@@ -1,0 +1,10 @@
+# Flutter-related
+**/Flutter/ephemeral/
+**/Pods/
+
+# Xcode-related
+**/dgph
+**/xcuserdata/
+
+# build/app/outputs/apk/debug/app-debug.apk
+build/app/outputs/apk/debug/app-debug.apk
