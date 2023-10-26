@@ -78,6 +78,8 @@ dependencies:
   webview_flutter: ^4.3.0
   #달력
   table_calendar: ^3.0.9
+  #제삼자 동의
+  app_tracking_transparency: ^2.0.4
   #로딩화면 스플레시 ---------------------------------
   flutter_native_splash: ^2.3.4
   change_app_package_name: ^1.1.0

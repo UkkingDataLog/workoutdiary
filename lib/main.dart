@@ -16,6 +16,9 @@ import 'package:workoutdiary/providers/app_image_provider.dart';
 
 import 'package:workoutdiary/ui/ui_group.dart';
 
+import 'package:app_tracking_transparency/app_tracking_transparency.dart';
+
+@override
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // 세로모드로 고정
@@ -23,6 +26,10 @@ void main() async {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
+
+  // Show tracking authorization dialog and ask for permission
+  final status = await AppTrackingTransparency.requestTrackingAuthorization();
+
   // 스플래시 확인시
   // await Future.delayed(const Duration(seconds: 5));
   // FlutterNativeSplash.remove();
