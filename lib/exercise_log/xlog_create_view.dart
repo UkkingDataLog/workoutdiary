@@ -17,6 +17,7 @@ import 'package:workoutdiary/common/colo_extension.dart';
 import 'package:workoutdiary/common/hive_helper.dart';
 import 'package:workoutdiary/exercise_date/ximg_saved_tile.dart';
 import 'package:workoutdiary/exercise_date/xlog_ximg_date_calendar_view.dart';
+import 'package:workoutdiary/exercise_log/today_xlog_list_tile.dart';
 import 'package:workoutdiary/hivedata/xlog.dart';
 
 import 'package:workoutdiary/common_widget/round_button.dart';
@@ -988,6 +989,7 @@ class XlogCreateViewState extends State<XlogCreateView> {
 
         //오늘 생성된 목록 개수
         int todayaddimgcount = 0;
+
         for (int index = 0; index < ximgs.length; index += 1) {
           if (ximgs[index].date.year == todaydate.year //년 비교
                   &&
@@ -1009,6 +1011,7 @@ class XlogCreateViewState extends State<XlogCreateView> {
 
             //오늘 생성된 목록 개수
             int todayaddcount = 0;
+            int todayaddcountComplete = 0;
             for (int index = 0; index < xlogs.length; index += 1) {
               if (xlogs[index].lxdate.year == todaydate.year //년 비교
                       &&
@@ -1017,6 +1020,9 @@ class XlogCreateViewState extends State<XlogCreateView> {
                       xlogs[index].lxdate.day == todaydate.day //일 비교
                   ) {
                 todayaddcount++;
+                if (xlogs[index].finished == true) {
+                  todayaddcountComplete++;
+                }
               }
             }
 
@@ -1364,322 +1370,572 @@ class XlogCreateViewState extends State<XlogCreateView> {
 
             return Scaffold(
               floatingActionButtonLocation: FloatingActionButtonLocation.miniCenterDocked,
-              floatingActionButton: (isselectedWritting == false)
-                  ? Stack(children: <Widget>[
-                      Align(
-                        alignment: Alignment.bottomCenter,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: FloatingActionButton.extended(
-                            heroTag: "btn1",
-                            backgroundColor: TColor.secondaryColor1, //TColor.secondaryColor1,
-                            elevation: 2,
-                            label: const Text('add'),
-                            icon: const Icon(
-                              Icons.add,
-                            ),
-                            onPressed: () {
-                              setState(
-                                () {
-                                  if (isselectedWritting == true) {
-                                    isselectedWritting = false;
-                                  } else {
-                                    isselectedWritting = true;
-                                    //
-                                    switch (_isbodypartcontroller) {
-                                      case '하체':
-                                        //필터 확인 후 운동 추가
-                                        //리스트 초기화 후 생성을 통해 정렬 및 제거기능 생략
-                                        exerciseList[BodyPart.legs]?.clear();
-                                        //[바벨]필터
-                                        if (isSelectedBabel == true) {
-                                          for (int i = 0; i < legsBabel.length; i++) {
-                                            exerciseList[BodyPart.legs]?.add(legsBabel[i]);
-                                          }
-                                        }
-                                        //[덤벨]필터
-                                        if (isSelectedDumbbell == true) {
-                                          for (int i = 0; i < legsDumbbell.length; i++) {
-                                            exerciseList[BodyPart.legs]?.add(legsDumbbell[i]);
-                                          }
-                                        }
-                                        //[덤벨]필터
-                                        if (isSelectedMachine == true) {
-                                          for (int i = 0; i < legsMachine.length; i++) {
-                                            exerciseList[BodyPart.legs]?.add(legsMachine[i]);
-                                          }
-                                        }
-                                        //[덤벨]필터
-                                        if (isSelectedBodyweight == true) {
-                                          for (int i = 0; i < legsBodyweight.length; i++) {
-                                            exerciseList[BodyPart.legs]?.add(legsBodyweight[i]);
-                                          }
-                                        }
-                                        //
-                                        exerciseItems = exerciseList[BodyPart.legs]!;
-
-                                        break;
-                                      case '어깨':
-                                        //필터 확인 후 운동 추가
-                                        //리스트 초기화 후 생성을 통해 정렬 및 제거기능 생략
-                                        exerciseList[BodyPart.shoulders]?.clear();
-                                        //[바벨]필터
-                                        if (isSelectedBabel == true) {
-                                          for (int i = 0; i < shouldersBabel.length; i++) {
-                                            exerciseList[BodyPart.shoulders]?.add(shouldersBabel[i]);
-                                          }
-                                        }
-                                        //[덤벨]필터
-                                        if (isSelectedDumbbell == true) {
-                                          for (int i = 0; i < shouldersDumbbell.length; i++) {
-                                            exerciseList[BodyPart.shoulders]?.add(shouldersDumbbell[i]);
-                                          }
-                                        }
-                                        //[덤벨]필터
-                                        if (isSelectedMachine == true) {
-                                          for (int i = 0; i < shouldersMachine.length; i++) {
-                                            exerciseList[BodyPart.shoulders]?.add(shouldersMachine[i]);
-                                          }
-                                        }
-                                        //[덤벨]필터
-                                        if (isSelectedBodyweight == true) {
-                                          for (int i = 0; i < shouldersBodyweight.length; i++) {
-                                            exerciseList[BodyPart.shoulders]?.add(shouldersBodyweight[i]);
-                                          }
-                                        }
-                                        //
-                                        exerciseItems = exerciseList[BodyPart.shoulders]!;
-
-                                        break;
-                                      case '가슴':
-                                        //필터 확인 후 운동 추가
-                                        //리스트 초기화 후 생성을 통해 정렬 및 제거기능 생략
-                                        exerciseList[BodyPart.chest]?.clear();
-                                        //[바벨]필터
-                                        if (isSelectedBabel == true) {
-                                          for (int i = 0; i < chestBabel.length; i++) {
-                                            exerciseList[BodyPart.chest]?.add(chestBabel[i]);
-                                          }
-                                        }
-                                        //[덤벨]필터
-                                        if (isSelectedDumbbell == true) {
-                                          for (int i = 0; i < chestDumbbell.length; i++) {
-                                            exerciseList[BodyPart.chest]?.add(chestDumbbell[i]);
-                                          }
-                                        }
-                                        //[덤벨]필터
-                                        if (isSelectedMachine == true) {
-                                          for (int i = 0; i < chestMachine.length; i++) {
-                                            exerciseList[BodyPart.chest]?.add(chestMachine[i]);
-                                          }
-                                        }
-                                        //[덤벨]필터
-                                        if (isSelectedBodyweight == true) {
-                                          for (int i = 0; i < chestBodyweight.length; i++) {
-                                            exerciseList[BodyPart.chest]?.add(chestBodyweight[i]);
-                                          }
-                                        }
-                                        //
-                                        exerciseItems = exerciseList[BodyPart.chest]!;
-
-                                        break;
-                                      case '팔':
-                                        //필터 확인 후 운동 추가
-                                        //리스트 초기화 후 생성을 통해 정렬 및 제거기능 생략
-                                        exerciseList[BodyPart.arms]?.clear();
-                                        //[바벨]필터
-                                        if (isSelectedBabel == true) {
-                                          for (int i = 0; i < armsBabel.length; i++) {
-                                            exerciseList[BodyPart.arms]?.add(armsBabel[i]);
-                                          }
-                                        }
-                                        //[덤벨]필터
-                                        if (isSelectedDumbbell == true) {
-                                          for (int i = 0; i < armsDumbbell.length; i++) {
-                                            exerciseList[BodyPart.arms]?.add(armsDumbbell[i]);
-                                          }
-                                        }
-                                        //[덤벨]필터
-                                        if (isSelectedMachine == true) {
-                                          for (int i = 0; i < armsMachine.length; i++) {
-                                            exerciseList[BodyPart.arms]?.add(armsMachine[i]);
-                                          }
-                                        }
-                                        //[덤벨]필터
-                                        if (isSelectedBodyweight == true) {
-                                          for (int i = 0; i < armsBodyweight.length; i++) {
-                                            exerciseList[BodyPart.arms]?.add(armsBodyweight[i]);
-                                          }
-                                        }
-                                        //
-                                        exerciseItems = exerciseList[BodyPart.arms]!;
-
-                                        break;
-                                      case '등':
-                                        //필터 확인 후 운동 추가
-                                        //리스트 초기화 후 생성을 통해 정렬 및 제거기능 생략
-                                        exerciseList[BodyPart.back]?.clear();
-                                        //[바벨]필터
-                                        if (isSelectedBabel == true) {
-                                          for (int i = 0; i < backBabel.length; i++) {
-                                            exerciseList[BodyPart.back]?.add(backBabel[i]);
-                                          }
-                                        }
-                                        //[덤벨]필터
-                                        if (isSelectedDumbbell == true) {
-                                          for (int i = 0; i < backDumbbell.length; i++) {
-                                            exerciseList[BodyPart.back]?.add(backDumbbell[i]);
-                                          }
-                                        }
-                                        //[덤벨]필터
-                                        if (isSelectedMachine == true) {
-                                          for (int i = 0; i < backMachine.length; i++) {
-                                            exerciseList[BodyPart.back]?.add(backMachine[i]);
-                                          }
-                                        }
-                                        //[덤벨]필터
-                                        if (isSelectedBodyweight == true) {
-                                          for (int i = 0; i < backBodyweight.length; i++) {
-                                            exerciseList[BodyPart.back]?.add(backBodyweight[i]);
-                                          }
-                                        }
-                                        //
-                                        exerciseItems = exerciseList[BodyPart.back]!;
-
-                                        break;
-                                      case '복근':
-                                        //필터 확인 후 운동 추가
-                                        //리스트 초기화 후 생성을 통해 정렬 및 제거기능 생략
-                                        exerciseList[BodyPart.abs]?.clear();
-                                        //[바벨]필터
-                                        if (isSelectedBabel == true) {
-                                          for (int i = 0; i < absBabel.length; i++) {
-                                            exerciseList[BodyPart.abs]?.add(absBabel[i]);
-                                          }
-                                        }
-                                        //[덤벨]필터
-                                        if (isSelectedDumbbell == true) {
-                                          for (int i = 0; i < absDumbbell.length; i++) {
-                                            exerciseList[BodyPart.abs]?.add(absDumbbell[i]);
-                                          }
-                                        }
-                                        //[덤벨]필터
-                                        if (isSelectedMachine == true) {
-                                          for (int i = 0; i < absMachine.length; i++) {
-                                            exerciseList[BodyPart.abs]?.add(absMachine[i]);
-                                          }
-                                        }
-                                        //[덤벨]필터
-                                        if (isSelectedBodyweight == true) {
-                                          for (int i = 0; i < absBodyweight.length; i++) {
-                                            exerciseList[BodyPart.abs]?.add(absBodyweight[i]);
-                                          }
-                                        }
-                                        //
-                                        exerciseItems = exerciseList[BodyPart.abs]!;
-
-                                        break;
-                                    }
-
-                                    if (selectedxTypeIndex > exerciseItems.length - 1) {
-                                      selectedxTypeItem = exerciseItems[exerciseItems.length - 1];
-                                      selectedxTypeIndex = exerciseItems.length - 1;
-                                    } else {
-                                      selectedxTypeItem = exerciseItems[selectedxTypeIndex];
-                                    }
-                                    //
-                                  }
-
-                                  _scrollController.animateTo(
-                                    _scrollController.position.maxScrollExtent,
-                                    duration: const Duration(seconds: 1),
-                                    curve: Curves.easeInOut,
-                                  );
-                                },
-                              );
-                            },
-                          ),
-                        ),
-                      ),
-                      Align(
-                        alignment: Alignment(Alignment.bottomCenter.x - 0.55, Alignment.bottomCenter.y),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: FloatingActionButton.small(
-                            heroTag: "btn2",
-                            backgroundColor: TColor.white, //TColor.secondaryColor1,
-                            elevation: 1,
-                            child: TextButton(
-                              onPressed: () {
-                                setState(() {
-                                  _ratio = (_ratio + 1) % 3;
-                                });
-                              },
-                              child: FittedBox(
-                                child: Text(
-                                  ratios[_ratio]!,
-                                  style: TextStyle(
-                                    color: TColor.black,
+              floatingActionButton: Stack(
+                children: [
+                  // 추가된 운동 목록 지우기쉽게(완료) + 위치 바꾸기(미구현)
+                  (todayaddcount >= 1)
+                      ? Align(
+                          alignment: Alignment(Alignment.bottomCenter.x + 0.95, Alignment.bottomCenter.y),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: const BorderRadius.all(Radius.circular(50)),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: TColor.white,
+                                    spreadRadius: 1,
+                                    blurRadius: 1,
+                                    offset: const Offset(0, 2),
                                   ),
+                                ],
+                              ),
+                              child: Badge(
+                                alignment: Alignment.topCenter,
+                                label: Text('$todayaddcountComplete($todayaddcount)'),
+                                backgroundColor: TColor.secondaryColor1,
+                                child: FloatingActionButton.extended(
+                                  heroTag: "btn3",
+                                  backgroundColor: TColor.black, //TColor.secondaryColor1,
+                                  elevation: 2,
+
+                                  label: const Text('ToDo'),
+                                  icon: const Icon(
+                                    Icons.checklist_outlined,
+                                  ),
+                                  onPressed: () async {
+                                    //
+
+                                    await showModalBottomSheet(
+                                      isScrollControlled: true,
+                                      enableDrag: false,
+                                      // shape: const RoundedRectangleBorder(
+                                      // <-- SEE HERE
+                                      // borderRadius: BorderRadius.vertical(
+                                      //   top: Radius.circular(25.0),
+                                      // ),
+                                      // ),
+                                      context: context,
+                                      builder: (BuildContext context) => StatefulBuilder(
+                                        builder: (context, setState) => Wrap(
+                                          // spacing: 60, // Add spacing between the child widgets.
+                                          children: <Widget>[
+                                            // Add a container with height to create some space.
+                                            // Container(height: 10),
+                                            // Add a text widget with a title for the sheet.
+                                            Stack(
+                                              children: [
+                                                Row(
+                                                  children: [
+                                                    // const SizedBox(width: 2),
+                                                    IconButton(
+                                                      onPressed: () {
+                                                        for (int index = 0; index < xlogs.length; index += 1) {
+                                                          (
+
+                                                                  ////둘다 dateTime 형식이므로 해당년, 월, 일 비교가 필요함
+                                                                  xlogs[index].lxdate.year == todaydate.year //년 비교
+                                                                      &&
+                                                                      xlogs[index].lxdate.month == todaydate.month //월 비교
+                                                                      &&
+                                                                      xlogs[index].lxdate.day == todaydate.day //일 비교
+
+                                                              )
+                                                              ? {xlogs[index].finished = true, xlogs[index].save()}
+                                                              : null;
+                                                        }
+                                                        setState(() {});
+                                                        this.setState(() {});
+                                                      },
+                                                      icon: const Icon(
+                                                        Icons.library_add_check_outlined,
+                                                        size: 20,
+                                                      ),
+                                                    ),
+                                                    IconButton(
+                                                      onPressed: () {
+                                                        for (int index = 0; index < xlogs.length; index += 1) {
+                                                          (
+
+                                                                  ////둘다 dateTime 형식이므로 해당년, 월, 일 비교가 필요함
+                                                                  xlogs[index].lxdate.year == todaydate.year //년 비교
+                                                                      &&
+                                                                      xlogs[index].lxdate.month == todaydate.month //월 비교
+                                                                      &&
+                                                                      xlogs[index].lxdate.day == todaydate.day //일 비교
+
+                                                              )
+                                                              ? {
+                                                                  xlogs[index].finished = false,
+                                                                  xlogs[index].save(),
+                                                                }
+                                                              : null;
+                                                        }
+                                                        setState(() {});
+                                                        this.setState(() {});
+                                                      },
+                                                      icon: const Icon(
+                                                        Icons.filter_none_rounded,
+                                                        size: 18,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                                Container(
+                                                  padding: EdgeInsets.only(top: 10),
+                                                  child: Center(
+                                                    child: Text(
+                                                      //"${todaydate.month}/${todaydate.day} ToDo $todayaddcountComplete($todayaddcount)",
+                                                      "${todaydate.month}/${todaydate.day} ToDo",
+                                                      style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            // Container(height: 10), // Add some more space.
+
+                                            // Add a text widget with a long description for the sheet.
+                                            // 타일 추가할 공간
+                                            SizedBox(
+                                              height: media.height * 0.770,
+                                              child: ListView(
+                                                physics: const NeverScrollableScrollPhysics(),
+                                                children: [
+                                                  Column(
+                                                    mainAxisAlignment: MainAxisAlignment.end,
+                                                    children: [
+                                                      for (int index = 0; index < xlogs.length; index += 1)
+                                                        if (
+
+                                                            ////둘다 dateTime 형식이므로 해당년, 월, 일 비교가 필요함
+                                                            xlogs[index].lxdate.year == todaydate.year //년 비교
+                                                                &&
+                                                                xlogs[index].lxdate.month == todaydate.month //월 비교
+                                                                &&
+                                                                xlogs[index].lxdate.day == todaydate.day //일 비교
+
+                                                            )
+                                                          Padding(
+                                                            padding: const EdgeInsets.all(2.0),
+                                                            child: todayXlogTile(
+                                                              xlog: xlogs[index],
+                                                              selectedweightUnit: selectedWeighUnint,
+                                                              onFinished: () {
+                                                                setState(() {
+                                                                  if (xlogs[index].finished == true) {
+                                                                    xlogs[index].finished = false;
+                                                                    xlogs[index].save();
+                                                                    todayaddcountComplete--;
+                                                                    this.setState(() {});
+                                                                  } else {
+                                                                    xlogs[index].finished = true;
+                                                                    xlogs[index].save();
+                                                                    todayaddcountComplete++;
+                                                                    this.setState(() {});
+                                                                  }
+                                                                });
+                                                              },
+                                                              onDeleted: () {
+                                                                setState(() {
+                                                                  xlogs.removeAt(index);
+                                                                  todayaddcount--;
+                                                                  todayaddcountComplete--;
+                                                                  this.setState(() {});
+                                                                  (todayaddcount == 0) ? Navigator.pop(context) : null;
+
+                                                                  // (todayaddcount == 0) ? Navigator.pop(context) : Container();
+                                                                });
+                                                              },
+                                                            ),
+                                                          ),
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+
+                                            // Text(
+                                            //   'Flutter is an open-source UI software development kit created by Google. It is used to develop cross-platform applications for Android, iOS, Linux, macOS, Windows, Google Fuchsia, and the web from a single codebase.',
+                                            //   style: TextStyle(
+                                            //       color: Colors.grey[600], // Set the text color.
+                                            //       fontSize: 18 // Set the text size.
+                                            //       ),
+                                            // ),
+                                            //
+                                            // Add some more space.
+                                            // Add a row widget to display buttons for closing and reading more.
+
+                                            Align(
+                                              alignment: Alignment(Alignment.bottomCenter.x + 0.95, Alignment.bottomCenter.y),
+                                              child: Container(
+                                                padding: EdgeInsets.all(8),
+                                                decoration: BoxDecoration(
+                                                  borderRadius: const BorderRadius.all(Radius.circular(50)),
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                      color: TColor.white,
+                                                      // spreadRadius: 3,
+                                                      blurRadius: 1,
+                                                      offset: const Offset(0, 2),
+                                                    ),
+                                                  ],
+                                                ),
+                                                child: FloatingActionButton.extended(
+                                                  heroTag: "btn3",
+                                                  elevation: 1,
+                                                  backgroundColor: TColor.white,
+                                                  label: Text(
+                                                    'close',
+                                                    style: TextStyle(color: TColor.black),
+                                                  ),
+                                                  icon: Icon(
+                                                    Icons.close,
+                                                    color: TColor.black,
+                                                  ),
+                                                  onPressed: () {
+                                                    Navigator.pop(context);
+                                                  },
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    );
+                                    // setState(() {});
+                                  },
                                 ),
                               ),
                             ),
-                            // label: const Text('add'),
-                            // icon: Icon(
-                            //   Icons.add,
-                            //   size: iconsize + 4,
-                            // ),
-                            onPressed: () {
-                              setState(
-                                () {
-                                  if (isselectedWritting == true) {
-                                    isselectedWritting = false;
-                                  } else {
-                                    isselectedWritting = true;
-                                  }
-                                  _scrollController.animateTo(
-                                    _scrollController.position.maxScrollExtent,
-                                    duration: const Duration(seconds: 1),
-                                    curve: Curves.easeInOut,
-                                  );
+                          ),
+                        )
+                      : Container(),
+
+                  (isselectedWritting == false)
+                      ? Align(
+                          alignment: Alignment(Alignment.bottomCenter.x - 0.55, Alignment.bottomCenter.y),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: FloatingActionButton.small(
+                              heroTag: "btn2",
+                              backgroundColor: TColor.white, //TColor.secondaryColor1,
+                              elevation: 1,
+                              child: TextButton(
+                                onPressed: () {
+                                  setState(() {
+                                    _ratio = (_ratio + 1) % 3;
+                                  });
                                 },
-                              );
-                            },
+                                child: FittedBox(
+                                  child: Text(
+                                    ratios[_ratio]!,
+                                    style: TextStyle(
+                                      color: TColor.black,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              // label: const Text('add'),
+                              // icon: Icon(
+                              //   Icons.add,
+                              //   size: iconsize + 4,
+                              // ),
+                              onPressed: () {
+                                setState(
+                                  () {
+                                    if (isselectedWritting == true) {
+                                      isselectedWritting = false;
+                                    } else {
+                                      isselectedWritting = true;
+                                    }
+                                    _scrollController.animateTo(
+                                      _scrollController.position.maxScrollExtent,
+                                      duration: const Duration(seconds: 1),
+                                      curve: Curves.easeInOut,
+                                    );
+                                  },
+                                );
+                              },
+                            ),
+                          ),
+                        )
+                      : Container(),
+
+                  //
+                  (isselectedWritting == false)
+                      ? Align(
+                          alignment: Alignment.bottomCenter,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: FloatingActionButton.extended(
+                              heroTag: "btn1",
+                              backgroundColor: TColor.secondaryColor1, //TColor.secondaryColor1,
+                              elevation: 2,
+                              label: const Text('add'),
+                              icon: const Icon(
+                                Icons.add,
+                              ),
+                              onPressed: () {
+                                setState(
+                                  () {
+                                    if (isselectedWritting == true) {
+                                      isselectedWritting = false;
+                                    } else {
+                                      isselectedWritting = true;
+                                      //
+                                      switch (_isbodypartcontroller) {
+                                        case '하체':
+                                          //필터 확인 후 운동 추가
+                                          //리스트 초기화 후 생성을 통해 정렬 및 제거기능 생략
+                                          exerciseList[BodyPart.legs]?.clear();
+                                          //[바벨]필터
+                                          if (isSelectedBabel == true) {
+                                            for (int i = 0; i < legsBabel.length; i++) {
+                                              exerciseList[BodyPart.legs]?.add(legsBabel[i]);
+                                            }
+                                          }
+                                          //[덤벨]필터
+                                          if (isSelectedDumbbell == true) {
+                                            for (int i = 0; i < legsDumbbell.length; i++) {
+                                              exerciseList[BodyPart.legs]?.add(legsDumbbell[i]);
+                                            }
+                                          }
+                                          //[덤벨]필터
+                                          if (isSelectedMachine == true) {
+                                            for (int i = 0; i < legsMachine.length; i++) {
+                                              exerciseList[BodyPart.legs]?.add(legsMachine[i]);
+                                            }
+                                          }
+                                          //[덤벨]필터
+                                          if (isSelectedBodyweight == true) {
+                                            for (int i = 0; i < legsBodyweight.length; i++) {
+                                              exerciseList[BodyPart.legs]?.add(legsBodyweight[i]);
+                                            }
+                                          }
+                                          //
+                                          exerciseItems = exerciseList[BodyPart.legs]!;
+
+                                          break;
+                                        case '어깨':
+                                          //필터 확인 후 운동 추가
+                                          //리스트 초기화 후 생성을 통해 정렬 및 제거기능 생략
+                                          exerciseList[BodyPart.shoulders]?.clear();
+                                          //[바벨]필터
+                                          if (isSelectedBabel == true) {
+                                            for (int i = 0; i < shouldersBabel.length; i++) {
+                                              exerciseList[BodyPart.shoulders]?.add(shouldersBabel[i]);
+                                            }
+                                          }
+                                          //[덤벨]필터
+                                          if (isSelectedDumbbell == true) {
+                                            for (int i = 0; i < shouldersDumbbell.length; i++) {
+                                              exerciseList[BodyPart.shoulders]?.add(shouldersDumbbell[i]);
+                                            }
+                                          }
+                                          //[덤벨]필터
+                                          if (isSelectedMachine == true) {
+                                            for (int i = 0; i < shouldersMachine.length; i++) {
+                                              exerciseList[BodyPart.shoulders]?.add(shouldersMachine[i]);
+                                            }
+                                          }
+                                          //[덤벨]필터
+                                          if (isSelectedBodyweight == true) {
+                                            for (int i = 0; i < shouldersBodyweight.length; i++) {
+                                              exerciseList[BodyPart.shoulders]?.add(shouldersBodyweight[i]);
+                                            }
+                                          }
+                                          //
+                                          exerciseItems = exerciseList[BodyPart.shoulders]!;
+
+                                          break;
+                                        case '가슴':
+                                          //필터 확인 후 운동 추가
+                                          //리스트 초기화 후 생성을 통해 정렬 및 제거기능 생략
+                                          exerciseList[BodyPart.chest]?.clear();
+                                          //[바벨]필터
+                                          if (isSelectedBabel == true) {
+                                            for (int i = 0; i < chestBabel.length; i++) {
+                                              exerciseList[BodyPart.chest]?.add(chestBabel[i]);
+                                            }
+                                          }
+                                          //[덤벨]필터
+                                          if (isSelectedDumbbell == true) {
+                                            for (int i = 0; i < chestDumbbell.length; i++) {
+                                              exerciseList[BodyPart.chest]?.add(chestDumbbell[i]);
+                                            }
+                                          }
+                                          //[덤벨]필터
+                                          if (isSelectedMachine == true) {
+                                            for (int i = 0; i < chestMachine.length; i++) {
+                                              exerciseList[BodyPart.chest]?.add(chestMachine[i]);
+                                            }
+                                          }
+                                          //[덤벨]필터
+                                          if (isSelectedBodyweight == true) {
+                                            for (int i = 0; i < chestBodyweight.length; i++) {
+                                              exerciseList[BodyPart.chest]?.add(chestBodyweight[i]);
+                                            }
+                                          }
+                                          //
+                                          exerciseItems = exerciseList[BodyPart.chest]!;
+
+                                          break;
+                                        case '팔':
+                                          //필터 확인 후 운동 추가
+                                          //리스트 초기화 후 생성을 통해 정렬 및 제거기능 생략
+                                          exerciseList[BodyPart.arms]?.clear();
+                                          //[바벨]필터
+                                          if (isSelectedBabel == true) {
+                                            for (int i = 0; i < armsBabel.length; i++) {
+                                              exerciseList[BodyPart.arms]?.add(armsBabel[i]);
+                                            }
+                                          }
+                                          //[덤벨]필터
+                                          if (isSelectedDumbbell == true) {
+                                            for (int i = 0; i < armsDumbbell.length; i++) {
+                                              exerciseList[BodyPart.arms]?.add(armsDumbbell[i]);
+                                            }
+                                          }
+                                          //[덤벨]필터
+                                          if (isSelectedMachine == true) {
+                                            for (int i = 0; i < armsMachine.length; i++) {
+                                              exerciseList[BodyPart.arms]?.add(armsMachine[i]);
+                                            }
+                                          }
+                                          //[덤벨]필터
+                                          if (isSelectedBodyweight == true) {
+                                            for (int i = 0; i < armsBodyweight.length; i++) {
+                                              exerciseList[BodyPart.arms]?.add(armsBodyweight[i]);
+                                            }
+                                          }
+                                          //
+                                          exerciseItems = exerciseList[BodyPart.arms]!;
+
+                                          break;
+                                        case '등':
+                                          //필터 확인 후 운동 추가
+                                          //리스트 초기화 후 생성을 통해 정렬 및 제거기능 생략
+                                          exerciseList[BodyPart.back]?.clear();
+                                          //[바벨]필터
+                                          if (isSelectedBabel == true) {
+                                            for (int i = 0; i < backBabel.length; i++) {
+                                              exerciseList[BodyPart.back]?.add(backBabel[i]);
+                                            }
+                                          }
+                                          //[덤벨]필터
+                                          if (isSelectedDumbbell == true) {
+                                            for (int i = 0; i < backDumbbell.length; i++) {
+                                              exerciseList[BodyPart.back]?.add(backDumbbell[i]);
+                                            }
+                                          }
+                                          //[덤벨]필터
+                                          if (isSelectedMachine == true) {
+                                            for (int i = 0; i < backMachine.length; i++) {
+                                              exerciseList[BodyPart.back]?.add(backMachine[i]);
+                                            }
+                                          }
+                                          //[덤벨]필터
+                                          if (isSelectedBodyweight == true) {
+                                            for (int i = 0; i < backBodyweight.length; i++) {
+                                              exerciseList[BodyPart.back]?.add(backBodyweight[i]);
+                                            }
+                                          }
+                                          //
+                                          exerciseItems = exerciseList[BodyPart.back]!;
+
+                                          break;
+                                        case '복근':
+                                          //필터 확인 후 운동 추가
+                                          //리스트 초기화 후 생성을 통해 정렬 및 제거기능 생략
+                                          exerciseList[BodyPart.abs]?.clear();
+                                          //[바벨]필터
+                                          if (isSelectedBabel == true) {
+                                            for (int i = 0; i < absBabel.length; i++) {
+                                              exerciseList[BodyPart.abs]?.add(absBabel[i]);
+                                            }
+                                          }
+                                          //[덤벨]필터
+                                          if (isSelectedDumbbell == true) {
+                                            for (int i = 0; i < absDumbbell.length; i++) {
+                                              exerciseList[BodyPart.abs]?.add(absDumbbell[i]);
+                                            }
+                                          }
+                                          //[덤벨]필터
+                                          if (isSelectedMachine == true) {
+                                            for (int i = 0; i < absMachine.length; i++) {
+                                              exerciseList[BodyPart.abs]?.add(absMachine[i]);
+                                            }
+                                          }
+                                          //[덤벨]필터
+                                          if (isSelectedBodyweight == true) {
+                                            for (int i = 0; i < absBodyweight.length; i++) {
+                                              exerciseList[BodyPart.abs]?.add(absBodyweight[i]);
+                                            }
+                                          }
+                                          //
+                                          exerciseItems = exerciseList[BodyPart.abs]!;
+
+                                          break;
+                                      }
+
+                                      if (selectedxTypeIndex > exerciseItems.length - 1) {
+                                        selectedxTypeItem = exerciseItems[exerciseItems.length - 1];
+                                        selectedxTypeIndex = exerciseItems.length - 1;
+                                      } else {
+                                        selectedxTypeItem = exerciseItems[selectedxTypeIndex];
+                                      }
+                                      //
+                                    }
+
+                                    _scrollController.animateTo(
+                                      _scrollController.position.maxScrollExtent,
+                                      duration: const Duration(seconds: 1),
+                                      curve: Curves.easeInOut,
+                                    );
+                                  },
+                                );
+                              },
+                            ),
+                          ),
+                        )
+                      : Align(
+                          alignment: Alignment.bottomCenter,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: FloatingActionButton.extended(
+                              heroTag: "btn1",
+                              elevation: 1,
+                              backgroundColor: TColor.white,
+                              label: Text(
+                                'close',
+                                style: TextStyle(color: TColor.black),
+                              ),
+                              icon: Icon(
+                                Icons.close,
+                                color: TColor.black,
+                              ),
+                              onPressed: () {
+                                setState(
+                                  () {
+                                    if (isselectedWritting == true) {
+                                      isselectedWritting = false;
+                                    } else {
+                                      isselectedWritting = true;
+                                    }
+                                    _scrollController.animateTo(
+                                      _scrollController.position.minScrollExtent,
+                                      duration: const Duration(seconds: 1),
+                                      curve: Curves.easeInOut,
+                                    );
+                                  },
+                                );
+                              },
+                            ),
                           ),
                         ),
-                      )
-                    ])
-                  : Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: FloatingActionButton.extended(
-                        elevation: 2,
-                        backgroundColor: TColor.white,
-                        label: Text(
-                          'close',
-                          style: TextStyle(color: TColor.black),
-                        ),
-                        icon: Icon(
-                          Icons.close,
-                          color: TColor.black,
-                        ),
-                        onPressed: () {
-                          setState(
-                            () {
-                              if (isselectedWritting == true) {
-                                isselectedWritting = false;
-                              } else {
-                                isselectedWritting = true;
-                              }
-                              _scrollController.animateTo(
-                                _scrollController.position.minScrollExtent,
-                                duration: const Duration(seconds: 1),
-                                curve: Curves.easeInOut,
-                              );
-                            },
-                          );
-                        },
-                      ),
-                    ),
+                ],
+              ),
               backgroundColor: TColor.white,
               body: SingleChildScrollView(
                 physics: (isselectedWritting == false)
@@ -1865,6 +2121,7 @@ class XlogCreateViewState extends State<XlogCreateView> {
                                           setState(() {
                                             xlogs.removeAt(index);
                                             todayaddcount--;
+                                            todayaddcountComplete--;
                                           });
                                         },
                                       ),
@@ -1879,7 +2136,7 @@ class XlogCreateViewState extends State<XlogCreateView> {
                     //003. photo edit tools
                     Container(
                       color: Theme.of(context).canvasColor,
-                      height: 40,
+                      height: 48,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -2030,7 +2287,7 @@ class XlogCreateViewState extends State<XlogCreateView> {
                               Padding(
                                 padding: const EdgeInsets.only(right: 4.0),
                                 child: Container(
-                                  height: 40,
+                                  height: 48,
                                   decoration: const BoxDecoration(
                                     color: Colors.black,
                                     // gradient:
@@ -2359,281 +2616,283 @@ class XlogCreateViewState extends State<XlogCreateView> {
                               // 005. Easy workout dial selector
                               Stack(
                                 children: [
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      const SizedBox(width: 4),
+                                  FittedBox(
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        const SizedBox(width: 4),
 
-                                      //1. exercise
-                                      Column(
-                                        children: [
-                                          Row(
-                                            children: [
-                                              const SizedBox(width: 10), //운동글씨 겹치지않게하기
-                                              Container(
-                                                width: media.width * selectedXtypewidth,
-                                                height: logheightmargin,
-                                                alignment: Alignment.center,
-                                                child: FittedBox(
-                                                  child: Text(
-                                                    selectedxTypeItem,
-                                                    style: TextStyle(fontSize: logTextSizeselected, fontWeight: logTextFontselectedWeight),
+                                        //1. exercise
+                                        Column(
+                                          children: [
+                                            Row(
+                                              children: [
+                                                const SizedBox(width: 10), //운동글씨 겹치지않게하기
+                                                Container(
+                                                  width: (media.width * selectedXtypewidth),
+                                                  height: 50,
+                                                  alignment: Alignment.center,
+                                                  child: FittedBox(
+                                                    child: Text(
+                                                      selectedxTypeItem,
+                                                      style: TextStyle(fontSize: logTextSizeselected, fontWeight: logTextFontselectedWeight),
+                                                    ),
                                                   ),
                                                 ),
-                                              ),
-                                            ],
-                                          ),
-                                          SizedBox(
-                                            height: cupertinoPickerHeight,
-                                            width: media.width * selectedXtypewidth,
-                                            child: Builder(builder: (context) {
-                                              return CupertinoPicker(
-                                                // hasSuitableHapticHardware = false로 내부 위젯 수정
+                                              ],
+                                            ),
+                                            SizedBox(
+                                              height: cupertinoPickerHeight,
+                                              width: media.width * selectedXtypewidth,
+                                              child: Builder(builder: (context) {
+                                                return CupertinoPicker(
+                                                  // hasSuitableHapticHardware = false로 내부 위젯 수정
 
+                                                  looping: false,
+
+                                                  //처음나오는 운동으로 변경 필요
+                                                  scrollController: FixedExtentScrollController(initialItem: selectedxTypeIndex),
+                                                  selectionOverlay: CupertinoPickerDefaultSelectionOverlay(
+                                                    background: cupertinoPickercolor,
+                                                  ),
+                                                  //Specify the height of lxsetItem
+                                                  itemExtent: cupertinoPickeritemExtent,
+                                                  //Enter a list of exerciseItems to select
+
+                                                  children: List.generate(
+                                                    exerciseItems.length,
+                                                    (xTypeIndex) {
+                                                      final isSelected = this.xTypeIndex == xTypeIndex;
+                                                      final lxsetItem = exerciseItems[xTypeIndex];
+
+                                                      final color = isSelected ? TColor.black : TColor.primarygray;
+
+                                                      return Center(
+                                                        child: FittedBox(
+                                                          child: Text(
+                                                            lxsetItem,
+                                                            style: TextStyle(color: color, fontSize: 20),
+                                                          ),
+                                                        ),
+                                                      );
+                                                    },
+                                                  ),
+
+                                                  onSelectedItemChanged: (xTypeIndex) {
+                                                    setState(() => this.xTypeIndex = xTypeIndex);
+
+                                                    final lxsetItem = exerciseItems[xTypeIndex];
+
+                                                    selectedxTypeItem = lxsetItem;
+                                                    selectedxTypeIndex = xTypeIndex;
+
+                                                    // debugPrint(lxsetItem);
+                                                  },
+                                                );
+                                              }),
+                                            ),
+                                            // SizedBox(height: logbottomHeight)
+                                          ],
+                                        ),
+
+                                        //2. input weight when exercising---------------------------
+                                        Column(
+                                          children: [
+                                            Row(
+                                              children: [
+                                                Container(
+                                                  height: logheightmargin,
+                                                  alignment: Alignment.centerRight,
+                                                  width: logTextweightwidth - 10,
+                                                  child: FittedBox(
+                                                    child: Text(
+                                                      (selectedlxweightItems == '0') ? ' ' : '${int.parse(selectedlxweightItems) * 0.5}',
+                                                      style: TextStyle(fontSize: logTextSizeselected, fontWeight: logTextFontselectedWeight),
+                                                    ),
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  width: 20,
+                                                  child: Text(
+                                                    (selectedlxweightItems == '0') ? ' ' : selectedWeighUnint,
+                                                    style: TextStyle(fontSize: logTextSize),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            SizedBox(
+                                              height: cupertinoPickerHeight,
+                                              width: media.width * selectedXweightnumberset,
+                                              child: CupertinoPicker(
                                                 looping: false,
-
-                                                //처음나오는 운동으로 변경 필요
-                                                scrollController: FixedExtentScrollController(initialItem: selectedxTypeIndex),
+                                                scrollController: FixedExtentScrollController(initialItem: int.parse(selectedlxweightItems)),
                                                 selectionOverlay: CupertinoPickerDefaultSelectionOverlay(
                                                   background: cupertinoPickercolor,
                                                 ),
                                                 //Specify the height of lxsetItem
                                                 itemExtent: cupertinoPickeritemExtent,
-                                                //Enter a list of exerciseItems to select
+                                                //Enter a list of lxweightItems to select
 
-                                                children: List.generate(
-                                                  exerciseItems.length,
-                                                  (xTypeIndex) {
-                                                    final isSelected = this.xTypeIndex == xTypeIndex;
-                                                    final lxsetItem = exerciseItems[xTypeIndex];
+                                                children: List.generate(lxweightItems.length, (lxweightIndex) {
+                                                  final isSelected = this.lxweightIndex == lxweightIndex;
+                                                  final lxsetItem = lxweightItems[lxweightIndex];
+                                                  final color = isSelected ? TColor.black : TColor.primarygray;
 
-                                                    final color = isSelected ? TColor.black : TColor.primarygray;
-
-                                                    return Center(
-                                                      child: FittedBox(
-                                                        child: Text(
-                                                          lxsetItem,
-                                                          style: TextStyle(color: color, fontSize: 20),
-                                                        ),
+                                                  return Center(
+                                                    child: FittedBox(
+                                                      child: Text(
+                                                        '${lxsetItem * 0.5}',
+                                                        style: TextStyle(color: color, fontSize: 20),
                                                       ),
-                                                    );
-                                                  },
-                                                ),
+                                                    ),
+                                                  );
+                                                }),
 
-                                                onSelectedItemChanged: (xTypeIndex) {
-                                                  setState(() => this.xTypeIndex = xTypeIndex);
+                                                onSelectedItemChanged: (lxweightIndex) {
+                                                  setState(() => this.lxweightIndex = lxweightIndex);
 
-                                                  final lxsetItem = exerciseItems[xTypeIndex];
+                                                  final lxsetItem = lxweightItems[lxweightIndex];
 
-                                                  selectedxTypeItem = lxsetItem;
-                                                  selectedxTypeIndex = xTypeIndex;
-
-                                                  // debugPrint(lxsetItem);
+                                                  selectedlxweightItems = '$lxsetItem';
                                                 },
-                                              );
-                                            }),
-                                          ),
-                                          // SizedBox(height: logbottomHeight)
-                                        ],
-                                      ),
-
-                                      //2. input weight when exercising---------------------------
-                                      Column(
-                                        children: [
-                                          Row(
-                                            children: [
-                                              Container(
-                                                height: logheightmargin,
-                                                alignment: Alignment.centerRight,
-                                                width: logTextweightwidth - 10,
-                                                child: FittedBox(
-                                                  child: Text(
-                                                    (selectedlxweightItems == '0') ? ' ' : '${int.parse(selectedlxweightItems) * 0.5}',
-                                                    style: TextStyle(fontSize: logTextSizeselected, fontWeight: logTextFontselectedWeight),
-                                                  ),
-                                                ),
                                               ),
-                                              SizedBox(
-                                                width: 20,
-                                                child: Text(
-                                                  (selectedlxweightItems == '0') ? ' ' : selectedWeighUnint,
-                                                  style: TextStyle(fontSize: logTextSize),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          SizedBox(
-                                            height: cupertinoPickerHeight,
-                                            width: media.width * selectedXweightnumberset,
-                                            child: CupertinoPicker(
-                                              looping: false,
-                                              scrollController: FixedExtentScrollController(initialItem: int.parse(selectedlxweightItems)),
-                                              selectionOverlay: CupertinoPickerDefaultSelectionOverlay(
-                                                background: cupertinoPickercolor,
-                                              ),
-                                              //Specify the height of lxsetItem
-                                              itemExtent: cupertinoPickeritemExtent,
-                                              //Enter a list of lxweightItems to select
+                                            ),
+                                            // SizedBox(height: logbottomHeight)
+                                          ],
+                                        ),
 
-                                              children: List.generate(lxweightItems.length, (lxweightIndex) {
-                                                final isSelected = this.lxweightIndex == lxweightIndex;
-                                                final lxsetItem = lxweightItems[lxweightIndex];
-                                                final color = isSelected ? TColor.black : TColor.primarygray;
-
-                                                return Center(
+                                        //3. Number of repetitions per exercise---------------------
+                                        Column(
+                                          children: [
+                                            Row(
+                                              children: [
+                                                Container(
+                                                  height: logheightmargin,
+                                                  alignment: Alignment.centerRight,
+                                                  width: logTextnumandsetwidth,
                                                   child: FittedBox(
                                                     child: Text(
-                                                      '${lxsetItem * 0.5}',
-                                                      style: TextStyle(color: color, fontSize: 20),
+                                                      selectedlxnumberItem,
+                                                      style: TextStyle(fontSize: logTextSizeselected, fontWeight: logTextFontselectedWeight),
                                                     ),
                                                   ),
-                                                );
-                                              }),
-
-                                              onSelectedItemChanged: (lxweightIndex) {
-                                                setState(() => this.lxweightIndex = lxweightIndex);
-
-                                                final lxsetItem = lxweightItems[lxweightIndex];
-
-                                                selectedlxweightItems = '$lxsetItem';
-                                              },
-                                            ),
-                                          ),
-                                          // SizedBox(height: logbottomHeight)
-                                        ],
-                                      ),
-
-                                      //3. Number of repetitions per exercise---------------------
-                                      Column(
-                                        children: [
-                                          Row(
-                                            children: [
-                                              Container(
-                                                height: logheightmargin,
-                                                alignment: Alignment.centerRight,
-                                                width: logTextnumandsetwidth,
-                                                child: FittedBox(
+                                                ),
+                                                FittedBox(
                                                   child: Text(
-                                                    selectedlxnumberItem,
-                                                    style: TextStyle(fontSize: logTextSizeselected, fontWeight: logTextFontselectedWeight),
+                                                    '회',
+                                                    style: TextStyle(fontSize: logTextSize),
                                                   ),
                                                 ),
-                                              ),
-                                              FittedBox(
-                                                child: Text(
-                                                  '회',
-                                                  style: TextStyle(fontSize: logTextSize),
+                                              ],
+                                            ),
+                                            SizedBox(
+                                              height: cupertinoPickerHeight,
+                                              width: media.width * selectedXweightnumberset,
+                                              child: CupertinoPicker(
+                                                looping: false,
+                                                scrollController: FixedExtentScrollController(initialItem: int.parse(selectedlxnumberItem) - 1),
+                                                selectionOverlay: CupertinoPickerDefaultSelectionOverlay(
+                                                  background: cupertinoPickercolor,
                                                 ),
-                                              ),
-                                            ],
-                                          ),
-                                          SizedBox(
-                                            height: cupertinoPickerHeight,
-                                            width: media.width * selectedXweightnumberset,
-                                            child: CupertinoPicker(
-                                              looping: false,
-                                              scrollController: FixedExtentScrollController(initialItem: int.parse(selectedlxnumberItem) - 1),
-                                              selectionOverlay: CupertinoPickerDefaultSelectionOverlay(
-                                                background: cupertinoPickercolor,
-                                              ),
-                                              //Specify the height of lxsetItem
-                                              itemExtent: cupertinoPickeritemExtent,
-                                              //Enter a list of lxnumberItems to select
+                                                //Specify the height of lxsetItem
+                                                itemExtent: cupertinoPickeritemExtent,
+                                                //Enter a list of lxnumberItems to select
 
-                                              children: List.generate(lxnumberItems.length, (lxnumberIndex) {
-                                                final isSelected = this.lxnumberIndex == lxnumberIndex;
-                                                final lxsetItem = lxnumberItems[lxnumberIndex];
-                                                final color = isSelected ? TColor.black : TColor.primarygray;
+                                                children: List.generate(lxnumberItems.length, (lxnumberIndex) {
+                                                  final isSelected = this.lxnumberIndex == lxnumberIndex;
+                                                  final lxsetItem = lxnumberItems[lxnumberIndex];
+                                                  final color = isSelected ? TColor.black : TColor.primarygray;
 
-                                                return Center(
+                                                  return Center(
+                                                    child: FittedBox(
+                                                      child: Text(
+                                                        '$lxsetItem',
+                                                        style: TextStyle(color: color, fontSize: 20),
+                                                      ),
+                                                    ),
+                                                  );
+                                                }),
+
+                                                onSelectedItemChanged: (lxnumberIndex) {
+                                                  setState(() => this.lxnumberIndex = lxnumberIndex);
+
+                                                  final lxsetItem = lxnumberItems[lxnumberIndex];
+
+                                                  selectedlxnumberItem = '$lxsetItem';
+                                                },
+                                              ),
+                                            ),
+                                            // SizedBox(height: logbottomHeight)
+                                          ],
+                                        ),
+
+                                        //4. input number of sets-----------------------------------
+                                        Column(
+                                          children: [
+                                            Row(
+                                              children: [
+                                                Container(
+                                                  height: logheightmargin,
+                                                  alignment: Alignment.centerRight,
+                                                  width: logTextnumandsetwidth,
                                                   child: FittedBox(
                                                     child: Text(
-                                                      '$lxsetItem',
-                                                      style: TextStyle(color: color, fontSize: 20),
+                                                      selectedlxsetItem,
+                                                      style: TextStyle(fontSize: logTextSizeselected, fontWeight: logTextFontselectedWeight),
                                                     ),
                                                   ),
-                                                );
-                                              }),
-
-                                              onSelectedItemChanged: (lxnumberIndex) {
-                                                setState(() => this.lxnumberIndex = lxnumberIndex);
-
-                                                final lxsetItem = lxnumberItems[lxnumberIndex];
-
-                                                selectedlxnumberItem = '$lxsetItem';
-                                              },
-                                            ),
-                                          ),
-                                          // SizedBox(height: logbottomHeight)
-                                        ],
-                                      ),
-
-                                      //4. input number of sets-----------------------------------
-                                      Column(
-                                        children: [
-                                          Row(
-                                            children: [
-                                              Container(
-                                                height: logheightmargin,
-                                                alignment: Alignment.centerRight,
-                                                width: logTextnumandsetwidth,
-                                                child: FittedBox(
+                                                ),
+                                                FittedBox(
                                                   child: Text(
-                                                    selectedlxsetItem,
-                                                    style: TextStyle(fontSize: logTextSizeselected, fontWeight: logTextFontselectedWeight),
+                                                    '세트',
+                                                    style: TextStyle(fontSize: logTextSize),
                                                   ),
                                                 ),
-                                              ),
-                                              FittedBox(
-                                                child: Text(
-                                                  '세트',
-                                                  style: TextStyle(fontSize: logTextSize),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          SizedBox(
-                                            height: cupertinoPickerHeight,
-                                            width: media.width * selectedXweightnumberset,
-                                            child: CupertinoPicker(
-                                              looping: false,
-                                              scrollController: FixedExtentScrollController(initialItem: int.parse(selectedlxsetItem) - 1),
-                                              selectionOverlay: CupertinoPickerDefaultSelectionOverlay(
-                                                background: cupertinoPickercolor,
-                                              ),
-                                              //Specify the height of lxsetItem
-                                              itemExtent: cupertinoPickeritemExtent,
-                                              //Enter a list of lxsetItems to select
-
-                                              children: List.generate(lxsetItems.length, (lxsetIndex) {
-                                                final isSelected = this.lxsetIndex == lxsetIndex;
-                                                final lxsetItem = lxsetItems[lxsetIndex];
-                                                final color = isSelected ? TColor.black : TColor.primarygray;
-
-                                                return Center(
-                                                  child: FittedBox(
-                                                    child: Text(
-                                                      "$lxsetItem",
-                                                      style: TextStyle(color: color, fontSize: 20),
-                                                    ),
-                                                  ),
-                                                );
-                                              }),
-
-                                              onSelectedItemChanged: (lxsetIndex) {
-                                                setState(() => this.lxsetIndex = lxsetIndex);
-
-                                                final lxsetItem = lxsetItems[lxsetIndex];
-
-                                                selectedlxsetItem = '$lxsetItem';
-                                              },
+                                              ],
                                             ),
-                                          ),
-                                          // SizedBox(height: logbottomHeight)
-                                        ],
-                                      ),
-                                      const SizedBox(width: 4),
-                                    ],
+                                            SizedBox(
+                                              height: cupertinoPickerHeight,
+                                              width: media.width * selectedXweightnumberset,
+                                              child: CupertinoPicker(
+                                                looping: false,
+                                                scrollController: FixedExtentScrollController(initialItem: int.parse(selectedlxsetItem) - 1),
+                                                selectionOverlay: CupertinoPickerDefaultSelectionOverlay(
+                                                  background: cupertinoPickercolor,
+                                                ),
+                                                //Specify the height of lxsetItem
+                                                itemExtent: cupertinoPickeritemExtent,
+                                                //Enter a list of lxsetItems to select
+
+                                                children: List.generate(lxsetItems.length, (lxsetIndex) {
+                                                  final isSelected = this.lxsetIndex == lxsetIndex;
+                                                  final lxsetItem = lxsetItems[lxsetIndex];
+                                                  final color = isSelected ? TColor.black : TColor.primarygray;
+
+                                                  return Center(
+                                                    child: FittedBox(
+                                                      child: Text(
+                                                        "$lxsetItem",
+                                                        style: TextStyle(color: color, fontSize: 20),
+                                                      ),
+                                                    ),
+                                                  );
+                                                }),
+
+                                                onSelectedItemChanged: (lxsetIndex) {
+                                                  setState(() => this.lxsetIndex = lxsetIndex);
+
+                                                  final lxsetItem = lxsetItems[lxsetIndex];
+
+                                                  selectedlxsetItem = '$lxsetItem';
+                                                },
+                                              ),
+                                            ),
+                                            // SizedBox(height: logbottomHeight)
+                                          ],
+                                        ),
+                                        const SizedBox(width: 4),
+                                      ],
+                                    ),
                                   ),
                                   Container(
                                       padding: const EdgeInsets.only(left: 4),
@@ -2652,6 +2911,7 @@ class XlogCreateViewState extends State<XlogCreateView> {
                                               setState(
                                                 () {
                                                   HiveHelper().createXlog(Xlog(
+                                                      finished: true,
                                                       lxdate:
                                                           // todaydate //지금시간 넣기
 
@@ -3169,9 +3429,11 @@ class XlogCreateViewState extends State<XlogCreateView> {
   int _numRewardedInterstitialLoadAttempts = 0;
   void _createRewardedInterstitialAd() {
     RewardedInterstitialAd.load(
-        adUnitId: Platform.isIOS ? 'ca-app-pub-3940256099942544/6978759866' : 'ca-app-pub-3940256099942544/5354046379',
-        // 'ios': 'ca-app-pub-3940256099942544/6978759866', //my ios key
-        // 'android': 'ca-app-pub-3940256099942544/5354046379', //my android key
+        adUnitId: Platform.isIOS ? 'ca-app-pub-9398946924743018/6574107704' : 'ca-app-pub-9398946924743018/8074891633',
+        // 테스트 데모 https://developers.google.com/admob/ios/test-ads?hl=ko#demo_ad_units
+
+        // 'ios': 'ca-app-pub-9398946924743018/6574107704', //my ios key
+        // 'android': 'ca-app-pub-9398946924743018/8074891633', //my android key
         request: request,
         rewardedInterstitialAdLoadCallback: RewardedInterstitialAdLoadCallback(
           onAdLoaded: (RewardedInterstitialAd ad) {
@@ -3507,4 +3769,3 @@ const int maxFailedLoadAttempts = 3;
 //                                               ),
 //                                             ),
 //                                             const SizedBox(width: 8)
-

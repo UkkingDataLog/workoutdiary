@@ -60,25 +60,28 @@ class _XimgSavedTileState extends State<XimgSavedTile> {
             ),
           ),
         ),
-        Container(
-          padding: const EdgeInsets.symmetric(vertical: 4.0),
-          // color: TColor.black.withOpacity(0.25),
-          child: SizedBox(
-            height: media.width * xlogcheckboxwidth * 0.5,
-            width: media.width * xlogcheckboxwidth,
-            child: IconButton(
-              padding: EdgeInsets.zero,
-              icon: Image.asset(
-                "assets/img/checkboxok.png",
-                color: TColor.white,
-                height: media.width * 1.00,
-                width: media.width * 1.00,
-                fit: BoxFit.contain,
+        Padding(
+          padding: EdgeInsets.only(bottom: (media.width >= 700) ? 0 : 4), //아이패드 화면 크기면 0 min-device-width : 768px
+          child: Container(
+            constraints: const BoxConstraints(maxHeight: 22),
+            // color: TColor.black.withOpacity(0.25),
+            child: SizedBox(
+              height: media.width * xlogcheckboxwidth * 0.5,
+              width: media.width * xlogcheckboxwidth,
+              child: IconButton(
+                padding: EdgeInsets.zero,
+                icon: Image.asset(
+                  "assets/img/checkboxok.png",
+                  color: TColor.white,
+                  height: media.width * 1.00,
+                  width: media.width * 1.00,
+                  fit: BoxFit.contain,
+                ),
+                onPressed: () {
+                  widget.ximg.delete();
+                  widget.onDeleted();
+                },
               ),
-              onPressed: () {
-                widget.ximg.delete();
-                widget.onDeleted();
-              },
             ),
           ),
         ),
