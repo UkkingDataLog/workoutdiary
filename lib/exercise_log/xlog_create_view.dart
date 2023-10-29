@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
+import 'package:timer_builder/timer_builder.dart';
+
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
@@ -85,6 +87,7 @@ class XlogCreateViewState extends State<XlogCreateView> {
   }
 
   //--------------------<<  Variable  >>--------------------
+  int _timeformat = 0;
   //사진 크기 변경
   int _ratio = 1;
   final Map<int, String> ratios = {
@@ -931,6 +934,7 @@ class XlogCreateViewState extends State<XlogCreateView> {
     //날짜 포멧을 한국어로 생성한다.
     initializeDateFormatting('ko_KR');
     //오늘 날짜 비교용 코드
+
     DateTime todaydate = DateTime.now();
 
 //------------------------
@@ -1392,7 +1396,7 @@ class XlogCreateViewState extends State<XlogCreateView> {
                               ),
                               child: Badge(
                                 alignment: Alignment.topCenter,
-                                label: Text('$todayaddcountComplete($todayaddcount)'),
+                                label: Text('$todayaddcountComplete/$todayaddcount'),
                                 backgroundColor: TColor.secondaryColor1,
                                 child: FloatingActionButton.extended(
                                   heroTag: "btn3",
@@ -1507,7 +1511,6 @@ class XlogCreateViewState extends State<XlogCreateView> {
                                                     children: [
                                                       for (int index = 0; index < xlogs.length; index += 1)
                                                         if (
-
                                                             ////둘다 dateTime 형식이므로 해당년, 월, 일 비교가 필요함
                                                             xlogs[index].lxdate.year == todaydate.year //년 비교
                                                                 &&
@@ -2071,10 +2074,23 @@ class XlogCreateViewState extends State<XlogCreateView> {
                               child: Container(
                                 decoration: BoxDecoration(color: TColor.black.withOpacity(0.25), borderRadius: const BorderRadius.all(Radius.circular(10))),
                                 child: FittedBox(
-                                  child: Text(
-                                    DateFormat(' M/ d E ').format(todaydate),
-                                    style: TextStyle(color: TColor.white, fontSize: 16, fontWeight: FontWeight.w700),
-                                  ),
+                                  child: ((_timeformat % 3) + 1 == 1)
+                                      ? TimerBuilder.periodic((const Duration(seconds: 1)),
+                                          builder: (context) => Text(
+                                                DateFormat(' M/ d E \n a hh:mm:ss').format(DateTime.now()),
+                                                style: TextStyle(color: TColor.white, fontSize: 16, fontWeight: FontWeight.w700),
+                                              ))
+                                      : ((_timeformat % 3) + 1 == 2)
+                                          ? TimerBuilder.periodic((const Duration(minutes: 1)),
+                                              builder: (context) => Text(
+                                                    DateFormat(' M/ d E \n a hh:mm').format(DateTime.now()),
+                                                    style: TextStyle(color: TColor.white, fontSize: 16, fontWeight: FontWeight.w700),
+                                                  ))
+                                          : TimerBuilder.periodic((const Duration(days: 1)),
+                                              builder: (context) => Text(
+                                                    DateFormat(' M/ d E ').format(DateTime.now()),
+                                                    style: TextStyle(color: TColor.white, fontSize: 16, fontWeight: FontWeight.w700),
+                                                  )), //((_timeformat%3)+1==3)일 때
                                 ),
                               ),
                             ),
@@ -2263,6 +2279,26 @@ class XlogCreateViewState extends State<XlogCreateView> {
                                           Icons.camera_alt_outlined,
                                           color: TColor.black,
                                         )),
+                                    Stack(
+                                      children: [
+                                        IconButton(
+                                          onPressed: () {
+                                            _timeformat++;
+                                            setState(() {});
+                                          },
+                                          icon: const Icon(
+                                            Icons.timer,
+                                          ),
+                                        ),
+                                        Positioned(
+                                            bottom: 6,
+                                            right: 6,
+                                            child: Text(
+                                              "${_timeformat % 3 + 1}",
+                                              style: TextStyle(fontWeight: FontWeight.w700),
+                                            ))
+                                      ],
+                                    ),
                                   ],
                                 ),
                           Row(

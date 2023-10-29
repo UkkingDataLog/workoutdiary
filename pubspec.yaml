@@ -83,6 +83,8 @@ dependencies:
   #로딩화면 스플레시 ---------------------------------
   flutter_native_splash: ^2.3.4
   change_app_package_name: ^1.1.0
+  
+  timer_builder: ^2.0.0
 # 수정하거나 변경되는 경우
 # 0) flutter pub run flutter_native_splash:remove
 # 1) flutter clean
