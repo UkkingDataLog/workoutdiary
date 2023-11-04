@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 // import 'package:flutter_native_splash/flutter_native_splash.dart';
@@ -29,6 +31,7 @@ void main() async {
 
   // Show tracking authorization dialog and ask for permission
   final status = await AppTrackingTransparency.requestTrackingAuthorization();
+  sleep(const Duration(seconds: 1));
 
   // 스플래시 확인시
   // await Future.delayed(const Duration(seconds: 5));

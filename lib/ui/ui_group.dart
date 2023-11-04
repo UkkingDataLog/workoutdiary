@@ -32,8 +32,13 @@ double addXlogoutlinebuttonwidth = 0.99;
 double logTextweightwidth = 60;
 double logTextnumandsetwidth = 32;
 //6. select Xdlog data
-double selectedXtypewidth = 0.45;
-double selectedXweightnumberset = 0.16;
+double selectedXtypewidth = 0.47;
+double selectedXweight = 0.20;
+double selectedXweightUnit = 20;
+double selectedXnumber = 0.11;
+double selectedXnumberUnit = 10;
+double selectedXset = 0.16;
+double selectedXsetUnit = 26;
 
 //----------003. xlog_create_tile.dart----------
 //----------004. xlog_done_tile.dart----------

@@ -64,7 +64,10 @@ class _todayXlogTileState extends State<todayXlogTile> {
 
         decoration: BoxDecoration(
           color: (widget.xlog.finished == true) ? TColor.primarygray.withOpacity(0.1) : null,
-          border: Border.all(color: (widget.xlog.finished == true) ? TColor.black : TColor.primarygray.withOpacity(0.3), width: (widget.xlog.finished == true) ? 1.2 : 1.0),
+          border: Border.all(
+            color: (widget.xlog.finished == true) ? TColor.black : TColor.primarygray.withOpacity(0.3),
+            width: (widget.xlog.finished == true) ? 2.0 : 1.0,
+          ),
           borderRadius: BorderRadius.circular(4),
         ),
         duration: const Duration(milliseconds: 300),
@@ -114,7 +117,7 @@ class _todayXlogTileState extends State<todayXlogTile> {
                         alignment: Alignment.centerRight,
                         fit: BoxFit.scaleDown,
                         child: Text(
-                          "${widget.xlog.xbodypart}",
+                          widget.xlog.xbodypart,
                           style: TextStyle(
                             color: TColor.black,
                             fontSize: 14,

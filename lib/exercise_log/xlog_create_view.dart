@@ -1,8 +1,10 @@
 import 'dart:io';
 
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 import 'package:timer_builder/timer_builder.dart';
@@ -38,6 +40,7 @@ import 'package:workoutdiary/setting/setting_view.dart';
 import 'package:workoutdiary/ui/ui_group.dart';
 
 import 'package:flutter_switch/flutter_switch.dart';
+import 'package:workoutdiary/youtubeVideo/custom_youtube_player.dart';
 
 class XlogCreateView extends StatefulWidget {
   const XlogCreateView({super.key});
@@ -48,6 +51,7 @@ class XlogCreateView extends StatefulWidget {
 
 class XlogCreateViewState extends State<XlogCreateView> {
   //
+  bool isSelectedYoutube = false;
   bool isSelectedkg = true;
   String selectedWeighUnint = 'kg';
 
@@ -63,11 +67,12 @@ class XlogCreateViewState extends State<XlogCreateView> {
   //이미지 가져오기, 카메라 사용
   late AppImageProvider imageProvider;
 
+  // youtube streaming
+  String videoURL = 'default';
+
   @override
   void initState() {
     super.initState();
-
-    //
 
     imageProvider = Provider.of<AppImageProvider>(context, listen: false);
     _createRewardedInterstitialAd();
@@ -119,13 +124,13 @@ class XlogCreateViewState extends State<XlogCreateView> {
 
   //3. Number of repetitions per exercise
   //input
-  int lxnumberIndex = 19;
-  String selectedlxnumberItem = '20';
+  int lxnumberIndex = 14;
+  String selectedlxnumberItem = '15';
 
   //4. input number of sets
   //input
-  int lxsetIndex = 2;
-  String selectedlxsetItem = '3';
+  int lxsetIndex = 4;
+  String selectedlxsetItem = '5';
 
   //--------------------<<   design   >>--------------------
   //selected log options
@@ -596,7 +601,7 @@ class XlogCreateViewState extends State<XlogCreateView> {
       case '스미스머신 벤치프레스':
         selectedxTypeImgpath = 'assets/img/workoutType/C_M_Smith_Machine_Bench_Press.png';
         break;
-      case '스미스머신 이늘라인 벤치프레스':
+      case '스미스머신 인클라인 벤치프레스':
         selectedxTypeImgpath = 'assets/img/workoutType/C_M_Smith_Machine_Inline_Bench_Press.png';
         break;
       case '스탠딩 케이블 플라이':
@@ -931,10 +936,55 @@ class XlogCreateViewState extends State<XlogCreateView> {
         break;
     }
 
-    //날짜 포멧을 한국어로 생성한다.
+    switch (selectedxTypeItem) {
+      case '바벨 글루트 브릿지':
+        videoURL = 'https://youtu.be/coDVXIpfhhI';
+        break;
+      case '스모 데드리프트':
+        videoURL = 'https://youtu.be/ZPcy5aDBbr4';
+        break;
+      case '바벨 백 스쿼트':
+        videoURL = 'https://youtu.be/0tYihRsCHOM';
+        break;
+
+      case '에어 스쿼트':
+        videoURL = 'https://youtu.be/Dp2PXU7RSHs';
+        break;
+
+      case '복근 롤아웃':
+        videoURL = 'https://youtu.be/Xe0PmUwcxZg';
+        break;
+
+      case '덤벨 사이드 벤드':
+        videoURL = 'https://youtu.be/u2bMCVbcQqc';
+        break;
+
+      case '복근 에어 바이크':
+        videoURL = 'https://youtu.be/7k-GKzeiMmk';
+        break;
+      case '크런치':
+        videoURL = 'https://youtu.be/G3cc4LdZwhg';
+        break;
+
+      case '사이드 크런치':
+        videoURL = 'https://youtu.be/M9404UBHLSE';
+        break;
+
+      case '싯업':
+        videoURL = 'https://youtu.be/HDrWX5_JSzM';
+        break;
+      case '업도미널 힙 쓰러스트':
+        videoURL = 'https://youtu.be/uENEi455Ozo';
+        break;
+
+      default:
+        videoURL = 'default';
+        break;
+    }
+
+    //날짜 포멧을 한국어로 생성한다
     initializeDateFormatting('ko_KR');
     //오늘 날짜 비교용 코드
-
     DateTime todaydate = DateTime.now();
 
 //------------------------
@@ -1214,7 +1264,7 @@ class XlogCreateViewState extends State<XlogCreateView> {
               '펙덱 플라이 머신',
               '시티드 딥스 머신',
               '스미스머신 벤치프레스',
-              '스미스머신 이늘라인 벤치프레스',
+              '스미스머신 인클라인 벤치프레스',
               '스탠딩 케이블 플라이',
             ];
             // // [맨몸]
@@ -1411,6 +1461,7 @@ class XlogCreateViewState extends State<XlogCreateView> {
                                     //
 
                                     await showModalBottomSheet(
+                                      backgroundColor: TColor.white,
                                       isScrollControlled: true,
                                       enableDrag: false,
                                       // shape: const RoundedRectangleBorder(
@@ -1486,7 +1537,7 @@ class XlogCreateViewState extends State<XlogCreateView> {
                                                   ],
                                                 ),
                                                 Container(
-                                                  padding: EdgeInsets.only(top: 10),
+                                                  padding: const EdgeInsets.only(top: 10),
                                                   child: Center(
                                                     child: Text(
                                                       //"${todaydate.month}/${todaydate.day} ToDo $todayaddcountComplete($todayaddcount)",
@@ -1572,7 +1623,7 @@ class XlogCreateViewState extends State<XlogCreateView> {
                                             Align(
                                               alignment: Alignment(Alignment.bottomCenter.x + 0.95, Alignment.bottomCenter.y),
                                               child: Container(
-                                                padding: EdgeInsets.all(8),
+                                                padding: const EdgeInsets.all(8),
                                                 decoration: BoxDecoration(
                                                   borderRadius: const BorderRadius.all(Radius.circular(50)),
                                                   boxShadow: [
@@ -2077,7 +2128,7 @@ class XlogCreateViewState extends State<XlogCreateView> {
                                   child: ((_timeformat % 3) + 1 == 1)
                                       ? TimerBuilder.periodic((const Duration(seconds: 1)),
                                           builder: (context) => Text(
-                                                DateFormat(' M/ d E \n a hh:mm:ss').format(DateTime.now()),
+                                                DateFormat(' M/ d E \n a hh:mm:ss ').format(DateTime.now()),
                                                 style: TextStyle(color: TColor.white, fontSize: 16, fontWeight: FontWeight.w700),
                                               ))
                                       : ((_timeformat % 3) + 1 == 2)
@@ -2157,11 +2208,101 @@ class XlogCreateViewState extends State<XlogCreateView> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           (isselectedWritting == true) //기록중이라면 사진앨범,카메라,이미지비율조정 버튼 비활성화(안보임)
-                              ? Container()
+                              ? (videoURL == 'default')
+                                  ? Container()
+                                  : Padding(
+                                      padding: const EdgeInsets.only(top: 4, left: 4),
+                                      child: Container(
+                                        height: 48,
+                                        decoration: const BoxDecoration(
+                                          borderRadius: BorderRadius.only(
+                                            topLeft: Radius.circular(20),
+                                            topRight: Radius.circular(20),
+                                          ),
+                                        ),
+                                        child: FittedBox(
+                                          child: SizedBox(
+                                            height: 48,
+                                            child: ElevatedButton(
+                                              style: ElevatedButton.styleFrom(
+                                                backgroundColor: TColor.primarygray.withOpacity(0.1),
+                                                elevation: 0,
+                                                shape: const RoundedRectangleBorder(
+                                                  borderRadius: BorderRadius.only(
+                                                    topLeft: Radius.circular(20), topRight: Radius.circular(20),
+                                                    //  bottomLeft:, bottom left
+                                                    // bottomRight: bottom right
+                                                  ),
+                                                ),
+                                                side: BorderSide(width: 2.0, color: TColor.black),
+                                              ),
+                                              onPressed: () async {
+                                                // 인터넷 연결상태인지 확인 한 후에 바꾸기
+
+                                                var connectivityResult = await (Connectivity().checkConnectivity());
+
+                                                if (isSelectedYoutube == true) {
+                                                  isSelectedYoutube = false;
+                                                  setState(() {
+                                                    //
+                                                  });
+                                                } else {
+                                                  if (connectivityResult == ConnectivityResult.mobile) {
+                                                    // I am connected to a mobile network.
+                                                    // print('I am connected to a mobile network.');
+                                                    //
+                                                    isSelectedYoutube = true;
+                                                    setState(() {
+                                                      //
+                                                    });
+                                                  } else if (connectivityResult == ConnectivityResult.wifi) {
+                                                    // I am connected to a wifi network.
+                                                    // print('I am connected to a wifi network.');
+                                                    //
+                                                    isSelectedYoutube = true;
+                                                    setState(() {
+                                                      //
+                                                    });
+                                                  } else {
+                                                    Fluttertoast.showToast(
+                                                      msg: "❗인터넷 연결을 확인해보세요❗",
+                                                      toastLength: Toast.LENGTH_SHORT,
+                                                      gravity: ToastGravity.TOP,
+                                                      backgroundColor: TColor.black,
+                                                      textColor: TColor.white,
+                                                    );
+                                                  }
+                                                }
+                                              },
+                                              child: (isSelectedYoutube == true)
+                                                  ? Row(
+                                                      children: [
+                                                        Icon(
+                                                          // Icons.play_arrow_rounded,
+                                                          Icons.cached_rounded,
+                                                          color: TColor.black,
+                                                        ),
+                                                        Text(
+                                                          ' Workout',
+                                                          style: TextStyle(color: TColor.black),
+                                                        ),
+                                                      ],
+                                                    )
+                                                  : SizedBox(
+                                                      width: 87,
+                                                      child: Image.asset(
+                                                        'assets/img/yt_logo_mono_light.png',
+                                                        scale: 0.1,
+                                                      )),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    )
                               : Row(
                                   children: [
                                     IconButton(
-                                        onPressed: () async {
+                                        onPressed: () {
                                           AppImagePicker(source: ImageSource.gallery).pick(
                                             onPick: (File? image) {
                                               Uint8List bytes;
@@ -2220,65 +2361,65 @@ class XlogCreateViewState extends State<XlogCreateView> {
                                           color: TColor.black,
                                         )),
                                     IconButton(
-                                        onPressed: () {
-                                          //
-                                          AppImagePicker(source: ImageSource.camera).pick(onPick: (File? image) {
-                                            Uint8List bytes;
-                                            Uint8List uint8List;
+                                      onPressed: () {
+                                        AppImagePicker(source: ImageSource.camera).pick(onPick: (File? image) {
+                                          Uint8List bytes;
+                                          Uint8List uint8List;
 
-                                            (image != null)
-                                                ? {
-                                                    // 파일의 내용 읽기
-                                                    bytes = image.readAsBytesSync(),
-                                                    // `Uint8List`로 변환
-                                                    uint8List = Uint8List.fromList(bytes),
-                                                    imageProvider.changeImage(image),
-                                                    //이미지 저장
-                                                    if (ximgs.isEmpty)
-                                                      {
-                                                        HiveHelper().createXimg(
-                                                          Ximg(
-                                                            date: todaydate,
-                                                            image: uint8List,
-                                                          ),
+                                          (image != null)
+                                              ? {
+                                                  // 파일의 내용 읽기
+                                                  bytes = image.readAsBytesSync(),
+                                                  // `Uint8List`로 변환
+                                                  uint8List = Uint8List.fromList(bytes),
+                                                  imageProvider.changeImage(image),
+                                                  //이미지 저장
+                                                  if (ximgs.isEmpty)
+                                                    {
+                                                      HiveHelper().createXimg(
+                                                        Ximg(
+                                                          date: todaydate,
+                                                          image: uint8List,
                                                         ),
-                                                        setState(() {
-                                                          todayaddimgcount++;
-                                                        }),
-                                                        // print("1비어있음 오늘날짜 이미지 개수는  $todayaddimgcount"),
-                                                      }
-                                                    else
-                                                      {
-                                                        if (todayaddimgcount > 0)
-                                                          {
-                                                            tempximg.image = uint8List,
-                                                            HiveHelper().updateXimg(tempximgindex, tempximg),
-                                                            setState(() {}),
-                                                            // print("2기존이미지있음 오늘날짜 이미지가 이미 있어 교체합니다.  $todayaddimgcount"),
-                                                          }
-                                                        else
-                                                          {
-                                                            HiveHelper().createXimg(
-                                                              Ximg(
-                                                                date: todaydate,
-                                                                image: uint8List,
-                                                              ),
+                                                      ),
+                                                      setState(() {
+                                                        todayaddimgcount++;
+                                                      }),
+                                                      // print("1비어있음 오늘날짜 이미지 개수는  $todayaddimgcount"),
+                                                    }
+                                                  else
+                                                    {
+                                                      if (todayaddimgcount > 0)
+                                                        {
+                                                          tempximg.image = uint8List,
+                                                          HiveHelper().updateXimg(tempximgindex, tempximg),
+                                                          setState(() {}),
+                                                          // print("2기존이미지있음 오늘날짜 이미지가 이미 있어 교체합니다.  $todayaddimgcount"),
+                                                        }
+                                                      else
+                                                        {
+                                                          HiveHelper().createXimg(
+                                                            Ximg(
+                                                              date: todaydate,
+                                                              image: uint8List,
                                                             ),
-                                                            setState(() {
-                                                              todayaddimgcount++;
-                                                            }),
-                                                            // print("3기존이미지있음 오늘날짜 이미지가 없어 새로 생성합니다.   $todayaddimgcount"),
-                                                          }
-                                                      }
-                                                  }
-                                                : null;
-                                            // Navigator.of(context).pushReplacementNamed('/');
-                                          });
-                                        },
-                                        icon: Icon(
-                                          Icons.camera_alt_outlined,
-                                          color: TColor.black,
-                                        )),
+                                                          ),
+                                                          setState(() {
+                                                            todayaddimgcount++;
+                                                          }),
+                                                          // print("3기존이미지있음 오늘날짜 이미지가 없어 새로 생성합니다.   $todayaddimgcount"),
+                                                        }
+                                                    }
+                                                }
+                                              : null;
+                                          // Navigator.of(context).pushReplacementNamed('/');
+                                        });
+                                      },
+                                      icon: Icon(
+                                        Icons.camera_alt_outlined,
+                                        color: TColor.black,
+                                      ),
+                                    ),
                                     Stack(
                                       children: [
                                         IconButton(
@@ -2295,7 +2436,7 @@ class XlogCreateViewState extends State<XlogCreateView> {
                                             right: 6,
                                             child: Text(
                                               "${_timeformat % 3 + 1}",
-                                              style: TextStyle(fontWeight: FontWeight.w700),
+                                              style: const TextStyle(fontWeight: FontWeight.w700),
                                             ))
                                       ],
                                     ),
@@ -2321,7 +2462,7 @@ class XlogCreateViewState extends State<XlogCreateView> {
                                 ),
                               ),
                               Padding(
-                                padding: const EdgeInsets.only(right: 4.0),
+                                padding: const EdgeInsets.only(bottom: 4.0, right: 4.0),
                                 child: Container(
                                   height: 48,
                                   decoration: const BoxDecoration(
@@ -2372,10 +2513,6 @@ class XlogCreateViewState extends State<XlogCreateView> {
                         ],
                       ),
                     ),
-                    Container(
-                      color: Theme.of(context).canvasColor,
-                      height: 4,
-                    ),
 
                     (isselectedWritting == false)
                         ? Container(
@@ -2384,33 +2521,65 @@ class XlogCreateViewState extends State<XlogCreateView> {
                           )
                         : Column(
                             children: [
-                              // workout img
                               Container(
-                                height: 0.5,
+                                alignment: Alignment.bottomCenter,
+                                height: 0.2,
                                 width: media.width * 0.98,
                                 decoration: BoxDecoration(
                                   color: TColor.primarygray.withOpacity(0.4),
-                                  // borderRadius: const BorderRadius.only(
-                                  //   topLeft: Radius.circular(10),
-                                  //   topRight: Radius.circular(10),
-                                  // ),
+                                  borderRadius: const BorderRadius.only(
+                                    bottomLeft: Radius.circular(10),
+                                    bottomRight: Radius.circular(10),
+                                  ),
                                 ),
+                              ),
+                              // const SizedBox(height: 8),
+                              //이미지 자료 추가영역
+                              Stack(
+                                children: [
+                                  Container(
+                                    alignment: Alignment.bottomCenter,
+                                    margin: EdgeInsets.zero,
+                                    padding: EdgeInsets.zero,
+                                    color: TColor.white,
+                                    height: media.width / 16 * 9, //이미지의 1400*800
+                                    width: media.width,
+                                    child:
+                                        // 이미지
+                                        (isSelectedYoutube == false)
+                                            ? Image.asset(
+                                                selectedxTypeImgpath,
+                                                height: media.width / 16 * 9, //이미지의 비율이 1400*800
+                                                width: media.width,
+                                                fit: BoxFit.contain,
+                                              )
+                                            :
+                                            //유튜브
+                                            CustomYoutubePlayer(videoURL: videoURL),
+                                  ),
+                                  SizedBox(
+                                    //유튜브를 가져오면 위아래 검은줄을 안보이도록 하는 프레임
+                                    height: media.width / 16 * 9, //이미지의 1400*800
+                                    width: media.width,
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Container(
+                                          height: 1.2,
+                                          color: TColor.white,
+                                        ),
+                                        Container(
+                                          height: 1.2,
+                                          color: TColor.white,
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                ],
                               ),
 
-                              const SizedBox(height: 16),
-                              Container(
-                                color: TColor.white,
-                                height: media.width / 14 * 8, //이미지의 1400*800
-                                width: media.width,
-                                child: Image.asset(
-                                  selectedxTypeImgpath,
-                                  height: media.width / 14 * 8, //이미지의 비율이 1400*800
-                                  width: media.width,
-                                  fit: BoxFit.contain,
-                                ),
-                              ),
                               // 장비에 따라서 하체 운동 추가
-
+                              const SizedBox(height: 8),
                               // 004. Exercise part selection tab
                               SizedBox(
                                 height: bodypartselectzoneheight,
@@ -2652,40 +2821,26 @@ class XlogCreateViewState extends State<XlogCreateView> {
                               // 005. Easy workout dial selector
                               Stack(
                                 children: [
-                                  FittedBox(
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 8.0),
                                     child: Row(
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
-                                        const SizedBox(width: 4),
-
                                         //1. exercise
                                         Column(
                                           children: [
-                                            Row(
-                                              children: [
-                                                const SizedBox(width: 10), //운동글씨 겹치지않게하기
-                                                Container(
-                                                  width: (media.width * selectedXtypewidth),
-                                                  height: 50,
-                                                  alignment: Alignment.center,
-                                                  child: FittedBox(
-                                                    child: Text(
-                                                      selectedxTypeItem,
-                                                      style: TextStyle(fontSize: logTextSizeselected, fontWeight: logTextFontselectedWeight),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
+                                            SizedBox(
+                                              width: (media.width * selectedXtypewidth),
+                                              height: 50,
                                             ),
+
                                             SizedBox(
                                               height: cupertinoPickerHeight,
                                               width: media.width * selectedXtypewidth,
                                               child: Builder(builder: (context) {
                                                 return CupertinoPicker(
                                                   // hasSuitableHapticHardware = false로 내부 위젯 수정
-
                                                   looping: false,
-
                                                   //처음나오는 운동으로 변경 필요
                                                   scrollController: FixedExtentScrollController(initialItem: selectedxTypeIndex),
                                                   selectionOverlay: CupertinoPickerDefaultSelectionOverlay(
@@ -2714,8 +2869,15 @@ class XlogCreateViewState extends State<XlogCreateView> {
                                                     },
                                                   ),
 
-                                                  onSelectedItemChanged: (xTypeIndex) {
-                                                    setState(() => this.xTypeIndex = xTypeIndex);
+                                                  onSelectedItemChanged: (xTypeIndex) async {
+                                                    setState(
+                                                      () {
+                                                        this.xTypeIndex = xTypeIndex;
+                                                        if (isSelectedYoutube == true) {
+                                                          isSelectedYoutube = false;
+                                                        }
+                                                      },
+                                                    );
 
                                                     final lxsetItem = exerciseItems[xTypeIndex];
 
@@ -2734,31 +2896,13 @@ class XlogCreateViewState extends State<XlogCreateView> {
                                         //2. input weight when exercising---------------------------
                                         Column(
                                           children: [
-                                            Row(
-                                              children: [
-                                                Container(
-                                                  height: logheightmargin,
-                                                  alignment: Alignment.centerRight,
-                                                  width: logTextweightwidth - 10,
-                                                  child: FittedBox(
-                                                    child: Text(
-                                                      (selectedlxweightItems == '0') ? ' ' : '${int.parse(selectedlxweightItems) * 0.5}',
-                                                      style: TextStyle(fontSize: logTextSizeselected, fontWeight: logTextFontselectedWeight),
-                                                    ),
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  width: 20,
-                                                  child: Text(
-                                                    (selectedlxweightItems == '0') ? ' ' : selectedWeighUnint,
-                                                    style: TextStyle(fontSize: logTextSize),
-                                                  ),
-                                                ),
-                                              ],
+                                            SizedBox(
+                                              height: logheightmargin,
+                                              width: media.width * selectedXweight,
                                             ),
                                             SizedBox(
                                               height: cupertinoPickerHeight,
-                                              width: media.width * selectedXweightnumberset,
+                                              width: media.width * selectedXweight,
                                               child: CupertinoPicker(
                                                 looping: false,
                                                 scrollController: FixedExtentScrollController(initialItem: int.parse(selectedlxweightItems)),
@@ -2800,30 +2944,13 @@ class XlogCreateViewState extends State<XlogCreateView> {
                                         //3. Number of repetitions per exercise---------------------
                                         Column(
                                           children: [
-                                            Row(
-                                              children: [
-                                                Container(
-                                                  height: logheightmargin,
-                                                  alignment: Alignment.centerRight,
-                                                  width: logTextnumandsetwidth,
-                                                  child: FittedBox(
-                                                    child: Text(
-                                                      selectedlxnumberItem,
-                                                      style: TextStyle(fontSize: logTextSizeselected, fontWeight: logTextFontselectedWeight),
-                                                    ),
-                                                  ),
-                                                ),
-                                                FittedBox(
-                                                  child: Text(
-                                                    '회',
-                                                    style: TextStyle(fontSize: logTextSize),
-                                                  ),
-                                                ),
-                                              ],
+                                            SizedBox(
+                                              height: logheightmargin,
+                                              width: media.width * selectedXnumber,
                                             ),
                                             SizedBox(
                                               height: cupertinoPickerHeight,
-                                              width: media.width * selectedXweightnumberset,
+                                              width: media.width * selectedXnumber,
                                               child: CupertinoPicker(
                                                 looping: false,
                                                 scrollController: FixedExtentScrollController(initialItem: int.parse(selectedlxnumberItem) - 1),
@@ -2867,28 +2994,15 @@ class XlogCreateViewState extends State<XlogCreateView> {
                                           children: [
                                             Row(
                                               children: [
-                                                Container(
+                                                SizedBox(
                                                   height: logheightmargin,
-                                                  alignment: Alignment.centerRight,
-                                                  width: logTextnumandsetwidth,
-                                                  child: FittedBox(
-                                                    child: Text(
-                                                      selectedlxsetItem,
-                                                      style: TextStyle(fontSize: logTextSizeselected, fontWeight: logTextFontselectedWeight),
-                                                    ),
-                                                  ),
-                                                ),
-                                                FittedBox(
-                                                  child: Text(
-                                                    '세트',
-                                                    style: TextStyle(fontSize: logTextSize),
-                                                  ),
+                                                  width: media.width * selectedXset,
                                                 ),
                                               ],
                                             ),
                                             SizedBox(
                                               height: cupertinoPickerHeight,
-                                              width: media.width * selectedXweightnumberset,
+                                              width: media.width * selectedXset,
                                               child: CupertinoPicker(
                                                 looping: false,
                                                 scrollController: FixedExtentScrollController(initialItem: int.parse(selectedlxsetItem) - 1),
@@ -2930,65 +3044,181 @@ class XlogCreateViewState extends State<XlogCreateView> {
                                       ],
                                     ),
                                   ),
+
                                   Container(
-                                      padding: const EdgeInsets.only(left: 4),
-                                      height: addXlogoutlinebuttonheight,
-                                      width: media.width * addXlogoutlinebuttonwidth,
-                                      child: OutlinedButton(
-                                          style: ButtonStyle(
-                                              shape: MaterialStateProperty.all(
-                                                RoundedRectangleBorder(
-                                                  borderRadius: BorderRadius.circular(4),
+                                    padding: const EdgeInsets.only(left: 4.0),
+                                    height: addXlogoutlinebuttonheight,
+                                    width: media.width * addXlogoutlinebuttonwidth,
+                                    child: OutlinedButton(
+                                      style: OutlinedButton.styleFrom(
+                                        side: BorderSide(width: 1.0, color: TColor.secondaryColor1),
+                                        backgroundColor: TColor.secondaryColor1,
+                                        minimumSize: Size.zero,
+                                        padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                                      ),
+                                      onPressed: () {
+                                        if (todayaddcount < 15) {
+                                          setState(
+                                            () {
+                                              HiveHelper().createXlog(
+                                                Xlog(
+                                                  finished: true,
+                                                  lxdate:
+                                                      // todaydate //지금시간 넣기
+
+                                                      todaydate.subtract(const Duration(days: 0)) //1:어제날짜 //테스트,
+                                                  ,
+                                                  xbodypart: _isbodypartcontroller,
+                                                  xType: selectedxTypeItem,
+                                                  lxweight: double.parse(selectedlxweightItems),
+                                                  lxweightUnit: selectedWeighUnint,
+                                                  lxnumber: int.parse(selectedlxnumberItem),
+                                                  lxset: int.parse(selectedlxsetItem),
+                                                ),
+                                              );
+                                              //
+                                              todayaddcount++;
+                                            },
+                                          );
+                                        } else {
+                                          showToastMessage("등록가능 최대개수 15개를 넘었어요! 대단해요👍");
+                                        }
+                                      },
+                                      child: FittedBox(
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            // 추가 버튼
+                                            // //운동종류
+                                            Container(
+                                              width: (media.width * selectedXtypewidth),
+                                              alignment: Alignment.center,
+                                              child: FittedBox(
+                                                child: Text(
+                                                  selectedxTypeItem,
+                                                  style: TextStyle(
+                                                    color: TColor.white,
+                                                    fontSize: logTextSizeselected,
+                                                    fontWeight: logTextFontselectedWeight,
+                                                  ),
                                                 ),
                                               ),
-                                              side: MaterialStateProperty.all(BorderSide(color: TColor.secondaryColor1, width: 2.0, style: BorderStyle.solid))),
-                                          onPressed: () {
-                                            if (todayaddcount < 15) {
-                                              setState(
-                                                () {
-                                                  HiveHelper().createXlog(Xlog(
-                                                      finished: true,
-                                                      lxdate:
-                                                          // todaydate //지금시간 넣기
-
-                                                          todaydate.subtract(const Duration(days: 0)) //1:어제날짜 //테스트,
-                                                      ,
-                                                      xbodypart: _isbodypartcontroller,
-                                                      xType: selectedxTypeItem,
-                                                      lxweight: double.parse(selectedlxweightItems),
-                                                      lxweightUnit: selectedWeighUnint,
-                                                      lxnumber: int.parse(selectedlxnumberItem),
-                                                      lxset: int.parse(selectedlxsetItem)));
-                                                  //
-                                                  todayaddcount++;
-                                                },
-                                              );
-                                            } else {
-                                              showToastMessage("등록가능 최대개수 15개를 넘었어요! 대단해요👍");
-                                            }
-                                          },
-                                          child: const Text(""))),
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 2.0),
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        color: TColor.secondaryColor1,
-                                        borderRadius: const BorderRadius.only(
-                                          topLeft: Radius.circular(4),
-                                          bottomLeft: Radius.circular(4),
+                                            ),
+                                            // //운동 중량
+                                            Row(
+                                              children: [
+                                                Container(
+                                                  alignment: Alignment.centerRight,
+                                                  height: logheightmargin,
+                                                  width: media.width * selectedXweight - selectedXweightUnit,
+                                                  child: Text(
+                                                    (selectedlxweightItems == '0') ? ' ' : '${int.parse(selectedlxweightItems) * 0.5}',
+                                                    style: TextStyle(
+                                                      color: TColor.white,
+                                                      fontSize: logTextSizeselected,
+                                                      fontWeight: logTextFontselectedWeight,
+                                                    ),
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  width: selectedXweightUnit,
+                                                  child: Text(
+                                                    (selectedlxweightItems == '0') ? ' ' : selectedWeighUnint,
+                                                    style: TextStyle(
+                                                      color: TColor.white,
+                                                      fontSize: logTextSize,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            // //운동횟수
+                                            Row(
+                                              children: [
+                                                SizedBox(
+                                                  width: media.width * selectedXnumber - selectedXnumberUnit,
+                                                  child: Text(
+                                                    selectedlxnumberItem,
+                                                    textAlign: TextAlign.right,
+                                                    style: TextStyle(
+                                                      color: TColor.white,
+                                                      fontSize: logTextSizeselected,
+                                                      fontWeight: logTextFontselectedWeight,
+                                                    ),
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  width: selectedXnumberUnit,
+                                                  child: Text(
+                                                    '회',
+                                                    textAlign: TextAlign.left,
+                                                    style: TextStyle(
+                                                      color: TColor.white,
+                                                      fontSize: logTextSize,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            // //운동세트수
+                                            Row(
+                                              children: [
+                                                Container(
+                                                  height: logheightmargin,
+                                                  alignment: Alignment.centerRight,
+                                                  width: media.width * selectedXset - selectedXsetUnit,
+                                                  child: Text(
+                                                    selectedlxsetItem,
+                                                    textAlign: TextAlign.left,
+                                                    style: TextStyle(
+                                                      color: TColor.white,
+                                                      fontSize: logTextSizeselected,
+                                                      fontWeight: logTextFontselectedWeight,
+                                                    ),
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  width: selectedXsetUnit,
+                                                  child: Text(
+                                                    '세트',
+                                                    textAlign: TextAlign.left,
+                                                    style: TextStyle(
+                                                      color: TColor.white,
+                                                      fontSize: logTextSize,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
                                         ),
                                       ),
-                                      height: 50,
-                                      width: media.width * 0.03,
-                                      child: FittedBox(
-                                        child: Icon(
-                                          Icons.add,
-                                          color: TColor.white,
-                                          size: 36,
-                                        ),
-                                      ),
+                                      // 기록추가부분
                                     ),
                                   ),
+                                  // Padding(
+                                  //   padding: const EdgeInsets.only(left: 2.0),
+                                  //   child: Container(
+                                  //     decoration: BoxDecoration(
+                                  //       color: TColor.secondaryColor1,
+                                  //       borderRadius: const BorderRadius.only(
+                                  //         topLeft: Radius.circular(4),
+                                  //         bottomLeft: Radius.circular(4),
+                                  //       ),
+                                  //     ),
+                                  //     height: 50,
+                                  //     width: media.width * 0.03,
+                                  //     child: FittedBox(
+                                  //       child: Icon(
+                                  //         Icons.add,
+                                  //         color: TColor.white,
+                                  //         size: 36,
+                                  //       ),
+                                  //     ),
+                                  //   ),
+                                  // ),
                                 ],
                               ),
                               Column(
@@ -3094,11 +3324,12 @@ class XlogCreateViewState extends State<XlogCreateView> {
                                                   });
                                                 },
                                                 style: OutlinedButton.styleFrom(
-                                                  side: (isSelectedBabel == true) ? BorderSide(width: 1.2, color: TColor.black) : null,
+                                                  side: (isSelectedBabel == true) ? BorderSide(width: 2.0, color: TColor.black) : null,
                                                   backgroundColor: (isSelectedBabel == true) ? TColor.primarygray.withOpacity(0.1) : null,
                                                   minimumSize: Size.zero,
-                                                  padding: const EdgeInsets.symmetric(vertical: 2.0, horizontal: 5.0),
+                                                  padding: const EdgeInsets.symmetric(vertical: 6.0, horizontal: 5.0),
                                                   tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                                                 ),
                                                 child: Text(
                                                   '바벨',
@@ -3188,11 +3419,12 @@ class XlogCreateViewState extends State<XlogCreateView> {
                                                   });
                                                 },
                                                 style: OutlinedButton.styleFrom(
-                                                  side: (isSelectedDumbbell == true) ? BorderSide(width: 1.2, color: TColor.black) : null,
+                                                  side: (isSelectedDumbbell == true) ? BorderSide(width: 2.0, color: TColor.black) : null,
                                                   backgroundColor: (isSelectedDumbbell == true) ? TColor.primarygray.withOpacity(0.1) : null,
                                                   minimumSize: Size.zero,
-                                                  padding: const EdgeInsets.symmetric(vertical: 2.0, horizontal: 5.0),
+                                                  padding: const EdgeInsets.symmetric(vertical: 6.0, horizontal: 5.0),
                                                   tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                                                 ),
                                                 child: Text(
                                                   '덤벨',
@@ -3282,11 +3514,12 @@ class XlogCreateViewState extends State<XlogCreateView> {
                                                   });
                                                 },
                                                 style: OutlinedButton.styleFrom(
-                                                  side: (isSelectedMachine == true) ? BorderSide(width: 1.2, color: TColor.black) : null,
+                                                  side: (isSelectedMachine == true) ? BorderSide(width: 2.0, color: TColor.black) : null,
                                                   backgroundColor: (isSelectedMachine == true) ? TColor.primarygray.withOpacity(0.1) : null,
                                                   minimumSize: Size.zero,
-                                                  padding: const EdgeInsets.symmetric(vertical: 2.0, horizontal: 5.0),
+                                                  padding: const EdgeInsets.symmetric(vertical: 6.0, horizontal: 5.0),
                                                   tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                                                 ),
                                                 child: Text(
                                                   '머신',
@@ -3376,11 +3609,12 @@ class XlogCreateViewState extends State<XlogCreateView> {
                                                   });
                                                 },
                                                 style: OutlinedButton.styleFrom(
-                                                  side: (isSelectedBodyweight == true) ? BorderSide(width: 1.2, color: TColor.black) : null,
+                                                  side: (isSelectedBodyweight == true) ? BorderSide(width: 2.0, color: TColor.black) : null,
                                                   backgroundColor: (isSelectedBodyweight == true) ? TColor.primarygray.withOpacity(0.1) : null,
                                                   minimumSize: Size.zero,
-                                                  padding: const EdgeInsets.symmetric(vertical: 2.0, horizontal: 5.0),
+                                                  padding: const EdgeInsets.symmetric(vertical: 6.0, horizontal: 5.0),
                                                   tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                                                 ),
                                                 child: Text(
                                                   '맨몸',

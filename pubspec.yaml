@@ -16,11 +16,11 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 1.1.0+4
+version: 1.1.0+6
 
 environment:
-    sdk: '>=2.19.6 <3.0.0'
-  # sdk: '>=3.1.2 <4.0.0'
+    # sdk: '>=2.19.6 <3.0.0'
+    sdk: '>=3.1.2 <4.0.0'
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -37,16 +37,16 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   carousel_slider: ^4.2.1
-  fl_chart: ^0.62.0
+  fl_chart: ^0.64.0
   simple_animation_progress_bar: ^1.6.0
   dotted_dashed_line: ^0.0.3
   simple_circular_progress_bar: ^1.0.2
-  animated_toggle_switch: ^0.6.2
+  animated_toggle_switch: ^0.8.0
   readmore: ^2.1.0
   # calendar_agenda:
   #   path: dev_lib/calendar_agenda/
   intl: ^0.18.1
-  uuid: ^3.0.7
+  uuid: ^4.1.0
   # hive DB
   hive: ^2.2.3
   hive_flutter: ^1.1.0
@@ -85,6 +85,12 @@ dependencies:
   change_app_package_name: ^1.1.0
   
   timer_builder: ^2.0.0
+  youtube_player_flutter: ^8.1.2
+  connectivity_plus: ^4.0.2 #높은 버전은 작동 안함
+  # youtube에서 videoID가져오는법 모름으로 사용하지 않음, 장점은 웹에서도 유튜브 플레이어 지원 가능
+  # youtube_player_iframe: ^4.0.4
+  
+  
 # 수정하거나 변경되는 경우
 # 0) flutter pub run flutter_native_splash:remove
 # 1) flutter clean
@@ -134,7 +140,7 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^2.0.0
+  flutter_lints: ^3.0.0
   # 아답터라는 모델을 만들고 쉽게 DB와 플러터를 연동하게 도와줌
   hive_generator: ^2.0.1
   build_runner: ^2.4.6

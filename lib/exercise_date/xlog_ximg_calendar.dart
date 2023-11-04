@@ -292,7 +292,7 @@ class _TableComplexExampleState extends State<TableComplexExample> {
                           // horizontal: 12.0,
                           // vertical: 16.0,
                           ),
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                           // border: Border.all(),
                           // borderRadius: BorderRadius.circular(12.0),
 
