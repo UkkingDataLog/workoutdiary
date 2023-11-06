@@ -41,6 +41,7 @@ import 'package:workoutdiary/ui/ui_group.dart';
 
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:workoutdiary/youtubeVideo/custom_youtube_player.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class XlogCreateView extends StatefulWidget {
   const XlogCreateView({super.key});
@@ -2600,6 +2601,7 @@ class XlogCreateViewState extends State<XlogCreateView> {
                                               )
                                             :
                                             //유튜브
+
                                             CustomYoutubePlayer(videoURL: videoURL),
                                   ),
                                   SizedBox(
