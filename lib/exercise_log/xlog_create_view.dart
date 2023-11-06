@@ -946,17 +946,54 @@ class XlogCreateViewState extends State<XlogCreateView> {
       case '바벨 백 스쿼트':
         videoURL = 'https://youtu.be/0tYihRsCHOM';
         break;
+      case '바벨 불가리안 스플릿 스쿼트':
+        videoURL = 'https://youtu.be/IFK5auzHY4c';
+        break;
+      case '바벨 프론트 스쿼트':
+        videoURL = 'https://youtu.be/WRoThcAqqNI';
+        break;
+
+      case '바벨 런지':
+        videoURL = 'https://youtu.be/iHWygRKZp3g';
+        break;
+      case '컨벤셔널 데드리프트':
+        videoURL = 'https://youtu.be/lqmyZhUK30M';
+        break;
+
+      case '루마니안 데드리프트':
+        videoURL = 'https://youtu.be/0toNMnclnUg';
+        break;
+
+      case '바벨 힙 쓰러스트':
+        videoURL = 'https://youtu.be/5U0GW8Kohys';
+        break;
+
+      case '바벨 스플릿 스쿼트':
+        videoURL = 'https://youtu.be/jgn5wz322p0';
+        break;
+
+      case '덤벨 스모 데드리프트':
+        videoURL = 'https://youtu.be/2Qwpr8vUkIM';
+        break;
+
+      case '덤벨 고블릿 스쿼트':
+        videoURL = 'https://youtu.be/wJWiYBE9Kc0';
+        break;
 
       case '에어 스쿼트':
         videoURL = 'https://youtu.be/Dp2PXU7RSHs';
         break;
 
-      case '복근 롤아웃':
-        videoURL = 'https://youtu.be/Xe0PmUwcxZg';
-        break;
-
       case '덤벨 사이드 벤드':
         videoURL = 'https://youtu.be/u2bMCVbcQqc';
+        break;
+
+      case '행잉 니 레이즈':
+        videoURL = 'https://youtu.be/XZQzqapu-DE';
+        break;
+
+      case '토즈투 바':
+        videoURL = 'https://youtu.be/uGIXMOHc2Sg';
         break;
 
       case '복근 에어 바이크':
@@ -966,6 +1003,13 @@ class XlogCreateViewState extends State<XlogCreateView> {
         videoURL = 'https://youtu.be/G3cc4LdZwhg';
         break;
 
+      case '레그 레이즈':
+        videoURL = 'https://youtu.be/5RHqSaab9RA';
+        break;
+
+      case '리버스 크런치':
+        videoURL = 'https://youtu.be/pVwPV9z8A44';
+        break;
       case '사이드 크런치':
         videoURL = 'https://youtu.be/M9404UBHLSE';
         break;
@@ -977,6 +1021,7 @@ class XlogCreateViewState extends State<XlogCreateView> {
         videoURL = 'https://youtu.be/uENEi455Ozo';
         break;
 
+      //기본값
       default:
         videoURL = 'default';
         break;

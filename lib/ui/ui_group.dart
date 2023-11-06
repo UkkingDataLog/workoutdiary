@@ -38,7 +38,7 @@ double selectedXweightUnit = 20;
 double selectedXnumber = 0.11;
 double selectedXnumberUnit = 10;
 double selectedXset = 0.16;
-double selectedXsetUnit = 26;
+double selectedXsetUnit = 28;
 
 //----------003. xlog_create_tile.dart----------
 //----------004. xlog_done_tile.dart----------

@@ -23,7 +23,7 @@ class _CustomYoutubePlayerState extends State<CustomYoutubePlayer> {
       initialVideoId: videoID!,
       flags: const YoutubePlayerFlags(
         mute: false,
-        autoPlay: false,
+        autoPlay: true,
         loop: true,
       ),
     );
@@ -34,13 +34,34 @@ class _CustomYoutubePlayerState extends State<CustomYoutubePlayer> {
   Widget build(BuildContext context) {
     return YoutubePlayer(
       controller: _controller,
+
       // showVideoProgressIndicator: true,
       // progressColors: ProgressBarColors(
       //   handleColor: TColor.secondaryColor2,
       //   playedColor: TColor.secondaryColor2,
       //   backgroundColor: TColor.secondaryColor1,
       // ),
-      onReady: (() => debugPrint('Ready')),
+
+      onReady: (() {
+        _controller.addListener(() {});
+      }),
+      // topActions: <Widget>[
+      //   const SizedBox(
+      //     width: 8.0,
+      //     height: 28,
+      //   ),
+      //   Expanded(
+      //     child: Text(
+      //       _controller.metadata.title,
+      //       style: const TextStyle(
+      //         color: Colors.white,
+      //         fontSize: 18.0,
+      //       ),
+      //       overflow: TextOverflow.ellipsis,
+      //       maxLines: 1,
+      //     ),
+      //   ),
+      // ],
       bottomActions: [
         CurrentPosition(),
         ProgressBar(
@@ -51,6 +72,7 @@ class _CustomYoutubePlayerState extends State<CustomYoutubePlayer> {
             backgroundColor: TColor.secondaryColor1,
           ),
         ),
+        RemainingDuration(),
         PlaybackSpeedButton(
           icon: Image.asset(
             'assets/img/play_speed_controal.png',
@@ -58,7 +80,7 @@ class _CustomYoutubePlayerState extends State<CustomYoutubePlayer> {
             color: TColor.lightGray,
           ),
         ),
-        // FullScreenButton(),//safearea와 화면고정 문제
+        // FullScreenButton(), //safearea와 화면고정 문제
       ],
     );
   }
