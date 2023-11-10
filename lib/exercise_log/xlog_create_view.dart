@@ -1,9 +1,11 @@
 import 'dart:io';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_localization/flutter_localization.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
@@ -30,6 +32,7 @@ import 'package:workoutdiary/data/xlog_data_list.dart';
 import 'package:workoutdiary/exercise_log/xlog_create_tile.dart';
 
 import 'package:workoutdiary/helper/app_image_picker.dart';
+import 'package:workoutdiary/localization/locales.dart';
 import 'package:workoutdiary/providers/app_image_provider.dart';
 
 import 'package:screenshot/screenshot.dart';
@@ -41,7 +44,6 @@ import 'package:workoutdiary/ui/ui_group.dart';
 
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:workoutdiary/youtubeVideo/custom_youtube_player.dart';
-import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class XlogCreateView extends StatefulWidget {
   const XlogCreateView({super.key});
@@ -70,10 +72,29 @@ class XlogCreateViewState extends State<XlogCreateView> {
 
   // youtube streaming
   String videoURL = 'default';
+  //
+  late FlutterLocalization _flutterLocalization;
+  late String _currentLocale;
+
+  void _setLocale(String? value) {
+    if (value == null) return;
+    if (value == 'en') {
+      _flutterLocalization.translate(('en'));
+    } else if (value == 'ko') {
+      _flutterLocalization.translate(('ko'));
+    } else if (value == 'de') {
+      _flutterLocalization.translate(('de'));
+    } else {
+      return;
+    }
+  }
 
   @override
   void initState() {
     super.initState();
+    _flutterLocalization = FlutterLocalization.instance;
+    _currentLocale = _flutterLocalization.currentLocale!.languageCode;
+    // print(_currentLocale);
 
     imageProvider = Provider.of<AppImageProvider>(context, listen: false);
     _createRewardedInterstitialAd();
@@ -938,6 +959,7 @@ class XlogCreateViewState extends State<XlogCreateView> {
     }
 
     switch (selectedxTypeItem) {
+      //영상주소입력위치
       case '바벨 글루트 브릿지':
         videoURL = 'https://youtu.be/coDVXIpfhhI';
         break;
@@ -981,8 +1003,183 @@ class XlogCreateViewState extends State<XlogCreateView> {
         videoURL = 'https://youtu.be/wJWiYBE9Kc0';
         break;
 
+      case '덤벨 스쿼트':
+        videoURL = 'https://youtu.be/DpRSG07VqUU';
+        break;
+
+      case '덤벨 루마니안 데드리프트':
+        videoURL = 'https://youtu.be/cwpKQJ4XvT4';
+        break;
+
+      case '덤벨 원레그 데드리프트':
+        videoURL = 'https://youtu.be/Qmp606CgBMU';
+        break;
+
       case '에어 스쿼트':
         videoURL = 'https://youtu.be/Dp2PXU7RSHs';
+        break;
+
+      case '힙 쓰러스트':
+        videoURL = 'https://youtu.be/h3Y_3kH8GYU';
+        break;
+      case '점프 스쿼트':
+        videoURL = 'https://youtu.be/xc-S57DdON8';
+        break;
+
+      case '스모 에어 스쿼트':
+        videoURL = 'https://youtu.be/m2R7LTY_CMY';
+        break;
+      case '바벨 오버헤드 프레스':
+        videoURL = 'https://youtu.be/lK3SQiEC2JE';
+        break;
+      case '바벨 프론트 레이즈':
+        videoURL = 'https://youtu.be/Ajzr2ISl-x8';
+        break;
+      case '바벨 슈러그':
+        videoURL = 'https://youtu.be/6cIl7Qcx61c';
+        break;
+      case '바벨 업라이트 로우':
+        videoURL = 'https://youtu.be/iSytfNPQJhY';
+        break;
+
+      case '이지바 업라이트 로우':
+        videoURL = 'https://youtu.be/cxsrYqQ4nfg';
+        break;
+
+      case '아놀드 덤벨 프레스':
+        videoURL = 'https://youtu.be/kTS24mrinwk';
+        break;
+
+      case '덤벨 프론트 레이즈':
+        videoURL = 'https://youtu.be/UCQGQ_QnQ5A';
+        break;
+      case '덤벨 레터럴 레이즈':
+        videoURL = 'https://youtu.be/tI0mXXyfIYI';
+        break;
+      case '덤벨 숄더 프레스':
+        videoURL = 'https://youtu.be/hat7My5Sdx4';
+        break;
+
+      case '벤치프레스':
+        videoURL = 'https://youtu.be/ot21xT-iHLg';
+        break;
+      case '디클라인 벤치프레스':
+        videoURL = 'https://youtu.be/UaKvRJOZEzU';
+        break;
+      case '인클라인 벤치프레스':
+        videoURL = 'https://youtu.be/xsWYKRz2uBA';
+        break;
+
+      case '디클라인 덤벨 벤치프레스':
+        videoURL = 'https://youtu.be/_Y2PEyAdoMM';
+        break;
+      case '디클라인 덤벨 플라이':
+        videoURL = 'https://youtu.be/PFEM97UIRHo';
+        break;
+      case '덤벨 벤치프레스':
+        videoURL = 'https://youtu.be/78trrdwb0QM';
+        break;
+      case '덤벨 플라이':
+        videoURL = 'https://youtu.be/AtF9dS1KoyE';
+        break;
+      case '덤벨 풀오버':
+        videoURL = 'https://youtu.be/sJ7kkU4Y59Y';
+        break;
+      case '덤벨 스퀴즈 프레스':
+        videoURL = 'https://youtu.be/dL9errKGTos';
+        break;
+      case '인클라인 덤벨 벤치프레스':
+        videoURL = 'https://youtu.be/1hPqxOOw0cQ';
+        break;
+      case '인클라인 덤벨 플라이':
+        videoURL = 'https://youtu.be/n6kM4d_j-sY';
+        break;
+
+      case '딥스':
+        videoURL = 'https://youtu.be/Aca7f32SWYU';
+        break;
+
+      case '푸시업':
+        videoURL = 'https://youtu.be/1Ih3_2cmqgo';
+        break;
+
+      case '바벨 컬':
+        videoURL = 'https://youtu.be/fcpf89fwj78';
+        break;
+
+      case '바벨 프리쳐 컬':
+        videoURL = 'https://youtu.be/Rca1MXVcbxw';
+        break;
+      case '바벨 리스트 컬':
+        videoURL = 'https://youtu.be/71LgWfyUBss';
+        break;
+
+      case '이지바 컬':
+        videoURL = 'https://youtu.be/jAUbcb2kPCo';
+        break;
+      case '이지바 프리쳐 컬':
+        videoURL = 'https://youtu.be/MuSjk76sncM';
+        break;
+      case '이지바 리스트 컬':
+        videoURL = 'https://youtu.be/dsYYN44U4mk';
+        break;
+      case '리스트 롤러':
+        videoURL = 'https://youtu.be/6RXLZRgWoxY';
+        break;
+      case '리버스 바벨 컬':
+        videoURL = 'https://youtu.be/yptPNjn_Yos';
+        break;
+      case '리버스 바벨 리스트 컬':
+        videoURL = 'https://youtu.be/AOR1OXuTryY';
+        break;
+      case '스컬 크러셔':
+        videoURL = 'https://youtu.be/MGTeyqavy50';
+        break;
+
+      case '덤벨 킥백':
+        videoURL = 'https://youtu.be/x8aNnHma5NM';
+        break;
+      case '덤벨 트리이셉 익스텐션':
+        videoURL = 'https://youtu.be/JBgK6Preqks';
+        break;
+
+      case '인클라인 덤벨 컬':
+        videoURL = 'https://youtu.be/TnZXYJa6W38';
+        break;
+
+      case '벤치 딥스':
+        videoURL = 'https://youtu.be/28Bdr_SVvmw';
+        break;
+      case '바벨 풀오버':
+        videoURL = 'https://youtu.be/hi94Tw2HuoY';
+        break;
+      case '바벨 로우':
+        videoURL = 'https://youtu.be/ECda9GHJw4g';
+        break;
+      case '굿모닝 엑서사이즈':
+        videoURL = 'https://youtu.be/2__DMFtag7A';
+        break;
+
+      case '덤벨 로우':
+        videoURL = 'https://youtu.be/ErAy1GVVZ-M';
+        break;
+
+      case '원암 덤벨 로우':
+        videoURL = 'https://youtu.be/vciXM0GnkmI';
+        break;
+
+      case '티바 로우 머신':
+        videoURL = 'https://youtu.be/y1GrFDU5et4';
+        break;
+
+      case '친업':
+        videoURL = 'https://youtu.be/24CixqZA-8k';
+        break;
+      case '하이퍼 익스텐션':
+        videoURL = 'https://youtu.be/N2I6X1bwZaA';
+        break;
+      case '풀업':
+        videoURL = 'https://youtu.be/nSUyfgWzc9M';
         break;
 
       case '덤벨 사이드 벤드':
@@ -1772,7 +1969,9 @@ class XlogCreateViewState extends State<XlogCreateView> {
                               heroTag: "btn1",
                               backgroundColor: TColor.secondaryColor1, //TColor.secondaryColor1,
                               elevation: 2,
-                              label: const Text('add'),
+                              label: Text(
+                                LocaleData.add.getString((context)),
+                              ),
                               icon: const Icon(
                                 Icons.add,
                               ),
@@ -2060,6 +2259,71 @@ class XlogCreateViewState extends State<XlogCreateView> {
                         ),
                         Row(
                           children: [
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                              child: DropdownButton2(
+                                customButton: const Icon(Icons.language, size: 22),
+                                dropdownStyleData: DropdownStyleData(
+                                  maxHeight: 500,
+                                  width: 200,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(14),
+                                    color: TColor.white,
+                                  ),
+                                  offset: const Offset(-20, 0),
+                                  scrollbarTheme: ScrollbarThemeData(
+                                    radius: const Radius.circular(40),
+                                    thickness: MaterialStateProperty.all<double>(6),
+                                    thumbVisibility: MaterialStateProperty.all<bool>(true),
+                                  ),
+                                ),
+                                menuItemStyleData: const MenuItemStyleData(
+                                  height: 40,
+                                  padding: EdgeInsets.only(left: 14, right: 14),
+                                ),
+                                items: const [
+                                  DropdownMenuItem(
+                                    value: "en",
+                                    child: Text("English"),
+                                  ),
+                                  DropdownMenuItem(
+                                    value: "de",
+                                    child: Text("German"),
+                                  ),
+                                  DropdownMenuItem(
+                                    value: "ko",
+                                    child: Text("Korean"),
+                                  ),
+                                  // DropdownMenuItem(
+                                  //   value: "ja",
+                                  //   child: Text("Japanese"),
+                                  // ),
+                                  // DropdownMenuItem(
+                                  //   value: "es",
+                                  //   child: Text("Spanish"),
+                                  // ),
+                                  // DropdownMenuItem(
+                                  //   value: "zh",
+                                  //   child: Text("Chinese"),
+                                  // ),
+                                  // DropdownMenuItem(
+                                  //   value: "pt",
+                                  //   child: Text("Portuguese"),
+                                  // ),
+                                  // DropdownMenuItem(
+                                  //   value: "ar",
+                                  //   child: Text("Arabic"),
+                                  // ),
+                                  // DropdownMenuItem(
+                                  //   value: "hi",
+                                  //   child: Text("Hindi"),
+                                  // ),
+                                ],
+                                onChanged: (value) {
+                                  _setLocale(value);
+                                },
+                              ),
+                            ),
                             FlutterSwitch(
                               width: flutterswitchwidth,
                               height: flutterswitcheight,
@@ -2105,7 +2369,7 @@ class XlogCreateViewState extends State<XlogCreateView> {
                                 }
                               },
                             ),
-                            const SizedBox(width: 12),
+                            const SizedBox(width: 4),
                             IconButton(
                               onPressed: (() {
                                 Navigator.push(

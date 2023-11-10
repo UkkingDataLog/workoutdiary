@@ -33,63 +33,60 @@ class _CustomYoutubePlayerState extends State<CustomYoutubePlayer> {
 
   @override
   Widget build(BuildContext context) {
-    final noMute = (_controller.value.volume ?? 0) > 0;
-    return Stack(
-      children: [
-        YoutubePlayer(
-          controller: _controller,
+    return YoutubePlayer(
+      controller: _controller,
 
-          // showVideoProgressIndicator: true,
-          // progressColors: ProgressBarColors(
-          //   handleColor: TColor.secondaryColor2,
-          //   playedColor: TColor.secondaryColor2,
-          //   backgroundColor: TColor.secondaryColor1,
-          // ),
+      // showVideoProgressIndicator: true,
+      // progressColors: ProgressBarColors(
+      //   bufferedColor: TColor.lightGray,
+      //   handleColor: TColor.black,
+      //   playedColor: TColor.secondaryColor2,
+      //   backgroundColor: TColor.white,
+      // ),
 
-          onReady: (() {
-            _controller.addListener(() {});
-          }),
-          // topActions: <Widget>[
-          //   const SizedBox(
-          //     width: 8.0,
-          //     height: 28,
-          //   ),
-          //   Expanded(
-          //     child: Text(
-          //       _controller.metadata.title,
-          //       style: const TextStyle(
-          //         color: Colors.white,
-          //         fontSize: 18.0,
-          //       ),
-          //       overflow: TextOverflow.ellipsis,
-          //       maxLines: 1,
-          //     ),
-          //   ),
-          // ],
-          bottomActions: [
-            CurrentPosition(),
-            ProgressBar(
-              isExpanded: true,
-              colors: ProgressBarColors(
-                handleColor: TColor.secondaryColor2,
-                playedColor: TColor.secondaryColor2,
-                backgroundColor: TColor.secondaryColor1,
-              ),
-            ),
+      onReady: (() {
+        _controller.addListener(() {});
+      }),
+      // topActions: <Widget>[
+      //   const SizedBox(
+      //     width: 8.0,
+      //     height: 28,
+      //   ),
+      //   Expanded(
+      //     child: Text(
+      //       _controller.metadata.title,
+      //       style: const TextStyle(
+      //         color: Colors.white,
+      //         fontSize: 18.0,
+      //       ),
+      //       overflow: TextOverflow.ellipsis,
+      //       maxLines: 1,
+      //     ),
+      //   ),
+      // ],
+      bottomActions: [
+        const MuteControllerButton(),
+        CurrentPosition(),
 
-            RemainingDuration(),
-            // 음악 높낮이 버튼 조작 필요
-            MuteControllerButton(),
-            PlaybackSpeedButton(
-              icon: Image.asset(
-                'assets/img/play_speed_controal.png',
-                scale: 24,
-                color: TColor.lightGray,
-              ),
-            ),
-            // FullScreenButton(), //safearea와 화면고정 문제
-          ],
+        ProgressBar(
+          isExpanded: true,
+          colors: ProgressBarColors(
+            handleColor: TColor.secondaryColor2,
+            playedColor: TColor.secondaryColor2,
+            backgroundColor: TColor.secondaryColor1,
+          ),
         ),
+        RemainingDuration(),
+        // 음악 높낮이 버튼 조작 필요
+        PlaybackSpeedButton(
+          icon: Image.asset(
+            'assets/img/play_speed_controal.png',
+            scale: 24,
+            color: TColor.lightGray,
+          ),
+        ),
+        const SizedBox(width: 12)
+        // FullScreenButton(), //safearea와 화면고정 문제
       ],
     );
   }

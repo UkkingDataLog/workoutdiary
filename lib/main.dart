@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_localization/flutter_localization.dart';
 // import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 import 'package:google_mobile_ads/google_mobile_ads.dart';
@@ -13,6 +14,7 @@ import 'package:workoutdiary/hivedata/xlog.dart';
 import 'package:workoutdiary/exercise_log/xlog_create_view.dart';
 //
 import 'package:provider/provider.dart';
+import 'package:workoutdiary/localization/locales.dart';
 import 'package:workoutdiary/operating_doc/term_of_use_view.dart';
 import 'package:workoutdiary/providers/app_image_provider.dart';
 
@@ -50,13 +52,26 @@ void main() async {
   runApp(
     MultiProvider(
       providers: [ChangeNotifierProvider(create: (_) => AppImageProvider())],
-      child: const MyApp(),
+      child: MyApp(),
     ),
   );
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class MyApp extends StatefulWidget {
+  MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  final FlutterLocalization localization = FlutterLocalization.instance;
+
+  @override
+  void initState() {
+    configureLocalization();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -70,14 +85,16 @@ class MyApp extends StatelessWidget {
         bottom: true,
         child: MaterialApp(
           title: maintitle,
-
+          //
           debugShowCheckedModeBanner: false,
-
           theme: ThemeData(
             primaryColor: TColor.primaryColor1,
             fontFamily: fontFamily,
           ),
           // darkTheme: ThemeData.dark(),
+          //
+          supportedLocales: localization.supportedLocales,
+          localizationsDelegates: localization.localizationsDelegates,
           //스크린 위치 설정
           routes: <String, WidgetBuilder>{
             '/': (_) => const XlogCreateView(),
@@ -88,5 +105,14 @@ class MyApp extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void configureLocalization() {
+    localization.init(mapLocales: LOCALES, initLanguageCode: "en");
+    localization.onTranslatedLanguage = onTranslatedLanguage;
+  }
+
+  void onTranslatedLanguage(Locale? locale) {
+    setState(() {});
   }
 }
