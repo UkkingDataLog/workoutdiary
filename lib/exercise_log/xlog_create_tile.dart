@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localization/flutter_localization.dart';
 import 'package:workoutdiary/common/colo_extension.dart';
 import 'package:workoutdiary/hivedata/xlog.dart';
+import 'package:workoutdiary/localization/locales.dart';
 import 'package:workoutdiary/ui/ui_group.dart';
 
 class XlogCreateTile extends StatefulWidget {
@@ -69,14 +71,14 @@ class _XlogCreateTileState extends State<XlogCreateTile> {
                     child: Row(
                       children: [
                         SizedBox(
-                          height: media.width * xlogcheckboxwidth * 0.5,
+                          height: media.width * xlogcheckboxwidth,
                           width: media.width * xlogcheckboxwidth,
                           child: IconButton(
                             padding: EdgeInsets.zero,
                             icon: Image.asset(
                               "assets/img/checkboxok.png",
                               color: TColor.white,
-                              fit: BoxFit.contain,
+                              fit: BoxFit.fitHeight,
                             ),
                             onPressed: () {
                               widget.xlog.delete();
@@ -90,18 +92,18 @@ class _XlogCreateTileState extends State<XlogCreateTile> {
                             alignment: Alignment.centerRight,
                             fit: BoxFit.contain,
                             child: Text(
-                              "${widget.xlog.xbodypart} |",
+                              " ${(widget.xlog.xbodypart == '하체') ? (LocaleData.legs.getString((context)).length > 2) ? LocaleData.legs.getString((context)).substring(0, 3) : LocaleData.legs.getString((context)) : (widget.xlog.xbodypart == '어깨') ? (LocaleData.shoulders.getString((context)).length > 2) ? LocaleData.shoulders.getString((context)).substring(0, 3) : LocaleData.shoulders.getString((context)) : (widget.xlog.xbodypart == '가슴') ? (LocaleData.chest.getString((context)).length > 2) ? LocaleData.chest.getString((context)).substring(0, 3) : LocaleData.chest.getString((context)) : (widget.xlog.xbodypart == '팔') ? (LocaleData.arms.getString((context)).length > 2) ? LocaleData.arms.getString((context)).substring(0, 3) : LocaleData.arms.getString((context)) : (widget.xlog.xbodypart == '등') ? (LocaleData.back.getString((context)).length > 2) ? LocaleData.back.getString((context)).substring(0, 3) : LocaleData.back.getString((context)) : (LocaleData.abs.getString((context)).length > 2) ? LocaleData.abs.getString((context)).substring(0, 3) : LocaleData.abs.getString((context))} |",
                               style: TextStyle(color: TColor.white, fontSize: 14, fontWeight: FontWeight.w700),
                             ),
                           ),
                         ),
                         SizedBox(
-                          width: media.width * xlogtilextypewidth,
+                          width: media.width * xlogtilextypewidth - 10,
                           child: FittedBox(
                             alignment: Alignment.centerLeft,
                             fit: BoxFit.contain,
                             child: Text(
-                              " ${widget.xlog.xType}",
+                              " ${widget.xlog.xType.getString(context)}",
                               textAlign: TextAlign.start,
                               style: TextStyle(color: TColor.white, fontSize: 14, fontWeight: FontWeight.w700),
                             ),
@@ -132,12 +134,12 @@ class _XlogCreateTileState extends State<XlogCreateTile> {
                           ),
                         ),
                         SizedBox(
-                          width: media.width * xlogtileweightnumber,
+                          width: media.width * xlogtileweightnumber + 10,
                           child: FittedBox(
                             alignment: Alignment.centerRight,
                             fit: BoxFit.contain,
                             child: Text(
-                              " ${widget.xlog.lxnumber}회 ×",
+                              " ${widget.xlog.lxnumber}${LocaleData.reps.getString((context))} ×",
                               textAlign: TextAlign.end,
                               style: TextStyle(color: TColor.white, fontSize: 14, fontWeight: FontWeight.w700),
                             ),
@@ -149,7 +151,7 @@ class _XlogCreateTileState extends State<XlogCreateTile> {
                             alignment: Alignment.centerRight,
                             fit: BoxFit.contain,
                             child: Text(
-                              "${widget.xlog.lxset}세트",
+                              "${widget.xlog.lxset}${LocaleData.sets.getString((context))}",
                               textAlign: TextAlign.end,
                               style: TextStyle(color: TColor.white, fontSize: 14, fontWeight: FontWeight.w700),
                             ),

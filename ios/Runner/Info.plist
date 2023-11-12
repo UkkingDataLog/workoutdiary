@@ -37,11 +37,11 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
-	<string>운동기록용 사진 촬영을 위해 카메라를 실행시키려고 합니다. 허용하시겠습니까?</string>
+	<string>I'm trying to launch the camera to take pictures to record my exercise. Do you want to allow it?</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>운동기록용 사진 선택과 저장을 위해 사진앨범을 사용하려합니다. 허용하시겠습니까?</string>
+	<string>I want to use a photo album to select and save photos for exercise records. Do you want to allow it?</string>
 	<key>NSUserTrackingUsageDescription</key>
-	<string>개인에게 최적화된 광고를 제공하기 위해 사용자의 광고 활동 정보를 수집합니다.</string>
+	<string>We collect information on users' advertising activities to provide personalized advertising.</string>
 	<key>SKAdNetworkItems</key>
 	<array>
 		<dict>

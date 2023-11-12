@@ -84,7 +84,6 @@ class _MyAppState extends State<MyApp> {
         top: true,
         bottom: true,
         child: MaterialApp(
-          title: maintitle,
           //
           debugShowCheckedModeBanner: false,
           theme: ThemeData(

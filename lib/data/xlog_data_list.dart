@@ -44,3 +44,13 @@ var lxweightItems = List<int>.filled(501, 0);
 var lxnumberItems = List<int>.filled(50, 0);
 //4. 세트 수
 var lxsetItems = List<int>.filled(20, 0);
+
+enum LegsBabel {
+  L_B_Barbell_Glute_Bridge('Barbell Glute Bridge', '바벨 글루트 브릿지'),
+  L_B_Sumo_Deadlift('Sumo Deadlift', '스모 데드리프트');
+
+  // enum의 constructor를 정의해 줍니다.
+  const LegsBabel(this.en, this.ko);
+  final String en;
+  final String ko;
+}

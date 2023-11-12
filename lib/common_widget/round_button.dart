@@ -17,40 +17,25 @@ class RoundButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.zero,
-      decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: type == RoundButtonType.bgSGradient ? TColor.secondaryG : TColor.primaryG,
-          ),
-          borderRadius: BorderRadius.circular(25),
-          boxShadow:
-              type == RoundButtonType.bgGradient || type == RoundButtonType.bgSGradient ? const [BoxShadow(color: Colors.black26, blurRadius: 0.5, offset: Offset(0, 0.5))] : null),
-      child: MaterialButton(
-        onPressed: onPressed,
-        height: 50,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
-        textColor: TColor.primaryColor1,
-        minWidth: double.maxFinite,
-        elevation: type == RoundButtonType.bgGradient || type == RoundButtonType.bgSGradient ? 0 : 0.5,
-        color: type == RoundButtonType.bgGradient || type == RoundButtonType.bgSGradient ? Colors.transparent : TColor.white, //텍스트버튼 수정 필요
-        child: type == RoundButtonType.bgGradient || type == RoundButtonType.bgSGradient
-            ? FittedBox(
-                fit: BoxFit.fitHeight,
-                child: Text(title, style: TextStyle(color: TColor.white, fontSize: fontSize, fontWeight: fontWeight)),
-              )
-            : FittedBox(
-                fit: BoxFit.fitHeight,
-                child: Text(
-                  title,
-                  style: TextStyle(
-                    color: TColor.black,
-                    fontSize: fontSize,
-                    fontWeight: fontWeight,
-                  ),
-                ),
-              ),
+    return ElevatedButton(
+      onPressed: onPressed,
+      style: ElevatedButton.styleFrom(
+        elevation: 1,
+        backgroundColor: type == RoundButtonType.bgGradient || type == RoundButtonType.bgSGradient ? TColor.black : TColor.white, //텍스트버튼 수정 필요
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
       ),
+      child: type == RoundButtonType.bgGradient || type == RoundButtonType.bgSGradient
+          ? Text(title, style: TextStyle(color: TColor.white, fontSize: fontSize, fontWeight: fontWeight))
+          : Text(
+              title,
+              style: TextStyle(
+                color: TColor.black,
+                fontSize: fontSize,
+                fontWeight: fontWeight,
+              ),
+            ),
     );
   }
 }

@@ -82,8 +82,8 @@ class XlogCreateViewState extends State<XlogCreateView> {
       _flutterLocalization.translate(('en'));
     } else if (value == 'ko') {
       _flutterLocalization.translate(('ko'));
-    } else if (value == 'de') {
-      _flutterLocalization.translate(('de'));
+    } else if (value == 'zh') {
+      _flutterLocalization.translate(('zh'));
     } else {
       return;
     }
@@ -136,7 +136,7 @@ class XlogCreateViewState extends State<XlogCreateView> {
   //input
   int xTypeIndex = 0;
   int selectedxTypeIndex = 0;
-  String selectedxTypeItem = '바벨 글루트 브릿지'; //부위선택하고 나오는 첫번째 운동으로 변경해줘야함
+  late String selectedxTypeItem = LocaleData.L_B_Barbell_Glute_Bridge;
   String selectedxTypeImgpath = 'assets/img/workoutType/L_B_Barbell_Glute_Bridge.png';
 
   //2. weight when exercising
@@ -181,1052 +181,8 @@ class XlogCreateViewState extends State<XlogCreateView> {
   //
   @override
   Widget build(BuildContext context) {
-    switch (selectedxTypeItem) {
-      case '바벨 글루트 브릿지':
-        selectedxTypeImgpath = 'assets/img/workoutType/L_B_Barbell_Glute_Bridge.png';
-        break;
-      case '스모 데드리프트':
-        selectedxTypeImgpath = 'assets/img/workoutType/L_B_Sumo_Deadlift.png';
-        break;
-      case '바벨 백 스쿼트':
-        selectedxTypeImgpath = 'assets/img/workoutType/L_B_Barbell_Back_Squat.png';
-        break;
-      case '바벨 불가리안 스플릿 스쿼트':
-        selectedxTypeImgpath = 'assets/img/workoutType/L_B_Barbell_Bulgarian_Split_Squat.png';
-        break;
-      case '바벨 프론트 스쿼트':
-        selectedxTypeImgpath = 'assets/img/workoutType/L_B_Barbell_Front_Squat.png';
-        break;
-      case '바벨 핵 스쿼트':
-        selectedxTypeImgpath = 'assets/img/workoutType/L_B_Barbell_Hack_Squat.png';
-        break;
-      case '바벨 레터럴 런지':
-        selectedxTypeImgpath = 'assets/img/workoutType/L_B_Barbell_Lateral_Lunge.png';
-        break;
-      case '바벨 런지':
-        selectedxTypeImgpath = 'assets/img/workoutType/L_B_Barbell_Lunge.png';
-        break;
-      case '컨벤셔널 데드리프트':
-        selectedxTypeImgpath = 'assets/img/workoutType/L_B_Conventional_Deadlift.png';
-        break;
-      case '데피싯 데드리프트':
-        selectedxTypeImgpath = 'assets/img/workoutType/L_B_Deficit_Deadlift.png';
-        break;
-      case '루마니안 데드리프트':
-        selectedxTypeImgpath = 'assets/img/workoutType/L_B_Romanian_Deadlift.png';
-        break;
-      case '바벨 프론트 랙 런지':
-        selectedxTypeImgpath = 'assets/img/workoutType/L_B_Barbell_Front_Rack_Lunge.png';
-        break;
-      case '바벨 힙 쓰러스트':
-        selectedxTypeImgpath = 'assets/img/workoutType/L_B_Barbell_Hip_Thrust.png';
-        break;
-      case '바벨 점프 스쿼트':
-        selectedxTypeImgpath = 'assets/img/workoutType/L_B_Barbell_Jump_Squat.png';
-        break;
-      case '바벨 원레그 데드리프트':
-        selectedxTypeImgpath = 'assets/img/workoutType/L_B_Barbell_One_Leg_Deadlift.png';
-        break;
-      case '바벨 스플릿 스쿼트':
-        selectedxTypeImgpath = 'assets/img/workoutType/L_B_Barbell_Split_Squat.png';
-        break;
-      case '바벨 스탠딩 카프 레이즈':
-        selectedxTypeImgpath = 'assets/img/workoutType/L_B_Barbell_Standing_Calf_Raise.png';
-        break;
-      case '바벨 스모 스쿼트':
-        selectedxTypeImgpath = 'assets/img/workoutType/L_B_Barbell_Sumo_Squat.png';
-        break;
-      case '트랩바 데드리프트':
-        selectedxTypeImgpath = 'assets/img/workoutType/L_B_Trap_Bar_Deadlift.png';
-        break;
-      case '저처 스쿼트':
-        selectedxTypeImgpath = 'assets/img/workoutType/L_B_Zercher_Squat.png';
-        break;
-      case '덤벨 레터럴 런지':
-        selectedxTypeImgpath = 'assets/img/workoutType/L_D_Dumbbell_Lateral_Lunge.png';
-        break;
-      case '덤벨 스모 데드리프트':
-        selectedxTypeImgpath = 'assets/img/workoutType/L_D_Dumbbell_Sumo_Deadlift.png';
-        break;
-      case '덤벨 불가리안 스플릿 스쿼트':
-        selectedxTypeImgpath = 'assets/img/workoutType/L_D_Dumbbell_Bulgarian_Split_Squat.png';
-        break;
-      case '덤벨 고블릿 스쿼트':
-        selectedxTypeImgpath = 'assets/img/workoutType/L_D_Dumbbell_Goblet_Squat.png';
-        break;
-      case '덤벨 런지':
-        selectedxTypeImgpath = 'assets/img/workoutType/L_D_Dumbbell_Lunge.png';
-        break;
-      case '덤벨 스쿼트':
-        selectedxTypeImgpath = 'assets/img/workoutType/L_D_Dumbbell_Squat.png';
-        break;
-      case '덤벨 스모 스쿼트':
-        selectedxTypeImgpath = 'assets/img/workoutType/L_D_Dumbbell_Sumo_Squat.png';
-        break;
-      case '덤벨 루마니안 데드리프트':
-        selectedxTypeImgpath = 'assets/img/workoutType/L_D_Dumbbell_Romanian_Deadlift.png';
-        break;
-      case '덤벨 카프 레이즈':
-        selectedxTypeImgpath = 'assets/img/workoutType/L_D_Dumbbell_Calf_Raise.png';
-        break;
-      case '덤벨 레그컬':
-        selectedxTypeImgpath = 'assets/img/workoutType/L_D_Dumbbell_Leg_Curl.png';
-        break;
-      case '덤벨 원레그 데드리프트':
-        selectedxTypeImgpath = 'assets/img/workoutType/L_D_Dumbbell_One_Leg_Deadlift.png';
-        break;
-      case '덤벨 스플릿 스쿼트':
-        selectedxTypeImgpath = 'assets/img/workoutType/L_D_Dumbbell_Split_Squat.png';
-        break;
-      case '덤벨 스티프 레그 데드리프트':
-        selectedxTypeImgpath = 'assets/img/workoutType/L_D_Dumbbell_Stiff_Leg_Deadlift.png';
-        break;
-      case '중량 스텝업':
-        selectedxTypeImgpath = 'assets/img/workoutType/L_D_Weight_Step_Up.png';
-        break;
-      case '글루트 킥백 머신':
-        selectedxTypeImgpath = 'assets/img/workoutType/L_M_Glute_Kickback_Machine.png';
-        break;
-      case '레그 익스텐션':
-        selectedxTypeImgpath = 'assets/img/workoutType/L_M_Leg_Extension.png';
-        break;
-      case '레그 프레스':
-        selectedxTypeImgpath = 'assets/img/workoutType/L_M_Leg_Press.png';
-        break;
-      case '레그 컬':
-        selectedxTypeImgpath = 'assets/img/workoutType/L_M_Leg_Curl.png';
-        break;
-      case '케이블 덩키 킥':
-        selectedxTypeImgpath = 'assets/img/workoutType/L_M_Cable_Donkey_Kick.png';
-        break;
-      case '케이블 힙 어브덕션':
-        selectedxTypeImgpath = 'assets/img/workoutType/L_M_Cable_Hip_Abduction.png';
-        break;
-      case '케이블 힙 어덕션':
-        selectedxTypeImgpath = 'assets/img/workoutType/L_M_Cable_Hip_Adduction.png';
-        break;
-      case '케이블 풀 스루':
-        selectedxTypeImgpath = 'assets/img/workoutType/L_M_Cable_Pull_Through.png';
-        break;
-      case '핵 스쿼트 머신':
-        selectedxTypeImgpath = 'assets/img/workoutType/L_M_Hack_Squat_Machine.png';
-        break;
-      case '힙 어브덕션 머신':
-        selectedxTypeImgpath = 'assets/img/workoutType/L_M_Hip_Abduction_Machine.png';
-        break;
-      case '힙 쓰러스트 머신':
-        selectedxTypeImgpath = 'assets/img/workoutType/L_M_Hip_Thrust_Machine.png';
-        break;
-      case '수평 레그 프레스':
-        selectedxTypeImgpath = 'assets/img/workoutType/L_M_Horizontal_Leg_Press.png';
-        break;
-      case '수평 원레그 프레스':
-        selectedxTypeImgpath = 'assets/img/workoutType/L_M_Horizontal_One_Leg_Press.png';
-        break;
-      case '이너 싸이 머신':
-        selectedxTypeImgpath = 'assets/img/workoutType/L_M_Inner_Cy_Machine.png';
-        break;
-      case '몬스터 글루트 머신':
-        selectedxTypeImgpath = 'assets/img/workoutType/L_M_Monster_Glute_Machine.png';
-        break;
-      case '원레그 컬':
-        selectedxTypeImgpath = 'assets/img/workoutType/L_M_One_Leg_Curl.png';
-        break;
-      case '원레그 익스텐션':
-        selectedxTypeImgpath = 'assets/img/workoutType/L_M_One_Leg_Extension.png';
-        break;
-      case '원레그 프레스':
-        selectedxTypeImgpath = 'assets/img/workoutType/L_M_One_Leg_Press.png';
-        break;
-      case '리버스 브이 스쿼트':
-        selectedxTypeImgpath = 'assets/img/workoutType/L_M_Reverse_V_Squat.png';
-        break;
-      case '시티드 카프 레이즈':
-        selectedxTypeImgpath = 'assets/img/workoutType/L_M_Seated_Calf_Raises.png';
-        break;
-      case '시티드 레그 컬':
-        selectedxTypeImgpath = 'assets/img/workoutType/L_M_Seated_Leg_Curl.png';
-        break;
-      case '시티드 원레그 컬':
-        selectedxTypeImgpath = 'assets/img/workoutType/L_M_Seated_One_Leg_Curl.png';
-        break;
-      case '스미스 머신 데드리프트':
-        selectedxTypeImgpath = 'assets/img/workoutType/L_M_Smith_Machine_Deadlift.png';
-        break;
-      case '스미스머신 스플릿 스쿼트':
-        selectedxTypeImgpath = 'assets/img/workoutType/L_M_Smith_Machine_Split_Squat.png';
-        break;
-      case '스미스머신 스쿼트':
-        selectedxTypeImgpath = 'assets/img/workoutType/L_M_Smith_Machine_Squat.png';
-        break;
-      case '스탠딩 카프 레이즈':
-        selectedxTypeImgpath = 'assets/img/workoutType/L_M_Standing_Calf_Raise.png';
-        break;
-      case '브이 스쿼트':
-        selectedxTypeImgpath = 'assets/img/workoutType/L_M_V_Squat.png';
-        break;
-      case '덩키 킥':
-        selectedxTypeImgpath = 'assets/img/workoutType/L_B_Donkey_Kick.png';
-        break;
-      case '런지':
-        selectedxTypeImgpath = 'assets/img/workoutType/L_B_Lunge.png';
-        break;
-      case '글루트 브릿지':
-        selectedxTypeImgpath = 'assets/img/workoutType/L_B_Glute_Bridge.png';
-        break;
-      case '노르딕 햄스트링 컬':
-        selectedxTypeImgpath = 'assets/img/workoutType/L_B_Nordic_Hamstring_Curl.png';
-        break;
-      case '에어 스쿼트':
-        selectedxTypeImgpath = 'assets/img/workoutType/L_B_Air_Squat.png';
-        break;
-      case '맨몸 카프 레이즈':
-        selectedxTypeImgpath = 'assets/img/workoutType/L_B_Body_Calf_Raise.png';
-        break;
-      case '맨몸 레터럴 런지':
-        selectedxTypeImgpath = 'assets/img/workoutType/L_B_Bodyweight_Lateral_Lunge.png';
-        break;
-      case '맨몸 원레그 데드리프트':
-        selectedxTypeImgpath = 'assets/img/workoutType/L_B_Bodyweight_One_Leg_Deadlift.png';
-        break;
-      case '맨몸 오버헤드 스쿼트':
-        selectedxTypeImgpath = 'assets/img/workoutType/L_B_Bodyweight_Overhead_Squat.png';
-        break;
-      case '맨몸 스플릿 스쿼트':
-        selectedxTypeImgpath = 'assets/img/workoutType/L_B_Bodyweight_Split_Squat.png';
-        break;
-      case '힙 쓰러스트':
-        selectedxTypeImgpath = 'assets/img/workoutType/L_B_Hip_Thrust.png';
-        break;
-      case '점프 스쿼트':
-        selectedxTypeImgpath = 'assets/img/workoutType/L_B_Jump_Squat.png';
-        break;
-      case '런지 트위스트':
-        selectedxTypeImgpath = 'assets/img/workoutType/L_B_Lunge_Twist.png';
-        break;
-      case '라잉 힙 어브덕션':
-        selectedxTypeImgpath = 'assets/img/workoutType/L_B_Lying_Hip_Abduction.png';
-        break;
-      case '피스톨 스쿼트':
-        selectedxTypeImgpath = 'assets/img/workoutType/L_B_Pistol_Squat.png';
-        break;
-      case '사이드 라잉 클램':
-        selectedxTypeImgpath = 'assets/img/workoutType/L_B_Side_Lying_Clam.png';
-        break;
-      case '싱글 레그 글루트 브릿지':
-        selectedxTypeImgpath = 'assets/img/workoutType/L_B_Single_Leg_Glute_Bridge.png';
-        break;
-      case '스텝업':
-        selectedxTypeImgpath = 'assets/img/workoutType/L_B_Step_Up.png';
-        break;
-      case '스모 에어 스쿼트':
-        selectedxTypeImgpath = 'assets/img/workoutType/L_B_Sumo_Air_Squat.png';
-        break;
-      case '바벨 오버헤드 프레스':
-        selectedxTypeImgpath = 'assets/img/workoutType/S_B_Barbell_Overhead_Press.png';
-        break;
-      case '바벨 프론트 레이즈':
-        selectedxTypeImgpath = 'assets/img/workoutType/S_B_Barbell_Front_Raise.png';
-        break;
-      case '바벨 슈러그':
-        selectedxTypeImgpath = 'assets/img/workoutType/S_B_Barbell_Shrug.png';
-        break;
-      case '바벨 업라이트 로우':
-        selectedxTypeImgpath = 'assets/img/workoutType/S_B_Barbell_Upright_Row.png';
-        break;
-      case '이지바 프론트 레이즈':
-        selectedxTypeImgpath = 'assets/img/workoutType/S_B_Easy_Bar_Front_Raise.png';
-        break;
-      case '이지바 업라이트 로우':
-        selectedxTypeImgpath = 'assets/img/workoutType/S_B_Easy_Bar_Upright_Row.png';
-        break;
-      case '플레이트 숄더 프레스':
-        selectedxTypeImgpath = 'assets/img/workoutType/S_B_Plate_Shoulder_Press.png';
-        break;
-      case '푸시 프레스':
-        selectedxTypeImgpath = 'assets/img/workoutType/S_B_Push_Press.png';
-        break;
-      case '시티드 바벨 숄더 프레스':
-        selectedxTypeImgpath = 'assets/img/workoutType/S_B_Seated_Barbell_Shoulder_Press.png';
-        break;
-      case '아놀드 덤벨 프레스':
-        selectedxTypeImgpath = 'assets/img/workoutType/S_D_Arnold_Dumbbell_Press.png';
-        break;
-      case '벤트오버 덤벨 레터럴 레이즈':
-        selectedxTypeImgpath = 'assets/img/workoutType/S_D_Bentover_Dumbbell_Lateral_Raise.png';
-        break;
-      case '덤벨 프론트 레이즈':
-        selectedxTypeImgpath = 'assets/img/workoutType/S_D_Dumbbell_Front_Raise.png';
-        break;
-      case '덤벨 레터럴 레이즈':
-        selectedxTypeImgpath = 'assets/img/workoutType/S_D_Dumbbell_Lateral_Raise.png';
-        break;
-      case '덤벨 숄더 프레스':
-        selectedxTypeImgpath = 'assets/img/workoutType/S_D_Dumbbell_Shoulder_Press.png';
-        break;
-      case '덤벨 슈러그':
-        selectedxTypeImgpath = 'assets/img/workoutType/S_D_Dumbbell_Shrug.png';
-        break;
-      case '덤벨 업라이트 로우':
-        selectedxTypeImgpath = 'assets/img/workoutType/S_D_Dumbbell_Upright_Row.png';
-        break;
-      case '덤벨 Y 레이즈':
-        selectedxTypeImgpath = 'assets/img/workoutType/S_D_Dumbbell_Y_Raise.png';
-        break;
-      case '시티드 덤벨 리어 레터럴 레이즈':
-        selectedxTypeImgpath = 'assets/img/workoutType/S_D_Seated_Dumbbell_Rear_Lateral_Raise.png';
-        break;
-      case '시티드 덤벨 숄더 프레스':
-        selectedxTypeImgpath = 'assets/img/workoutType/S_D_Seated_Dumbbell_Shoulder_Press.png';
-        break;
-      case '비하인드 넥 프레스':
-        selectedxTypeImgpath = 'assets/img/workoutType/S_M_Behind_Neck_Press.png';
-        break;
-      case '케이블 익스터널 로테이션':
-        selectedxTypeImgpath = 'assets/img/workoutType/S_M_Cable_External_Rotation.png';
-        break;
-      case '케이블 프론트 레이즈':
-        selectedxTypeImgpath = 'assets/img/workoutType/S_M_Cable_Front_Raise.png';
-        break;
-      case '케이블 인터널 로테이션':
-        selectedxTypeImgpath = 'assets/img/workoutType/S_M_Cable_Internal_Rotation.png';
-        break;
-      case '케이블 레터럴 레이즈':
-        selectedxTypeImgpath = 'assets/img/workoutType/S_M_Cable_Lateral_Raise.png';
-        break;
-      case '케이블 리버스 플라이':
-        selectedxTypeImgpath = 'assets/img/workoutType/S_M_Cable_Reverse_Fly.png';
-        break;
-      case '케이블 슈러그':
-        selectedxTypeImgpath = 'assets/img/workoutType/S_M_Cable_Shrug.png';
-        break;
-      case '페이스풀':
-        selectedxTypeImgpath = 'assets/img/workoutType/S_M_Faithfull.png';
-        break;
-      case '랜드마인 프레스':
-        selectedxTypeImgpath = 'assets/img/workoutType/S_M_Landmine_Press.png';
-        break;
-      case '레터럴 레이즈 머신':
-        selectedxTypeImgpath = 'assets/img/workoutType/S_M_Lateral_Raise_Machine.png';
-        break;
-      case '원암 케이블 레터럴 레이즈':
-        selectedxTypeImgpath = 'assets/img/workoutType/S_M_One-Arm_Cable_Lateral_Raise.png';
-        break;
-      case '리어 델토이드 플라이 머신':
-        selectedxTypeImgpath = 'assets/img/workoutType/S_M_Rear_Deltoid_Fly_Machine.png';
-        break;
-      case '숄더 플레스 머신':
-        selectedxTypeImgpath = 'assets/img/workoutType/S_M_Shoulder_Press_Machine.png';
-        break;
-      case '슈러그 머신':
-        selectedxTypeImgpath = 'assets/img/workoutType/S_M_Shrug_Machine.png';
-        break;
-      case '스미스머신 오버헤드 프레스':
-        selectedxTypeImgpath = 'assets/img/workoutType/S_M_Smith_Machine_Overhead_Press.png';
-        break;
-      case '스미스머신 슈러그':
-        selectedxTypeImgpath = 'assets/img/workoutType/S_M_Smith_Machine_Shrug.png';
-        break;
-      case '원암 랜드마인 프레스':
-        selectedxTypeImgpath = 'assets/img/workoutType/S_M_Wonam_Landmine_Press.png';
-        break;
-      case '핸드스탠드':
-        selectedxTypeImgpath = 'assets/img/workoutType/S_B_Handstand.png';
-        break;
-      case '핸드스탠드 푸시업':
-        selectedxTypeImgpath = 'assets/img/workoutType/S_B_Handstand_Push_Up.png';
-        break;
-      case '숄더 탭':
-        selectedxTypeImgpath = 'assets/img/workoutType/S_B_Shoulder_Tab.png';
-        break;
-      case 'Y 레이즈':
-        selectedxTypeImgpath = 'assets/img/workoutType/S_B_Y_Raise.png';
-        break;
-      case '바벨 플로어 프레스':
-        selectedxTypeImgpath = 'assets/img/workoutType/C_B_Barbell_Floor_Press.png';
-        break;
-      case '벤치프레스':
-        selectedxTypeImgpath = 'assets/img/workoutType/C_B_Bench_Press.png';
-        break;
-      case '디클라인 벤치프레스':
-        selectedxTypeImgpath = 'assets/img/workoutType/C_B_Decline_Bench_Press.png';
-        break;
-      case '인클라인 벤치프레스':
-        selectedxTypeImgpath = 'assets/img/workoutType/C_B_Incline_Bench_Press.png';
-        break;
-      case '스포토 벤치프레스':
-        selectedxTypeImgpath = 'assets/img/workoutType/C_B_Spoto_Bench_Press.png';
-        break;
-      case '디클라인 덤벨 벤치프레스':
-        selectedxTypeImgpath = 'assets/img/workoutType/C_D_Decline_Dumbbell_Bench_Press.png';
-        break;
-      case '디클라인 덤벨 플라이':
-        selectedxTypeImgpath = 'assets/img/workoutType/C_D_Decline_Dumbbell_Fly.png';
-        break;
-      case '덤벨 벤치프레스':
-        selectedxTypeImgpath = 'assets/img/workoutType/C_D_Dumbbell_Bench_Press.png';
-        break;
-      case '덤벨 플라이':
-        selectedxTypeImgpath = 'assets/img/workoutType/C_D_Dumbbell_Fly.png';
-        break;
-      case '덤벨 풀오버':
-        selectedxTypeImgpath = 'assets/img/workoutType/C_D_Dumbbell_Pullover.png';
-        break;
-      case '덤벨 스퀴즈 프레스':
-        selectedxTypeImgpath = 'assets/img/workoutType/C_D_Dumbbell_Squeeze_Press.png';
-        break;
-      case '인클라인 덤벨 벤치프레스':
-        selectedxTypeImgpath = 'assets/img/workoutType/C_D_Incline_Dumbbell_Bench_Press.png';
-        break;
-      case '인클라인 덤벨 플라이':
-        selectedxTypeImgpath = 'assets/img/workoutType/C_D_Incline_Dumbbell_Flyes.png';
-        break;
-      case '인클라인 덤벨 트위스트 프레스':
-        selectedxTypeImgpath = 'assets/img/workoutType/C_D_Incline_Dumbbell_Twist_Press.png';
-        break;
-      case '중량 딥스':
-        selectedxTypeImgpath = 'assets/img/workoutType/C_D_Weighted_Dips.png';
-        break;
-      case '어시스트 딥스 머신':
-        selectedxTypeImgpath = 'assets/img/workoutType/C_M_Assist_Dips_Machine.png';
-        break;
-      case '케이블 크로스오버':
-        selectedxTypeImgpath = 'assets/img/workoutType/C_M_Cable_Crossover.png';
-        break;
-      case '체스트 프레스 머신':
-        selectedxTypeImgpath = 'assets/img/workoutType/C_M_Chest_Press_Machine.png';
-        break;
-      case '디클라인 체스트 프레스 머신':
-        selectedxTypeImgpath = 'assets/img/workoutType/C_M_Decline_Chest_Press_Machine.png';
-        break;
-      case '해머 벤치프레스':
-        selectedxTypeImgpath = 'assets/img/workoutType/C_M_Hammer_Bench_Press.png';
-        break;
-      case '인클라인 벤치프레스 머신':
-        selectedxTypeImgpath = 'assets/img/workoutType/C_M_Incline_Bench_Press_Machine.png';
-        break;
-      case '인클라인 케이블 플라이':
-        selectedxTypeImgpath = 'assets/img/workoutType/C_M_Incline_Cable_Fly.png';
-        break;
-      case '인클라인 체스트 프레스 머신':
-        selectedxTypeImgpath = 'assets/img/workoutType/C_M_Incline_Chest_Press_Machine.png';
-        break;
-      case '로우 풀리 케이블 플라이':
-        selectedxTypeImgpath = 'assets/img/workoutType/C_M_Low_Pulley_Cable_Fly.png';
-        break;
-      case '펙덱 플라이 머신':
-        selectedxTypeImgpath = 'assets/img/workoutType/C_M_Peck_Deck_Fly_Machine.png';
-        break;
-      case '시티드 딥스 머신':
-        selectedxTypeImgpath = 'assets/img/workoutType/C_M_Seated_Dips_Machine.png';
-        break;
-      case '스미스머신 벤치프레스':
-        selectedxTypeImgpath = 'assets/img/workoutType/C_M_Smith_Machine_Bench_Press.png';
-        break;
-      case '스미스머신 인클라인 벤치프레스':
-        selectedxTypeImgpath = 'assets/img/workoutType/C_M_Smith_Machine_Inline_Bench_Press.png';
-        break;
-      case '스탠딩 케이블 플라이':
-        selectedxTypeImgpath = 'assets/img/workoutType/C_M_Standing_Cable_Fly.png';
-        break;
-      case '아처 푸시업':
-        selectedxTypeImgpath = 'assets/img/workoutType/C_B_Archer_Push_Up.png';
-        break;
-      case '클랩 푸시업':
-        selectedxTypeImgpath = 'assets/img/workoutType/C_B_Clap_Push_Up.png';
-        break;
-      case '클로즈그립 푸시업':
-        selectedxTypeImgpath = 'assets/img/workoutType/C_B_Close_Grip_Push_Up.png';
-        break;
-      case '딥스':
-        selectedxTypeImgpath = 'assets/img/workoutType/C_B_Dips.png';
-        break;
-      case '힌두 푸시업':
-        selectedxTypeImgpath = 'assets/img/workoutType/C_B_Hindu_Push_Up.png';
-        break;
-      case '파이크 푸시업':
-        selectedxTypeImgpath = 'assets/img/workoutType/C_B_Pike_Push_Up.png';
-        break;
-      case '푸시업':
-        selectedxTypeImgpath = 'assets/img/workoutType/C_B_Push_Up.png';
-        break;
-      case '중량 푸시업':
-        selectedxTypeImgpath = 'assets/img/workoutType/C_B_Weighted_Push_Ups.png';
-        break;
-      //팔-----
-      case '바벨 컬':
-        selectedxTypeImgpath = 'assets/img/workoutType/R_B_Barbell_Curl.png';
-        break;
-      case '바벨 라잉 트라이셉 익스텐션':
-        selectedxTypeImgpath = 'assets/img/workoutType/R_B_Barbell_Lying_Tricep_Extension.png';
-        break;
-      case '바벨 프리쳐 컬':
-        selectedxTypeImgpath = 'assets/img/workoutType/R_B_Barbell_Preacher_Curl.png';
-        break;
-      case '바벨 리스트 컬':
-        selectedxTypeImgpath = 'assets/img/workoutType/R_B_Barbell_Wrist_Curl.png';
-        break;
-      case '클로즈 그립 벤치프레스':
-        selectedxTypeImgpath = 'assets/img/workoutType/R_B_Close_Grip_Bench_Press.png';
-        break;
-      case '이지바 컬':
-        selectedxTypeImgpath = 'assets/img/workoutType/R_B_Easy_Bar_Curl.png';
-        break;
-      case '이지바 프리쳐 컬':
-        selectedxTypeImgpath = 'assets/img/workoutType/R_B_Easy_Bar_Preacher_Curl.png';
-        break;
-      case '이지바 리스트 컬':
-        selectedxTypeImgpath = 'assets/img/workoutType/R_B_Easy_Bar_Wrist_Curl.png';
-        break;
-      case '리스트 롤러':
-        selectedxTypeImgpath = 'assets/img/workoutType/R_B_List_Roller.png';
-        break;
-      case '리버스 바벨 컬':
-        selectedxTypeImgpath = 'assets/img/workoutType/R_B_Reverse_Barbell_Curl.png';
-        break;
-      case '리버스 바벨 리스트 컬':
-        selectedxTypeImgpath = 'assets/img/workoutType/R_B_Reverse_Barbell_Wrist_Curl.png';
-        break;
-      case '스컬 크러셔':
-        selectedxTypeImgpath = 'assets/img/workoutType/R_B_Skull_Crusher.png';
-        break;
-      case '뎀벨 프리쳐 컬':
-        selectedxTypeImgpath = 'assets/img/workoutType/R_D_Dembel_Preacher_Curl.png';
-        break;
-      case '덤벨 컬':
-        selectedxTypeImgpath = 'assets/img/workoutType/R_D_Dumbbell_Curl.png';
-        break;
-      case '덤벨 해머 컬':
-        selectedxTypeImgpath = 'assets/img/workoutType/R_D_Dumbbell_Hammer_Curl.png';
-        break;
-      case '덤벨 킥백':
-        selectedxTypeImgpath = 'assets/img/workoutType/R_D_Dumbbell_Kickback.png';
-        break;
-      case '덤벨 트리이셉 익스텐션':
-        selectedxTypeImgpath = 'assets/img/workoutType/R_D_Dumbbell_Tricep_Extension.png';
-        break;
-      case '덤벨 리스트 컬':
-        selectedxTypeImgpath = 'assets/img/workoutType/R_D_Dumbbell_Wrist_Curl.png';
-        break;
-      case '인클라인 덤벨 컬':
-        selectedxTypeImgpath = 'assets/img/workoutType/R_D_Incline_Dumbbell_Curl.png';
-        break;
-      case '리버스 덤벨 리스트 컬':
-        selectedxTypeImgpath = 'assets/img/workoutType/R_D_Reverse_Dumbbell_Wrist_Curl.png';
-        break;
-      case '시티드 덤벨 트라이셉 익스텐션':
-        selectedxTypeImgpath = 'assets/img/workoutType/R_D_Seated_Dumbbell_Tricep_Extension.png';
-        break;
-      case '암 컬 머신':
-        selectedxTypeImgpath = 'assets/img/workoutType/R_M_Arm_Curl_Machine.png';
-        break;
-      case '케이블 컬':
-        selectedxTypeImgpath = 'assets/img/workoutType/R_M_Cable_Curl.png';
-        break;
-      case '케이블 해머컬':
-        selectedxTypeImgpath = 'assets/img/workoutType/R_M_Cable_Hammer_Curl.png';
-        break;
-      case '케이블 라잉 트라이셉 익스텐션':
-        selectedxTypeImgpath = 'assets/img/workoutType/R_M_Cable_Lying_Tricep_Extension.png';
-        break;
-      case '케이블 오버헤드 트라이셉 익스텐션':
-        selectedxTypeImgpath = 'assets/img/workoutType/R_M_Cable_Overhead_Tricep_Extension.png';
-        break;
-      case '케이블 푸시 다운':
-        selectedxTypeImgpath = 'assets/img/workoutType/R_M_Cable_Push_Down.png';
-        break;
-      case '케이블 트라이셉 익스텐션':
-        selectedxTypeImgpath = 'assets/img/workoutType/R_M_Cable_Tricep_Extension.png';
-        break;
-      case '프리쳐 컬 머신':
-        selectedxTypeImgpath = 'assets/img/workoutType/R_M_Preacher_Curl_Machine.png';
-        break;
-      case '트라이셉 익스텐션 머신':
-        selectedxTypeImgpath = 'assets/img/workoutType/R_M_Tricep_Extension_Machine.png';
-        break;
-      case '벤치 딥스':
-        selectedxTypeImgpath = 'assets/img/workoutType/R_B_Bench_Dips.png';
-        break;
-
-      //
-      case '바벨 풀오버':
-        selectedxTypeImgpath = 'assets/img/workoutType/B_B_Barbell_Pullover.png';
-        break;
-      case '바벨 로우':
-        selectedxTypeImgpath = 'assets/img/workoutType/B_B_Barbell_Row.png';
-        break;
-      case '굿모닝 엑서사이즈':
-        selectedxTypeImgpath = 'assets/img/workoutType/B_B_Good_Morning_Exercise.png';
-        break;
-      case '인클라인 바벨 로우':
-        selectedxTypeImgpath = 'assets/img/workoutType/B_B_Incline_Barbell_Row.png';
-        break;
-      case '라잉 바벨 로우':
-        selectedxTypeImgpath = 'assets/img/workoutType/B_B_Lying_Barbell_Row.png';
-        break;
-      case '펜들레이 로우':
-        selectedxTypeImgpath = 'assets/img/workoutType/B_B_Pendlay_Row.png';
-        break;
-      case '언더그립 바벨 로우':
-        selectedxTypeImgpath = 'assets/img/workoutType/B_B_Undergrip_Barbell_Row.png';
-        break;
-      case '덤벨 로우':
-        selectedxTypeImgpath = 'assets/img/workoutType/B_D_Dumbbell_Row.png';
-        break;
-      case '인클라인 덤벨 로우':
-        selectedxTypeImgpath = 'assets/img/workoutType/B_D_Incline_Dumbbell_Row.png';
-        break;
-      case '원암 덤벨 로우':
-        selectedxTypeImgpath = 'assets/img/workoutType/B_D_One-Arm_Dumbbell_Row.png';
-        break;
-      case '중량 친업':
-        selectedxTypeImgpath = 'assets/img/workoutType/B_D_Weighted_Chin-Up.png';
-        break;
-      case '중량 풀업':
-        selectedxTypeImgpath = 'assets/img/workoutType/B_D_Weighted_Pull_Ups.png';
-        break;
-      case '어시스트 풀업 머신':
-        selectedxTypeImgpath = 'assets/img/workoutType/B_M_Assist_Pull-Up_Machine.png';
-        break;
-      case '비하인드 넥 풀다운':
-        selectedxTypeImgpath = 'assets/img/workoutType/B_M_Behind_The_Neck_Pulldown.png';
-        break;
-      case '케이블 암 풀다운':
-        selectedxTypeImgpath = 'assets/img/workoutType/B_M_Cable_Arm_Pulldown.png';
-        break;
-      case '플로어 시티드 케이블 로우':
-        selectedxTypeImgpath = 'assets/img/workoutType/B_M_Floor_Seated_Cable_Row.png';
-        break;
-      case '중량 하이퍼 익스텐션':
-        selectedxTypeImgpath = 'assets/img/workoutType/B_M_Heavy_Hyperextension.png';
-        break;
-      case '하이 로우 머신':
-        selectedxTypeImgpath = 'assets/img/workoutType/B_M_High_Low_Machine.png';
-        break;
-      case '인버티드 로우':
-        selectedxTypeImgpath = 'assets/img/workoutType/B_M_Inverted_Row.png';
-        break;
-      case '랫풀다운':
-        selectedxTypeImgpath = 'assets/img/workoutType/B_M_Lat_Pulldown.png';
-        break;
-      case '레터럴 와이드 풀다운':
-        selectedxTypeImgpath = 'assets/img/workoutType/B_M_Lateral_Wide_Pulldown.png';
-        break;
-      case '맥그립 랫풀다운':
-        selectedxTypeImgpath = 'assets/img/workoutType/B_M_Mcgrip_Lat_Pulldown.png';
-        break;
-      case '원암 케이블 풀다운':
-        selectedxTypeImgpath = 'assets/img/workoutType/B_M_One_Arm_Cable_Pull_Down.png';
-        break;
-      case '원암 하이 로우 머신':
-        selectedxTypeImgpath = 'assets/img/workoutType/B_M_One_Arm_High_Low_Machine.png';
-        break;
-      case '원암 레터럴 와이드 풀다운':
-        selectedxTypeImgpath = 'assets/img/workoutType/B_M_One_Arm_Lateral_Wide_Pulldown.png';
-        break;
-      case '원암 시티드 케이블 로우':
-        selectedxTypeImgpath = 'assets/img/workoutType/B_M_One_Arm_Seated_Cable_Row.png';
-        break;
-      case '원암 로우 머신':
-        selectedxTypeImgpath = 'assets/img/workoutType/B_M_One-Arm_Row_Machine.png';
-        break;
-      case '패러럴그립 랫풀다운':
-        selectedxTypeImgpath = 'assets/img/workoutType/B_M_Parallel_Grip_Lat_Pulldown.png';
-        break;
-      case '로우 머신':
-        selectedxTypeImgpath = 'assets/img/workoutType/B_M_Row_Machine.png';
-        break;
-      case '시티드 케이블 로우':
-        selectedxTypeImgpath = 'assets/img/workoutType/B_M_Seated_Cable_Row.png';
-        break;
-      case '시티드 로우 머신':
-        selectedxTypeImgpath = 'assets/img/workoutType/B_M_Seated_Row_Machine.png';
-        break;
-      case '스미스머신 로우':
-        selectedxTypeImgpath = 'assets/img/workoutType/B_M_Smith_Machine_Row.png';
-        break;
-      case '티바 로우 머신':
-        selectedxTypeImgpath = 'assets/img/workoutType/B_M_T-Bar_Row_Machine.png';
-        break;
-      case '언더그랩 랫풀다운':
-        selectedxTypeImgpath = 'assets/img/workoutType/B_M_Undergrab_Lat_Pulldown.png';
-        break;
-      case '언더그립 하이 로우 머신':
-        selectedxTypeImgpath = 'assets/img/workoutType/B_M_Undergrip_High_Low_Machine.png';
-        break;
-      case '백 익스텐션':
-        selectedxTypeImgpath = 'assets/img/workoutType/B_B_Back_Extension.png';
-        break;
-      case '친업':
-        selectedxTypeImgpath = 'assets/img/workoutType/B_B_Chin_Up.png';
-        break;
-      case '하이퍼 익스텐션':
-        selectedxTypeImgpath = 'assets/img/workoutType/B_B_Hyper_Extension.png';
-        break;
-      case '풀업':
-        selectedxTypeImgpath = 'assets/img/workoutType/B_B_Pull_Up.png';
-        break;
-      case '복근 롤아웃':
-        selectedxTypeImgpath = 'assets/img/workoutType/A_B_Abs_Rollout.png';
-        break;
-      case '덤벨 사이드 벤드':
-        selectedxTypeImgpath = 'assets/img/workoutType/A_D_Dumbbell_Side_Bend.png';
-        break;
-      case '중량 디클라인 싯업':
-        selectedxTypeImgpath = 'assets/img/workoutType/A_D_Heavy_Decline_Sit-Up.png';
-        break;
-      case '중량 업도미널 힙 쓰러스트':
-        selectedxTypeImgpath = 'assets/img/workoutType/A_D_Heavy_Updominal_Hip_Thrust.png';
-        break;
-      case '러시안 트위스트':
-        selectedxTypeImgpath = 'assets/img/workoutType/A_D_Russian_Twist.png';
-        break;
-      case '중량 디클라인 크런치':
-        selectedxTypeImgpath = 'assets/img/workoutType/A_D_Weighted_Decline_Crunch.png';
-        break;
-      case '복근 크런치 머신':
-        selectedxTypeImgpath = 'assets/img/workoutType/A_M_Abdominal_Crunch_Machine.png';
-        break;
-      case '케이블 사이드 벤드':
-        selectedxTypeImgpath = 'assets/img/workoutType/A_M_Cable_Side_Bend.png';
-        break;
-      case '케이블 트위스트':
-        selectedxTypeImgpath = 'assets/img/workoutType/A_M_Cable_Twist.png';
-        break;
-      case '행잉 니 레이즈':
-        selectedxTypeImgpath = 'assets/img/workoutType/A_M_Hanging_Knee_Raise.png';
-        break;
-      case '행잉 레그 레이즈':
-        selectedxTypeImgpath = 'assets/img/workoutType/A_M_Hanging_Leg_Raise.png';
-        break;
-      case '토즈투 바':
-        selectedxTypeImgpath = 'assets/img/workoutType/A_M_Tods_To_Bar.png';
-        break;
-      case '45도 사이드 벤드':
-        selectedxTypeImgpath = 'assets/img/workoutType/A_B_45_Degree_Side_Bend.png';
-        break;
-      case '복근 에어 바이크':
-        selectedxTypeImgpath = 'assets/img/workoutType/A_B_Abs_Air_Bike.png';
-        break;
-      case '크런치':
-        selectedxTypeImgpath = 'assets/img/workoutType/A_B_Crunch.png';
-        break;
-      case '디클라인 크런치':
-        selectedxTypeImgpath = 'assets/img/workoutType/A_B_Decline_Crunch.png';
-        break;
-      case '디클라인 리버스 크런치':
-        selectedxTypeImgpath = 'assets/img/workoutType/A_B_Decline_Reverse_Crunch.png';
-        break;
-      case '디클라인 싯업':
-        selectedxTypeImgpath = 'assets/img/workoutType/A_B_Decline_Sit-Up.png';
-        break;
-      case '힐 터치':
-        selectedxTypeImgpath = 'assets/img/workoutType/A_B_Heel_Touch.png';
-        break;
-      case '할로우 포지션':
-        selectedxTypeImgpath = 'assets/img/workoutType/A_B_Hollow_Position.png';
-        break;
-      case '할로우 락':
-        selectedxTypeImgpath = 'assets/img/workoutType/A_B_Hollow_Rock.png';
-        break;
-      case '레그 레이즈':
-        selectedxTypeImgpath = 'assets/img/workoutType/A_B_Leg_Raise.png';
-        break;
-      case '필라테스 잭나이프':
-        selectedxTypeImgpath = 'assets/img/workoutType/A_B_Pilates_Jackknife.png';
-        break;
-      case '플랭크':
-        selectedxTypeImgpath = 'assets/img/workoutType/A_B_Plank.png';
-        break;
-      case '리버스 크런치':
-        selectedxTypeImgpath = 'assets/img/workoutType/A_B_Reverse_Crunch.png';
-        break;
-      case '사이드 크런치':
-        selectedxTypeImgpath = 'assets/img/workoutType/A_B_Side_Crunches.png';
-        break;
-      case '사이드 플랭크':
-        selectedxTypeImgpath = 'assets/img/workoutType/A_B_Side_Plank.png';
-        break;
-      case '싯업':
-        selectedxTypeImgpath = 'assets/img/workoutType/A_B_Sit_Up.png';
-        break;
-      case '업도미널 힙 쓰러스트':
-        selectedxTypeImgpath = 'assets/img/workoutType/A_B_Updominal_Hip_Thrust.png';
-        break;
-      case '브이 업':
-        selectedxTypeImgpath = 'assets/img/workoutType/A_B_V_Up.png';
-        break;
-    }
-
-    switch (selectedxTypeItem) {
-      //영상주소입력위치
-      case '바벨 글루트 브릿지':
-        videoURL = 'https://youtu.be/coDVXIpfhhI';
-        break;
-      case '스모 데드리프트':
-        videoURL = 'https://youtu.be/ZPcy5aDBbr4';
-        break;
-      case '바벨 백 스쿼트':
-        videoURL = 'https://youtu.be/0tYihRsCHOM';
-        break;
-      case '바벨 불가리안 스플릿 스쿼트':
-        videoURL = 'https://youtu.be/IFK5auzHY4c';
-        break;
-      case '바벨 프론트 스쿼트':
-        videoURL = 'https://youtu.be/WRoThcAqqNI';
-        break;
-
-      case '바벨 런지':
-        videoURL = 'https://youtu.be/iHWygRKZp3g';
-        break;
-      case '컨벤셔널 데드리프트':
-        videoURL = 'https://youtu.be/lqmyZhUK30M';
-        break;
-
-      case '루마니안 데드리프트':
-        videoURL = 'https://youtu.be/0toNMnclnUg';
-        break;
-
-      case '바벨 힙 쓰러스트':
-        videoURL = 'https://youtu.be/5U0GW8Kohys';
-        break;
-
-      case '바벨 스플릿 스쿼트':
-        videoURL = 'https://youtu.be/jgn5wz322p0';
-        break;
-
-      case '덤벨 스모 데드리프트':
-        videoURL = 'https://youtu.be/2Qwpr8vUkIM';
-        break;
-
-      case '덤벨 고블릿 스쿼트':
-        videoURL = 'https://youtu.be/wJWiYBE9Kc0';
-        break;
-
-      case '덤벨 스쿼트':
-        videoURL = 'https://youtu.be/DpRSG07VqUU';
-        break;
-
-      case '덤벨 루마니안 데드리프트':
-        videoURL = 'https://youtu.be/cwpKQJ4XvT4';
-        break;
-
-      case '덤벨 원레그 데드리프트':
-        videoURL = 'https://youtu.be/Qmp606CgBMU';
-        break;
-
-      case '에어 스쿼트':
-        videoURL = 'https://youtu.be/Dp2PXU7RSHs';
-        break;
-
-      case '힙 쓰러스트':
-        videoURL = 'https://youtu.be/h3Y_3kH8GYU';
-        break;
-      case '점프 스쿼트':
-        videoURL = 'https://youtu.be/xc-S57DdON8';
-        break;
-
-      case '스모 에어 스쿼트':
-        videoURL = 'https://youtu.be/m2R7LTY_CMY';
-        break;
-      case '바벨 오버헤드 프레스':
-        videoURL = 'https://youtu.be/lK3SQiEC2JE';
-        break;
-      case '바벨 프론트 레이즈':
-        videoURL = 'https://youtu.be/Ajzr2ISl-x8';
-        break;
-      case '바벨 슈러그':
-        videoURL = 'https://youtu.be/6cIl7Qcx61c';
-        break;
-      case '바벨 업라이트 로우':
-        videoURL = 'https://youtu.be/iSytfNPQJhY';
-        break;
-
-      case '이지바 업라이트 로우':
-        videoURL = 'https://youtu.be/cxsrYqQ4nfg';
-        break;
-
-      case '아놀드 덤벨 프레스':
-        videoURL = 'https://youtu.be/kTS24mrinwk';
-        break;
-
-      case '덤벨 프론트 레이즈':
-        videoURL = 'https://youtu.be/UCQGQ_QnQ5A';
-        break;
-      case '덤벨 레터럴 레이즈':
-        videoURL = 'https://youtu.be/tI0mXXyfIYI';
-        break;
-      case '덤벨 숄더 프레스':
-        videoURL = 'https://youtu.be/hat7My5Sdx4';
-        break;
-
-      case '벤치프레스':
-        videoURL = 'https://youtu.be/ot21xT-iHLg';
-        break;
-      case '디클라인 벤치프레스':
-        videoURL = 'https://youtu.be/UaKvRJOZEzU';
-        break;
-      case '인클라인 벤치프레스':
-        videoURL = 'https://youtu.be/xsWYKRz2uBA';
-        break;
-
-      case '디클라인 덤벨 벤치프레스':
-        videoURL = 'https://youtu.be/_Y2PEyAdoMM';
-        break;
-      case '디클라인 덤벨 플라이':
-        videoURL = 'https://youtu.be/PFEM97UIRHo';
-        break;
-      case '덤벨 벤치프레스':
-        videoURL = 'https://youtu.be/78trrdwb0QM';
-        break;
-      case '덤벨 플라이':
-        videoURL = 'https://youtu.be/AtF9dS1KoyE';
-        break;
-      case '덤벨 풀오버':
-        videoURL = 'https://youtu.be/sJ7kkU4Y59Y';
-        break;
-      case '덤벨 스퀴즈 프레스':
-        videoURL = 'https://youtu.be/dL9errKGTos';
-        break;
-      case '인클라인 덤벨 벤치프레스':
-        videoURL = 'https://youtu.be/1hPqxOOw0cQ';
-        break;
-      case '인클라인 덤벨 플라이':
-        videoURL = 'https://youtu.be/n6kM4d_j-sY';
-        break;
-
-      case '딥스':
-        videoURL = 'https://youtu.be/Aca7f32SWYU';
-        break;
-
-      case '푸시업':
-        videoURL = 'https://youtu.be/1Ih3_2cmqgo';
-        break;
-
-      case '바벨 컬':
-        videoURL = 'https://youtu.be/fcpf89fwj78';
-        break;
-
-      case '바벨 프리쳐 컬':
-        videoURL = 'https://youtu.be/Rca1MXVcbxw';
-        break;
-      case '바벨 리스트 컬':
-        videoURL = 'https://youtu.be/71LgWfyUBss';
-        break;
-
-      case '이지바 컬':
-        videoURL = 'https://youtu.be/jAUbcb2kPCo';
-        break;
-      case '이지바 프리쳐 컬':
-        videoURL = 'https://youtu.be/MuSjk76sncM';
-        break;
-      case '이지바 리스트 컬':
-        videoURL = 'https://youtu.be/dsYYN44U4mk';
-        break;
-      case '리스트 롤러':
-        videoURL = 'https://youtu.be/6RXLZRgWoxY';
-        break;
-      case '리버스 바벨 컬':
-        videoURL = 'https://youtu.be/yptPNjn_Yos';
-        break;
-      case '리버스 바벨 리스트 컬':
-        videoURL = 'https://youtu.be/AOR1OXuTryY';
-        break;
-      case '스컬 크러셔':
-        videoURL = 'https://youtu.be/MGTeyqavy50';
-        break;
-
-      case '덤벨 킥백':
-        videoURL = 'https://youtu.be/x8aNnHma5NM';
-        break;
-      case '덤벨 트리이셉 익스텐션':
-        videoURL = 'https://youtu.be/JBgK6Preqks';
-        break;
-
-      case '인클라인 덤벨 컬':
-        videoURL = 'https://youtu.be/TnZXYJa6W38';
-        break;
-
-      case '벤치 딥스':
-        videoURL = 'https://youtu.be/28Bdr_SVvmw';
-        break;
-      case '바벨 풀오버':
-        videoURL = 'https://youtu.be/hi94Tw2HuoY';
-        break;
-      case '바벨 로우':
-        videoURL = 'https://youtu.be/ECda9GHJw4g';
-        break;
-      case '굿모닝 엑서사이즈':
-        videoURL = 'https://youtu.be/2__DMFtag7A';
-        break;
-
-      case '덤벨 로우':
-        videoURL = 'https://youtu.be/ErAy1GVVZ-M';
-        break;
-
-      case '원암 덤벨 로우':
-        videoURL = 'https://youtu.be/vciXM0GnkmI';
-        break;
-
-      case '티바 로우 머신':
-        videoURL = 'https://youtu.be/y1GrFDU5et4';
-        break;
-
-      case '친업':
-        videoURL = 'https://youtu.be/24CixqZA-8k';
-        break;
-      case '하이퍼 익스텐션':
-        videoURL = 'https://youtu.be/N2I6X1bwZaA';
-        break;
-      case '풀업':
-        videoURL = 'https://youtu.be/nSUyfgWzc9M';
-        break;
-
-      case '덤벨 사이드 벤드':
-        videoURL = 'https://youtu.be/u2bMCVbcQqc';
-        break;
-
-      case '행잉 니 레이즈':
-        videoURL = 'https://youtu.be/XZQzqapu-DE';
-        break;
-
-      case '토즈투 바':
-        videoURL = 'https://youtu.be/uGIXMOHc2Sg';
-        break;
-
-      case '복근 에어 바이크':
-        videoURL = 'https://youtu.be/7k-GKzeiMmk';
-        break;
-      case '크런치':
-        videoURL = 'https://youtu.be/G3cc4LdZwhg';
-        break;
-
-      case '레그 레이즈':
-        videoURL = 'https://youtu.be/5RHqSaab9RA';
-        break;
-
-      case '리버스 크런치':
-        videoURL = 'https://youtu.be/pVwPV9z8A44';
-        break;
-      case '사이드 크런치':
-        videoURL = 'https://youtu.be/M9404UBHLSE';
-        break;
-
-      case '싯업':
-        videoURL = 'https://youtu.be/HDrWX5_JSzM';
-        break;
-      case '업도미널 힙 쓰러스트':
-        videoURL = 'https://youtu.be/uENEi455Ozo';
-        break;
-
-      //기본값
-      default:
-        videoURL = 'default';
-        break;
-    }
-
-    //날짜 포멧을 한국어로 생성한다
-    initializeDateFormatting('ko_KR');
+    //날짜 포멧을 자국어로 생성한다
+    initializeDateFormatting(LocaleData.language.getString(context));
     //오늘 날짜 비교용 코드
     DateTime todaydate = DateTime.now();
 
@@ -1326,344 +282,1122 @@ class XlogCreateViewState extends State<XlogCreateView> {
             // 1. [하체]운동목록
             // // [바벨]
             List legsBabel = [
-              '바벨 글루트 브릿지',
-              '스모 데드리프트',
-              '바벨 백 스쿼트',
-              '바벨 불가리안 스플릿 스쿼트',
-              '바벨 프론트 스쿼트',
-              '바벨 핵 스쿼트',
-              '바벨 레터럴 런지',
-              '바벨 런지',
-              '컨벤셔널 데드리프트',
-              '데피싯 데드리프트',
-              '루마니안 데드리프트',
-              '바벨 프론트 랙 런지',
-              '바벨 힙 쓰러스트',
-              '바벨 점프 스쿼트',
-              '바벨 원레그 데드리프트',
-              '바벨 스플릿 스쿼트',
-              '바벨 스탠딩 카프 레이즈',
-              '바벨 스모 스쿼트',
-              '트랩바 데드리프트',
-              '저처 스쿼트',
+              LocaleData.L_B_Barbell_Glute_Bridge,
+              LocaleData.L_B_Sumo_Deadlift,
+              LocaleData.L_B_Barbell_Back_Squat,
+              LocaleData.L_B_Barbell_Bulgarian_Split_Squat,
+              LocaleData.L_B_Barbell_Front_Squat,
+              LocaleData.L_B_Barbell_Hack_Squat,
+              LocaleData.L_B_Barbell_Lateral_Lunge,
+              LocaleData.L_B_Barbell_Lunge,
+              LocaleData.L_B_Conventional_Deadlift,
+              LocaleData.L_B_Deficit_Deadlift,
+              LocaleData.L_B_Romanian_Deadlift,
+              LocaleData.L_B_Barbell_Front_Rack_Lunge,
+              LocaleData.L_B_Barbell_Hip_Thrust,
+              LocaleData.L_B_Barbell_Jump_Squat,
+              LocaleData.L_B_Barbell_One_Leg_Deadlift,
+              LocaleData.L_B_Barbell_Split_Squat,
+              LocaleData.L_B_Barbell_Standing_Calf_Raise,
+              LocaleData.L_B_Barbell_Sumo_Squat,
+              LocaleData.L_B_Trap_Bar_Deadlift,
+              LocaleData.L_B_Zercher_Squat,
             ];
             // // [덤벨]
             List legsDumbbell = [
-              '덤벨 레터럴 런지',
-              '덤벨 스모 데드리프트',
-              '덤벨 불가리안 스플릿 스쿼트',
-              '덤벨 고블릿 스쿼트',
-              '덤벨 런지',
-              '덤벨 스쿼트',
-              '덤벨 스모 스쿼트',
-              '덤벨 루마니안 데드리프트',
-              '덤벨 카프 레이즈',
-              '덤벨 레그컬',
-              '덤벨 원레그 데드리프트',
-              '덤벨 스플릿 스쿼트',
-              '덤벨 스티프 레그 데드리프트',
-              '중량 스텝업',
+              LocaleData.L_D_Dumbbell_Lateral_Lunge,
+              LocaleData.L_D_Dumbbell_Sumo_Deadlift,
+              LocaleData.L_D_Dumbbell_Bulgarian_Split_Squat,
+              LocaleData.L_D_Dumbbell_Goblet_Squat,
+              LocaleData.L_D_Dumbbell_Lunge,
+              LocaleData.L_D_Dumbbell_Squat,
+              LocaleData.L_D_Dumbbell_Sumo_Squat,
+              LocaleData.L_D_Dumbbell_Romanian_Deadlift,
+              LocaleData.L_D_Dumbbell_Calf_Raise,
+              LocaleData.L_D_Dumbbell_Leg_Curl,
+              LocaleData.L_D_Dumbbell_One_Leg_Deadlift,
+              LocaleData.L_D_Dumbbell_Split_Squat,
+              LocaleData.L_D_Dumbbell_Stiff_Leg_Deadlift,
+              LocaleData.L_D_Weight_Step_Up,
             ];
             // // [머신]
             List legsMachine = [
-              '글루트 킥백 머신',
-              '레그 익스텐션',
-              '레그 프레스',
-              '레그 컬',
-              '케이블 덩키 킥',
-              '케이블 힙 어브덕션',
-              '케이블 힙 어덕션',
-              '케이블 풀 스루',
-              '핵 스쿼트 머신',
-              '힙 어브덕션 머신',
-              '힙 쓰러스트 머신',
-              '수평 레그 프레스',
-              '수평 원레그 프레스',
-              '이너 싸이 머신',
-              '몬스터 글루트 머신',
-              '원레그 컬',
-              '원레그 익스텐션',
-              '원레그 프레스',
-              '리버스 브이 스쿼트',
-              '시티드 카프 레이즈',
-              '시티드 레그 컬',
-              '시티드 원레그 컬',
-              '스미스 머신 데드리프트',
-              '스미스머신 스플릿 스쿼트',
-              '스미스머신 스쿼트',
-              '스탠딩 카프 레이즈',
-              '브이 스쿼트',
+              LocaleData.L_M_Glute_Kickback_Machine,
+              LocaleData.L_M_Leg_Extension,
+              LocaleData.L_M_Leg_Press,
+              LocaleData.L_M_Leg_Curl,
+              LocaleData.L_M_Cable_Donkey_Kick,
+              LocaleData.L_M_Cable_Hip_Abduction,
+              LocaleData.L_M_Cable_Hip_Adduction,
+              LocaleData.L_M_Cable_Pull_Through,
+              LocaleData.L_M_Hack_Squat_Machine,
+              LocaleData.L_M_Hip_Abduction_Machine,
+              LocaleData.L_M_Hip_Thrust_Machine,
+              LocaleData.L_M_Horizontal_Leg_Press,
+              LocaleData.L_M_Horizontal_One_Leg_Press,
+              LocaleData.L_M_Inner_Cy_Machine,
+              LocaleData.L_M_Monster_Glute_Machine,
+              LocaleData.L_M_One_Leg_Curl,
+              LocaleData.L_M_One_Leg_Extension,
+              LocaleData.L_M_One_Leg_Press,
+              LocaleData.L_M_Reverse_V_Squat,
+              LocaleData.L_M_Seated_Calf_Raises,
+              LocaleData.L_M_Seated_Leg_Curl,
+              LocaleData.L_M_Seated_One_Leg_Curl,
+              LocaleData.L_M_Smith_Machine_Deadlift,
+              LocaleData.L_M_Smith_Machine_Split_Squat,
+              LocaleData.L_M_Smith_Machine_Squat,
+              LocaleData.L_M_Standing_Calf_Raise,
+              LocaleData.L_M_V_Squat,
             ];
             // // [맨몸]
             List legsBodyweight = [
-              '덩키 킥',
-              '런지',
-              '글루트 브릿지',
-              '노르딕 햄스트링 컬',
-              '에어 스쿼트',
-              '맨몸 카프 레이즈',
-              '맨몸 레터럴 런지',
-              '맨몸 원레그 데드리프트',
-              '맨몸 오버헤드 스쿼트',
-              '맨몸 스플릿 스쿼트',
-              '힙 쓰러스트',
-              '점프 스쿼트',
-              '런지 트위스트',
-              '라잉 힙 어브덕션',
-              '피스톨 스쿼트',
-              '사이드 라잉 클램',
-              '싱글 레그 글루트 브릿지',
-              '스텝업',
-              '스모 에어 스쿼트',
+              LocaleData.L_B_Donkey_Kick,
+              LocaleData.L_B_Lunge,
+              LocaleData.L_B_Glute_Bridge,
+              LocaleData.L_B_Nordic_Hamstring_Curl,
+              LocaleData.L_B_Air_Squat,
+              LocaleData.L_B_Body_Calf_Raise,
+              LocaleData.L_B_Bodyweight_Lateral_Lunge,
+              LocaleData.L_B_Bodyweight_One_Leg_Deadlift,
+              LocaleData.L_B_Bodyweight_Overhead_Squat,
+              LocaleData.L_B_Bodyweight_Split_Squat,
+              LocaleData.L_B_Hip_Thrust,
+              LocaleData.L_B_Jump_Squat,
+              LocaleData.L_B_Lunge_Twist,
+              LocaleData.L_B_Lying_Hip_Abduction,
+              LocaleData.L_B_Pistol_Squat,
+              LocaleData.L_B_Side_Lying_Clam,
+              LocaleData.L_B_Single_Leg_Glute_Bridge,
+              LocaleData.L_B_Step_Up,
+              LocaleData.L_B_Sumo_Air_Squat,
             ];
 
             // 2. [어깨]운동목록
             // // [바벨]
             List shouldersBabel = [
-              '바벨 오버헤드 프레스',
-              '바벨 프론트 레이즈',
-              '바벨 슈러그',
-              '바벨 업라이트 로우',
-              '이지바 프론트 레이즈',
-              '이지바 업라이트 로우',
-              '플레이트 숄더 프레스',
-              '푸시 프레스',
-              '시티드 바벨 숄더 프레스',
+              LocaleData.S_B_Barbell_Overhead_Press,
+              LocaleData.S_B_Barbell_Front_Raise,
+              LocaleData.S_B_Barbell_Shrug,
+              LocaleData.S_B_Barbell_Upright_Row,
+              LocaleData.S_B_Easy_Bar_Front_Raise,
+              LocaleData.S_B_Easy_Bar_Upright_Row,
+              LocaleData.S_B_Plate_Shoulder_Press,
+              LocaleData.S_B_Push_Press,
+              LocaleData.S_B_Seated_Barbell_Shoulder_Press,
             ];
             // // [덤벨]
             List shouldersDumbbell = [
-              '아놀드 덤벨 프레스',
-              '벤트오버 덤벨 레터럴 레이즈',
-              '덤벨 프론트 레이즈',
-              '덤벨 레터럴 레이즈',
-              '덤벨 숄더 프레스',
-              '덤벨 슈러그',
-              '덤벨 업라이트 로우',
-              '덤벨 Y 레이즈',
-              '시티드 덤벨 리어 레터럴 레이즈',
-              '시티드 덤벨 숄더 프레스',
+              LocaleData.S_D_Arnold_Dumbbell_Press,
+              LocaleData.S_D_Bentover_Dumbbell_Lateral_Raise,
+              LocaleData.S_D_Dumbbell_Front_Raise,
+              LocaleData.S_D_Dumbbell_Lateral_Raise,
+              LocaleData.S_D_Dumbbell_Shoulder_Press,
+              LocaleData.S_D_Dumbbell_Shrug,
+              LocaleData.S_D_Dumbbell_Upright_Row,
+              LocaleData.S_D_Dumbbell_Y_Raise,
+              LocaleData.S_D_Seated_Dumbbell_Rear_Lateral_Raise,
+              LocaleData.S_D_Seated_Dumbbell_Shoulder_Press,
             ];
             // // [머신]
             List shouldersMachine = [
-              '비하인드 넥 프레스',
-              '케이블 익스터널 로테이션',
-              '케이블 프론트 레이즈',
-              '케이블 인터널 로테이션',
-              '케이블 레터럴 레이즈',
-              '케이블 리버스 플라이',
-              '케이블 슈러그',
-              '페이스풀',
-              '랜드마인 프레스',
-              '레터럴 레이즈 머신',
-              '원암 케이블 레터럴 레이즈',
-              '리어 델토이드 플라이 머신',
-              '숄더 플레스 머신',
-              '슈러그 머신',
-              '스미스머신 오버헤드 프레스',
-              '스미스머신 슈러그',
-              '원암 랜드마인 프레스',
+              LocaleData.S_M_Behind_Neck_Press,
+              LocaleData.S_M_Cable_External_Rotation,
+              LocaleData.S_M_Cable_Front_Raise,
+              LocaleData.S_M_Cable_Internal_Rotation,
+              LocaleData.S_M_Cable_Lateral_Raise,
+              LocaleData.S_M_Cable_Reverse_Fly,
+              LocaleData.S_M_Cable_Shrug,
+              LocaleData.S_M_Faithfull,
+              LocaleData.S_M_Landmine_Press,
+              LocaleData.S_M_Lateral_Raise_Machine,
+              LocaleData.S_M_One_Arm_Cable_Lateral_Raise,
+              LocaleData.S_M_Rear_Deltoid_Fly_Machine,
+              LocaleData.S_M_Shoulder_Press_Machine,
+              LocaleData.S_M_Shrug_Machine,
+              LocaleData.S_M_Smith_Machine_Overhead_Press,
+              LocaleData.S_M_Smith_Machine_Shrug,
+              LocaleData.S_M_Wonam_Landmine_Press,
             ];
             // // [맨몸]
             List shouldersBodyweight = [
-              '핸드스탠드',
-              '핸드스탠드 푸시업',
-              '숄더 탭',
-              'Y 레이즈',
+              LocaleData.S_B_Handstand,
+              LocaleData.S_B_Handstand_Push_Up,
+              LocaleData.S_B_Shoulder_Tab,
+              LocaleData.S_B_Y_Raise,
             ];
 
             // 3. [가슴]운동목록
             // // [바벨]
             List chestBabel = [
-              '바벨 플로어 프레스',
-              '벤치프레스',
-              '디클라인 벤치프레스',
-              '인클라인 벤치프레스',
-              '스포토 벤치프레스',
+              LocaleData.C_B_Barbell_Floor_Press,
+              LocaleData.C_B_Bench_Press,
+              LocaleData.C_B_Decline_Bench_Press,
+              LocaleData.C_B_Incline_Bench_Press,
+              LocaleData.C_B_Spoto_Bench_Press,
             ];
             // // [덤벨]
             List chestDumbbell = [
-              '디클라인 덤벨 벤치프레스',
-              '디클라인 덤벨 플라이',
-              '덤벨 벤치프레스',
-              '덤벨 플라이',
-              '덤벨 풀오버',
-              '덤벨 스퀴즈 프레스',
-              '인클라인 덤벨 벤치프레스',
-              '인클라인 덤벨 플라이',
-              '인클라인 덤벨 트위스트 프레스',
-              '중량 딥스',
+              LocaleData.C_D_Decline_Dumbbell_Bench_Press,
+              LocaleData.C_D_Decline_Dumbbell_Fly,
+              LocaleData.C_D_Dumbbell_Bench_Press,
+              LocaleData.C_D_Dumbbell_Fly,
+              LocaleData.C_D_Dumbbell_Pullover,
+              LocaleData.C_D_Dumbbell_Squeeze_Press,
+              LocaleData.C_D_Incline_Dumbbell_Bench_Press,
+              LocaleData.C_D_Incline_Dumbbell_Flyes,
+              LocaleData.C_D_Incline_Dumbbell_Twist_Press,
+              LocaleData.C_D_Weighted_Dips,
             ];
             // // [머신]
             List chestMachine = [
-              '어시스트 딥스 머신',
-              '케이블 크로스오버',
-              '체스트 프레스 머신',
-              '디클라인 체스트 프레스 머신',
-              '해머 벤치프레스',
-              '인클라인 벤치프레스 머신',
-              '인클라인 케이블 플라이',
-              '인클라인 체스트 프레스 머신',
-              '로우 풀리 케이블 플라이',
-              '펙덱 플라이 머신',
-              '시티드 딥스 머신',
-              '스미스머신 벤치프레스',
-              '스미스머신 인클라인 벤치프레스',
-              '스탠딩 케이블 플라이',
+              LocaleData.C_M_Assist_Dips_Machine,
+              LocaleData.C_M_Cable_Crossover,
+              LocaleData.C_M_Chest_Press_Machine,
+              LocaleData.C_M_Decline_Chest_Press_Machine,
+              LocaleData.C_M_Hammer_Bench_Press,
+              LocaleData.C_M_Incline_Bench_Press_Machine,
+              LocaleData.C_M_Incline_Cable_Fly,
+              LocaleData.C_M_Incline_Chest_Press_Machine,
+              LocaleData.C_M_Low_Pulley_Cable_Fly,
+              LocaleData.C_M_Peck_Deck_Fly_Machine,
+              LocaleData.C_M_Seated_Dips_Machine,
+              LocaleData.C_M_Smith_Machine_Bench_Press,
+              LocaleData.C_M_Smith_Machine_Inline_Bench_Press,
+              LocaleData.C_M_Standing_Cable_Fly,
             ];
             // // [맨몸]
             List chestBodyweight = [
-              '아처 푸시업',
-              '클랩 푸시업',
-              '클로즈그립 푸시업',
-              '딥스',
-              '힌두 푸시업',
-              '파이크 푸시업',
-              '푸시업',
-              '중량 푸시업',
+              LocaleData.C_B_Archer_Push_Up,
+              LocaleData.C_B_Clap_Push_Up,
+              LocaleData.C_B_Close_Grip_Push_Up,
+              LocaleData.C_B_Dips,
+              LocaleData.C_B_Hindu_Push_Up,
+              LocaleData.C_B_Pike_Push_Up,
+              LocaleData.C_B_Push_Up,
+              LocaleData.C_B_Weighted_Push_Ups,
             ];
 
             // 4. [팔]운동목록
             // // [바벨]
             List armsBabel = [
-              '바벨 컬',
-              '바벨 라잉 트라이셉 익스텐션',
-              '바벨 프리쳐 컬',
-              '바벨 리스트 컬',
-              '클로즈 그립 벤치프레스',
-              '이지바 컬',
-              '이지바 프리쳐 컬',
-              '이지바 리스트 컬',
-              '리스트 롤러',
-              '리버스 바벨 컬',
-              '리버스 바벨 리스트 컬',
-              '스컬 크러셔',
+              LocaleData.R_B_Barbell_Curl,
+              LocaleData.R_B_Barbell_Lying_Tricep_Extension,
+              LocaleData.R_B_Barbell_Preacher_Curl,
+              LocaleData.R_B_Barbell_Wrist_Curl,
+              LocaleData.R_B_Close_Grip_Bench_Press,
+              LocaleData.R_B_Easy_Bar_Curl,
+              LocaleData.R_B_Easy_Bar_Preacher_Curl,
+              LocaleData.R_B_Easy_Bar_Wrist_Curl,
+              LocaleData.R_B_List_Roller,
+              LocaleData.R_B_Reverse_Barbell_Curl,
+              LocaleData.R_B_Reverse_Barbell_Wrist_Curl,
+              LocaleData.R_B_Skull_Crusher,
             ];
             // // [덤벨]
             List armsDumbbell = [
-              '뎀벨 프리쳐 컬',
-              '덤벨 컬',
-              '덤벨 해머 컬',
-              '덤벨 킥백',
-              '덤벨 트리이셉 익스텐션',
-              '덤벨 리스트 컬',
-              '인클라인 덤벨 컬',
-              '리버스 덤벨 리스트 컬',
-              '시티드 덤벨 트라이셉 익스텐션',
+              LocaleData.R_D_Dembel_Preacher_Curl,
+              LocaleData.R_D_Dumbbell_Curl,
+              LocaleData.R_D_Dumbbell_Hammer_Curl,
+              LocaleData.R_D_Dumbbell_Kickback,
+              LocaleData.R_D_Dumbbell_Tricep_Extension,
+              LocaleData.R_D_Dumbbell_Wrist_Curl,
+              LocaleData.R_D_Incline_Dumbbell_Curl,
+              LocaleData.R_D_Reverse_Dumbbell_Wrist_Curl,
+              LocaleData.R_D_Seated_Dumbbell_Tricep_Extension,
             ];
             // // [머신]
             List armsMachine = [
-              '암 컬 머신',
-              '케이블 컬',
-              '케이블 해머컬',
-              '케이블 라잉 트라이셉 익스텐션',
-              '케이블 오버헤드 트라이셉 익스텐션',
-              '케이블 푸시 다운',
-              '케이블 트라이셉 익스텐션',
-              '프리쳐 컬 머신',
-              '트라이셉 익스텐션 머신',
+              LocaleData.R_M_Arm_Curl_Machine,
+              LocaleData.R_M_Cable_Curl,
+              LocaleData.R_M_Cable_Hammer_Curl,
+              LocaleData.R_M_Cable_Lying_Tricep_Extension,
+              LocaleData.R_M_Cable_Overhead_Tricep_Extension,
+              LocaleData.R_M_Cable_Push_Down,
+              LocaleData.R_M_Cable_Tricep_Extension,
+              LocaleData.R_M_Preacher_Curl_Machine,
+              LocaleData.R_M_Tricep_Extension_Machine,
             ];
             // // [맨몸]
             List armsBodyweight = [
-              '벤치 딥스',
+              LocaleData.R_B_Bench_Dips,
             ];
 
             // 5. [등]운동목록
             // // [바벨]
             List backBabel = [
-              '바벨 풀오버',
-              '바벨 로우',
-              '굿모닝 엑서사이즈',
-              '인클라인 바벨 로우',
-              '라잉 바벨 로우',
-              '펜들레이 로우',
-              '언더그립 바벨 로우',
+              LocaleData.B_B_Barbell_Pullover,
+              LocaleData.B_B_Barbell_Row,
+              LocaleData.B_B_Good_Morning_Exercise,
+              LocaleData.B_B_Incline_Barbell_Row,
+              LocaleData.B_B_Lying_Barbell_Row,
+              LocaleData.B_B_Pendlay_Row,
+              LocaleData.B_B_Undergrip_Barbell_Row,
             ];
             // // [덤벨]
             List backDumbbell = [
-              '덤벨 로우',
-              '인클라인 덤벨 로우',
-              '원암 덤벨 로우',
-              '중량 친업',
-              '중량 풀업',
+              LocaleData.B_D_Dumbbell_Row,
+              LocaleData.B_D_Incline_Dumbbell_Row,
+              LocaleData.B_D_One_Arm_Dumbbell_Row,
+              LocaleData.B_D_Weighted_Chin_Up,
+              LocaleData.B_D_Weighted_Pull_Ups,
             ];
             // // [머신]
             List backMachine = [
-              '어시스트 풀업 머신',
-              '비하인드 넥 풀다운',
-              '케이블 암 풀다운',
-              '플로어 시티드 케이블 로우',
-              '중량 하이퍼 익스텐션',
-              '하이 로우 머신',
-              '인버티드 로우',
-              '랫풀다운',
-              '레터럴 와이드 풀다운',
-              '맥그립 랫풀다운',
-              '원암 케이블 풀다운',
-              '원암 하이 로우 머신',
-              '원암 레터럴 와이드 풀다운',
-              '원암 시티드 케이블 로우',
-              '원암 로우 머신',
-              '패러럴그립 랫풀다운',
-              '로우 머신',
-              '시티드 케이블 로우',
-              '시티드 로우 머신',
-              '스미스머신 로우',
-              '티바 로우 머신',
-              '언더그랩 랫풀다운',
-              '언더그립 하이 로우 머신',
+              LocaleData.B_M_Assist_Pull_Up_Machine,
+              LocaleData.B_M_Behind_The_Neck_Pulldown,
+              LocaleData.B_M_Cable_Arm_Pulldown,
+              LocaleData.B_M_Floor_Seated_Cable_Row,
+              LocaleData.B_M_Heavy_Hyperextension,
+              LocaleData.B_M_High_Low_Machine,
+              LocaleData.B_M_Inverted_Row,
+              LocaleData.B_M_Lat_Pulldown,
+              LocaleData.B_M_Lateral_Wide_Pulldown,
+              LocaleData.B_M_Mcgrip_Lat_Pulldown,
+              LocaleData.B_M_One_Arm_Cable_Pull_Down,
+              LocaleData.B_M_One_Arm_High_Low_Machine,
+              LocaleData.B_M_One_Arm_Lateral_Wide_Pulldown,
+              LocaleData.B_M_One_Arm_Seated_Cable_Row,
+              LocaleData.B_M_One_Arm_Row_Machine,
+              LocaleData.B_M_Parallel_Grip_Lat_Pulldown,
+              LocaleData.B_M_Row_Machine,
+              LocaleData.B_M_Seated_Cable_Row,
+              LocaleData.B_M_Seated_Row_Machine,
+              LocaleData.B_M_Smith_Machine_Row,
+              LocaleData.B_M_T_Bar_Row_Machine,
+              LocaleData.B_M_Undergrab_Lat_Pulldown,
+              LocaleData.B_M_Undergrip_High_Low_Machine,
             ];
             // // [맨몸]
             List backBodyweight = [
-              '백 익스텐션',
-              '친업',
-              '하이퍼 익스텐션',
-              '풀업',
+              LocaleData.B_B_Back_Extension,
+              LocaleData.B_B_Chin_Up,
+              LocaleData.B_B_Hyper_Extension,
+              LocaleData.B_B_Pull_Up,
             ];
 
             // 6. [복근]운동목록
             // // [바벨]
             List absBabel = [
-              '복근 롤아웃',
+              LocaleData.A_B_Abs_Rollout,
             ];
             // // [덤벨]
             List absDumbbell = [
-              '덤벨 사이드 벤드',
-              '중량 디클라인 싯업',
-              '중량 업도미널 힙 쓰러스트',
-              '러시안 트위스트',
-              '중량 디클라인 크런치',
+              LocaleData.A_D_Dumbbell_Side_Bend,
+              LocaleData.A_D_Heavy_Decline_Sit_Up,
+              LocaleData.A_D_Heavy_Updominal_Hip_Thrust,
+              LocaleData.A_D_Russian_Twist,
+              LocaleData.A_D_Weighted_Decline_Crunch,
             ];
             // // [머신]
             List absMachine = [
-              '복근 크런치 머신',
-              '케이블 사이드 벤드',
-              '케이블 트위스트',
-              '행잉 니 레이즈',
-              '행잉 레그 레이즈',
-              '토즈투 바',
+              LocaleData.A_M_Abdominal_Crunch_Machine,
+              LocaleData.A_M_Cable_Side_Bend,
+              LocaleData.A_M_Cable_Twist,
+              LocaleData.A_M_Hanging_Knee_Raise,
+              LocaleData.A_M_Hanging_Leg_Raise,
+              LocaleData.A_M_Tods_To_Bar,
             ];
             // // [맨몸]
             List absBodyweight = [
-              '45도 사이드 벤드',
-              '복근 에어 바이크',
-              '크런치',
-              '디클라인 크런치',
-              '디클라인 리버스 크런치',
-              '디클라인 싯업',
-              '힐 터치',
-              '할로우 포지션',
-              '할로우 락',
-              '레그 레이즈',
-              '필라테스 잭나이프',
-              '플랭크',
-              '리버스 크런치',
-              '사이드 크런치',
-              '사이드 플랭크',
-              '싯업',
-              '업도미널 힙 쓰러스트',
-              '브이 업',
+              LocaleData.A_B_45_Degree_Side_Bend,
+              LocaleData.A_B_Abs_Air_Bike,
+              LocaleData.A_B_Crunch,
+              LocaleData.A_B_Decline_Crunch,
+              LocaleData.A_B_Decline_Reverse_Crunch,
+              LocaleData.A_B_Decline_Sit_Up,
+              LocaleData.A_B_Heel_Touch,
+              LocaleData.A_B_Hollow_Position,
+              LocaleData.A_B_Hollow_Rock,
+              LocaleData.A_B_Leg_Raise,
+              LocaleData.A_B_Pilates_Jackknife,
+              LocaleData.A_B_Plank,
+              LocaleData.A_B_Reverse_Crunch,
+              LocaleData.A_B_Side_Crunches,
+              LocaleData.A_B_Side_Plank,
+              LocaleData.A_B_Sit_Up,
+              LocaleData.A_B_Updominal_Hip_Thrust,
+              LocaleData.A_B_V_Up,
             ];
             //
+            if (selectedxTypeItem == LocaleData.L_B_Barbell_Glute_Bridge) {
+              selectedxTypeImgpath = 'assets/img/workoutType/L_B_Barbell_Glute_Bridge.png';
+              videoURL = 'https://youtu.be/coDVXIpfhhI';
+            } else if (selectedxTypeItem == LocaleData.L_B_Sumo_Deadlift) {
+              selectedxTypeImgpath = 'assets/img/workoutType/L_B_Sumo_Deadlift.png';
+              videoURL = 'https://youtu.be/ZPcy5aDBbr4';
+            } else if (selectedxTypeItem == LocaleData.L_B_Barbell_Back_Squat) {
+              selectedxTypeImgpath = 'assets/img/workoutType/L_B_Barbell_Back_Squat.png';
+              videoURL = 'https://youtu.be/0tYihRsCHOM';
+            } else if (selectedxTypeItem == LocaleData.L_B_Barbell_Bulgarian_Split_Squat) {
+              selectedxTypeImgpath = 'assets/img/workoutType/L_B_Barbell_Bulgarian_Split_Squat.png';
+              videoURL = 'https://youtu.be/IFK5auzHY4c';
+            } else if (selectedxTypeItem == LocaleData.L_B_Barbell_Front_Squat) {
+              selectedxTypeImgpath = 'assets/img/workoutType/L_B_Barbell_Front_Squat.png';
+              videoURL = 'https://youtu.be/WRoThcAqqNI';
+            } else if (selectedxTypeItem == LocaleData.L_B_Barbell_Hack_Squat) {
+              selectedxTypeImgpath = 'assets/img/workoutType/L_B_Barbell_Hack_Squat.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.L_B_Barbell_Lateral_Lunge) {
+              selectedxTypeImgpath = 'assets/img/workoutType/L_B_Barbell_Lateral_Lunge.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.L_B_Barbell_Lunge) {
+              selectedxTypeImgpath = 'assets/img/workoutType/L_B_Barbell_Lunge.png';
+              videoURL = 'https://youtu.be/iHWygRKZp3g';
+            } else if (selectedxTypeItem == LocaleData.L_B_Conventional_Deadlift) {
+              selectedxTypeImgpath = 'assets/img/workoutType/L_B_Conventional_Deadlift.png';
+              videoURL = 'https://youtu.be/lqmyZhUK30M';
+            } else if (selectedxTypeItem == LocaleData.L_B_Deficit_Deadlift) {
+              selectedxTypeImgpath = 'assets/img/workoutType/L_B_Deficit_Deadlift.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.L_B_Romanian_Deadlift) {
+              selectedxTypeImgpath = 'assets/img/workoutType/L_B_Romanian_Deadlift.png';
+              videoURL = 'https://youtu.be/0toNMnclnUg';
+            } else if (selectedxTypeItem == LocaleData.L_B_Barbell_Front_Rack_Lunge) {
+              selectedxTypeImgpath = 'assets/img/workoutType/L_B_Barbell_Front_Rack_Lunge.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.L_B_Barbell_Hip_Thrust) {
+              selectedxTypeImgpath = 'assets/img/workoutType/L_B_Barbell_Hip_Thrust.png';
+              videoURL = 'https://youtu.be/5U0GW8Kohys';
+            } else if (selectedxTypeItem == LocaleData.L_B_Barbell_Jump_Squat) {
+              selectedxTypeImgpath = 'assets/img/workoutType/L_B_Barbell_Jump_Squat.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.L_B_Barbell_One_Leg_Deadlift) {
+              selectedxTypeImgpath = 'assets/img/workoutType/L_B_Barbell_One_Leg_Deadlift.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.L_B_Barbell_Split_Squat) {
+              selectedxTypeImgpath = 'assets/img/workoutType/L_B_Barbell_Split_Squat.png';
+              videoURL = 'https://youtu.be/jgn5wz322p0';
+            } else if (selectedxTypeItem == LocaleData.L_B_Barbell_Standing_Calf_Raise) {
+              selectedxTypeImgpath = 'assets/img/workoutType/L_B_Barbell_Standing_Calf_Raise.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.L_B_Barbell_Sumo_Squat) {
+              selectedxTypeImgpath = 'assets/img/workoutType/L_B_Barbell_Sumo_Squat.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.L_B_Trap_Bar_Deadlift) {
+              selectedxTypeImgpath = 'assets/img/workoutType/L_B_Trap_Bar_Deadlift.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.L_B_Zercher_Squat) {
+              selectedxTypeImgpath = 'assets/img/workoutType/L_B_Zercher_Squat.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.L_D_Dumbbell_Lateral_Lunge) {
+              selectedxTypeImgpath = 'assets/img/workoutType/L_D_Dumbbell_Lateral_Lunge.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.L_D_Dumbbell_Sumo_Deadlift) {
+              selectedxTypeImgpath = 'assets/img/workoutType/L_D_Dumbbell_Sumo_Deadlift.png';
+              videoURL = 'https://youtu.be/2Qwpr8vUkIM';
+            } else if (selectedxTypeItem == LocaleData.L_D_Dumbbell_Bulgarian_Split_Squat) {
+              selectedxTypeImgpath = 'assets/img/workoutType/L_D_Dumbbell_Bulgarian_Split_Squat.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.L_D_Dumbbell_Goblet_Squat) {
+              selectedxTypeImgpath = 'assets/img/workoutType/L_D_Dumbbell_Goblet_Squat.png';
+              videoURL = 'https://youtu.be/wJWiYBE9Kc0';
+            } else if (selectedxTypeItem == LocaleData.L_D_Dumbbell_Lunge) {
+              selectedxTypeImgpath = 'assets/img/workoutType/L_D_Dumbbell_Lunge.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.L_D_Dumbbell_Squat) {
+              selectedxTypeImgpath = 'assets/img/workoutType/L_D_Dumbbell_Squat.png';
+              videoURL = 'https://youtu.be/DpRSG07VqUU';
+            } else if (selectedxTypeItem == LocaleData.L_D_Dumbbell_Sumo_Squat) {
+              selectedxTypeImgpath = 'assets/img/workoutType/L_D_Dumbbell_Sumo_Squat.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.L_D_Dumbbell_Romanian_Deadlift) {
+              selectedxTypeImgpath = 'assets/img/workoutType/L_D_Dumbbell_Romanian_Deadlift.png';
+              videoURL = 'https://youtu.be/cwpKQJ4XvT4';
+            } else if (selectedxTypeItem == LocaleData.L_D_Dumbbell_Calf_Raise) {
+              selectedxTypeImgpath = 'assets/img/workoutType/L_D_Dumbbell_Calf_Raise.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.L_D_Dumbbell_Leg_Curl) {
+              selectedxTypeImgpath = 'assets/img/workoutType/L_D_Dumbbell_Leg_Curl.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.L_D_Dumbbell_One_Leg_Deadlift) {
+              selectedxTypeImgpath = 'assets/img/workoutType/L_D_Dumbbell_One_Leg_Deadlift.png';
+              videoURL = 'https://youtu.be/Qmp606CgBMU';
+            } else if (selectedxTypeItem == LocaleData.L_D_Dumbbell_Split_Squat) {
+              selectedxTypeImgpath = 'assets/img/workoutType/L_D_Dumbbell_Split_Squat.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.L_D_Dumbbell_Stiff_Leg_Deadlift) {
+              selectedxTypeImgpath = 'assets/img/workoutType/L_D_Dumbbell_Stiff_Leg_Deadlift.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.L_D_Weight_Step_Up) {
+              selectedxTypeImgpath = 'assets/img/workoutType/L_D_Weight_Step_Up.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.L_M_Glute_Kickback_Machine) {
+              selectedxTypeImgpath = 'assets/img/workoutType/L_M_Glute_Kickback_Machine.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.L_M_Leg_Extension) {
+              selectedxTypeImgpath = 'assets/img/workoutType/L_M_Leg_Extension.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.L_M_Leg_Press) {
+              selectedxTypeImgpath = 'assets/img/workoutType/L_M_Leg_Press.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.L_M_Leg_Curl) {
+              selectedxTypeImgpath = 'assets/img/workoutType/L_M_Leg_Curl.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.L_M_Cable_Donkey_Kick) {
+              selectedxTypeImgpath = 'assets/img/workoutType/L_M_Cable_Donkey_Kick.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.L_M_Cable_Hip_Abduction) {
+              selectedxTypeImgpath = 'assets/img/workoutType/L_M_Cable_Hip_Abduction.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.L_M_Cable_Hip_Adduction) {
+              selectedxTypeImgpath = 'assets/img/workoutType/L_M_Cable_Hip_Adduction.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.L_M_Cable_Pull_Through) {
+              selectedxTypeImgpath = 'assets/img/workoutType/L_M_Cable_Pull_Through.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.L_M_Hack_Squat_Machine) {
+              selectedxTypeImgpath = 'assets/img/workoutType/L_M_Hack_Squat_Machine.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.L_M_Hip_Abduction_Machine) {
+              selectedxTypeImgpath = 'assets/img/workoutType/L_M_Hip_Abduction_Machine.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.L_M_Hip_Thrust_Machine) {
+              selectedxTypeImgpath = 'assets/img/workoutType/L_M_Hip_Thrust_Machine.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.L_M_Horizontal_Leg_Press) {
+              selectedxTypeImgpath = 'assets/img/workoutType/L_M_Horizontal_Leg_Press.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.L_M_Horizontal_One_Leg_Press) {
+              selectedxTypeImgpath = 'assets/img/workoutType/L_M_Horizontal_One_Leg_Press.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.L_M_Inner_Cy_Machine) {
+              selectedxTypeImgpath = 'assets/img/workoutType/L_M_Inner_Cy_Machine.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.L_M_Monster_Glute_Machine) {
+              selectedxTypeImgpath = 'assets/img/workoutType/L_M_Monster_Glute_Machine.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.L_M_One_Leg_Curl) {
+              selectedxTypeImgpath = 'assets/img/workoutType/L_M_One_Leg_Curl.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.L_M_One_Leg_Extension) {
+              selectedxTypeImgpath = 'assets/img/workoutType/L_M_One_Leg_Extension.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.L_M_One_Leg_Press) {
+              selectedxTypeImgpath = 'assets/img/workoutType/L_M_One_Leg_Press.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.L_M_Reverse_V_Squat) {
+              selectedxTypeImgpath = 'assets/img/workoutType/L_M_Reverse_V_Squat.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.L_M_Seated_Calf_Raises) {
+              selectedxTypeImgpath = 'assets/img/workoutType/L_M_Seated_Calf_Raises.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.L_M_Seated_Leg_Curl) {
+              selectedxTypeImgpath = 'assets/img/workoutType/L_M_Seated_Leg_Curl.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.L_M_Seated_One_Leg_Curl) {
+              selectedxTypeImgpath = 'assets/img/workoutType/L_M_Seated_One_Leg_Curl.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.L_M_Smith_Machine_Deadlift) {
+              selectedxTypeImgpath = 'assets/img/workoutType/L_M_Smith_Machine_Deadlift.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.L_M_Smith_Machine_Split_Squat) {
+              selectedxTypeImgpath = 'assets/img/workoutType/L_M_Smith_Machine_Split_Squat.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.L_M_Smith_Machine_Squat) {
+              selectedxTypeImgpath = 'assets/img/workoutType/L_M_Smith_Machine_Squat.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.L_M_Standing_Calf_Raise) {
+              selectedxTypeImgpath = 'assets/img/workoutType/L_M_Standing_Calf_Raise.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.L_M_V_Squat) {
+              selectedxTypeImgpath = 'assets/img/workoutType/L_M_V_Squat.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.L_B_Donkey_Kick) {
+              selectedxTypeImgpath = 'assets/img/workoutType/L_B_Donkey_Kick.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.L_B_Lunge) {
+              selectedxTypeImgpath = 'assets/img/workoutType/L_B_Lunge.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.L_B_Glute_Bridge) {
+              selectedxTypeImgpath = 'assets/img/workoutType/L_B_Glute_Bridge.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.L_B_Nordic_Hamstring_Curl) {
+              selectedxTypeImgpath = 'assets/img/workoutType/L_B_Nordic_Hamstring_Curl.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.L_B_Air_Squat) {
+              selectedxTypeImgpath = 'assets/img/workoutType/L_B_Air_Squat.png';
+              videoURL = 'https://youtu.be/Dp2PXU7RSHs';
+            } else if (selectedxTypeItem == LocaleData.L_B_Body_Calf_Raise) {
+              selectedxTypeImgpath = 'assets/img/workoutType/L_B_Body_Calf_Raise.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.L_B_Bodyweight_Lateral_Lunge) {
+              selectedxTypeImgpath = 'assets/img/workoutType/L_B_Bodyweight_Lateral_Lunge.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.L_B_Bodyweight_One_Leg_Deadlift) {
+              selectedxTypeImgpath = 'assets/img/workoutType/L_B_Bodyweight_One_Leg_Deadlift.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.L_B_Bodyweight_Overhead_Squat) {
+              selectedxTypeImgpath = 'assets/img/workoutType/L_B_Bodyweight_Overhead_Squat.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.L_B_Bodyweight_Split_Squat) {
+              selectedxTypeImgpath = 'assets/img/workoutType/L_B_Bodyweight_Split_Squat.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.L_B_Hip_Thrust) {
+              selectedxTypeImgpath = 'assets/img/workoutType/L_B_Hip_Thrust.png';
+              videoURL = 'https://youtu.be/h3Y_3kH8GYU';
+            } else if (selectedxTypeItem == LocaleData.L_B_Jump_Squat) {
+              selectedxTypeImgpath = 'assets/img/workoutType/L_B_Jump_Squat.png';
+              videoURL = 'https://youtu.be/xc-S57DdON8';
+            } else if (selectedxTypeItem == LocaleData.L_B_Lunge_Twist) {
+              selectedxTypeImgpath = 'assets/img/workoutType/L_B_Lunge_Twist.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.L_B_Lying_Hip_Abduction) {
+              selectedxTypeImgpath = 'assets/img/workoutType/L_B_Lying_Hip_Abduction.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.L_B_Pistol_Squat) {
+              selectedxTypeImgpath = 'assets/img/workoutType/L_B_Pistol_Squat.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.L_B_Side_Lying_Clam) {
+              selectedxTypeImgpath = 'assets/img/workoutType/L_B_Side_Lying_Clam.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.L_B_Single_Leg_Glute_Bridge) {
+              selectedxTypeImgpath = 'assets/img/workoutType/L_B_Single_Leg_Glute_Bridge.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.L_B_Step_Up) {
+              selectedxTypeImgpath = 'assets/img/workoutType/L_B_Step_Up.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.L_B_Sumo_Air_Squat) {
+              selectedxTypeImgpath = 'assets/img/workoutType/L_B_Sumo_Air_Squat.png';
+              videoURL = 'https://youtu.be/m2R7LTY_CMY';
+            } else if (selectedxTypeItem == LocaleData.S_B_Barbell_Overhead_Press) {
+              selectedxTypeImgpath = 'assets/img/workoutType/S_B_Barbell_Overhead_Press.png';
+              videoURL = 'https://youtu.be/lK3SQiEC2JE';
+            } else if (selectedxTypeItem == LocaleData.S_B_Barbell_Front_Raise) {
+              selectedxTypeImgpath = 'assets/img/workoutType/S_B_Barbell_Front_Raise.png';
+              videoURL = 'https://youtu.be/Ajzr2ISl-x8';
+            } else if (selectedxTypeItem == LocaleData.S_B_Barbell_Shrug) {
+              selectedxTypeImgpath = 'assets/img/workoutType/S_B_Barbell_Shrug.png';
+              videoURL = 'https://youtu.be/6cIl7Qcx61c';
+            } else if (selectedxTypeItem == LocaleData.S_B_Barbell_Upright_Row) {
+              selectedxTypeImgpath = 'assets/img/workoutType/S_B_Barbell_Upright_Row.png';
+              videoURL = 'https://youtu.be/iSytfNPQJhY';
+            } else if (selectedxTypeItem == LocaleData.S_B_Easy_Bar_Front_Raise) {
+              selectedxTypeImgpath = 'assets/img/workoutType/S_B_Easy_Bar_Front_Raise.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.S_B_Easy_Bar_Upright_Row) {
+              selectedxTypeImgpath = 'assets/img/workoutType/S_B_Easy_Bar_Upright_Row.png';
+              videoURL = 'https://youtu.be/cxsrYqQ4nfg';
+            } else if (selectedxTypeItem == LocaleData.S_B_Plate_Shoulder_Press) {
+              selectedxTypeImgpath = 'assets/img/workoutType/S_B_Plate_Shoulder_Press.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.S_B_Push_Press) {
+              selectedxTypeImgpath = 'assets/img/workoutType/S_B_Push_Press.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.S_B_Seated_Barbell_Shoulder_Press) {
+              selectedxTypeImgpath = 'assets/img/workoutType/S_B_Seated_Barbell_Shoulder_Press.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.S_D_Arnold_Dumbbell_Press) {
+              selectedxTypeImgpath = 'assets/img/workoutType/S_D_Arnold_Dumbbell_Press.png';
+              videoURL = 'https://youtu.be/kTS24mrinwk';
+            } else if (selectedxTypeItem == LocaleData.S_D_Bentover_Dumbbell_Lateral_Raise) {
+              selectedxTypeImgpath = 'assets/img/workoutType/S_D_Bentover_Dumbbell_Lateral_Raise.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.S_D_Dumbbell_Front_Raise) {
+              selectedxTypeImgpath = 'assets/img/workoutType/S_D_Dumbbell_Front_Raise.png';
+              videoURL = 'https://youtu.be/UCQGQ_QnQ5A';
+            } else if (selectedxTypeItem == LocaleData.S_D_Dumbbell_Lateral_Raise) {
+              selectedxTypeImgpath = 'assets/img/workoutType/S_D_Dumbbell_Lateral_Raise.png';
+              videoURL = 'https://youtu.be/tI0mXXyfIYI';
+            } else if (selectedxTypeItem == LocaleData.S_D_Dumbbell_Shoulder_Press) {
+              selectedxTypeImgpath = 'assets/img/workoutType/S_D_Dumbbell_Shoulder_Press.png';
+              videoURL = 'https://youtu.be/hat7My5Sdx4';
+            } else if (selectedxTypeItem == LocaleData.S_D_Dumbbell_Shrug) {
+              selectedxTypeImgpath = 'assets/img/workoutType/S_D_Dumbbell_Shrug.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.S_D_Dumbbell_Upright_Row) {
+              selectedxTypeImgpath = 'assets/img/workoutType/S_D_Dumbbell_Upright_Row.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.S_D_Dumbbell_Y_Raise) {
+              selectedxTypeImgpath = 'assets/img/workoutType/S_D_Dumbbell_Y_Raise.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.S_D_Seated_Dumbbell_Rear_Lateral_Raise) {
+              selectedxTypeImgpath = 'assets/img/workoutType/S_D_Seated_Dumbbell_Rear_Lateral_Raise.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.S_D_Seated_Dumbbell_Shoulder_Press) {
+              selectedxTypeImgpath = 'assets/img/workoutType/S_D_Seated_Dumbbell_Shoulder_Press.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.S_M_Behind_Neck_Press) {
+              selectedxTypeImgpath = 'assets/img/workoutType/S_M_Behind_Neck_Press.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.S_M_Cable_External_Rotation) {
+              selectedxTypeImgpath = 'assets/img/workoutType/S_M_Cable_External_Rotation.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.S_M_Cable_Front_Raise) {
+              selectedxTypeImgpath = 'assets/img/workoutType/S_M_Cable_Front_Raise.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.S_M_Cable_Internal_Rotation) {
+              selectedxTypeImgpath = 'assets/img/workoutType/S_M_Cable_Internal_Rotation.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.S_M_Cable_Lateral_Raise) {
+              selectedxTypeImgpath = 'assets/img/workoutType/S_M_Cable_Lateral_Raise.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.S_M_Cable_Reverse_Fly) {
+              selectedxTypeImgpath = 'assets/img/workoutType/S_M_Cable_Reverse_Fly.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.S_M_Cable_Shrug) {
+              selectedxTypeImgpath = 'assets/img/workoutType/S_M_Cable_Shrug.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.S_M_Faithfull) {
+              selectedxTypeImgpath = 'assets/img/workoutType/S_M_Faithfull.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.S_M_Landmine_Press) {
+              selectedxTypeImgpath = 'assets/img/workoutType/S_M_Landmine_Press.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.S_M_Lateral_Raise_Machine) {
+              selectedxTypeImgpath = 'assets/img/workoutType/S_M_Lateral_Raise_Machine.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.S_M_One_Arm_Cable_Lateral_Raise) {
+              selectedxTypeImgpath = 'assets/img/workoutType/S_M_One_Arm_Cable_Lateral_Raise.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.S_M_Rear_Deltoid_Fly_Machine) {
+              selectedxTypeImgpath = 'assets/img/workoutType/S_M_Rear_Deltoid_Fly_Machine.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.S_M_Shoulder_Press_Machine) {
+              selectedxTypeImgpath = 'assets/img/workoutType/S_M_Shoulder_Press_Machine.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.S_M_Shrug_Machine) {
+              selectedxTypeImgpath = 'assets/img/workoutType/S_M_Shrug_Machine.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.S_M_Smith_Machine_Overhead_Press) {
+              selectedxTypeImgpath = 'assets/img/workoutType/S_M_Smith_Machine_Overhead_Press.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.S_M_Smith_Machine_Shrug) {
+              selectedxTypeImgpath = 'assets/img/workoutType/S_M_Smith_Machine_Shrug.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.S_M_Wonam_Landmine_Press) {
+              selectedxTypeImgpath = 'assets/img/workoutType/S_M_Wonam_Landmine_Press.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.S_B_Handstand) {
+              selectedxTypeImgpath = 'assets/img/workoutType/S_B_Handstand.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.S_B_Handstand_Push_Up) {
+              selectedxTypeImgpath = 'assets/img/workoutType/S_B_Handstand_Push_Up.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.S_B_Shoulder_Tab) {
+              selectedxTypeImgpath = 'assets/img/workoutType/S_B_Shoulder_Tab.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.S_B_Y_Raise) {
+              selectedxTypeImgpath = 'assets/img/workoutType/S_B_Y_Raise.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.C_B_Barbell_Floor_Press) {
+              selectedxTypeImgpath = 'assets/img/workoutType/C_B_Barbell_Floor_Press.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.C_B_Bench_Press) {
+              selectedxTypeImgpath = 'assets/img/workoutType/C_B_Bench_Press.png';
+              videoURL = 'https://youtu.be/ot21xT-iHLg';
+            } else if (selectedxTypeItem == LocaleData.C_B_Decline_Bench_Press) {
+              selectedxTypeImgpath = 'assets/img/workoutType/C_B_Decline_Bench_Press.png';
+              videoURL = 'https://youtu.be/UaKvRJOZEzU';
+            } else if (selectedxTypeItem == LocaleData.C_B_Incline_Bench_Press) {
+              selectedxTypeImgpath = 'assets/img/workoutType/C_B_Incline_Bench_Press.png';
+              videoURL = 'https://youtu.be/xsWYKRz2uBA';
+            } else if (selectedxTypeItem == LocaleData.C_B_Spoto_Bench_Press) {
+              selectedxTypeImgpath = 'assets/img/workoutType/C_B_Spoto_Bench_Press.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.C_D_Decline_Dumbbell_Bench_Press) {
+              selectedxTypeImgpath = 'assets/img/workoutType/C_D_Decline_Dumbbell_Bench_Press.png';
+              videoURL = 'https://youtu.be/_Y2PEyAdoMM';
+            } else if (selectedxTypeItem == LocaleData.C_D_Decline_Dumbbell_Fly) {
+              selectedxTypeImgpath = 'assets/img/workoutType/C_D_Decline_Dumbbell_Fly.png';
+              videoURL = 'https://youtu.be/PFEM97UIRHo';
+            } else if (selectedxTypeItem == LocaleData.C_D_Dumbbell_Bench_Press) {
+              selectedxTypeImgpath = 'assets/img/workoutType/C_D_Dumbbell_Bench_Press.png';
+              videoURL = 'https://youtu.be/78trrdwb0QM';
+            } else if (selectedxTypeItem == LocaleData.C_D_Dumbbell_Fly) {
+              selectedxTypeImgpath = 'assets/img/workoutType/C_D_Dumbbell_Fly.png';
+              videoURL = 'https://youtu.be/AtF9dS1KoyE';
+            } else if (selectedxTypeItem == LocaleData.C_D_Dumbbell_Pullover) {
+              selectedxTypeImgpath = 'assets/img/workoutType/C_D_Dumbbell_Pullover.png';
+              videoURL = 'https://youtu.be/sJ7kkU4Y59Y';
+            } else if (selectedxTypeItem == LocaleData.C_D_Dumbbell_Squeeze_Press) {
+              selectedxTypeImgpath = 'assets/img/workoutType/C_D_Dumbbell_Squeeze_Press.png';
+              videoURL = 'https://youtu.be/dL9errKGTos';
+            } else if (selectedxTypeItem == LocaleData.C_D_Incline_Dumbbell_Bench_Press) {
+              selectedxTypeImgpath = 'assets/img/workoutType/C_D_Incline_Dumbbell_Bench_Press.png';
+              videoURL = 'https://youtu.be/1hPqxOOw0cQ';
+            } else if (selectedxTypeItem == LocaleData.C_D_Incline_Dumbbell_Flyes) {
+              selectedxTypeImgpath = 'assets/img/workoutType/C_D_Incline_Dumbbell_Flyes.png';
+              videoURL = 'https://youtu.be/n6kM4d_j-sY';
+            } else if (selectedxTypeItem == LocaleData.C_D_Incline_Dumbbell_Twist_Press) {
+              selectedxTypeImgpath = 'assets/img/workoutType/C_D_Incline_Dumbbell_Twist_Press.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.C_D_Weighted_Dips) {
+              selectedxTypeImgpath = 'assets/img/workoutType/C_D_Weighted_Dips.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.C_M_Assist_Dips_Machine) {
+              selectedxTypeImgpath = 'assets/img/workoutType/C_M_Assist_Dips_Machine.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.C_M_Cable_Crossover) {
+              selectedxTypeImgpath = 'assets/img/workoutType/C_M_Cable_Crossover.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.C_M_Chest_Press_Machine) {
+              selectedxTypeImgpath = 'assets/img/workoutType/C_M_Chest_Press_Machine.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.C_M_Decline_Chest_Press_Machine) {
+              selectedxTypeImgpath = 'assets/img/workoutType/C_M_Decline_Chest_Press_Machine.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.C_M_Hammer_Bench_Press) {
+              selectedxTypeImgpath = 'assets/img/workoutType/C_M_Hammer_Bench_Press.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.C_M_Incline_Bench_Press_Machine) {
+              selectedxTypeImgpath = 'assets/img/workoutType/C_M_Incline_Bench_Press_Machine.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.C_M_Incline_Cable_Fly) {
+              selectedxTypeImgpath = 'assets/img/workoutType/C_M_Incline_Cable_Fly.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.C_M_Incline_Chest_Press_Machine) {
+              selectedxTypeImgpath = 'assets/img/workoutType/C_M_Incline_Chest_Press_Machine.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.C_M_Low_Pulley_Cable_Fly) {
+              selectedxTypeImgpath = 'assets/img/workoutType/C_M_Low_Pulley_Cable_Fly.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.C_M_Peck_Deck_Fly_Machine) {
+              selectedxTypeImgpath = 'assets/img/workoutType/C_M_Peck_Deck_Fly_Machine.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.C_M_Seated_Dips_Machine) {
+              selectedxTypeImgpath = 'assets/img/workoutType/C_M_Seated_Dips_Machine.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.C_M_Smith_Machine_Bench_Press) {
+              selectedxTypeImgpath = 'assets/img/workoutType/C_M_Smith_Machine_Bench_Press.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.C_M_Smith_Machine_Inline_Bench_Press) {
+              selectedxTypeImgpath = 'assets/img/workoutType/C_M_Smith_Machine_Inline_Bench_Press.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.C_M_Standing_Cable_Fly) {
+              selectedxTypeImgpath = 'assets/img/workoutType/C_M_Standing_Cable_Fly.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.C_B_Archer_Push_Up) {
+              selectedxTypeImgpath = 'assets/img/workoutType/C_B_Archer_Push_Up.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.C_B_Clap_Push_Up) {
+              selectedxTypeImgpath = 'assets/img/workoutType/C_B_Clap_Push_Up.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.C_B_Close_Grip_Push_Up) {
+              selectedxTypeImgpath = 'assets/img/workoutType/C_B_Close_Grip_Push_Up.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.C_B_Dips) {
+              selectedxTypeImgpath = 'assets/img/workoutType/C_B_Dips.png';
+              videoURL = 'https://youtu.be/Aca7f32SWYU';
+            } else if (selectedxTypeItem == LocaleData.C_B_Hindu_Push_Up) {
+              selectedxTypeImgpath = 'assets/img/workoutType/C_B_Hindu_Push_Up.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.C_B_Pike_Push_Up) {
+              selectedxTypeImgpath = 'assets/img/workoutType/C_B_Pike_Push_Up.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.C_B_Push_Up) {
+              selectedxTypeImgpath = 'assets/img/workoutType/C_B_Push_Up.png';
+              videoURL = 'https://youtu.be/1Ih3_2cmqgo';
+            } else if (selectedxTypeItem == LocaleData.C_B_Weighted_Push_Ups) {
+              selectedxTypeImgpath = 'assets/img/workoutType/C_B_Weighted_Push_Ups.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.R_B_Barbell_Curl) {
+              selectedxTypeImgpath = 'assets/img/workoutType/R_B_Barbell_Curl.png';
+              videoURL = 'https://youtu.be/fcpf89fwj78';
+            } else if (selectedxTypeItem == LocaleData.R_B_Barbell_Lying_Tricep_Extension) {
+              selectedxTypeImgpath = 'assets/img/workoutType/R_B_Barbell_Lying_Tricep_Extension.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.R_B_Barbell_Preacher_Curl) {
+              selectedxTypeImgpath = 'assets/img/workoutType/R_B_Barbell_Preacher_Curl.png';
+              videoURL = 'https://youtu.be/Rca1MXVcbxw';
+            } else if (selectedxTypeItem == LocaleData.R_B_Barbell_Wrist_Curl) {
+              selectedxTypeImgpath = 'assets/img/workoutType/R_B_Barbell_Wrist_Curl.png';
+              videoURL = 'https://youtu.be/71LgWfyUBss';
+            } else if (selectedxTypeItem == LocaleData.R_B_Close_Grip_Bench_Press) {
+              selectedxTypeImgpath = 'assets/img/workoutType/R_B_Close_Grip_Bench_Press.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.R_B_Easy_Bar_Curl) {
+              selectedxTypeImgpath = 'assets/img/workoutType/R_B_Easy_Bar_Curl.png';
+              videoURL = 'https://youtu.be/jAUbcb2kPCo';
+            } else if (selectedxTypeItem == LocaleData.R_B_Easy_Bar_Preacher_Curl) {
+              selectedxTypeImgpath = 'assets/img/workoutType/R_B_Easy_Bar_Preacher_Curl.png';
+              videoURL = 'https://youtu.be/MuSjk76sncM';
+            } else if (selectedxTypeItem == LocaleData.R_B_Easy_Bar_Wrist_Curl) {
+              selectedxTypeImgpath = 'assets/img/workoutType/R_B_Easy_Bar_Wrist_Curl.png';
+              videoURL = 'https://youtu.be/dsYYN44U4mk';
+            } else if (selectedxTypeItem == LocaleData.R_B_List_Roller) {
+              selectedxTypeImgpath = 'assets/img/workoutType/R_B_List_Roller.png';
+              videoURL = 'https://youtu.be/6RXLZRgWoxY';
+            } else if (selectedxTypeItem == LocaleData.R_B_Reverse_Barbell_Curl) {
+              selectedxTypeImgpath = 'assets/img/workoutType/R_B_Reverse_Barbell_Curl.png';
+              videoURL = 'https://youtu.be/yptPNjn_Yos';
+            } else if (selectedxTypeItem == LocaleData.R_B_Reverse_Barbell_Wrist_Curl) {
+              selectedxTypeImgpath = 'assets/img/workoutType/R_B_Reverse_Barbell_Wrist_Curl.png';
+              videoURL = 'https://youtu.be/AOR1OXuTryY';
+            } else if (selectedxTypeItem == LocaleData.R_B_Skull_Crusher) {
+              selectedxTypeImgpath = 'assets/img/workoutType/R_B_Skull_Crusher.png';
+              videoURL = 'https://youtu.be/MGTeyqavy50';
+            } else if (selectedxTypeItem == LocaleData.R_D_Dembel_Preacher_Curl) {
+              selectedxTypeImgpath = 'assets/img/workoutType/R_D_Dembel_Preacher_Curl.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.R_D_Dumbbell_Curl) {
+              selectedxTypeImgpath = 'assets/img/workoutType/R_D_Dumbbell_Curl.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.R_D_Dumbbell_Hammer_Curl) {
+              selectedxTypeImgpath = 'assets/img/workoutType/R_D_Dumbbell_Hammer_Curl.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.R_D_Dumbbell_Kickback) {
+              selectedxTypeImgpath = 'assets/img/workoutType/R_D_Dumbbell_Kickback.png';
+              videoURL = 'https://youtu.be/x8aNnHma5NM';
+            } else if (selectedxTypeItem == LocaleData.R_D_Dumbbell_Tricep_Extension) {
+              selectedxTypeImgpath = 'assets/img/workoutType/R_D_Dumbbell_Tricep_Extension.png';
+              videoURL = 'https://youtu.be/JBgK6Preqks';
+            } else if (selectedxTypeItem == LocaleData.R_D_Dumbbell_Wrist_Curl) {
+              selectedxTypeImgpath = 'assets/img/workoutType/R_D_Dumbbell_Wrist_Curl.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.R_D_Incline_Dumbbell_Curl) {
+              selectedxTypeImgpath = 'assets/img/workoutType/R_D_Incline_Dumbbell_Curl.png';
+              videoURL = 'https://youtu.be/TnZXYJa6W38';
+            } else if (selectedxTypeItem == LocaleData.R_D_Reverse_Dumbbell_Wrist_Curl) {
+              selectedxTypeImgpath = 'assets/img/workoutType/R_D_Reverse_Dumbbell_Wrist_Curl.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.R_D_Seated_Dumbbell_Tricep_Extension) {
+              selectedxTypeImgpath = 'assets/img/workoutType/R_D_Seated_Dumbbell_Tricep_Extension.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.R_M_Arm_Curl_Machine) {
+              selectedxTypeImgpath = 'assets/img/workoutType/R_M_Arm_Curl_Machine.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.R_M_Cable_Curl) {
+              selectedxTypeImgpath = 'assets/img/workoutType/R_M_Cable_Curl.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.R_M_Cable_Hammer_Curl) {
+              selectedxTypeImgpath = 'assets/img/workoutType/R_M_Cable_Hammer_Curl.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.R_M_Cable_Lying_Tricep_Extension) {
+              selectedxTypeImgpath = 'assets/img/workoutType/R_M_Cable_Lying_Tricep_Extension.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.R_M_Cable_Overhead_Tricep_Extension) {
+              selectedxTypeImgpath = 'assets/img/workoutType/R_M_Cable_Overhead_Tricep_Extension.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.R_M_Cable_Push_Down) {
+              selectedxTypeImgpath = 'assets/img/workoutType/R_M_Cable_Push_Down.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.R_M_Cable_Tricep_Extension) {
+              selectedxTypeImgpath = 'assets/img/workoutType/R_M_Cable_Tricep_Extension.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.R_M_Preacher_Curl_Machine) {
+              selectedxTypeImgpath = 'assets/img/workoutType/R_M_Preacher_Curl_Machine.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.R_M_Tricep_Extension_Machine) {
+              selectedxTypeImgpath = 'assets/img/workoutType/R_M_Tricep_Extension_Machine.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.R_B_Bench_Dips) {
+              selectedxTypeImgpath = 'assets/img/workoutType/R_B_Bench_Dips.png';
+              videoURL = 'https://youtu.be/28Bdr_SVvmw';
+            } else if (selectedxTypeItem == LocaleData.B_B_Barbell_Pullover) {
+              selectedxTypeImgpath = 'assets/img/workoutType/B_B_Barbell_Pullover.png';
+              videoURL = 'https://youtu.be/hi94Tw2HuoY';
+            } else if (selectedxTypeItem == LocaleData.B_B_Barbell_Row) {
+              selectedxTypeImgpath = 'assets/img/workoutType/B_B_Barbell_Row.png';
+              videoURL = 'https://youtu.be/ECda9GHJw4g';
+            } else if (selectedxTypeItem == LocaleData.B_B_Good_Morning_Exercise) {
+              selectedxTypeImgpath = 'assets/img/workoutType/B_B_Good_Morning_Exercise.png';
+              videoURL = 'https://youtu.be/2__DMFtag7A';
+            } else if (selectedxTypeItem == LocaleData.B_B_Incline_Barbell_Row) {
+              selectedxTypeImgpath = 'assets/img/workoutType/B_B_Incline_Barbell_Row.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.B_B_Lying_Barbell_Row) {
+              selectedxTypeImgpath = 'assets/img/workoutType/B_B_Lying_Barbell_Row.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.B_B_Pendlay_Row) {
+              selectedxTypeImgpath = 'assets/img/workoutType/B_B_Pendlay_Row.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.B_B_Undergrip_Barbell_Row) {
+              selectedxTypeImgpath = 'assets/img/workoutType/B_B_Undergrip_Barbell_Row.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.B_D_Dumbbell_Row) {
+              selectedxTypeImgpath = 'assets/img/workoutType/B_D_Dumbbell_Row.png';
+              videoURL = 'https://youtu.be/ErAy1GVVZ-M';
+            } else if (selectedxTypeItem == LocaleData.B_D_Incline_Dumbbell_Row) {
+              selectedxTypeImgpath = 'assets/img/workoutType/B_D_Incline_Dumbbell_Row.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.B_D_One_Arm_Dumbbell_Row) {
+              selectedxTypeImgpath = 'assets/img/workoutType/B_D_One_Arm_Dumbbell_Row.png';
+              videoURL = 'https://youtu.be/vciXM0GnkmI';
+            } else if (selectedxTypeItem == LocaleData.B_D_Weighted_Chin_Up) {
+              selectedxTypeImgpath = 'assets/img/workoutType/B_D_Weighted_Chin_Up.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.B_D_Weighted_Pull_Ups) {
+              selectedxTypeImgpath = 'assets/img/workoutType/B_D_Weighted_Pull_Ups.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.B_M_Assist_Pull_Up_Machine) {
+              selectedxTypeImgpath = 'assets/img/workoutType/B_M_Assist_Pull_Up_Machine.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.B_M_Behind_The_Neck_Pulldown) {
+              selectedxTypeImgpath = 'assets/img/workoutType/B_M_Behind_The_Neck_Pulldown.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.B_M_Cable_Arm_Pulldown) {
+              selectedxTypeImgpath = 'assets/img/workoutType/B_M_Cable_Arm_Pulldown.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.B_M_Floor_Seated_Cable_Row) {
+              selectedxTypeImgpath = 'assets/img/workoutType/B_M_Floor_Seated_Cable_Row.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.B_M_Heavy_Hyperextension) {
+              selectedxTypeImgpath = 'assets/img/workoutType/B_M_Heavy_Hyperextension.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.B_M_High_Low_Machine) {
+              selectedxTypeImgpath = 'assets/img/workoutType/B_M_High_Low_Machine.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.B_M_Inverted_Row) {
+              selectedxTypeImgpath = 'assets/img/workoutType/B_M_Inverted_Row.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.B_M_Lat_Pulldown) {
+              selectedxTypeImgpath = 'assets/img/workoutType/B_M_Lat_Pulldown.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.B_M_Lateral_Wide_Pulldown) {
+              selectedxTypeImgpath = 'assets/img/workoutType/B_M_Lateral_Wide_Pulldown.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.B_M_Mcgrip_Lat_Pulldown) {
+              selectedxTypeImgpath = 'assets/img/workoutType/B_M_Mcgrip_Lat_Pulldown.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.B_M_One_Arm_Cable_Pull_Down) {
+              selectedxTypeImgpath = 'assets/img/workoutType/B_M_One_Arm_Cable_Pull_Down.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.B_M_One_Arm_High_Low_Machine) {
+              selectedxTypeImgpath = 'assets/img/workoutType/B_M_One_Arm_High_Low_Machine.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.B_M_One_Arm_Lateral_Wide_Pulldown) {
+              selectedxTypeImgpath = 'assets/img/workoutType/B_M_One_Arm_Lateral_Wide_Pulldown.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.B_M_One_Arm_Seated_Cable_Row) {
+              selectedxTypeImgpath = 'assets/img/workoutType/B_M_One_Arm_Seated_Cable_Row.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.B_M_One_Arm_Row_Machine) {
+              selectedxTypeImgpath = 'assets/img/workoutType/B_M_One_Arm_Row_Machine.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.B_M_Parallel_Grip_Lat_Pulldown) {
+              selectedxTypeImgpath = 'assets/img/workoutType/B_M_Parallel_Grip_Lat_Pulldown.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.B_M_Row_Machine) {
+              selectedxTypeImgpath = 'assets/img/workoutType/B_M_Row_Machine.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.B_M_Seated_Cable_Row) {
+              selectedxTypeImgpath = 'assets/img/workoutType/B_M_Seated_Cable_Row.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.B_M_Seated_Row_Machine) {
+              selectedxTypeImgpath = 'assets/img/workoutType/B_M_Seated_Row_Machine.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.B_M_Smith_Machine_Row) {
+              selectedxTypeImgpath = 'assets/img/workoutType/B_M_Smith_Machine_Row.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.B_M_T_Bar_Row_Machine) {
+              selectedxTypeImgpath = 'assets/img/workoutType/B_M_T_Bar_Row_Machine.png';
+              videoURL = 'https://youtu.be/y1GrFDU5et4';
+            } else if (selectedxTypeItem == LocaleData.B_M_Undergrab_Lat_Pulldown) {
+              selectedxTypeImgpath = 'assets/img/workoutType/B_M_Undergrab_Lat_Pulldown.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.B_M_Undergrip_High_Low_Machine) {
+              selectedxTypeImgpath = 'assets/img/workoutType/B_M_Undergrip_High_Low_Machine.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.B_B_Back_Extension) {
+              selectedxTypeImgpath = 'assets/img/workoutType/B_B_Back_Extension.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.B_B_Chin_Up) {
+              selectedxTypeImgpath = 'assets/img/workoutType/B_B_Chin_Up.png';
+              videoURL = 'https://youtu.be/24CixqZA-8k';
+            } else if (selectedxTypeItem == LocaleData.B_B_Hyper_Extension) {
+              selectedxTypeImgpath = 'assets/img/workoutType/B_B_Hyper_Extension.png';
+              videoURL = 'https://youtu.be/N2I6X1bwZaA';
+            } else if (selectedxTypeItem == LocaleData.B_B_Pull_Up) {
+              selectedxTypeImgpath = 'assets/img/workoutType/B_B_Pull_Up.png';
+              videoURL = 'https://youtu.be/nSUyfgWzc9M';
+            } else if (selectedxTypeItem == LocaleData.A_B_Abs_Rollout) {
+              selectedxTypeImgpath = 'assets/img/workoutType/A_B_Abs_Rollout.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.A_D_Dumbbell_Side_Bend) {
+              selectedxTypeImgpath = 'assets/img/workoutType/A_D_Dumbbell_Side_Bend.png';
+              videoURL = 'https://youtu.be/u2bMCVbcQqc';
+            } else if (selectedxTypeItem == LocaleData.A_D_Heavy_Decline_Sit_Up) {
+              selectedxTypeImgpath = 'assets/img/workoutType/A_D_Heavy_Decline_Sit_Up.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.A_D_Heavy_Updominal_Hip_Thrust) {
+              selectedxTypeImgpath = 'assets/img/workoutType/A_D_Heavy_Updominal_Hip_Thrust.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.A_D_Russian_Twist) {
+              selectedxTypeImgpath = 'assets/img/workoutType/A_D_Russian_Twist.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.A_D_Weighted_Decline_Crunch) {
+              selectedxTypeImgpath = 'assets/img/workoutType/A_D_Weighted_Decline_Crunch.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.A_M_Abdominal_Crunch_Machine) {
+              selectedxTypeImgpath = 'assets/img/workoutType/A_M_Abdominal_Crunch_Machine.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.A_M_Cable_Side_Bend) {
+              selectedxTypeImgpath = 'assets/img/workoutType/A_M_Cable_Side_Bend.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.A_M_Cable_Twist) {
+              selectedxTypeImgpath = 'assets/img/workoutType/A_M_Cable_Twist.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.A_M_Hanging_Knee_Raise) {
+              selectedxTypeImgpath = 'assets/img/workoutType/A_M_Hanging_Knee_Raise.png';
+              videoURL = 'https://youtu.be/XZQzqapu-DE';
+            } else if (selectedxTypeItem == LocaleData.A_M_Hanging_Leg_Raise) {
+              selectedxTypeImgpath = 'assets/img/workoutType/A_M_Hanging_Leg_Raise.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.A_M_Tods_To_Bar) {
+              selectedxTypeImgpath = 'assets/img/workoutType/A_M_Tods_To_Bar.png';
+              videoURL = 'https://youtu.be/uGIXMOHc2Sg';
+            } else if (selectedxTypeItem == LocaleData.A_B_45_Degree_Side_Bend) {
+              selectedxTypeImgpath = 'assets/img/workoutType/A_B_45_Degree_Side_Bend.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.A_B_Abs_Air_Bike) {
+              selectedxTypeImgpath = 'assets/img/workoutType/A_B_Abs_Air_Bike.png';
+              videoURL = 'https://youtu.be/7k-GKzeiMmk';
+            } else if (selectedxTypeItem == LocaleData.A_B_Crunch) {
+              selectedxTypeImgpath = 'assets/img/workoutType/A_B_Crunch.png';
+              videoURL = 'https://youtu.be/G3cc4LdZwhg';
+            } else if (selectedxTypeItem == LocaleData.A_B_Decline_Crunch) {
+              selectedxTypeImgpath = 'assets/img/workoutType/A_B_Decline_Crunch.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.A_B_Decline_Reverse_Crunch) {
+              selectedxTypeImgpath = 'assets/img/workoutType/A_B_Decline_Reverse_Crunch.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.A_B_Decline_Sit_Up) {
+              selectedxTypeImgpath = 'assets/img/workoutType/A_B_Decline_Sit_Up.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.A_B_Heel_Touch) {
+              selectedxTypeImgpath = 'assets/img/workoutType/A_B_Heel_Touch.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.A_B_Hollow_Position) {
+              selectedxTypeImgpath = 'assets/img/workoutType/A_B_Hollow_Position.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.A_B_Hollow_Rock) {
+              selectedxTypeImgpath = 'assets/img/workoutType/A_B_Hollow_Rock.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.A_B_Leg_Raise) {
+              selectedxTypeImgpath = 'assets/img/workoutType/A_B_Leg_Raise.png';
+              videoURL = 'https://youtu.be/5RHqSaab9RA';
+            } else if (selectedxTypeItem == LocaleData.A_B_Pilates_Jackknife) {
+              selectedxTypeImgpath = 'assets/img/workoutType/A_B_Pilates_Jackknife.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.A_B_Plank) {
+              selectedxTypeImgpath = 'assets/img/workoutType/A_B_Plank.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.A_B_Reverse_Crunch) {
+              selectedxTypeImgpath = 'assets/img/workoutType/A_B_Reverse_Crunch.png';
+              videoURL = 'https://youtu.be/pVwPV9z8A44';
+            } else if (selectedxTypeItem == LocaleData.A_B_Side_Crunches) {
+              selectedxTypeImgpath = 'assets/img/workoutType/A_B_Side_Crunches.png';
+              videoURL = 'https://youtu.be/M9404UBHLSE';
+            } else if (selectedxTypeItem == LocaleData.A_B_Side_Plank) {
+              selectedxTypeImgpath = 'assets/img/workoutType/A_B_Side_Plank.png';
+              videoURL = '';
+            } else if (selectedxTypeItem == LocaleData.A_B_Sit_Up) {
+              selectedxTypeImgpath = 'assets/img/workoutType/A_B_Sit_Up.png';
+              videoURL = 'https://youtu.be/HDrWX5_JSzM';
+            } else if (selectedxTypeItem == LocaleData.A_B_Updominal_Hip_Thrust) {
+              selectedxTypeImgpath = 'assets/img/workoutType/A_B_Updominal_Hip_Thrust.png';
+              videoURL = 'https://youtu.be/uENEi455Ozo';
+            } else if (selectedxTypeItem == LocaleData.A_B_V_Up) {
+              selectedxTypeImgpath = 'assets/img/workoutType/A_B_V_Up.png';
+              videoURL = '';
+            } else {
+              videoURL = 'default';
+            }
+
+            if (videoURL == '') {
+              videoURL = 'default';
+            }
 
             return Scaffold(
               floatingActionButtonLocation: FloatingActionButtonLocation.miniCenterDocked,
@@ -1696,7 +1430,9 @@ class XlogCreateViewState extends State<XlogCreateView> {
                                   backgroundColor: TColor.black, //TColor.secondaryColor1,
                                   elevation: 2,
 
-                                  label: const Text('ToDo'),
+                                  label: Text(
+                                    LocaleData.toDo.getString((context)),
+                                  ),
                                   icon: const Icon(
                                     Icons.checklist_outlined,
                                   ),
@@ -1784,7 +1520,7 @@ class XlogCreateViewState extends State<XlogCreateView> {
                                                   child: Center(
                                                     child: Text(
                                                       //"${todaydate.month}/${todaydate.day} ToDo $todayaddcountComplete($todayaddcount)",
-                                                      "${todaydate.month}/${todaydate.day} ToDo",
+                                                      "${todaydate.month}/${todaydate.day} ${LocaleData.toDo.getString((context))}",
                                                       style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
                                                     ),
                                                   ),
@@ -1879,11 +1615,11 @@ class XlogCreateViewState extends State<XlogCreateView> {
                                                   ],
                                                 ),
                                                 child: FloatingActionButton.extended(
-                                                  heroTag: "btn3",
+                                                  heroTag: 'btn3',
                                                   elevation: 1,
                                                   backgroundColor: TColor.white,
                                                   label: Text(
-                                                    'close',
+                                                    LocaleData.close.getString((context)),
                                                     style: TextStyle(color: TColor.black),
                                                   ),
                                                   icon: Icon(
@@ -1915,7 +1651,7 @@ class XlogCreateViewState extends State<XlogCreateView> {
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: FloatingActionButton.small(
-                              heroTag: "btn2",
+                              heroTag: 'btn2',
                               backgroundColor: TColor.white, //TColor.secondaryColor1,
                               elevation: 1,
                               child: TextButton(
@@ -1966,7 +1702,7 @@ class XlogCreateViewState extends State<XlogCreateView> {
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: FloatingActionButton.extended(
-                              heroTag: "btn1",
+                              heroTag: 'btn1',
                               backgroundColor: TColor.secondaryColor1, //TColor.secondaryColor1,
                               elevation: 2,
                               label: Text(
@@ -2203,11 +1939,11 @@ class XlogCreateViewState extends State<XlogCreateView> {
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: FloatingActionButton.extended(
-                              heroTag: "btn1",
+                              heroTag: 'btn1',
                               elevation: 1,
                               backgroundColor: TColor.white,
                               label: Text(
-                                'close',
+                                LocaleData.close.getString((context)),
                                 style: TextStyle(color: TColor.black),
                               ),
                               icon: Icon(
@@ -2252,7 +1988,7 @@ class XlogCreateViewState extends State<XlogCreateView> {
                         FittedBox(
                           child: FittedBox(
                             child: Text(
-                              '  $xlogcreateviewtitle',
+                              '  ${LocaleData.workoutdiary.getString(context)}',
                               style: TextStyle(color: xlogcreateviewtitlecolor, fontSize: xlogcreateviewtitlefontSize, fontWeight: FontWeight.w700),
                             ),
                           ),
@@ -2260,9 +1996,9 @@ class XlogCreateViewState extends State<XlogCreateView> {
                         Row(
                           children: [
                             Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                              padding: const EdgeInsets.symmetric(horizontal: 12.0),
                               child: DropdownButton2(
-                                customButton: const Icon(Icons.language, size: 22),
+                                customButton: const Icon(Icons.language),
                                 dropdownStyleData: DropdownStyleData(
                                   maxHeight: 500,
                                   width: 200,
@@ -2283,39 +2019,39 @@ class XlogCreateViewState extends State<XlogCreateView> {
                                 ),
                                 items: const [
                                   DropdownMenuItem(
-                                    value: "en",
-                                    child: Text("English"),
-                                  ),
-                                  DropdownMenuItem(
-                                    value: "de",
-                                    child: Text("German"),
-                                  ),
-                                  DropdownMenuItem(
-                                    value: "ko",
-                                    child: Text("Korean"),
+                                    value: 'en',
+                                    child: Text('English'),
                                   ),
                                   // DropdownMenuItem(
-                                  //   value: "ja",
+                                  //   value: 'de',
+                                  //   child: Text('German'),
+                                  // ),
+                                  DropdownMenuItem(
+                                    value: 'ko',
+                                    child: Text("한국어"),
+                                  ),
+                                  // DropdownMenuItem(
+                                  //   value: 'ja',
                                   //   child: Text("Japanese"),
                                   // ),
                                   // DropdownMenuItem(
-                                  //   value: "es",
+                                  //   value: 'es',
                                   //   child: Text("Spanish"),
                                   // ),
+                                  DropdownMenuItem(
+                                    value: 'zh',
+                                    child: Text("中国人"),
+                                  ),
                                   // DropdownMenuItem(
-                                  //   value: "zh",
-                                  //   child: Text("Chinese"),
-                                  // ),
-                                  // DropdownMenuItem(
-                                  //   value: "pt",
+                                  //   value: 'pt',
                                   //   child: Text("Portuguese"),
                                   // ),
                                   // DropdownMenuItem(
-                                  //   value: "ar",
+                                  //   value: 'ar',
                                   //   child: Text("Arabic"),
                                   // ),
                                   // DropdownMenuItem(
-                                  //   value: "hi",
+                                  //   value: 'hi',
                                   //   child: Text("Hindi"),
                                   // ),
                                 ],
@@ -2330,9 +2066,9 @@ class XlogCreateViewState extends State<XlogCreateView> {
                               showOnOff: true,
                               activeColor: TColor.black,
                               // activeTextColor: TColor.white,
-                              activeText: activeText,
+                              activeText: LocaleData.LOGO.getString(context),
                               // inactiveTextColor: TColor.black,
-                              inactiveText: inactiveText,
+                              inactiveText: LocaleData.logo.getString(context),
                               valueFontSize: valueFontSize,
                               value: isselectedlog,
                               onToggle: (val) async {
@@ -2345,20 +2081,30 @@ class XlogCreateViewState extends State<XlogCreateView> {
                                       return Column(
                                         children: [
                                           Container(height: media.height * 0.125),
-                                          RoundButton(
+                                          SizedBox(
+                                            height: 48,
+                                            width: double.infinity,
+                                            child: RoundButton(
                                               type: RoundButtonType.textGradient,
                                               onPressed: () {
                                                 _showRewardedInterstitialAd();
                                                 setState(() {});
                                               },
-                                              title: '광고보기'),
+                                              title: LocaleData.seeAds.getString((context)),
+                                            ),
+                                          ),
                                           Container(height: 8),
-                                          RoundButton(
+                                          SizedBox(
+                                            height: 48,
+                                            width: double.infinity,
+                                            child: RoundButton(
                                               type: RoundButtonType.textGradient,
                                               onPressed: () {
                                                 Navigator.pop(context);
                                               },
-                                              title: '돌아가기'),
+                                              title: LocaleData.back_button_text.getString((context)),
+                                            ),
+                                          ),
                                         ],
                                       );
                                     },
@@ -2378,6 +2124,7 @@ class XlogCreateViewState extends State<XlogCreateView> {
                                         builder: (context) => XlogXimgDateCalendarView(
                                               xlogs: xlogs,
                                               ximgs: ximgs,
+                                              weightUnits: selectedWeighUnint,
                                             ))).then((value) {
                                   _update();
                                 });
@@ -2389,7 +2136,12 @@ class XlogCreateViewState extends State<XlogCreateView> {
                             ),
                             IconButton(
                                 onPressed: (() {
-                                  Navigator.push(context, MaterialPageRoute(builder: (context) => const SettingView())).then((value) {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => SettingView(
+                                                weightUnits: selectedWeighUnint,
+                                              ))).then((value) {
                                     _update();
                                   });
                                 }),
@@ -2436,22 +2188,79 @@ class XlogCreateViewState extends State<XlogCreateView> {
                                 decoration: BoxDecoration(color: TColor.black.withOpacity(0.25), borderRadius: const BorderRadius.all(Radius.circular(10))),
                                 child: FittedBox(
                                   child: ((_timeformat % 3) + 1 == 1)
-                                      ? TimerBuilder.periodic((const Duration(seconds: 1)),
-                                          builder: (context) => Text(
-                                                DateFormat(' M/ d E \n a hh:mm:ss ').format(DateTime.now()),
+                                      ? TimerBuilder.periodic(
+                                          (const Duration(seconds: 1)),
+                                          builder: (context) => Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Row(
+                                                children: [
+                                                  Text(
+                                                    DateFormat((' M/ d ')).format(DateTime.now()),
+                                                    style: TextStyle(color: TColor.white, fontSize: 16, fontWeight: FontWeight.w700),
+                                                  ),
+                                                  Text(
+                                                    DateFormat.E('${LocaleData.locale.getString(context)}').format(DateTime.now()),
+                                                    style: TextStyle(color: TColor.white, fontSize: 16, fontWeight: FontWeight.w700),
+                                                  ),
+                                                ],
+                                              ),
+                                              Text(
+                                                DateFormat((' a hh:mm:ss ')).format(DateTime.now()),
                                                 style: TextStyle(color: TColor.white, fontSize: 16, fontWeight: FontWeight.w700),
-                                              ))
+                                              ),
+                                            ],
+                                          ),
+                                        )
                                       : ((_timeformat % 3) + 1 == 2)
-                                          ? TimerBuilder.periodic((const Duration(minutes: 1)),
-                                              builder: (context) => Text(
-                                                    DateFormat(' M/ d E \n a hh:mm').format(DateTime.now()),
+                                          ? TimerBuilder.periodic(
+                                              (const Duration(minutes: 1)),
+                                              builder: (context) => Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  Row(
+                                                    children: [
+                                                      Text(
+                                                        DateFormat((' M/ d ')).format(DateTime.now()),
+                                                        style: TextStyle(color: TColor.white, fontSize: 16, fontWeight: FontWeight.w700),
+                                                      ),
+                                                      Text(
+                                                        DateFormat.E('${LocaleData.locale.getString(context)}').format(DateTime.now()),
+                                                        style: TextStyle(color: TColor.white, fontSize: 16, fontWeight: FontWeight.w700),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  Text(
+                                                    DateFormat((' a hh:mm ')).format(DateTime.now()),
                                                     style: TextStyle(color: TColor.white, fontSize: 16, fontWeight: FontWeight.w700),
-                                                  ))
-                                          : TimerBuilder.periodic((const Duration(days: 1)),
-                                              builder: (context) => Text(
-                                                    DateFormat(' M/ d E ').format(DateTime.now()),
-                                                    style: TextStyle(color: TColor.white, fontSize: 16, fontWeight: FontWeight.w700),
-                                                  )), //((_timeformat%3)+1==3)일 때
+                                                  ),
+                                                ],
+                                              ),
+                                            )
+                                          : TimerBuilder.periodic(
+                                              (const Duration(days: 1)),
+                                              builder: (context) => Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  Row(
+                                                    children: [
+                                                      Text(
+                                                        DateFormat((' M/ d ')).format(DateTime.now()),
+                                                        style: TextStyle(color: TColor.white, fontSize: 16, fontWeight: FontWeight.w700),
+                                                      ),
+                                                      Text(
+                                                        DateFormat.E('${LocaleData.locale.getString(context)}').format(DateTime.now()),
+                                                        style: TextStyle(color: TColor.white, fontSize: 16, fontWeight: FontWeight.w700),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  // Text(
+                                                  //   DateFormat((' a hh:mm:ss ')).format(DateTime.now()),
+                                                  //   style: TextStyle(color: TColor.white, fontSize: 16, fontWeight: FontWeight.w700),
+                                                  // ),
+                                                ],
+                                              ),
+                                            ), //((_timeformat%3)+1==3)일 때
                                 ),
                               ),
                             ),
@@ -2469,7 +2278,7 @@ class XlogCreateViewState extends State<XlogCreateView> {
                                         decoration: BoxDecoration(color: TColor.black.withOpacity(0.25), borderRadius: const BorderRadius.all(Radius.circular(10))),
                                         child: FittedBox(
                                           child: Text(
-                                            ' $logotitle ',
+                                            ' ${LocaleData.workoutdiary.getString(context)} ',
                                             style: TextStyle(color: TColor.white, fontSize: 16, fontWeight: FontWeight.w700),
                                           ),
                                         ),
@@ -2575,7 +2384,7 @@ class XlogCreateViewState extends State<XlogCreateView> {
                                                     });
                                                   } else {
                                                     Fluttertoast.showToast(
-                                                      msg: "❗인터넷 연결을 확인해보세요❗",
+                                                      msg: LocaleData.toastmessage_internetconnect.getString((context)),
                                                       toastLength: Toast.LENGTH_SHORT,
                                                       gravity: ToastGravity.TOP,
                                                       backgroundColor: TColor.black,
@@ -2612,7 +2421,7 @@ class XlogCreateViewState extends State<XlogCreateView> {
                               : Row(
                                   children: [
                                     IconButton(
-                                        onPressed: () {
+                                        onPressed: () async {
                                           AppImagePicker(source: ImageSource.gallery).pick(
                                             onPick: (File? image) {
                                               Uint8List bytes;
@@ -2671,7 +2480,7 @@ class XlogCreateViewState extends State<XlogCreateView> {
                                           color: TColor.black,
                                         )),
                                     IconButton(
-                                      onPressed: () {
+                                      onPressed: () async {
                                         AppImagePicker(source: ImageSource.camera).pick(onPick: (File? image) {
                                           Uint8List bytes;
                                           Uint8List uint8List;
@@ -2802,13 +2611,13 @@ class XlogCreateViewState extends State<XlogCreateView> {
                                           )),
                                       IconButton(
                                           onPressed: () async {
-                                            showToastMessage("저장 중!! ⏳");
+                                            showToastMessage(LocaleData.toastmessage_imgsaveing.getString((context)));
                                             final screenshotimage = await screenshotController.capture();
                                             if (screenshotimage == null) return;
 
                                             await saveImage(screenshotimage);
 
-                                            showToastMessage("저장 성공 😘");
+                                            showToastMessage(LocaleData.toastmessage_imgsavesuccess.getString((context)));
                                           },
                                           icon: Icon(
                                             Icons.download_rounded,
@@ -2902,224 +2711,230 @@ class XlogCreateViewState extends State<XlogCreateView> {
                                       const SizedBox(width: 4),
                                       for (final bodyPart in BodyPart.values)
                                         Padding(
-                                          padding: const EdgeInsets.only(right: 8.0),
-                                          child: SizedBox(
-                                            width: bodypartbuttonwidth,
-                                            height: bodypartbuttonheight,
-                                            child: RoundButton(
-                                              title: " ${bodyPart.koreanName}",
-                                              type: (_isbodypartcontroller == bodyPart.koreanName) ? RoundButtonType.bgSGradient : RoundButtonType.textGradient,
-                                              fontSize: bodypartbuttonfontSize,
-                                              fontWeight: FontWeight.w700,
-                                              onPressed: () {
-                                                setState(() {
-                                                  //Adjust the controller to the selected bodyPart
-                                                  _isbodypartcontroller = bodyPart.koreanName;
+                                          padding: const EdgeInsets.only(right: 4.0),
+                                          child: RoundButton(
+                                            title: (bodyPart.koreanName == '하체')
+                                                ? LocaleData.legs.getString((context))
+                                                : (bodyPart.koreanName == '어깨')
+                                                    ? LocaleData.shoulders.getString((context))
+                                                    : (bodyPart.koreanName == '가슴')
+                                                        ? LocaleData.chest.getString((context))
+                                                        : (bodyPart.koreanName == '팔')
+                                                            ? LocaleData.arms.getString((context))
+                                                            : (bodyPart.koreanName == '등')
+                                                                ? LocaleData.back.getString((context))
+                                                                : LocaleData.abs.getString((context)),
+                                            type: (_isbodypartcontroller == bodyPart.koreanName) ? RoundButtonType.bgSGradient : RoundButtonType.textGradient,
+                                            fontSize: bodypartbuttonfontSize,
+                                            fontWeight: FontWeight.w700,
+                                            onPressed: () {
+                                              setState(() {
+                                                //Adjust the controller to the selected bodyPart
+                                                _isbodypartcontroller = bodyPart.koreanName;
 
-                                                  switch (_isbodypartcontroller) {
-                                                    case '하체':
-                                                      //필터 확인 후 운동 추가
-                                                      //리스트 초기화 후 생성을 통해 정렬 및 제거기능 생략
-                                                      exerciseList[BodyPart.legs]?.clear();
-                                                      //[바벨]필터
-                                                      if (isSelectedBabel == true) {
-                                                        for (int i = 0; i < legsBabel.length; i++) {
-                                                          exerciseList[BodyPart.legs]?.add(legsBabel[i]);
-                                                        }
+                                                switch (_isbodypartcontroller) {
+                                                  case '하체':
+                                                    //필터 확인 후 운동 추가
+                                                    //리스트 초기화 후 생성을 통해 정렬 및 제거기능 생략
+                                                    exerciseList[BodyPart.legs]?.clear();
+                                                    //[바벨]필터
+                                                    if (isSelectedBabel == true) {
+                                                      for (int i = 0; i < legsBabel.length; i++) {
+                                                        exerciseList[BodyPart.legs]?.add(legsBabel[i]);
                                                       }
-                                                      //[덤벨]필터
-                                                      if (isSelectedDumbbell == true) {
-                                                        for (int i = 0; i < legsDumbbell.length; i++) {
-                                                          exerciseList[BodyPart.legs]?.add(legsDumbbell[i]);
-                                                        }
+                                                    }
+                                                    //[덤벨]필터
+                                                    if (isSelectedDumbbell == true) {
+                                                      for (int i = 0; i < legsDumbbell.length; i++) {
+                                                        exerciseList[BodyPart.legs]?.add(legsDumbbell[i]);
                                                       }
-                                                      //[덤벨]필터
-                                                      if (isSelectedMachine == true) {
-                                                        for (int i = 0; i < legsMachine.length; i++) {
-                                                          exerciseList[BodyPart.legs]?.add(legsMachine[i]);
-                                                        }
+                                                    }
+                                                    //[덤벨]필터
+                                                    if (isSelectedMachine == true) {
+                                                      for (int i = 0; i < legsMachine.length; i++) {
+                                                        exerciseList[BodyPart.legs]?.add(legsMachine[i]);
                                                       }
-                                                      //[덤벨]필터
-                                                      if (isSelectedBodyweight == true) {
-                                                        for (int i = 0; i < legsBodyweight.length; i++) {
-                                                          exerciseList[BodyPart.legs]?.add(legsBodyweight[i]);
-                                                        }
+                                                    }
+                                                    //[덤벨]필터
+                                                    if (isSelectedBodyweight == true) {
+                                                      for (int i = 0; i < legsBodyweight.length; i++) {
+                                                        exerciseList[BodyPart.legs]?.add(legsBodyweight[i]);
                                                       }
-                                                      //
-                                                      exerciseItems = exerciseList[BodyPart.legs]!;
+                                                    }
+                                                    //
+                                                    exerciseItems = exerciseList[BodyPart.legs]!;
 
-                                                      break;
-                                                    case '어깨':
-                                                      //필터 확인 후 운동 추가
-                                                      //리스트 초기화 후 생성을 통해 정렬 및 제거기능 생략
-                                                      exerciseList[BodyPart.shoulders]?.clear();
-                                                      //[바벨]필터
-                                                      if (isSelectedBabel == true) {
-                                                        for (int i = 0; i < shouldersBabel.length; i++) {
-                                                          exerciseList[BodyPart.shoulders]?.add(shouldersBabel[i]);
-                                                        }
+                                                    break;
+                                                  case '어깨':
+                                                    //필터 확인 후 운동 추가
+                                                    //리스트 초기화 후 생성을 통해 정렬 및 제거기능 생략
+                                                    exerciseList[BodyPart.shoulders]?.clear();
+                                                    //[바벨]필터
+                                                    if (isSelectedBabel == true) {
+                                                      for (int i = 0; i < shouldersBabel.length; i++) {
+                                                        exerciseList[BodyPart.shoulders]?.add(shouldersBabel[i]);
                                                       }
-                                                      //[덤벨]필터
-                                                      if (isSelectedDumbbell == true) {
-                                                        for (int i = 0; i < shouldersDumbbell.length; i++) {
-                                                          exerciseList[BodyPart.shoulders]?.add(shouldersDumbbell[i]);
-                                                        }
+                                                    }
+                                                    //[덤벨]필터
+                                                    if (isSelectedDumbbell == true) {
+                                                      for (int i = 0; i < shouldersDumbbell.length; i++) {
+                                                        exerciseList[BodyPart.shoulders]?.add(shouldersDumbbell[i]);
                                                       }
-                                                      //[덤벨]필터
-                                                      if (isSelectedMachine == true) {
-                                                        for (int i = 0; i < shouldersMachine.length; i++) {
-                                                          exerciseList[BodyPart.shoulders]?.add(shouldersMachine[i]);
-                                                        }
+                                                    }
+                                                    //[덤벨]필터
+                                                    if (isSelectedMachine == true) {
+                                                      for (int i = 0; i < shouldersMachine.length; i++) {
+                                                        exerciseList[BodyPart.shoulders]?.add(shouldersMachine[i]);
                                                       }
-                                                      //[덤벨]필터
-                                                      if (isSelectedBodyweight == true) {
-                                                        for (int i = 0; i < shouldersBodyweight.length; i++) {
-                                                          exerciseList[BodyPart.shoulders]?.add(shouldersBodyweight[i]);
-                                                        }
+                                                    }
+                                                    //[덤벨]필터
+                                                    if (isSelectedBodyweight == true) {
+                                                      for (int i = 0; i < shouldersBodyweight.length; i++) {
+                                                        exerciseList[BodyPart.shoulders]?.add(shouldersBodyweight[i]);
                                                       }
-                                                      //
-                                                      exerciseItems = exerciseList[BodyPart.shoulders]!;
+                                                    }
+                                                    //
+                                                    exerciseItems = exerciseList[BodyPart.shoulders]!;
 
-                                                      break;
-                                                    case '가슴':
-                                                      //필터 확인 후 운동 추가
-                                                      //리스트 초기화 후 생성을 통해 정렬 및 제거기능 생략
-                                                      exerciseList[BodyPart.chest]?.clear();
-                                                      //[바벨]필터
-                                                      if (isSelectedBabel == true) {
-                                                        for (int i = 0; i < chestBabel.length; i++) {
-                                                          exerciseList[BodyPart.chest]?.add(chestBabel[i]);
-                                                        }
+                                                    break;
+                                                  case '가슴':
+                                                    //필터 확인 후 운동 추가
+                                                    //리스트 초기화 후 생성을 통해 정렬 및 제거기능 생략
+                                                    exerciseList[BodyPart.chest]?.clear();
+                                                    //[바벨]필터
+                                                    if (isSelectedBabel == true) {
+                                                      for (int i = 0; i < chestBabel.length; i++) {
+                                                        exerciseList[BodyPart.chest]?.add(chestBabel[i]);
                                                       }
-                                                      //[덤벨]필터
-                                                      if (isSelectedDumbbell == true) {
-                                                        for (int i = 0; i < chestDumbbell.length; i++) {
-                                                          exerciseList[BodyPart.chest]?.add(chestDumbbell[i]);
-                                                        }
+                                                    }
+                                                    //[덤벨]필터
+                                                    if (isSelectedDumbbell == true) {
+                                                      for (int i = 0; i < chestDumbbell.length; i++) {
+                                                        exerciseList[BodyPart.chest]?.add(chestDumbbell[i]);
                                                       }
-                                                      //[덤벨]필터
-                                                      if (isSelectedMachine == true) {
-                                                        for (int i = 0; i < chestMachine.length; i++) {
-                                                          exerciseList[BodyPart.chest]?.add(chestMachine[i]);
-                                                        }
+                                                    }
+                                                    //[덤벨]필터
+                                                    if (isSelectedMachine == true) {
+                                                      for (int i = 0; i < chestMachine.length; i++) {
+                                                        exerciseList[BodyPart.chest]?.add(chestMachine[i]);
                                                       }
-                                                      //[덤벨]필터
-                                                      if (isSelectedBodyweight == true) {
-                                                        for (int i = 0; i < chestBodyweight.length; i++) {
-                                                          exerciseList[BodyPart.chest]?.add(chestBodyweight[i]);
-                                                        }
+                                                    }
+                                                    //[덤벨]필터
+                                                    if (isSelectedBodyweight == true) {
+                                                      for (int i = 0; i < chestBodyweight.length; i++) {
+                                                        exerciseList[BodyPart.chest]?.add(chestBodyweight[i]);
                                                       }
-                                                      //
-                                                      exerciseItems = exerciseList[BodyPart.chest]!;
+                                                    }
+                                                    //
+                                                    exerciseItems = exerciseList[BodyPart.chest]!;
 
-                                                      break;
-                                                    case '팔':
-                                                      //필터 확인 후 운동 추가
-                                                      //리스트 초기화 후 생성을 통해 정렬 및 제거기능 생략
-                                                      exerciseList[BodyPart.arms]?.clear();
-                                                      //[바벨]필터
-                                                      if (isSelectedBabel == true) {
-                                                        for (int i = 0; i < armsBabel.length; i++) {
-                                                          exerciseList[BodyPart.arms]?.add(armsBabel[i]);
-                                                        }
+                                                    break;
+                                                  case '팔':
+                                                    //필터 확인 후 운동 추가
+                                                    //리스트 초기화 후 생성을 통해 정렬 및 제거기능 생략
+                                                    exerciseList[BodyPart.arms]?.clear();
+                                                    //[바벨]필터
+                                                    if (isSelectedBabel == true) {
+                                                      for (int i = 0; i < armsBabel.length; i++) {
+                                                        exerciseList[BodyPart.arms]?.add(armsBabel[i]);
                                                       }
-                                                      //[덤벨]필터
-                                                      if (isSelectedDumbbell == true) {
-                                                        for (int i = 0; i < armsDumbbell.length; i++) {
-                                                          exerciseList[BodyPart.arms]?.add(armsDumbbell[i]);
-                                                        }
+                                                    }
+                                                    //[덤벨]필터
+                                                    if (isSelectedDumbbell == true) {
+                                                      for (int i = 0; i < armsDumbbell.length; i++) {
+                                                        exerciseList[BodyPart.arms]?.add(armsDumbbell[i]);
                                                       }
-                                                      //[덤벨]필터
-                                                      if (isSelectedMachine == true) {
-                                                        for (int i = 0; i < armsMachine.length; i++) {
-                                                          exerciseList[BodyPart.arms]?.add(armsMachine[i]);
-                                                        }
+                                                    }
+                                                    //[덤벨]필터
+                                                    if (isSelectedMachine == true) {
+                                                      for (int i = 0; i < armsMachine.length; i++) {
+                                                        exerciseList[BodyPart.arms]?.add(armsMachine[i]);
                                                       }
-                                                      //[덤벨]필터
-                                                      if (isSelectedBodyweight == true) {
-                                                        for (int i = 0; i < armsBodyweight.length; i++) {
-                                                          exerciseList[BodyPart.arms]?.add(armsBodyweight[i]);
-                                                        }
+                                                    }
+                                                    //[덤벨]필터
+                                                    if (isSelectedBodyweight == true) {
+                                                      for (int i = 0; i < armsBodyweight.length; i++) {
+                                                        exerciseList[BodyPart.arms]?.add(armsBodyweight[i]);
                                                       }
-                                                      //
-                                                      exerciseItems = exerciseList[BodyPart.arms]!;
+                                                    }
+                                                    //
+                                                    exerciseItems = exerciseList[BodyPart.arms]!;
 
-                                                      break;
-                                                    case '등':
-                                                      //필터 확인 후 운동 추가
-                                                      //리스트 초기화 후 생성을 통해 정렬 및 제거기능 생략
-                                                      exerciseList[BodyPart.back]?.clear();
-                                                      //[바벨]필터
-                                                      if (isSelectedBabel == true) {
-                                                        for (int i = 0; i < backBabel.length; i++) {
-                                                          exerciseList[BodyPart.back]?.add(backBabel[i]);
-                                                        }
+                                                    break;
+                                                  case '등':
+                                                    //필터 확인 후 운동 추가
+                                                    //리스트 초기화 후 생성을 통해 정렬 및 제거기능 생략
+                                                    exerciseList[BodyPart.back]?.clear();
+                                                    //[바벨]필터
+                                                    if (isSelectedBabel == true) {
+                                                      for (int i = 0; i < backBabel.length; i++) {
+                                                        exerciseList[BodyPart.back]?.add(backBabel[i]);
                                                       }
-                                                      //[덤벨]필터
-                                                      if (isSelectedDumbbell == true) {
-                                                        for (int i = 0; i < backDumbbell.length; i++) {
-                                                          exerciseList[BodyPart.back]?.add(backDumbbell[i]);
-                                                        }
+                                                    }
+                                                    //[덤벨]필터
+                                                    if (isSelectedDumbbell == true) {
+                                                      for (int i = 0; i < backDumbbell.length; i++) {
+                                                        exerciseList[BodyPart.back]?.add(backDumbbell[i]);
                                                       }
-                                                      //[덤벨]필터
-                                                      if (isSelectedMachine == true) {
-                                                        for (int i = 0; i < backMachine.length; i++) {
-                                                          exerciseList[BodyPart.back]?.add(backMachine[i]);
-                                                        }
+                                                    }
+                                                    //[덤벨]필터
+                                                    if (isSelectedMachine == true) {
+                                                      for (int i = 0; i < backMachine.length; i++) {
+                                                        exerciseList[BodyPart.back]?.add(backMachine[i]);
                                                       }
-                                                      //[덤벨]필터
-                                                      if (isSelectedBodyweight == true) {
-                                                        for (int i = 0; i < backBodyweight.length; i++) {
-                                                          exerciseList[BodyPart.back]?.add(backBodyweight[i]);
-                                                        }
+                                                    }
+                                                    //[덤벨]필터
+                                                    if (isSelectedBodyweight == true) {
+                                                      for (int i = 0; i < backBodyweight.length; i++) {
+                                                        exerciseList[BodyPart.back]?.add(backBodyweight[i]);
                                                       }
-                                                      //
-                                                      exerciseItems = exerciseList[BodyPart.back]!;
+                                                    }
+                                                    //
+                                                    exerciseItems = exerciseList[BodyPart.back]!;
 
-                                                      break;
-                                                    case '복근':
-                                                      //필터 확인 후 운동 추가
-                                                      //리스트 초기화 후 생성을 통해 정렬 및 제거기능 생략
-                                                      exerciseList[BodyPart.abs]?.clear();
-                                                      //[바벨]필터
-                                                      if (isSelectedBabel == true) {
-                                                        for (int i = 0; i < absBabel.length; i++) {
-                                                          exerciseList[BodyPart.abs]?.add(absBabel[i]);
-                                                        }
+                                                    break;
+                                                  case '복근':
+                                                    //필터 확인 후 운동 추가
+                                                    //리스트 초기화 후 생성을 통해 정렬 및 제거기능 생략
+                                                    exerciseList[BodyPart.abs]?.clear();
+                                                    //[바벨]필터
+                                                    if (isSelectedBabel == true) {
+                                                      for (int i = 0; i < absBabel.length; i++) {
+                                                        exerciseList[BodyPart.abs]?.add(absBabel[i]);
                                                       }
-                                                      //[덤벨]필터
-                                                      if (isSelectedDumbbell == true) {
-                                                        for (int i = 0; i < absDumbbell.length; i++) {
-                                                          exerciseList[BodyPart.abs]?.add(absDumbbell[i]);
-                                                        }
+                                                    }
+                                                    //[덤벨]필터
+                                                    if (isSelectedDumbbell == true) {
+                                                      for (int i = 0; i < absDumbbell.length; i++) {
+                                                        exerciseList[BodyPart.abs]?.add(absDumbbell[i]);
                                                       }
-                                                      //[덤벨]필터
-                                                      if (isSelectedMachine == true) {
-                                                        for (int i = 0; i < absMachine.length; i++) {
-                                                          exerciseList[BodyPart.abs]?.add(absMachine[i]);
-                                                        }
+                                                    }
+                                                    //[덤벨]필터
+                                                    if (isSelectedMachine == true) {
+                                                      for (int i = 0; i < absMachine.length; i++) {
+                                                        exerciseList[BodyPart.abs]?.add(absMachine[i]);
                                                       }
-                                                      //[덤벨]필터
-                                                      if (isSelectedBodyweight == true) {
-                                                        for (int i = 0; i < absBodyweight.length; i++) {
-                                                          exerciseList[BodyPart.abs]?.add(absBodyweight[i]);
-                                                        }
+                                                    }
+                                                    //[덤벨]필터
+                                                    if (isSelectedBodyweight == true) {
+                                                      for (int i = 0; i < absBodyweight.length; i++) {
+                                                        exerciseList[BodyPart.abs]?.add(absBodyweight[i]);
                                                       }
-                                                      //
-                                                      exerciseItems = exerciseList[BodyPart.abs]!;
+                                                    }
+                                                    //
+                                                    exerciseItems = exerciseList[BodyPart.abs]!;
 
-                                                      break;
-                                                  }
+                                                    break;
+                                                }
 
-                                                  if (selectedxTypeIndex > exerciseItems.length - 1) {
-                                                    selectedxTypeItem = exerciseItems[exerciseItems.length - 1];
-                                                    selectedxTypeIndex = exerciseItems.length - 1;
-                                                  } else {
-                                                    selectedxTypeItem = exerciseItems[selectedxTypeIndex];
-                                                  }
-                                                });
-                                              },
-                                            ),
+                                                if (selectedxTypeIndex > exerciseItems.length - 1) {
+                                                  selectedxTypeItem = exerciseItems[exerciseItems.length - 1];
+                                                  selectedxTypeIndex = exerciseItems.length - 1;
+                                                } else {
+                                                  selectedxTypeItem = exerciseItems[selectedxTypeIndex];
+                                                }
+                                              });
+                                            },
                                           ),
                                         ),
                                     ],
@@ -3142,9 +2957,19 @@ class XlogCreateViewState extends State<XlogCreateView> {
                                           children: [
                                             SizedBox(
                                               width: (media.width * selectedXtypewidth),
-                                              height: 50,
+                                              height: logheightmargin,
                                             ),
-
+                                            SizedBox(
+                                              height: 20,
+                                              child: Text(
+                                                LocaleData.workOut.getString((context)),
+                                                style: TextStyle(
+                                                  color: TColor.secondaryColor1,
+                                                  fontSize: logTextSize,
+                                                  fontWeight: FontWeight.w700,
+                                                ),
+                                              ),
+                                            ),
                                             SizedBox(
                                               height: cupertinoPickerHeight,
                                               width: media.width * selectedXtypewidth,
@@ -3165,7 +2990,8 @@ class XlogCreateViewState extends State<XlogCreateView> {
                                                     exerciseItems.length,
                                                     (xTypeIndex) {
                                                       final isSelected = this.xTypeIndex == xTypeIndex;
-                                                      final lxsetItem = exerciseItems[xTypeIndex];
+                                                      // 번역 된 운동으로 보여주기
+                                                      final lxsetItem = exerciseItems[xTypeIndex].getString(context);
 
                                                       final color = isSelected ? TColor.black : TColor.primarygray;
 
@@ -3212,6 +3038,18 @@ class XlogCreateViewState extends State<XlogCreateView> {
                                               width: media.width * selectedXweight,
                                             ),
                                             SizedBox(
+                                              height: 20,
+                                              child: Text(
+                                                (selectedlxweightItems == '0') ? ' ' : selectedWeighUnint,
+                                                style: TextStyle(
+                                                  color: TColor.secondaryColor1,
+                                                  fontSize: logTextSize,
+                                                  fontWeight: FontWeight.w700,
+                                                ),
+                                              ),
+                                            ),
+
+                                            SizedBox(
                                               height: cupertinoPickerHeight,
                                               width: media.width * selectedXweight,
                                               child: CupertinoPicker(
@@ -3248,6 +3086,7 @@ class XlogCreateViewState extends State<XlogCreateView> {
                                                 },
                                               ),
                                             ),
+
                                             // SizedBox(height: logbottomHeight)
                                           ],
                                         ),
@@ -3258,6 +3097,17 @@ class XlogCreateViewState extends State<XlogCreateView> {
                                             SizedBox(
                                               height: logheightmargin,
                                               width: media.width * selectedXnumber,
+                                            ),
+                                            SizedBox(
+                                              height: 20,
+                                              child: Text(
+                                                LocaleData.reps.getString((context)),
+                                                style: TextStyle(
+                                                  color: TColor.secondaryColor1,
+                                                  fontSize: logTextSize,
+                                                  fontWeight: FontWeight.w700,
+                                                ),
+                                              ),
                                             ),
                                             SizedBox(
                                               height: cupertinoPickerHeight,
@@ -3303,13 +3153,17 @@ class XlogCreateViewState extends State<XlogCreateView> {
                                         //4. input number of sets-----------------------------------
                                         Column(
                                           children: [
-                                            Row(
-                                              children: [
-                                                SizedBox(
-                                                  height: logheightmargin,
-                                                  width: media.width * selectedXset,
-                                                ),
-                                              ],
+                                            SizedBox(
+                                              height: logheightmargin,
+                                              width: media.width * selectedXset,
+                                            ),
+                                            SizedBox(
+                                              height: 20,
+                                              child: Text(
+                                                LocaleData.sets.getString((context)),
+                                                textAlign: TextAlign.left,
+                                                style: TextStyle(color: TColor.secondaryColor1, fontSize: logTextSize, fontWeight: FontWeight.w700),
+                                              ),
                                             ),
                                             SizedBox(
                                               height: cupertinoPickerHeight,
@@ -3378,9 +3232,8 @@ class XlogCreateViewState extends State<XlogCreateView> {
                                                   finished: true,
                                                   lxdate:
                                                       // todaydate //지금시간 넣기
-
-                                                      todaydate.subtract(const Duration(days: 0)) //1:어제날짜 //테스트,
-                                                  ,
+                                                      //1:어제날짜 //테스트,
+                                                      todaydate.subtract(const Duration(days: 0)),
                                                   xbodypart: _isbodypartcontroller,
                                                   xType: selectedxTypeItem,
                                                   lxweight: double.parse(selectedlxweightItems),
@@ -3394,7 +3247,7 @@ class XlogCreateViewState extends State<XlogCreateView> {
                                             },
                                           );
                                         } else {
-                                          showToastMessage("등록가능 최대개수 15개를 넘었어요! 대단해요👍");
+                                          showToastMessage(LocaleData.toastmessage_registernumberexceeded.getString((context)));
                                         }
                                       },
                                       child: FittedBox(
@@ -3408,7 +3261,7 @@ class XlogCreateViewState extends State<XlogCreateView> {
                                               alignment: Alignment.center,
                                               child: FittedBox(
                                                 child: Text(
-                                                  selectedxTypeItem,
+                                                  selectedxTypeItem.getString(context),
                                                   style: TextStyle(
                                                     color: TColor.white,
                                                     fontSize: logTextSizeselected,
@@ -3418,90 +3271,43 @@ class XlogCreateViewState extends State<XlogCreateView> {
                                               ),
                                             ),
                                             // //운동 중량
-                                            Row(
-                                              children: [
-                                                Container(
-                                                  alignment: Alignment.centerRight,
-                                                  height: logheightmargin,
-                                                  width: media.width * selectedXweight - selectedXweightUnit,
-                                                  child: Text(
-                                                    (selectedlxweightItems == '0') ? ' ' : '${int.parse(selectedlxweightItems) * 0.5}',
-                                                    style: TextStyle(
-                                                      color: TColor.white,
-                                                      fontSize: logTextSizeselected,
-                                                      fontWeight: logTextFontselectedWeight,
-                                                    ),
-                                                  ),
+                                            Container(
+                                              alignment: Alignment.center,
+                                              width: media.width * selectedXweight,
+                                              child: Text(
+                                                (selectedlxweightItems == '0') ? ' ' : '${int.parse(selectedlxweightItems) * 0.5}',
+                                                style: TextStyle(
+                                                  color: TColor.white,
+                                                  fontSize: logTextSizeselected,
+                                                  fontWeight: logTextFontselectedWeight,
                                                 ),
-                                                SizedBox(
-                                                  width: selectedXweightUnit,
-                                                  child: Text(
-                                                    (selectedlxweightItems == '0') ? ' ' : selectedWeighUnint,
-                                                    style: TextStyle(
-                                                      color: TColor.white,
-                                                      fontSize: logTextSize,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
+                                              ),
                                             ),
                                             // //운동횟수
-                                            Row(
-                                              children: [
-                                                SizedBox(
-                                                  width: media.width * selectedXnumber - selectedXnumberUnit,
-                                                  child: Text(
-                                                    selectedlxnumberItem,
-                                                    textAlign: TextAlign.right,
-                                                    style: TextStyle(
-                                                      color: TColor.white,
-                                                      fontSize: logTextSizeselected,
-                                                      fontWeight: logTextFontselectedWeight,
-                                                    ),
-                                                  ),
+                                            Container(
+                                              alignment: Alignment.center,
+                                              width: media.width * selectedXnumber,
+                                              child: Text(
+                                                selectedlxnumberItem,
+                                                style: TextStyle(
+                                                  color: TColor.white,
+                                                  fontSize: logTextSizeselected,
+                                                  fontWeight: logTextFontselectedWeight,
                                                 ),
-                                                SizedBox(
-                                                  width: selectedXnumberUnit,
-                                                  child: Text(
-                                                    '회',
-                                                    textAlign: TextAlign.left,
-                                                    style: TextStyle(
-                                                      color: TColor.white,
-                                                      fontSize: logTextSize,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
+                                              ),
                                             ),
                                             // //운동세트수
-                                            Row(
-                                              children: [
-                                                Container(
-                                                  height: logheightmargin,
-                                                  alignment: Alignment.centerRight,
-                                                  width: media.width * selectedXset - selectedXsetUnit,
-                                                  child: Text(
-                                                    selectedlxsetItem,
-                                                    textAlign: TextAlign.left,
-                                                    style: TextStyle(
-                                                      color: TColor.white,
-                                                      fontSize: logTextSizeselected,
-                                                      fontWeight: logTextFontselectedWeight,
-                                                    ),
-                                                  ),
+                                            Container(
+                                              alignment: Alignment.center,
+                                              width: media.width * selectedXset,
+                                              child: Text(
+                                                selectedlxsetItem,
+                                                style: TextStyle(
+                                                  color: TColor.white,
+                                                  fontSize: logTextSizeselected,
+                                                  fontWeight: logTextFontselectedWeight,
                                                 ),
-                                                SizedBox(
-                                                  width: selectedXsetUnit,
-                                                  child: Text(
-                                                    '세트',
-                                                    textAlign: TextAlign.left,
-                                                    style: TextStyle(
-                                                      color: TColor.white,
-                                                      fontSize: logTextSize,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
+                                              ),
                                             ),
                                           ],
                                         ),
@@ -3537,402 +3343,400 @@ class XlogCreateViewState extends State<XlogCreateView> {
                                 children: [
                                   // const SizedBox(height: 8),
                                   SizedBox(
-                                    height: 36,
-                                    width: media.width * selectedXtypewidth,
+                                    height: 30,
+                                    // width: media.width * selectedXtypewidth,
                                     child: FittedBox(
                                       child: Row(
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
-                                          const SizedBox(width: 2),
+                                          const SizedBox(width: 4),
                                           Icon(
                                             Icons.filter_alt,
                                             size: 16,
                                             color: TColor.secondarygray,
                                           ),
-                                          SizedBox(
-                                            width: media.width * selectedXtypewidth - 20,
-                                            child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                                              OutlinedButton(
-                                                onPressed: () {
-                                                  setState(() {
-                                                    if (isSelectedBabel == true) {
-                                                      if (isSelectedDumbbell == false && isSelectedMachine == false && isSelectedBodyweight == false) {
-                                                        showToastMessage('1가지 이상 선택해주세요~');
-                                                      } else {
-                                                        isSelectedBabel = false;
-                                                        //
-                                                        bodyexerciseListUpdate(
-                                                          legsBabel,
-                                                          legsDumbbell,
-                                                          legsMachine,
-                                                          legsBodyweight,
-                                                          shouldersBabel,
-                                                          shouldersDumbbell,
-                                                          shouldersMachine,
-                                                          shouldersBodyweight,
-                                                          chestBabel,
-                                                          chestDumbbell,
-                                                          chestMachine,
-                                                          chestBodyweight,
-                                                          armsBabel,
-                                                          armsDumbbell,
-                                                          armsMachine,
-                                                          armsBodyweight,
-                                                          backBabel,
-                                                          backDumbbell,
-                                                          backMachine,
-                                                          backBodyweight,
-                                                          absBabel,
-                                                          absDumbbell,
-                                                          absMachine,
-                                                          absBodyweight,
-                                                        );
-                                                        if (selectedxTypeIndex > exerciseItems.length - 1) {
-                                                          selectedxTypeItem = exerciseItems[exerciseItems.length - 1];
-                                                          selectedxTypeIndex = exerciseItems.length - 1;
-                                                        } else {
-                                                          selectedxTypeItem = exerciseItems[selectedxTypeIndex];
-                                                        }
-                                                        //
-                                                      }
+                                          OutlinedButton(
+                                            onPressed: () {
+                                              setState(() {
+                                                if (isSelectedBabel == true) {
+                                                  if (isSelectedDumbbell == false && isSelectedMachine == false && isSelectedBodyweight == false) {
+                                                    showToastMessage('1가지 이상 선택해주세요~');
+                                                  } else {
+                                                    isSelectedBabel = false;
+                                                    //
+                                                    bodyexerciseListUpdate(
+                                                      legsBabel,
+                                                      legsDumbbell,
+                                                      legsMachine,
+                                                      legsBodyweight,
+                                                      shouldersBabel,
+                                                      shouldersDumbbell,
+                                                      shouldersMachine,
+                                                      shouldersBodyweight,
+                                                      chestBabel,
+                                                      chestDumbbell,
+                                                      chestMachine,
+                                                      chestBodyweight,
+                                                      armsBabel,
+                                                      armsDumbbell,
+                                                      armsMachine,
+                                                      armsBodyweight,
+                                                      backBabel,
+                                                      backDumbbell,
+                                                      backMachine,
+                                                      backBodyweight,
+                                                      absBabel,
+                                                      absDumbbell,
+                                                      absMachine,
+                                                      absBodyweight,
+                                                    );
+                                                    if (selectedxTypeIndex > exerciseItems.length - 1) {
+                                                      selectedxTypeItem = exerciseItems[exerciseItems.length - 1];
+                                                      selectedxTypeIndex = exerciseItems.length - 1;
                                                     } else {
-                                                      isSelectedBabel = true;
-                                                      //
-                                                      bodyexerciseListUpdate(
-                                                        legsBabel,
-                                                        legsDumbbell,
-                                                        legsMachine,
-                                                        legsBodyweight,
-                                                        shouldersBabel,
-                                                        shouldersDumbbell,
-                                                        shouldersMachine,
-                                                        shouldersBodyweight,
-                                                        chestBabel,
-                                                        chestDumbbell,
-                                                        chestMachine,
-                                                        chestBodyweight,
-                                                        armsBabel,
-                                                        armsDumbbell,
-                                                        armsMachine,
-                                                        armsBodyweight,
-                                                        backBabel,
-                                                        backDumbbell,
-                                                        backMachine,
-                                                        backBodyweight,
-                                                        absBabel,
-                                                        absDumbbell,
-                                                        absMachine,
-                                                        absBodyweight,
-                                                      );
-                                                      if (selectedxTypeIndex > exerciseItems.length - 1) {
-                                                        selectedxTypeItem = exerciseItems[exerciseItems.length - 1];
-                                                        selectedxTypeIndex = exerciseItems.length - 1;
-                                                      } else {
-                                                        selectedxTypeItem = exerciseItems[selectedxTypeIndex];
-                                                      }
-                                                      //
+                                                      selectedxTypeItem = exerciseItems[selectedxTypeIndex];
                                                     }
-                                                  });
-                                                },
-                                                style: OutlinedButton.styleFrom(
-                                                  side: (isSelectedBabel == true) ? BorderSide(width: 2.0, color: TColor.black) : null,
-                                                  backgroundColor: (isSelectedBabel == true) ? TColor.primarygray.withOpacity(0.1) : null,
-                                                  minimumSize: Size.zero,
-                                                  padding: const EdgeInsets.symmetric(vertical: 6.0, horizontal: 5.0),
-                                                  tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                                                ),
-                                                child: Text(
-                                                  '바벨',
-                                                  style: TextStyle(fontSize: 14, color: TColor.black),
-                                                ),
-                                              ),
-                                              OutlinedButton(
-                                                onPressed: () {
-                                                  setState(() {
-                                                    if (isSelectedDumbbell == true) {
-                                                      if (isSelectedBabel == false && isSelectedMachine == false && isSelectedBodyweight == false) {
-                                                        showToastMessage('1가지 이상 선택해주세요~');
-                                                      } else {
-                                                        isSelectedDumbbell = false;
-                                                        //
-                                                        bodyexerciseListUpdate(
-                                                          legsBabel,
-                                                          legsDumbbell,
-                                                          legsMachine,
-                                                          legsBodyweight,
-                                                          shouldersBabel,
-                                                          shouldersDumbbell,
-                                                          shouldersMachine,
-                                                          shouldersBodyweight,
-                                                          chestBabel,
-                                                          chestDumbbell,
-                                                          chestMachine,
-                                                          chestBodyweight,
-                                                          armsBabel,
-                                                          armsDumbbell,
-                                                          armsMachine,
-                                                          armsBodyweight,
-                                                          backBabel,
-                                                          backDumbbell,
-                                                          backMachine,
-                                                          backBodyweight,
-                                                          absBabel,
-                                                          absDumbbell,
-                                                          absMachine,
-                                                          absBodyweight,
-                                                        );
-                                                        if (selectedxTypeIndex > exerciseItems.length - 1) {
-                                                          selectedxTypeItem = exerciseItems[exerciseItems.length - 1];
-                                                          selectedxTypeIndex = exerciseItems.length - 1;
-                                                        } else {
-                                                          selectedxTypeItem = exerciseItems[selectedxTypeIndex];
-                                                        }
-                                                        //
-                                                      }
+                                                    //
+                                                  }
+                                                } else {
+                                                  isSelectedBabel = true;
+                                                  //
+                                                  bodyexerciseListUpdate(
+                                                    legsBabel,
+                                                    legsDumbbell,
+                                                    legsMachine,
+                                                    legsBodyweight,
+                                                    shouldersBabel,
+                                                    shouldersDumbbell,
+                                                    shouldersMachine,
+                                                    shouldersBodyweight,
+                                                    chestBabel,
+                                                    chestDumbbell,
+                                                    chestMachine,
+                                                    chestBodyweight,
+                                                    armsBabel,
+                                                    armsDumbbell,
+                                                    armsMachine,
+                                                    armsBodyweight,
+                                                    backBabel,
+                                                    backDumbbell,
+                                                    backMachine,
+                                                    backBodyweight,
+                                                    absBabel,
+                                                    absDumbbell,
+                                                    absMachine,
+                                                    absBodyweight,
+                                                  );
+                                                  if (selectedxTypeIndex > exerciseItems.length - 1) {
+                                                    selectedxTypeItem = exerciseItems[exerciseItems.length - 1];
+                                                    selectedxTypeIndex = exerciseItems.length - 1;
+                                                  } else {
+                                                    selectedxTypeItem = exerciseItems[selectedxTypeIndex];
+                                                  }
+                                                  //
+                                                }
+                                              });
+                                            },
+                                            style: OutlinedButton.styleFrom(
+                                              side: (isSelectedBabel == true) ? BorderSide(width: 2.0, color: TColor.black) : null,
+                                              backgroundColor: (isSelectedBabel == true) ? TColor.primarygray.withOpacity(0.1) : null,
+                                              minimumSize: Size.zero,
+                                              padding: const EdgeInsets.symmetric(vertical: 6.0, horizontal: 5.0),
+                                              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                                            ),
+                                            child: Text(
+                                              LocaleData.babel.getString((context)),
+                                              style: TextStyle(fontSize: 14, color: TColor.black),
+                                            ),
+                                          ),
+                                          const SizedBox(width: 4),
+                                          OutlinedButton(
+                                            onPressed: () {
+                                              setState(() {
+                                                if (isSelectedDumbbell == true) {
+                                                  if (isSelectedBabel == false && isSelectedMachine == false && isSelectedBodyweight == false) {
+                                                    showToastMessage('1가지 이상 선택해주세요~');
+                                                  } else {
+                                                    isSelectedDumbbell = false;
+                                                    //
+                                                    bodyexerciseListUpdate(
+                                                      legsBabel,
+                                                      legsDumbbell,
+                                                      legsMachine,
+                                                      legsBodyweight,
+                                                      shouldersBabel,
+                                                      shouldersDumbbell,
+                                                      shouldersMachine,
+                                                      shouldersBodyweight,
+                                                      chestBabel,
+                                                      chestDumbbell,
+                                                      chestMachine,
+                                                      chestBodyweight,
+                                                      armsBabel,
+                                                      armsDumbbell,
+                                                      armsMachine,
+                                                      armsBodyweight,
+                                                      backBabel,
+                                                      backDumbbell,
+                                                      backMachine,
+                                                      backBodyweight,
+                                                      absBabel,
+                                                      absDumbbell,
+                                                      absMachine,
+                                                      absBodyweight,
+                                                    );
+                                                    if (selectedxTypeIndex > exerciseItems.length - 1) {
+                                                      selectedxTypeItem = exerciseItems[exerciseItems.length - 1];
+                                                      selectedxTypeIndex = exerciseItems.length - 1;
                                                     } else {
-                                                      isSelectedDumbbell = true;
-                                                      //
-                                                      bodyexerciseListUpdate(
-                                                        legsBabel,
-                                                        legsDumbbell,
-                                                        legsMachine,
-                                                        legsBodyweight,
-                                                        shouldersBabel,
-                                                        shouldersDumbbell,
-                                                        shouldersMachine,
-                                                        shouldersBodyweight,
-                                                        chestBabel,
-                                                        chestDumbbell,
-                                                        chestMachine,
-                                                        chestBodyweight,
-                                                        armsBabel,
-                                                        armsDumbbell,
-                                                        armsMachine,
-                                                        armsBodyweight,
-                                                        backBabel,
-                                                        backDumbbell,
-                                                        backMachine,
-                                                        backBodyweight,
-                                                        absBabel,
-                                                        absDumbbell,
-                                                        absMachine,
-                                                        absBodyweight,
-                                                      );
-                                                      if (selectedxTypeIndex > exerciseItems.length - 1) {
-                                                        selectedxTypeItem = exerciseItems[exerciseItems.length - 1];
-                                                        selectedxTypeIndex = exerciseItems.length - 1;
-                                                      } else {
-                                                        selectedxTypeItem = exerciseItems[selectedxTypeIndex];
-                                                      }
-                                                      //
+                                                      selectedxTypeItem = exerciseItems[selectedxTypeIndex];
                                                     }
-                                                  });
-                                                },
-                                                style: OutlinedButton.styleFrom(
-                                                  side: (isSelectedDumbbell == true) ? BorderSide(width: 2.0, color: TColor.black) : null,
-                                                  backgroundColor: (isSelectedDumbbell == true) ? TColor.primarygray.withOpacity(0.1) : null,
-                                                  minimumSize: Size.zero,
-                                                  padding: const EdgeInsets.symmetric(vertical: 6.0, horizontal: 5.0),
-                                                  tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                                                ),
-                                                child: Text(
-                                                  '덤벨',
-                                                  style: TextStyle(fontSize: 14, color: TColor.black),
-                                                ),
-                                              ),
-                                              OutlinedButton(
-                                                onPressed: () {
-                                                  setState(() {
-                                                    if (isSelectedMachine == true) {
-                                                      if (isSelectedBabel == false && isSelectedDumbbell == false && isSelectedBodyweight == false) {
-                                                        showToastMessage('1가지 이상 선택해주세요~');
-                                                      } else {
-                                                        isSelectedMachine = false;
-                                                        //
-                                                        bodyexerciseListUpdate(
-                                                          legsBabel,
-                                                          legsDumbbell,
-                                                          legsMachine,
-                                                          legsBodyweight,
-                                                          shouldersBabel,
-                                                          shouldersDumbbell,
-                                                          shouldersMachine,
-                                                          shouldersBodyweight,
-                                                          chestBabel,
-                                                          chestDumbbell,
-                                                          chestMachine,
-                                                          chestBodyweight,
-                                                          armsBabel,
-                                                          armsDumbbell,
-                                                          armsMachine,
-                                                          armsBodyweight,
-                                                          backBabel,
-                                                          backDumbbell,
-                                                          backMachine,
-                                                          backBodyweight,
-                                                          absBabel,
-                                                          absDumbbell,
-                                                          absMachine,
-                                                          absBodyweight,
-                                                        );
-                                                        if (selectedxTypeIndex > exerciseItems.length - 1) {
-                                                          selectedxTypeItem = exerciseItems[exerciseItems.length - 1];
-                                                          selectedxTypeIndex = exerciseItems.length - 1;
-                                                        } else {
-                                                          selectedxTypeItem = exerciseItems[selectedxTypeIndex];
-                                                        }
-                                                        //
-                                                      }
+                                                    //
+                                                  }
+                                                } else {
+                                                  isSelectedDumbbell = true;
+                                                  //
+                                                  bodyexerciseListUpdate(
+                                                    legsBabel,
+                                                    legsDumbbell,
+                                                    legsMachine,
+                                                    legsBodyweight,
+                                                    shouldersBabel,
+                                                    shouldersDumbbell,
+                                                    shouldersMachine,
+                                                    shouldersBodyweight,
+                                                    chestBabel,
+                                                    chestDumbbell,
+                                                    chestMachine,
+                                                    chestBodyweight,
+                                                    armsBabel,
+                                                    armsDumbbell,
+                                                    armsMachine,
+                                                    armsBodyweight,
+                                                    backBabel,
+                                                    backDumbbell,
+                                                    backMachine,
+                                                    backBodyweight,
+                                                    absBabel,
+                                                    absDumbbell,
+                                                    absMachine,
+                                                    absBodyweight,
+                                                  );
+                                                  if (selectedxTypeIndex > exerciseItems.length - 1) {
+                                                    selectedxTypeItem = exerciseItems[exerciseItems.length - 1];
+                                                    selectedxTypeIndex = exerciseItems.length - 1;
+                                                  } else {
+                                                    selectedxTypeItem = exerciseItems[selectedxTypeIndex];
+                                                  }
+                                                  //
+                                                }
+                                              });
+                                            },
+                                            style: OutlinedButton.styleFrom(
+                                              side: (isSelectedDumbbell == true) ? BorderSide(width: 2.0, color: TColor.black) : null,
+                                              backgroundColor: (isSelectedDumbbell == true) ? TColor.primarygray.withOpacity(0.1) : null,
+                                              minimumSize: Size.zero,
+                                              padding: const EdgeInsets.symmetric(vertical: 6.0, horizontal: 5.0),
+                                              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                                            ),
+                                            child: Text(
+                                              LocaleData.dumbbell.getString((context)),
+                                              style: TextStyle(fontSize: 14, color: TColor.black),
+                                            ),
+                                          ),
+                                          const SizedBox(width: 4),
+                                          OutlinedButton(
+                                            onPressed: () {
+                                              setState(() {
+                                                if (isSelectedMachine == true) {
+                                                  if (isSelectedBabel == false && isSelectedDumbbell == false && isSelectedBodyweight == false) {
+                                                    showToastMessage('1가지 이상 선택해주세요~');
+                                                  } else {
+                                                    isSelectedMachine = false;
+                                                    //
+                                                    bodyexerciseListUpdate(
+                                                      legsBabel,
+                                                      legsDumbbell,
+                                                      legsMachine,
+                                                      legsBodyweight,
+                                                      shouldersBabel,
+                                                      shouldersDumbbell,
+                                                      shouldersMachine,
+                                                      shouldersBodyweight,
+                                                      chestBabel,
+                                                      chestDumbbell,
+                                                      chestMachine,
+                                                      chestBodyweight,
+                                                      armsBabel,
+                                                      armsDumbbell,
+                                                      armsMachine,
+                                                      armsBodyweight,
+                                                      backBabel,
+                                                      backDumbbell,
+                                                      backMachine,
+                                                      backBodyweight,
+                                                      absBabel,
+                                                      absDumbbell,
+                                                      absMachine,
+                                                      absBodyweight,
+                                                    );
+                                                    if (selectedxTypeIndex > exerciseItems.length - 1) {
+                                                      selectedxTypeItem = exerciseItems[exerciseItems.length - 1];
+                                                      selectedxTypeIndex = exerciseItems.length - 1;
                                                     } else {
-                                                      isSelectedMachine = true;
-                                                      //
-                                                      bodyexerciseListUpdate(
-                                                        legsBabel,
-                                                        legsDumbbell,
-                                                        legsMachine,
-                                                        legsBodyweight,
-                                                        shouldersBabel,
-                                                        shouldersDumbbell,
-                                                        shouldersMachine,
-                                                        shouldersBodyweight,
-                                                        chestBabel,
-                                                        chestDumbbell,
-                                                        chestMachine,
-                                                        chestBodyweight,
-                                                        armsBabel,
-                                                        armsDumbbell,
-                                                        armsMachine,
-                                                        armsBodyweight,
-                                                        backBabel,
-                                                        backDumbbell,
-                                                        backMachine,
-                                                        backBodyweight,
-                                                        absBabel,
-                                                        absDumbbell,
-                                                        absMachine,
-                                                        absBodyweight,
-                                                      );
-                                                      if (selectedxTypeIndex > exerciseItems.length - 1) {
-                                                        selectedxTypeItem = exerciseItems[exerciseItems.length - 1];
-                                                        selectedxTypeIndex = exerciseItems.length - 1;
-                                                      } else {
-                                                        selectedxTypeItem = exerciseItems[selectedxTypeIndex];
-                                                      }
-                                                      //
+                                                      selectedxTypeItem = exerciseItems[selectedxTypeIndex];
                                                     }
-                                                  });
-                                                },
-                                                style: OutlinedButton.styleFrom(
-                                                  side: (isSelectedMachine == true) ? BorderSide(width: 2.0, color: TColor.black) : null,
-                                                  backgroundColor: (isSelectedMachine == true) ? TColor.primarygray.withOpacity(0.1) : null,
-                                                  minimumSize: Size.zero,
-                                                  padding: const EdgeInsets.symmetric(vertical: 6.0, horizontal: 5.0),
-                                                  tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                                                ),
-                                                child: Text(
-                                                  '머신',
-                                                  style: TextStyle(fontSize: 14, color: TColor.black),
-                                                ),
-                                              ),
-                                              OutlinedButton(
-                                                onPressed: () {
-                                                  setState(() {
-                                                    if (isSelectedBodyweight == true) {
-                                                      if (isSelectedBabel == false && isSelectedDumbbell == false && isSelectedMachine == false) {
-                                                        showToastMessage('1가지 이상 선택해주세요~');
-                                                      } else {
-                                                        isSelectedBodyweight = false;
-                                                        //
-                                                        bodyexerciseListUpdate(
-                                                          legsBabel,
-                                                          legsDumbbell,
-                                                          legsMachine,
-                                                          legsBodyweight,
-                                                          shouldersBabel,
-                                                          shouldersDumbbell,
-                                                          shouldersMachine,
-                                                          shouldersBodyweight,
-                                                          chestBabel,
-                                                          chestDumbbell,
-                                                          chestMachine,
-                                                          chestBodyweight,
-                                                          armsBabel,
-                                                          armsDumbbell,
-                                                          armsMachine,
-                                                          armsBodyweight,
-                                                          backBabel,
-                                                          backDumbbell,
-                                                          backMachine,
-                                                          backBodyweight,
-                                                          absBabel,
-                                                          absDumbbell,
-                                                          absMachine,
-                                                          absBodyweight,
-                                                        );
-                                                        if (selectedxTypeIndex > exerciseItems.length - 1) {
-                                                          selectedxTypeItem = exerciseItems[exerciseItems.length - 1];
-                                                          selectedxTypeIndex = exerciseItems.length - 1;
-                                                        } else {
-                                                          selectedxTypeItem = exerciseItems[selectedxTypeIndex];
-                                                        }
-                                                        //
-                                                      }
+                                                    //
+                                                  }
+                                                } else {
+                                                  isSelectedMachine = true;
+                                                  //
+                                                  bodyexerciseListUpdate(
+                                                    legsBabel,
+                                                    legsDumbbell,
+                                                    legsMachine,
+                                                    legsBodyweight,
+                                                    shouldersBabel,
+                                                    shouldersDumbbell,
+                                                    shouldersMachine,
+                                                    shouldersBodyweight,
+                                                    chestBabel,
+                                                    chestDumbbell,
+                                                    chestMachine,
+                                                    chestBodyweight,
+                                                    armsBabel,
+                                                    armsDumbbell,
+                                                    armsMachine,
+                                                    armsBodyweight,
+                                                    backBabel,
+                                                    backDumbbell,
+                                                    backMachine,
+                                                    backBodyweight,
+                                                    absBabel,
+                                                    absDumbbell,
+                                                    absMachine,
+                                                    absBodyweight,
+                                                  );
+                                                  if (selectedxTypeIndex > exerciseItems.length - 1) {
+                                                    selectedxTypeItem = exerciseItems[exerciseItems.length - 1];
+                                                    selectedxTypeIndex = exerciseItems.length - 1;
+                                                  } else {
+                                                    selectedxTypeItem = exerciseItems[selectedxTypeIndex];
+                                                  }
+                                                  //
+                                                }
+                                              });
+                                            },
+                                            style: OutlinedButton.styleFrom(
+                                              side: (isSelectedMachine == true) ? BorderSide(width: 2.0, color: TColor.black) : null,
+                                              backgroundColor: (isSelectedMachine == true) ? TColor.primarygray.withOpacity(0.1) : null,
+                                              minimumSize: Size.zero,
+                                              padding: const EdgeInsets.symmetric(vertical: 6.0, horizontal: 5.0),
+                                              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                                            ),
+                                            child: Text(
+                                              LocaleData.machine.getString((context)),
+                                              style: TextStyle(fontSize: 14, color: TColor.black),
+                                            ),
+                                          ),
+                                          const SizedBox(width: 4),
+                                          OutlinedButton(
+                                            onPressed: () {
+                                              setState(() {
+                                                if (isSelectedBodyweight == true) {
+                                                  if (isSelectedBabel == false && isSelectedDumbbell == false && isSelectedMachine == false) {
+                                                    showToastMessage('1가지 이상 선택해주세요~');
+                                                  } else {
+                                                    isSelectedBodyweight = false;
+                                                    //
+                                                    bodyexerciseListUpdate(
+                                                      legsBabel,
+                                                      legsDumbbell,
+                                                      legsMachine,
+                                                      legsBodyweight,
+                                                      shouldersBabel,
+                                                      shouldersDumbbell,
+                                                      shouldersMachine,
+                                                      shouldersBodyweight,
+                                                      chestBabel,
+                                                      chestDumbbell,
+                                                      chestMachine,
+                                                      chestBodyweight,
+                                                      armsBabel,
+                                                      armsDumbbell,
+                                                      armsMachine,
+                                                      armsBodyweight,
+                                                      backBabel,
+                                                      backDumbbell,
+                                                      backMachine,
+                                                      backBodyweight,
+                                                      absBabel,
+                                                      absDumbbell,
+                                                      absMachine,
+                                                      absBodyweight,
+                                                    );
+                                                    if (selectedxTypeIndex > exerciseItems.length - 1) {
+                                                      selectedxTypeItem = exerciseItems[exerciseItems.length - 1];
+                                                      selectedxTypeIndex = exerciseItems.length - 1;
                                                     } else {
-                                                      isSelectedBodyweight = true;
-                                                      //
-                                                      bodyexerciseListUpdate(
-                                                        legsBabel,
-                                                        legsDumbbell,
-                                                        legsMachine,
-                                                        legsBodyweight,
-                                                        shouldersBabel,
-                                                        shouldersDumbbell,
-                                                        shouldersMachine,
-                                                        shouldersBodyweight,
-                                                        chestBabel,
-                                                        chestDumbbell,
-                                                        chestMachine,
-                                                        chestBodyweight,
-                                                        armsBabel,
-                                                        armsDumbbell,
-                                                        armsMachine,
-                                                        armsBodyweight,
-                                                        backBabel,
-                                                        backDumbbell,
-                                                        backMachine,
-                                                        backBodyweight,
-                                                        absBabel,
-                                                        absDumbbell,
-                                                        absMachine,
-                                                        absBodyweight,
-                                                      );
-                                                      if (selectedxTypeIndex > exerciseItems.length - 1) {
-                                                        selectedxTypeItem = exerciseItems[exerciseItems.length - 1];
-                                                        selectedxTypeIndex = exerciseItems.length - 1;
-                                                      } else {
-                                                        selectedxTypeItem = exerciseItems[selectedxTypeIndex];
-                                                      }
-                                                      //
+                                                      selectedxTypeItem = exerciseItems[selectedxTypeIndex];
                                                     }
-                                                  });
-                                                },
-                                                style: OutlinedButton.styleFrom(
-                                                  side: (isSelectedBodyweight == true) ? BorderSide(width: 2.0, color: TColor.black) : null,
-                                                  backgroundColor: (isSelectedBodyweight == true) ? TColor.primarygray.withOpacity(0.1) : null,
-                                                  minimumSize: Size.zero,
-                                                  padding: const EdgeInsets.symmetric(vertical: 6.0, horizontal: 5.0),
-                                                  tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                                                ),
-                                                child: Text(
-                                                  '맨몸',
-                                                  style: TextStyle(fontSize: 14, color: TColor.black),
-                                                ),
-                                              ),
-                                            ]),
+                                                    //
+                                                  }
+                                                } else {
+                                                  isSelectedBodyweight = true;
+                                                  //
+                                                  bodyexerciseListUpdate(
+                                                    legsBabel,
+                                                    legsDumbbell,
+                                                    legsMachine,
+                                                    legsBodyweight,
+                                                    shouldersBabel,
+                                                    shouldersDumbbell,
+                                                    shouldersMachine,
+                                                    shouldersBodyweight,
+                                                    chestBabel,
+                                                    chestDumbbell,
+                                                    chestMachine,
+                                                    chestBodyweight,
+                                                    armsBabel,
+                                                    armsDumbbell,
+                                                    armsMachine,
+                                                    armsBodyweight,
+                                                    backBabel,
+                                                    backDumbbell,
+                                                    backMachine,
+                                                    backBodyweight,
+                                                    absBabel,
+                                                    absDumbbell,
+                                                    absMachine,
+                                                    absBodyweight,
+                                                  );
+                                                  if (selectedxTypeIndex > exerciseItems.length - 1) {
+                                                    selectedxTypeItem = exerciseItems[exerciseItems.length - 1];
+                                                    selectedxTypeIndex = exerciseItems.length - 1;
+                                                  } else {
+                                                    selectedxTypeItem = exerciseItems[selectedxTypeIndex];
+                                                  }
+                                                  //
+                                                }
+                                              });
+                                            },
+                                            style: OutlinedButton.styleFrom(
+                                              side: (isSelectedBodyweight == true) ? BorderSide(width: 2.0, color: TColor.black) : null,
+                                              backgroundColor: (isSelectedBodyweight == true) ? TColor.primarygray.withOpacity(0.1) : null,
+                                              minimumSize: Size.zero,
+                                              padding: const EdgeInsets.symmetric(vertical: 6.0, horizontal: 5.0),
+                                              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                                            ),
+                                            child: Text(
+                                              LocaleData.bodyweight.getString((context)),
+                                              style: TextStyle(fontSize: 14, color: TColor.black),
+                                            ),
                                           ),
                                         ],
                                       ),

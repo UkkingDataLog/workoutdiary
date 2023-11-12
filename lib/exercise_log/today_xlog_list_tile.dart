@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localization/flutter_localization.dart';
 import 'package:workoutdiary/common/colo_extension.dart';
 import 'package:workoutdiary/hivedata/xlog.dart';
+import 'package:workoutdiary/localization/locales.dart';
 import 'package:workoutdiary/ui/ui_group.dart';
 
 class todayXlogTile extends StatefulWidget {
@@ -78,9 +80,10 @@ class _todayXlogTileState extends State<todayXlogTile> {
               child: FittedBox(
                 child: Row(
                   children: [
+                    const SizedBox(width: 4),
                     SizedBox(
-                      height: media.width * xlogcheckboxwidth * 0.73,
-                      width: media.width * xlogcheckboxwidth,
+                      height: media.width * xlogcheckboxwidth * 1.4,
+                      width: media.width * xlogcheckboxwidth * 1.4,
                       child: IconButton(
                         padding: EdgeInsets.zero,
                         icon: (widget.xlog.finished == true)
@@ -117,7 +120,7 @@ class _todayXlogTileState extends State<todayXlogTile> {
                         alignment: Alignment.centerRight,
                         fit: BoxFit.scaleDown,
                         child: Text(
-                          widget.xlog.xbodypart,
+                          "${(widget.xlog.xbodypart == '하체') ? (LocaleData.legs.getString((context)).length > 2) ? LocaleData.legs.getString((context)).substring(0, 3) : LocaleData.legs.getString((context)) : (widget.xlog.xbodypart == '어깨') ? (LocaleData.shoulders.getString((context)).length > 2) ? LocaleData.shoulders.getString((context)).substring(0, 3) : LocaleData.shoulders.getString((context)) : (widget.xlog.xbodypart == '가슴') ? (LocaleData.chest.getString((context)).length > 2) ? LocaleData.chest.getString((context)).substring(0, 3) : LocaleData.chest.getString((context)) : (widget.xlog.xbodypart == '팔') ? (LocaleData.arms.getString((context)).length > 2) ? LocaleData.arms.getString((context)).substring(0, 3) : LocaleData.arms.getString((context)) : (widget.xlog.xbodypart == '등') ? (LocaleData.back.getString((context)).length > 2) ? LocaleData.back.getString((context)).substring(0, 3) : LocaleData.back.getString((context)) : (LocaleData.abs.getString((context)).length > 2) ? LocaleData.abs.getString((context)).substring(0, 3) : LocaleData.abs.getString((context))}",
                           style: TextStyle(
                             color: TColor.black,
                             fontSize: 14,
@@ -126,12 +129,12 @@ class _todayXlogTileState extends State<todayXlogTile> {
                       ),
                     ),
                     SizedBox(
-                      width: media.width * xlogtilextypewidth * 0.97,
+                      width: media.width * xlogtilextypewidth * 0.97 - 10,
                       child: FittedBox(
                         alignment: Alignment.centerLeft,
                         fit: BoxFit.scaleDown,
                         child: Text(
-                          " ${widget.xlog.xType}",
+                          " ${widget.xlog.xType.getString(context)}",
                           textAlign: TextAlign.start,
                           style: TextStyle(
                             color: TColor.black,
@@ -186,12 +189,12 @@ class _todayXlogTileState extends State<todayXlogTile> {
                       ),
                     ),
                     SizedBox(
-                      width: media.width * xlogtileweightnumber * 0.36,
+                      width: media.width * xlogtileweightnumber * 0.36 + 10,
                       child: FittedBox(
                         alignment: Alignment.centerRight,
                         fit: BoxFit.scaleDown,
                         child: Text(
-                          "회×",
+                          "${LocaleData.reps.getString((context))}×",
                           textAlign: TextAlign.start,
                           style: TextStyle(
                             color: TColor.black,
@@ -218,7 +221,7 @@ class _todayXlogTileState extends State<todayXlogTile> {
                         alignment: Alignment.centerRight,
                         fit: BoxFit.scaleDown,
                         child: Text(
-                          "세트",
+                          LocaleData.sets.getString((context)),
                           textAlign: TextAlign.end,
                           style: TextStyle(
                             color: TColor.black,

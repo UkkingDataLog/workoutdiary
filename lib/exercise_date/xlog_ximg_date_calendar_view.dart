@@ -1,21 +1,25 @@
 import 'dart:collection';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_localization/flutter_localization.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:workoutdiary/common/colo_extension.dart';
 import 'package:workoutdiary/exercise_date/utils.dart';
 
 import 'package:workoutdiary/exercise_date/xlog_ximg_calendar.dart';
 import 'package:workoutdiary/hivedata/xlog.dart';
+import 'package:workoutdiary/localization/locales.dart';
 
 class XlogXimgDateCalendarView extends StatefulWidget {
   XlogXimgDateCalendarView({
     Key? key,
     required this.xlogs,
     required this.ximgs,
+    required this.weightUnits,
   }) : super(key: key);
   final List<Xlog> xlogs;
   final List<Ximg> ximgs;
+  final String weightUnits;
 
   @override
   State<XlogXimgDateCalendarView> createState() => XlogXimgDateCalendarViewState();
@@ -132,7 +136,7 @@ class XlogXimgDateCalendarViewState extends State<XlogXimgDateCalendarView> {
               toolbarHeight: 48,
               backgroundColor: TColor.white,
               title: Text(
-                "운동 달력",
+                LocaleData.viewtitle_calendar.getString((context)),
                 style: TextStyle(color: TColor.black, fontSize: 16, fontWeight: FontWeight.w700),
               ),
             ),
@@ -141,6 +145,7 @@ class XlogXimgDateCalendarViewState extends State<XlogXimgDateCalendarView> {
             kFirstDay: kFirstDay,
             kLastDay: kLastDay,
             kEvents: kEvents,
+            weightUnits: widget.weightUnits,
           ),
         ),
       ),

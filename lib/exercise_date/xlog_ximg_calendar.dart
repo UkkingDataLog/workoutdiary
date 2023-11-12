@@ -4,6 +4,7 @@
 import 'dart:collection';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_localization/flutter_localization.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:workoutdiary/common/colo_extension.dart';
@@ -11,18 +12,21 @@ import 'package:workoutdiary/exercise_date/utils.dart';
 import 'package:workoutdiary/exercise_date/ximg_saved_tile.dart';
 import 'package:workoutdiary/exercise_date/xlog_ximg_date_calendar_view.dart';
 import 'package:workoutdiary/exercise_log/xlog_create_tile.dart';
+import 'package:workoutdiary/localization/locales.dart';
 
 class TableComplexExample extends StatefulWidget {
-  const TableComplexExample({
+  TableComplexExample({
     super.key,
     required this.kEvents,
     required this.kFirstDay,
     required this.kLastDay,
+    required this.weightUnits,
   });
 
   final LinkedHashMap<DateTime, List<Event>> kEvents;
   final DateTime kFirstDay;
   final DateTime kLastDay;
+  String weightUnits;
 
   @override
   _TableComplexExampleState createState() => _TableComplexExampleState();
@@ -31,7 +35,7 @@ class TableComplexExample extends StatefulWidget {
 class _TableComplexExampleState extends State<TableComplexExample> {
   //
   bool isSelectedkg = true;
-  String selectedWeighUnint = 'kg';
+
   //
   bool isCalenderopen = true;
   //
@@ -120,6 +124,11 @@ class _TableComplexExampleState extends State<TableComplexExample> {
   Widget build(BuildContext context) {
     XlogXimgDateCalendarViewState? parent = context.findAncestorStateOfType<XlogXimgDateCalendarViewState>();
 
+    if (widget.weightUnits == 'kg') {
+      isSelectedkg = true;
+    } else {
+      isSelectedkg = false;
+    }
     var media = MediaQuery.of(context).size;
     return Scaffold(
       body: Column(
@@ -129,7 +138,7 @@ class _TableComplexExampleState extends State<TableComplexExample> {
             color: Colors.black,
             child: Center(
               child: Text(
-                'Habit make me',
+                LocaleData.slogan.getString((context)),
                 style: TextStyle(color: TColor.white),
               ),
             ),
@@ -176,7 +185,8 @@ class _TableComplexExampleState extends State<TableComplexExample> {
               (isCalenderopen == true)
                   ? TableCalendar<Event>(
                       rowHeight: 48,
-                      locale: 'ko_KR',
+                      daysOfWeekHeight: 22,
+                      locale: LocaleData.locale.getString((context)),
 
                       firstDay: widget.kFirstDay,
                       lastDay: widget.kLastDay,
@@ -216,10 +226,12 @@ class _TableComplexExampleState extends State<TableComplexExample> {
                         setState(() {
                           if (isSelectedkg == true) {
                             isSelectedkg = false;
-                            selectedWeighUnint = 'lb';
+
+                            widget.weightUnits = 'lb';
                           } else {
                             isSelectedkg = true;
-                            selectedWeighUnint = 'kg';
+
+                            widget.weightUnits = 'kg';
                           }
                         });
                       },
@@ -333,7 +345,7 @@ class _TableComplexExampleState extends State<TableComplexExample> {
                                   child: FittedBox(
                                     fit: BoxFit.fitHeight,
                                     child: Text(
-                                      '${value[index].datetime.month}월 ${value[index].datetime.day}일',
+                                      '${value[index].datetime.month} / ${value[index].datetime.day}',
                                       textAlign: TextAlign.center,
                                       style: TextStyle(color: TColor.white, fontSize: 16, fontWeight: FontWeight.w700),
                                     ),
@@ -404,7 +416,7 @@ class _TableComplexExampleState extends State<TableComplexExample> {
                                         parent?.setState(() {});
                                       });
                                     },
-                                    selectedweightUnit: selectedWeighUnint,
+                                    selectedweightUnit: widget.weightUnits,
                                   ),
                                 ),
                             // Container(
@@ -509,7 +521,7 @@ class _CalendarHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // final headerText = DateFormat.yMMM().format(focusedDay);
-    final headerText = DateFormat('yyyy M월').format(focusedDay);
+    final headerText = DateFormat('yyyy. MM').format(focusedDay);
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 0.0),

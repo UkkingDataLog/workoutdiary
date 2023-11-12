@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localization/flutter_localization.dart';
 
 import 'package:workoutdiary/common/colo_extension.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -10,9 +11,14 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:workoutdiary/common/hive_helper.dart';
 import 'package:workoutdiary/hivedata/xlog.dart';
 import 'package:workoutdiary/common_widget/show_toast_message.dart';
+import 'package:workoutdiary/localization/locales.dart';
 
 class SettingView extends StatefulWidget {
-  const SettingView({super.key});
+  const SettingView({
+    super.key,
+    required this.weightUnits,
+  });
+  final String weightUnits;
 
   @override
   State<SettingView> createState() => _SettingViewState();
@@ -48,7 +54,7 @@ class _SettingViewState extends State<SettingView> {
           toolbarHeight: 48,
           backgroundColor: TColor.white,
           title: Text(
-            "설정",
+            LocaleData.setting.getString((context)),
             style: TextStyle(color: TColor.black, fontSize: 16, fontWeight: FontWeight.w700),
           ),
           centerTitle: true,
@@ -61,7 +67,7 @@ class _SettingViewState extends State<SettingView> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
                 child: Text(
-                  "사용자 설정",
+                  LocaleData.usersetting.getString((context)),
                   style: TextStyle(
                       fontSize: 14,
                       // fontWeight: FontWeight.w700,
@@ -87,18 +93,20 @@ class _SettingViewState extends State<SettingView> {
                         title: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            const Text("언어"),
                             Text(
-                              "한국어",
+                              LocaleData.language.getString((context)),
+                            ),
+                            Text(
+                              LocaleData.selectedLanguage.getString((context)),
                               style: TextStyle(color: TColor.primarygray),
                             ),
                           ],
                         ),
 
                         // trailing: Icon(Icons.keyboard_arrow_down_rounded),
-                        onTap: () {
-                          //
-                        },
+                        // onTap: () {
+                        //   //
+                        // },
                       ),
                     ),
                     Divider(height: 1, color: TColor.primarygray),
@@ -115,17 +123,19 @@ class _SettingViewState extends State<SettingView> {
                         title: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            const Text("단위"),
                             Text(
-                              "kg",
+                              LocaleData.units.getString((context)),
+                            ),
+                            Text(
+                              widget.weightUnits,
                               style: TextStyle(color: TColor.primarygray),
                             ),
                           ],
                         ),
                         // trailing: Icon(Icons.keyboard_arrow_down_rounded),
-                        onTap: () {
-                          //
-                        },
+                        // onTap: () {
+                        //   //
+                        // },
                       ),
                     ),
                     // ListTile(
@@ -149,7 +159,7 @@ class _SettingViewState extends State<SettingView> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
                 child: Text(
-                  "기타",
+                  LocaleData.more.getString((context)),
                   style: TextStyle(
                       fontSize: 14,
                       // fontWeight: FontWeight.w700,
@@ -171,7 +181,9 @@ class _SettingViewState extends State<SettingView> {
                             foregroundColor: TColor.black,
                             child: const Icon(Icons.restore_rounded),
                           ),
-                          title: const Text("데이터 초기화"),
+                          title: Text(
+                            LocaleData.dataInitialization.getString((context)),
+                          ),
                           onTap: (() {
                             //
                             showCupertinoDialog(
@@ -186,11 +198,13 @@ class _SettingViewState extends State<SettingView> {
                                         builder: (context, snapshot) {
                                           List<Xlog> xlogs = snapshot.data ?? [];
                                           return CupertinoAlertDialog(
-                                            title: const Text('데이터 초기화'),
-                                            content: const Column(
+                                            title: Text(
+                                              LocaleData.dataInitialization.getString((context)),
+                                            ),
+                                            content: Column(
                                               children: [
                                                 Text(
-                                                  '핸드폰에 저장된 모든 기록을 삭제합니다.\n',
+                                                  LocaleData.dataInitializationBody.getString((context)),
                                                   textAlign: TextAlign.left,
                                                 ),
                                               ],
@@ -199,7 +213,7 @@ class _SettingViewState extends State<SettingView> {
                                               // Button to continue with formatted text
                                               CupertinoDialogAction(
                                                 child: Text(
-                                                  '뒤로가기',
+                                                  LocaleData.back_button_text.getString((context)),
                                                   style: TextStyle(color: TColor.primarygray),
                                                 ),
                                                 onPressed: () {
@@ -208,18 +222,16 @@ class _SettingViewState extends State<SettingView> {
                                               ),
                                               CupertinoDialogAction(
                                                   child: Text(
-                                                    '네,삭제합니다',
+                                                    LocaleData.deleteButtonText.getString((context)),
                                                     style: TextStyle(color: TColor.primarygray),
                                                   ),
                                                   onPressed: () {
                                                     if (xlogs.isEmpty && ximgs.isEmpty) {
-                                                      showToastMessage("초기화 할 데이터가 없습니다");
+                                                      showToastMessage(
+                                                        LocaleData.dataInitializationNotToastmessage.getString((context)),
+                                                      );
                                                       Navigator.of(context).pop();
                                                     } else {
-                                                      // showToastMessage(
-                                                      //     "초기화 할 데이터가 없습니다");
-                                                      // Navigator.of(context)
-                                                      //     .pop();
                                                       for (int index = 0; index < xlogs.length; index++) {
                                                         xlogs[index].delete();
                                                       }
@@ -228,7 +240,9 @@ class _SettingViewState extends State<SettingView> {
                                                           ximgs[index].delete();
                                                         }
                                                       }
-                                                      showToastMessage("데이터를 초기화 했습니다");
+                                                      showToastMessage(
+                                                        LocaleData.dataInitializationToastmessage.getString((context)),
+                                                      );
                                                       setState(() {});
                                                       Navigator.of(context).pop();
                                                     }
@@ -258,9 +272,10 @@ class _SettingViewState extends State<SettingView> {
                               Icons.handshake_outlined,
                             ),
                           ),
-                          title: const Text("이용약관"),
+                          title: Text(
+                            LocaleData.termsOfUse.getString((context)),
+                          ),
                           onTap: (() {
-                            //
                             Navigator.of(context).pushNamed('/TermsOfUse');
                           }),
                         ),
@@ -273,7 +288,7 @@ class _SettingViewState extends State<SettingView> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
                 child: Text(
-                  "개발자에게",
+                  LocaleData.toDevelopers.getString((context)),
                   style: TextStyle(
                       fontSize: 14,
                       // fontWeight: FontWeight.w700,
@@ -291,28 +306,32 @@ class _SettingViewState extends State<SettingView> {
                       child: Center(
                         child: ListTile(
                           leading: CircleAvatar(backgroundColor: TColor.white, foregroundColor: TColor.black, child: const Icon(Icons.mail_outline_rounded)),
-                          title: const Text("피드백"),
+                          title: Text(
+                            LocaleData.feedback.getString((context)),
+                          ),
                           onTap: (() {
                             //
                             showCupertinoDialog(
                               context: context,
                               builder: (BuildContext context) => CupertinoAlertDialog(
-                                title: const Text('피드백'),
-                                content: const Column(
+                                title: Text(
+                                  LocaleData.feedback.getString((context)),
+                                ),
+                                content: Column(
                                   children: [
                                     Text(
-                                      '궁금한 점이 있으시다면, 연락해주세요.\n앱의 개선사항을 알려주시면 즉시 개발에 착수합니다.\n',
+                                      LocaleData.feedbackEmailBody.getString((context)),
                                       textAlign: TextAlign.left,
                                     ),
-                                    Text('00:00~24:00'),
-                                    Text('ukkingdatalog@gmail.com'),
+                                    const Text('00:00~24:00'),
+                                    const Text('ukkingdatalog@gmail.com'),
                                   ],
                                 ),
                                 actions: <Widget>[
                                   // Button to continue with formatted text
                                   CupertinoDialogAction(
                                     child: Text(
-                                      '뒤로가기',
+                                      LocaleData.back_button_text.getString((context)),
                                       style: TextStyle(color: TColor.primarygray),
                                     ),
                                     onPressed: () {
@@ -321,7 +340,7 @@ class _SettingViewState extends State<SettingView> {
                                   ),
                                   CupertinoDialogAction(
                                     child: Text(
-                                      '메일쓰기',
+                                      LocaleData.sendEmailButtonText.getString((context)),
                                       style: TextStyle(color: TColor.secondaryColor1),
                                     ),
                                     onPressed: () async {
@@ -336,9 +355,9 @@ class _SettingViewState extends State<SettingView> {
                                         path: 'ukkingdatalog@gmail.com',
                                         query: encodeQueryParameters(
                                           <String, String>{
-                                            'subject': '[Workout Diary][문의사항]',
+                                            'subject': '[Workout Diary][${LocaleData.Inquiry.getString((context))}]',
                                             'body':
-                                                '---- << 문의사항 >> ----\n😀상황과 함께 구체적으로 적어주시면 내용파악에 도움이 됩니다\n\n\n\n\n\n\n\n\n---- << 기기사항 >> ----\n$deviceInfo\n화면비: ${media.width.ceil()} × ${media.height.ceil()}\n\nWorkout Diary $appversion '
+                                                '${LocaleData.InquiryEmailBody.getString((context))}\n$deviceInfo \n ${LocaleData.screenRatio.getString((context))} : ${media.width.ceil()} × ${media.height.ceil()}\n\nWorkout Diary $appversion '
                                           },
                                         ),
                                       );
@@ -402,7 +421,7 @@ class _SettingViewState extends State<SettingView> {
                           ),
                           // Text('Package Name: ${data.packageName}'),
                           Text(
-                            '버전 ${data.version}',
+                            '${LocaleData.version.getString((context))} ${data.version}',
                             style: TextStyle(
                                 fontSize: 14,
                                 // fontWeight: FontWeight.w700,
@@ -446,7 +465,7 @@ Map<String, dynamic> _readAndroidDeviceInfo(AndroidDeviceInfo info) {
   var manufacturer = info.manufacturer;
   var model = info.model;
 
-  return {"OS 버전": "Android $release (SDK $sdkInt)", "기기": "$manufacturer $model"};
+  return {"OS version": "Android $release (SDK $sdkInt)", "device": "$manufacturer $model"};
 }
 
 Map<String, dynamic> _readIosDeviceInfo(IosDeviceInfo info) {
@@ -454,5 +473,5 @@ Map<String, dynamic> _readIosDeviceInfo(IosDeviceInfo info) {
   var version = info.systemVersion;
   var machine = info.utsname.machine;
 
-  return {"OS 버전": "$systemName $version", "기기": machine};
+  return {"OS version": "$systemName $version", "device": machine};
 }
