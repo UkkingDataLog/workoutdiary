@@ -8,12 +8,14 @@ import 'package:flutter_localization/flutter_localization.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 //
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:workoutdiary/common/colo_extension.dart';
 import 'package:workoutdiary/common/hive_helper.dart';
 import 'package:workoutdiary/hivedata/xlog.dart';
 import 'package:workoutdiary/exercise_log/xlog_create_view.dart';
 //
 import 'package:provider/provider.dart';
+import 'package:workoutdiary/onboard/onboard_view.dart';
 import 'package:workoutdiary/localization/locales.dart';
 import 'package:workoutdiary/operating_doc/term_of_use_view.dart';
 import 'package:workoutdiary/providers/app_image_provider.dart';
@@ -22,9 +24,12 @@ import 'package:workoutdiary/ui/ui_group.dart';
 
 import 'package:app_tracking_transparency/app_tracking_transparency.dart';
 
+int? isviewed;
 @override
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  isviewed = prefs.getInt('onBoard');
   // 세로모드로 고정
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
@@ -82,7 +87,7 @@ class _MyAppState extends State<MyApp> {
       child: SafeArea(
         maintainBottomViewPadding: true,
         top: true,
-        bottom: true,
+        bottom: false,
         child: MaterialApp(
           //
           debugShowCheckedModeBanner: false,
@@ -97,10 +102,12 @@ class _MyAppState extends State<MyApp> {
           //스크린 위치 설정
           routes: <String, WidgetBuilder>{
             '/': (_) => const XlogCreateView(),
-            // '/splish': (context) => const SplashView(),
+            '/landing': (context) => OnBoard(),
             '/TermsOfUse': (context) => const TermOfUseView(),
           },
-          initialRoute: '/',
+          initialRoute:
+              // '/landing',
+              isviewed != 0 ? '/landing' : '/',
         ),
       ),
     );

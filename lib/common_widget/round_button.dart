@@ -27,9 +27,18 @@ class RoundButton extends StatelessWidget {
         ),
       ),
       child: type == RoundButtonType.bgGradient || type == RoundButtonType.bgSGradient
-          ? Text(title, style: TextStyle(color: TColor.white, fontSize: fontSize, fontWeight: fontWeight))
+          ? Text(
+              title,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: TColor.white,
+                fontSize: fontSize,
+                fontWeight: fontWeight,
+              ),
+            )
           : Text(
               title,
+              textAlign: TextAlign.center,
               style: TextStyle(
                 color: TColor.black,
                 fontSize: fontSize,

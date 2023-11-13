@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localization/flutter_localization.dart';
 import 'package:workoutdiary/common/colo_extension.dart';
 import 'package:workoutdiary/common/coustom_web_view.dart';
+import 'package:workoutdiary/localization/locales.dart';
 
 class TermOfUseView extends StatefulWidget {
   const TermOfUseView({super.key});
@@ -38,7 +40,7 @@ class _TermOfUseViewState extends State<TermOfUseView> {
                         },
                       ),
                       Text(
-                        "이용약관",
+                        LocaleData.termsOfUse.getString(context),
                         style: TextStyle(color: TColor.black, fontSize: 16, fontWeight: FontWeight.w700),
                       ),
                       IconButton(

@@ -84,6 +84,18 @@ class XlogCreateViewState extends State<XlogCreateView> {
       _flutterLocalization.translate(('ko'));
     } else if (value == 'zh') {
       _flutterLocalization.translate(('zh'));
+    } else if (value == 'ja') {
+      _flutterLocalization.translate(('ja'));
+    } else if (value == 'de') {
+      _flutterLocalization.translate(('de'));
+    } else if (value == 'es') {
+      _flutterLocalization.translate(('es'));
+    } else if (value == 'pt') {
+      _flutterLocalization.translate(('pt'));
+    } else if (value == 'ar') {
+      _flutterLocalization.translate(('ar'));
+    } else if (value == 'hi') {
+      _flutterLocalization.translate(('hi'));
     } else {
       return;
     }
@@ -2020,40 +2032,40 @@ class XlogCreateViewState extends State<XlogCreateView> {
                                 items: const [
                                   DropdownMenuItem(
                                     value: 'en',
-                                    child: Text('English'),
+                                    child: Text('🇺🇸 English'),
                                   ),
-                                  // DropdownMenuItem(
-                                  //   value: 'de',
-                                  //   child: Text('German'),
-                                  // ),
                                   DropdownMenuItem(
                                     value: 'ko',
-                                    child: Text("한국어"),
+                                    child: Text("🇰🇷 한국어"),
                                   ),
-                                  // DropdownMenuItem(
-                                  //   value: 'ja',
-                                  //   child: Text("Japanese"),
-                                  // ),
-                                  // DropdownMenuItem(
-                                  //   value: 'es',
-                                  //   child: Text("Spanish"),
-                                  // ),
                                   DropdownMenuItem(
                                     value: 'zh',
-                                    child: Text("中国人"),
+                                    child: Text("🇨🇳 中国"),
                                   ),
-                                  // DropdownMenuItem(
-                                  //   value: 'pt',
-                                  //   child: Text("Portuguese"),
-                                  // ),
-                                  // DropdownMenuItem(
-                                  //   value: 'ar',
-                                  //   child: Text("Arabic"),
-                                  // ),
-                                  // DropdownMenuItem(
-                                  //   value: 'hi',
-                                  //   child: Text("Hindi"),
-                                  // ),
+                                  DropdownMenuItem(
+                                    value: 'ja',
+                                    child: Text("🇯🇵 日本語"),
+                                  ),
+                                  DropdownMenuItem(
+                                    value: 'de',
+                                    child: Text('🇩🇪 Deutsch'),
+                                  ),
+                                  DropdownMenuItem(
+                                    value: 'es',
+                                    child: Text("🇪🇸 Español"),
+                                  ),
+                                  DropdownMenuItem(
+                                    value: 'pt',
+                                    child: Text("🇵🇹 Português"),
+                                  ),
+                                  DropdownMenuItem(
+                                    value: 'ar',
+                                    child: Text("🇸🇦 عربي"),
+                                  ),
+                                  DropdownMenuItem(
+                                    value: 'hi',
+                                    child: Text("🇮🇳 हिंदी"),
+                                  ),
                                 ],
                                 onChanged: (value) {
                                   _setLocale(value);
