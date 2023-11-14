@@ -1450,7 +1450,10 @@ class XlogCreateViewState extends State<XlogCreateView> {
                                   ),
                                   onPressed: () async {
                                     //
-
+                                    if (isSelectedYoutube == true) {
+                                      isSelectedYoutube = false;
+                                      setState(() {});
+                                    }
                                     await showModalBottomSheet(
                                       backgroundColor: TColor.white,
                                       isScrollControlled: true,
@@ -1478,7 +1481,6 @@ class XlogCreateViewState extends State<XlogCreateView> {
                                                       onPressed: () {
                                                         for (int index = 0; index < xlogs.length; index += 1) {
                                                           (
-
                                                                   ////둘다 dateTime 형식이므로 해당년, 월, 일 비교가 필요함
                                                                   xlogs[index].lxdate.year == todaydate.year //년 비교
                                                                       &&
@@ -1612,35 +1614,38 @@ class XlogCreateViewState extends State<XlogCreateView> {
                                             // Add a row widget to display buttons for closing and reading more.
 
                                             Align(
-                                              alignment: Alignment(Alignment.bottomCenter.x + 0.95, Alignment.bottomCenter.y),
-                                              child: Container(
-                                                padding: const EdgeInsets.all(8),
-                                                decoration: BoxDecoration(
-                                                  borderRadius: const BorderRadius.all(Radius.circular(50)),
-                                                  boxShadow: [
-                                                    BoxShadow(
-                                                      color: TColor.white,
-                                                      // spreadRadius: 3,
-                                                      blurRadius: 1,
-                                                      offset: const Offset(0, 2),
+                                              alignment: Alignment(Alignment.bottomCenter.x + 0.97, Alignment.bottomCenter.y),
+                                              child: Padding(
+                                                padding: const EdgeInsets.only(bottom: 24.0),
+                                                child: Container(
+                                                  padding: const EdgeInsets.all(12),
+                                                  decoration: BoxDecoration(
+                                                    borderRadius: const BorderRadius.all(Radius.circular(50)),
+                                                    boxShadow: [
+                                                      BoxShadow(
+                                                        color: TColor.white,
+                                                        // spreadRadius: 3,
+                                                        blurRadius: 1,
+                                                        offset: const Offset(0, 2),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  child: FloatingActionButton.extended(
+                                                    heroTag: 'btn3',
+                                                    elevation: 1,
+                                                    backgroundColor: TColor.white,
+                                                    label: Text(
+                                                      LocaleData.close.getString((context)),
+                                                      style: TextStyle(color: TColor.black),
                                                     ),
-                                                  ],
-                                                ),
-                                                child: FloatingActionButton.extended(
-                                                  heroTag: 'btn3',
-                                                  elevation: 1,
-                                                  backgroundColor: TColor.white,
-                                                  label: Text(
-                                                    LocaleData.close.getString((context)),
-                                                    style: TextStyle(color: TColor.black),
+                                                    icon: Icon(
+                                                      Icons.close,
+                                                      color: TColor.black,
+                                                    ),
+                                                    onPressed: () {
+                                                      Navigator.pop(context);
+                                                    },
                                                   ),
-                                                  icon: Icon(
-                                                    Icons.close,
-                                                    color: TColor.black,
-                                                  ),
-                                                  onPressed: () {
-                                                    Navigator.pop(context);
-                                                  },
                                                 ),
                                               ),
                                             ),
@@ -1694,9 +1699,10 @@ class XlogCreateViewState extends State<XlogCreateView> {
                                     } else {
                                       isselectedWritting = true;
                                     }
+
                                     _scrollController.animateTo(
                                       _scrollController.position.maxScrollExtent,
-                                      duration: const Duration(seconds: 1),
+                                      duration: const Duration(seconds: 100),
                                       curve: Curves.easeInOut,
                                     );
                                   },
@@ -1724,6 +1730,10 @@ class XlogCreateViewState extends State<XlogCreateView> {
                                 Icons.add,
                               ),
                               onPressed: () {
+                                if (isSelectedYoutube == true) {
+                                  isSelectedYoutube = false;
+                                  setState(() {});
+                                }
                                 setState(
                                   () {
                                     if (isselectedWritting == true) {
@@ -2740,6 +2750,10 @@ class XlogCreateViewState extends State<XlogCreateView> {
                                             fontSize: bodypartbuttonfontSize,
                                             fontWeight: FontWeight.w700,
                                             onPressed: () {
+                                              if (isSelectedYoutube == true) {
+                                                isSelectedYoutube = false;
+                                                setState(() {});
+                                              }
                                               setState(() {
                                                 //Adjust the controller to the selected bodyPart
                                                 _isbodypartcontroller = bodyPart.koreanName;
@@ -3369,6 +3383,10 @@ class XlogCreateViewState extends State<XlogCreateView> {
                                           ),
                                           OutlinedButton(
                                             onPressed: () {
+                                              if (isSelectedYoutube == true) {
+                                                isSelectedYoutube = false;
+                                                setState(() {});
+                                              }
                                               setState(() {
                                                 if (isSelectedBabel == true) {
                                                   if (isSelectedDumbbell == false && isSelectedMachine == false && isSelectedBodyweight == false) {
@@ -3465,6 +3483,10 @@ class XlogCreateViewState extends State<XlogCreateView> {
                                           const SizedBox(width: 4),
                                           OutlinedButton(
                                             onPressed: () {
+                                              if (isSelectedYoutube == true) {
+                                                isSelectedYoutube = false;
+                                                setState(() {});
+                                              }
                                               setState(() {
                                                 if (isSelectedDumbbell == true) {
                                                   if (isSelectedBabel == false && isSelectedMachine == false && isSelectedBodyweight == false) {
@@ -3561,6 +3583,10 @@ class XlogCreateViewState extends State<XlogCreateView> {
                                           const SizedBox(width: 4),
                                           OutlinedButton(
                                             onPressed: () {
+                                              if (isSelectedYoutube == true) {
+                                                isSelectedYoutube = false;
+                                                setState(() {});
+                                              }
                                               setState(() {
                                                 if (isSelectedMachine == true) {
                                                   if (isSelectedBabel == false && isSelectedDumbbell == false && isSelectedBodyweight == false) {
@@ -3657,6 +3683,10 @@ class XlogCreateViewState extends State<XlogCreateView> {
                                           const SizedBox(width: 4),
                                           OutlinedButton(
                                             onPressed: () {
+                                              if (isSelectedYoutube == true) {
+                                                isSelectedYoutube = false;
+                                                setState(() {});
+                                              }
                                               setState(() {
                                                 if (isSelectedBodyweight == true) {
                                                   if (isSelectedBabel == false && isSelectedDumbbell == false && isSelectedMachine == false) {
@@ -3774,7 +3804,7 @@ class XlogCreateViewState extends State<XlogCreateView> {
                               ),
                               Container(
                                 // color: Colors.black.withOpacity(0.2),
-                                height: media.height * 32 / 844, //아이폰13을 기준으로 맞춤
+                                height: media.height * 68 / 844, //아이폰13을 기준으로 맞춤
                               ),
                             ],
                           ),
