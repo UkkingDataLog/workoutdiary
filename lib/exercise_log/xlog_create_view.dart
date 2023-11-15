@@ -127,6 +127,7 @@ class XlogCreateViewState extends State<XlogCreateView> {
 
   //--------------------<<  Variable  >>--------------------
   int _timeformat = 0;
+  int _xlogformat = 0;
   //사진 크기 변경
   int _ratio = 1;
   final Map<int, String> ratios = {
@@ -1427,9 +1428,9 @@ class XlogCreateViewState extends State<XlogCreateView> {
                                 boxShadow: [
                                   BoxShadow(
                                     color: TColor.white,
-                                    spreadRadius: 1,
-                                    blurRadius: 1,
-                                    offset: const Offset(0, 2),
+                                    spreadRadius: 0.2,
+                                    blurRadius: 0.2,
+                                    offset: const Offset(0, 0.5),
                                   ),
                                 ],
                               ),
@@ -1437,15 +1438,15 @@ class XlogCreateViewState extends State<XlogCreateView> {
                                 alignment: Alignment.topCenter,
                                 label: Text('$todayaddcountComplete/$todayaddcount'),
                                 backgroundColor: TColor.secondaryColor1,
-                                child: FloatingActionButton.extended(
+                                child: FloatingActionButton.small(
                                   heroTag: "btn3",
                                   backgroundColor: TColor.black, //TColor.secondaryColor1,
                                   elevation: 2,
 
-                                  label: Text(
-                                    LocaleData.toDo.getString((context)),
-                                  ),
-                                  icon: const Icon(
+                                  // label: Text(
+                                  //   LocaleData.toDo.getString((context)),
+                                  // ),
+                                  child: const Icon(
                                     Icons.checklist_outlined,
                                   ),
                                   onPressed: () async {
@@ -1533,7 +1534,6 @@ class XlogCreateViewState extends State<XlogCreateView> {
                                                   padding: const EdgeInsets.only(top: 10),
                                                   child: Center(
                                                     child: Text(
-                                                      //"${todaydate.month}/${todaydate.day} ToDo $todayaddcountComplete($todayaddcount)",
                                                       "${todaydate.month}/${todaydate.day} ${LocaleData.toDo.getString((context))}",
                                                       style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
                                                     ),
@@ -1664,7 +1664,7 @@ class XlogCreateViewState extends State<XlogCreateView> {
 
                   (isselectedWritting == false)
                       ? Align(
-                          alignment: Alignment(Alignment.bottomCenter.x - 0.55, Alignment.bottomCenter.y),
+                          alignment: Alignment(Alignment.bottomCenter.x - 0.95, Alignment.bottomCenter.y),
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: FloatingActionButton.small(
@@ -1720,6 +1720,7 @@ class XlogCreateViewState extends State<XlogCreateView> {
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: FloatingActionButton.extended(
+                              clipBehavior: Clip.antiAlias,
                               heroTag: 'btn1',
                               backgroundColor: TColor.secondaryColor1, //TColor.secondaryColor1,
                               elevation: 2,
@@ -2225,6 +2226,7 @@ class XlogCreateViewState extends State<XlogCreateView> {
                                                     DateFormat.E('${LocaleData.locale.getString(context)}').format(DateTime.now()),
                                                     style: TextStyle(color: TColor.white, fontSize: 16, fontWeight: FontWeight.w700),
                                                   ),
+                                                  const Text(" "),
                                                 ],
                                               ),
                                               Text(
@@ -2250,6 +2252,7 @@ class XlogCreateViewState extends State<XlogCreateView> {
                                                         DateFormat.E('${LocaleData.locale.getString(context)}').format(DateTime.now()),
                                                         style: TextStyle(color: TColor.white, fontSize: 16, fontWeight: FontWeight.w700),
                                                       ),
+                                                      const Text(" "),
                                                     ],
                                                   ),
                                                   Text(
@@ -2274,6 +2277,7 @@ class XlogCreateViewState extends State<XlogCreateView> {
                                                         DateFormat.E('${LocaleData.locale.getString(context)}').format(DateTime.now()),
                                                         style: TextStyle(color: TColor.white, fontSize: 16, fontWeight: FontWeight.w700),
                                                       ),
+                                                      const Text(" "),
                                                     ],
                                                   ),
                                                   // Text(
@@ -2322,17 +2326,20 @@ class XlogCreateViewState extends State<XlogCreateView> {
                                             xlogs[index].lxdate.day == todaydate.day //일 비교
 
                                         )
-                                      XlogCreateTile(
-                                        xlog: xlogs[index],
-                                        selectedweightUnit: selectedWeighUnint,
-                                        onDeleted: () {
-                                          setState(() {
-                                            xlogs.removeAt(index);
-                                            todayaddcount--;
-                                            todayaddcountComplete--;
-                                          });
-                                        },
-                                      ),
+                                      (_xlogformat >= 0)
+                                          ? XlogCreateTile(
+                                              xlog: xlogs[index],
+                                              selectedweightUnit: selectedWeighUnint,
+                                              xlogformat: _xlogformat,
+                                              onDeleted: () {
+                                                setState(() {
+                                                  xlogs.removeAt(index);
+                                                  todayaddcount--;
+                                                  todayaddcountComplete--;
+                                                });
+                                              },
+                                            )
+                                          : Container(),
                                 ],
                               ),
                             ],
@@ -2579,6 +2586,32 @@ class XlogCreateViewState extends State<XlogCreateView> {
                                               "${_timeformat % 3 + 1}",
                                               style: const TextStyle(fontWeight: FontWeight.w700),
                                             ))
+                                      ],
+                                    ),
+                                    //운동기록 형태 변경
+                                    Stack(
+                                      children: [
+                                        IconButton(
+                                          onPressed: () {
+                                            if (_xlogformat > 1) {
+                                              _xlogformat = 0;
+                                            } else {
+                                              _xlogformat++;
+                                            }
+                                            setState(() {});
+                                          },
+                                          icon: const Icon(
+                                            Icons.edit_document,
+                                          ),
+                                        ),
+                                        Positioned(
+                                          bottom: 6,
+                                          right: 6,
+                                          child: Text(
+                                            (_xlogformat != 2) ? "${_xlogformat % 3 + 1}" : "x",
+                                            style: const TextStyle(fontWeight: FontWeight.w700),
+                                          ),
+                                        )
                                       ],
                                     ),
                                   ],
@@ -3127,7 +3160,9 @@ class XlogCreateViewState extends State<XlogCreateView> {
                                             SizedBox(
                                               height: 20,
                                               child: Text(
-                                                LocaleData.reps.getString((context)),
+                                                (LocaleData.reps.getString((context)).length < 4)
+                                                    ? LocaleData.reps.getString((context))
+                                                    : LocaleData.reps.getString((context)).substring(0, 3),
                                                 style: TextStyle(
                                                   color: TColor.secondaryColor1,
                                                   fontSize: logTextSize,
@@ -3186,7 +3221,9 @@ class XlogCreateViewState extends State<XlogCreateView> {
                                             SizedBox(
                                               height: 20,
                                               child: Text(
-                                                LocaleData.sets.getString((context)),
+                                                (LocaleData.sets.getString((context)).length < 4)
+                                                    ? LocaleData.sets.getString((context))
+                                                    : LocaleData.sets.getString((context)).substring(0, 3),
                                                 textAlign: TextAlign.left,
                                                 style: TextStyle(color: TColor.secondaryColor1, fontSize: logTextSize, fontWeight: FontWeight.w700),
                                               ),

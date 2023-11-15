@@ -242,7 +242,7 @@ class _OnBoardState extends State<OnBoard> {
                                   child: RoundButton(
                                     type: selectedchoise == 5 ? RoundButtonType.bgGradient : RoundButtonType.textGradient,
                                     onPressed: () {
-                                      String value = 'en';
+                                      String value = 'es';
                                       _setLocale(value);
                                       setState(() {
                                         selectedchoise = 5;

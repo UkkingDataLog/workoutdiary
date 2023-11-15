@@ -194,7 +194,7 @@ class _todayXlogTileState extends State<todayXlogTile> {
                         alignment: Alignment.centerRight,
                         fit: BoxFit.scaleDown,
                         child: Text(
-                          "${LocaleData.reps.getString((context))}×",
+                          "${(LocaleData.reps.getString((context)).length < 4) ? LocaleData.reps.getString((context)) : LocaleData.reps.getString((context)).substring(0, 3)} ×",
                           textAlign: TextAlign.start,
                           style: TextStyle(
                             color: TColor.black,
@@ -221,7 +221,7 @@ class _todayXlogTileState extends State<todayXlogTile> {
                         alignment: Alignment.centerRight,
                         fit: BoxFit.scaleDown,
                         child: Text(
-                          LocaleData.sets.getString((context)),
+                          (LocaleData.sets.getString((context)).length < 4) ? LocaleData.sets.getString((context)) : LocaleData.sets.getString((context)).substring(0, 3),
                           textAlign: TextAlign.end,
                           style: TextStyle(
                             color: TColor.black,

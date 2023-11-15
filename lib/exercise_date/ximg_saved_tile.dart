@@ -66,7 +66,7 @@ class _XimgSavedTileState extends State<XimgSavedTile> {
             constraints: const BoxConstraints(maxHeight: 22),
             // color: TColor.black.withOpacity(0.25),
             child: SizedBox(
-              height: media.width * xlogcheckboxwidth * 0.5,
+              height: media.width * xlogcheckboxwidth,
               width: media.width * xlogcheckboxwidth,
               child: IconButton(
                 padding: EdgeInsets.zero,
