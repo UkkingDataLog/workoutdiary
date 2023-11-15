@@ -2040,42 +2040,42 @@ class XlogCreateViewState extends State<XlogCreateView> {
                                   height: 40,
                                   padding: EdgeInsets.only(left: 14, right: 14),
                                 ),
-                                items: const [
+                                items: [
                                   DropdownMenuItem(
                                     value: 'en',
-                                    child: Text('🇺🇸 English'),
+                                    child: (LocaleData.locale.getString(context) == 'en') ? Text('🇺🇸 English ✔') : Text('🇺🇸 English'),
                                   ),
                                   DropdownMenuItem(
                                     value: 'ko',
-                                    child: Text("🇰🇷 한국어"),
+                                    child: (LocaleData.locale.getString(context) == 'ko') ? Text("🇰🇷 한국어 ✔") : Text("🇰🇷 한국어"),
                                   ),
                                   DropdownMenuItem(
                                     value: 'zh',
-                                    child: Text("🇨🇳 中国"),
+                                    child: (LocaleData.locale.getString(context) == 'zh') ? Text("🇨🇳 中国 ✔") : Text("🇨🇳 中国"),
                                   ),
                                   DropdownMenuItem(
                                     value: 'ja',
-                                    child: Text("🇯🇵 日本語"),
+                                    child: (LocaleData.locale.getString(context) == 'ja') ? Text("🇯🇵 日本語 ✔") : Text("🇯🇵 日本語"),
                                   ),
                                   DropdownMenuItem(
                                     value: 'de',
-                                    child: Text('🇩🇪 Deutsch'),
+                                    child: (LocaleData.locale.getString(context) == 'de') ? Text('🇩🇪 Deutsch ✔') : Text('🇩🇪 Deutsch'),
                                   ),
                                   DropdownMenuItem(
                                     value: 'es',
-                                    child: Text("🇪🇸 Español"),
+                                    child: (LocaleData.locale.getString(context) == 'es') ? Text("🇪🇸 Español ✔") : Text("🇪🇸 Español"),
                                   ),
                                   DropdownMenuItem(
                                     value: 'pt',
-                                    child: Text("🇵🇹 Português"),
+                                    child: (LocaleData.locale.getString(context) == 'pt') ? Text("🇵🇹 Português ✔") : Text("🇵🇹 Português"),
                                   ),
                                   DropdownMenuItem(
                                     value: 'ar',
-                                    child: Text("🇸🇦 عربي"),
+                                    child: (LocaleData.locale.getString(context) == 'ar') ? Text("🇸🇦 عربي ✔") : Text("🇸🇦 عربي"),
                                   ),
                                   DropdownMenuItem(
                                     value: 'hi',
-                                    child: Text("🇮🇳 हिंदी"),
+                                    child: (LocaleData.locale.getString(context) == 'hi') ? Text("🇮🇳 हिंदी ✔") : Text("🇮🇳 हिंदी"),
                                   ),
                                 ],
                                 onChanged: (value) {
