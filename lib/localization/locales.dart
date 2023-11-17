@@ -1909,7 +1909,7 @@ mixin LocaleData {
   // 중국어 (Simplified Chinese) - 간체
   static const Map<String, dynamic> ZH = {
     locale: 'zh',
-    workoutdiary: '运动日记',
+    workoutdiary: '健身追记',
     chooselanguage: '请选择语言',
     LOGO: '标志',
     logo: '标志',

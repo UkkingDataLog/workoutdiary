@@ -179,7 +179,7 @@ class XlogCreateViewState extends State<XlogCreateView> {
   //about CupertinoPicker
   //public
   //CupertinoPicker height
-  double cupertinoPickerHeight = 180;
+
   double cupertinoPickeritemExtent = 44;
   //background color
   Color cupertinoPickercolor = TColor.primarygray.withOpacity(0.05);
@@ -217,7 +217,10 @@ class XlogCreateViewState extends State<XlogCreateView> {
 
     //화면 크기를 생성한다.
     var media = MediaQuery.of(context).size;
-    //
+    // ios 5.5에서는 158, ios 6.5에서는 180 사용, 5.5 : 414*736, 6.5 : 414*896
+
+    double cupertinoPickerHeight;
+    (media.height / media.width > 1.8) ? cupertinoPickerHeight = 180 : cupertinoPickerHeight = 158;
 
     // bool isSelectedkg = true;
     // String selectedWeighUnint = 'kg';
@@ -1548,7 +1551,7 @@ class XlogCreateViewState extends State<XlogCreateView> {
                                             SizedBox(
                                               height: media.height * 0.770,
                                               child: ListView(
-                                                physics: const NeverScrollableScrollPhysics(),
+                                                // physics: const NeverScrollableScrollPhysics(),
                                                 children: [
                                                   Column(
                                                     mainAxisAlignment: MainAxisAlignment.end,
