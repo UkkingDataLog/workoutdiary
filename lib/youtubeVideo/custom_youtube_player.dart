@@ -71,9 +71,9 @@ class _CustomYoutubePlayerState extends State<CustomYoutubePlayer> {
         ProgressBar(
           isExpanded: true,
           colors: ProgressBarColors(
-            handleColor: TColor.secondaryColor2,
-            playedColor: TColor.secondaryColor2,
-            backgroundColor: TColor.secondaryColor1,
+            handleColor: Theme.of(context).colorScheme.inversePrimary,
+            playedColor: Theme.of(context).colorScheme.inversePrimary,
+            backgroundColor: Theme.of(context).colorScheme.primary,
           ),
         ),
         RemainingDuration(),

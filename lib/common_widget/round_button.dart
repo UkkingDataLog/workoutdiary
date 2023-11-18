@@ -1,19 +1,22 @@
 import 'package:flutter/material.dart';
 
-import '../common/colo_extension.dart';
-
-enum RoundButtonType { bgGradient, bgSGradient, textGradient }
+enum RoundButtonType { selected, unselected, textGradient }
 
 class RoundButton extends StatelessWidget {
   final String title;
   final RoundButtonType type;
   final VoidCallback onPressed;
-  final double fontSize;
   final double elevation;
   final FontWeight fontWeight;
 
-  const RoundButton(
-      {super.key, required this.title, this.type = RoundButtonType.bgGradient, this.fontSize = 16, this.elevation = 1, this.fontWeight = FontWeight.w700, required this.onPressed});
+  const RoundButton({
+    super.key,
+    required this.title,
+    this.type = RoundButtonType.selected,
+    this.elevation = 1,
+    this.fontWeight = FontWeight.w700,
+    required this.onPressed,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -21,28 +24,30 @@ class RoundButton extends StatelessWidget {
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
         elevation: 1,
-        backgroundColor: type == RoundButtonType.bgGradient || type == RoundButtonType.bgSGradient ? TColor.black : TColor.white, //텍스트버튼 수정 필요
+        backgroundColor: type == RoundButtonType.selected || type == RoundButtonType.unselected ? Theme.of(context).colorScheme.onSurface : Theme.of(context).colorScheme.surface,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
         ),
       ),
-      child: type == RoundButtonType.bgGradient || type == RoundButtonType.bgSGradient
-          ? Text(
-              title,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: TColor.white,
-                fontSize: fontSize,
-                fontWeight: fontWeight,
+      child: type == RoundButtonType.selected || type == RoundButtonType.unselected
+          ? FittedBox(
+              child: Text(
+                title,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.surface,
+                  fontWeight: fontWeight,
+                ),
               ),
             )
-          : Text(
-              title,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: TColor.black,
-                fontSize: fontSize,
-                fontWeight: fontWeight,
+          : FittedBox(
+              child: Text(
+                title,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.onSurface,
+                  fontWeight: fontWeight,
+                ),
               ),
             ),
     );

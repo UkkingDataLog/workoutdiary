@@ -41,7 +41,7 @@ class _TermOfUseViewState extends State<TermOfUseView> {
                       ),
                       Text(
                         LocaleData.termsOfUse.getString(context),
-                        style: TextStyle(color: TColor.black, fontSize: 16, fontWeight: FontWeight.w700),
+                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
                       ),
                       IconButton(
                         icon: Icon(

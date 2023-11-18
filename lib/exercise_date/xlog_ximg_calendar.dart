@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'package:workoutdiary/common/colo_extension.dart';
 import 'package:workoutdiary/exercise_date/utils.dart';
 import 'package:workoutdiary/exercise_date/ximg_saved_tile.dart';
 import 'package:workoutdiary/exercise_date/xlog_ximg_date_calendar_view.dart';
@@ -33,12 +32,9 @@ class TableComplexExample extends StatefulWidget {
 }
 
 class _TableComplexExampleState extends State<TableComplexExample> {
-  //
   bool isSelectedkg = true;
-
-  //
   bool isCalenderopen = true;
-  //
+
   int selectdaycount = 0;
   late final ValueNotifier<List<Event>> _selectedEvents;
   final ValueNotifier<DateTime> _focusedDay = ValueNotifier(DateTime.now());
@@ -134,12 +130,15 @@ class _TableComplexExampleState extends State<TableComplexExample> {
       body: Column(
         children: [
           Container(
+            height: 42,
             padding: const EdgeInsets.only(top: 0.0, bottom: 0.0),
-            color: Colors.black,
+            color: Theme.of(context).colorScheme.onBackground,
             child: Center(
               child: Text(
                 LocaleData.slogan.getString((context)),
-                style: TextStyle(color: TColor.white),
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.background,
+                ),
               ),
             ),
           ),
@@ -187,7 +186,6 @@ class _TableComplexExampleState extends State<TableComplexExample> {
                       rowHeight: 48,
                       daysOfWeekHeight: 22,
                       locale: LocaleData.locale.getString((context)),
-
                       firstDay: widget.kFirstDay,
                       lastDay: widget.kLastDay,
                       focusedDay: _focusedDay.value,
@@ -196,9 +194,9 @@ class _TableComplexExampleState extends State<TableComplexExample> {
                       rangeStartDay: _rangeStart,
                       rangeEndDay: _rangeEnd,
                       calendarFormat: _calendarFormat,
-
                       rangeSelectionMode: _rangeSelectionMode,
                       eventLoader: _getEventsForDay,
+
                       // holidayPredicate: (day) {
                       //   // Every 20th day of the month will be treated as a holiday 휴무일
                       //   return day.day == 20;
@@ -213,13 +211,31 @@ class _TableComplexExampleState extends State<TableComplexExample> {
                           setState(() => _calendarFormat = format);
                         }
                       },
+
+                      //custom
+                      calendarStyle: CalendarStyle(
+                        // marker 모양 조정
+                        markerDecoration: BoxDecoration(
+                          color: Theme.of(context).colorScheme.onBackground,
+                          shape: BoxShape.circle,
+                        ),
+                        // startDay, endDay 사이의 글자 조정
+                        withinRangeTextStyle: TextStyle(
+                          color: Theme.of(context).colorScheme.background,
+                        ),
+                      ),
                     )
                   : Container(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  SizedBox(
-                    height: 40,
+                  Container(
+                    height: 36,
+                    width: 36,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                      color: Theme.of(context).colorScheme.outline,
+                    ),
                     child: IconButton(
                       padding: const EdgeInsets.all(0),
                       onPressed: () {
@@ -241,31 +257,22 @@ class _TableComplexExampleState extends State<TableComplexExample> {
                       ),
                     ),
                   ),
+                  const SizedBox(width: 8),
                   Padding(
                     padding: const EdgeInsets.only(right: 4.0),
                     child: Container(
                       height: 40,
-                      decoration: const BoxDecoration(
-                        color: Colors.black,
-                        // gradient:
-                        //     LinearGradient(colors: TColor.secondaryG),
-                        borderRadius: BorderRadius.only(
-                          // topLeft: Radius.circular(20),
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.onBackground,
+                        borderRadius: const BorderRadius.only(
                           bottomLeft: Radius.circular(20),
                           bottomRight: Radius.circular(20),
                         ),
                       ),
                       child: Row(
                         children: [
-                          // 위젯이미지 캡처 및 공유
-                          // IconButton(
-                          //     onPressed: () {},
-                          //     icon: Icon(
-                          //       Icons.share,
-                          //       // size: iconsize - 4,
-                          //       color: TColor.white,
-                          //     )),
                           IconButton(
+                              color: Theme.of(context).colorScheme.background,
                               onPressed: () {
                                 if (isCalenderopen == true) {
                                   setState(() {
@@ -277,10 +284,7 @@ class _TableComplexExampleState extends State<TableComplexExample> {
                                   });
                                 }
                               },
-                              icon: Icon(
-                                Icons.date_range,
-                                color: TColor.white,
-                              )),
+                              icon: const Icon(Icons.date_range)),
                         ],
                       ),
                     ),
@@ -299,194 +303,84 @@ class _TableComplexExampleState extends State<TableComplexExample> {
                   // physics: ClampingScrollPhysics(),
                   itemCount: value.length,
                   itemBuilder: (context, index) {
-                    return Container(
-                      margin: const EdgeInsets.symmetric(
-                          // horizontal: 12.0,
-                          // vertical: 16.0,
-                          ),
-                      decoration: const BoxDecoration(
-                          // border: Border.all(),
-                          // borderRadius: BorderRadius.circular(12.0),
-
-                          ),
-                      //수정필요 카드형태로 제작
-                      child: ListTile(
-                        contentPadding: EdgeInsets.zero,
-                        // onTap: () => print('${value[index]}'), //버튼 클릭시 이벤트 발생
-                        title: Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                // Container(
-                                //   color: TColor.black,
-                                //   child: Container(
-                                //     height: media.width * 0.06,
-                                //     width: media.width * 0.28, //* 0.28,
-                                //     decoration: BoxDecoration(
-                                //       color: Theme.of(context).canvasColor,
-                                //       borderRadius: const BorderRadius.only(
-                                //         bottomRight: Radius.circular(10),
-                                //       ),
-                                //     ),
-                                //     child: const Text(''),
-                                //   ),
-                                // ),
-                                Container(
-                                  height: media.width * 0.06,
-                                  width: media.width * 0.28,
-                                  decoration: BoxDecoration(
-                                    color: TColor.black,
-                                    borderRadius: const BorderRadius.only(
-                                      topLeft: Radius.circular(10),
-                                      topRight: Radius.circular(10),
-                                    ),
+                    return ListTile(
+                      contentPadding: EdgeInsets.zero,
+                      // onTap: () => print('${value[index]}'), //버튼 클릭시 이벤트 발생
+                      title: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                height: media.width * 0.06,
+                                width: media.width * 0.28,
+                                decoration: BoxDecoration(
+                                  color: Theme.of(context).colorScheme.onBackground,
+                                  borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(10),
+                                    topRight: Radius.circular(10),
                                   ),
-                                  child: FittedBox(
-                                    fit: BoxFit.fitHeight,
-                                    child: Text(
-                                      '${value[index].datetime.month} / ${value[index].datetime.day}',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(color: TColor.white, fontSize: 16, fontWeight: FontWeight.w700),
+                                ),
+                                child: FittedBox(
+                                  fit: BoxFit.fitHeight,
+                                  child: Text(
+                                    '${value[index].datetime.month} / ${value[index].datetime.day}',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w700,
+                                      color: Theme.of(context).colorScheme.background,
                                     ),
                                   ),
                                 ),
-                                // Container(
-                                //   color: TColor.black,
-                                //   child: Container(
-                                //     height: media.width * 0.06,
-                                //     width: media.width * 0.28, //* 0.28,
-                                //     decoration: BoxDecoration(
-                                //       color: Theme.of(context).canvasColor,
-                                //       borderRadius: const BorderRadius.only(
-                                //         bottomLeft: Radius.circular(10),
-                                //       ),
-                                //     ),
-                                //     child: const Text(''),
-                                //   ),
-                                // ),
-                              ],
-                            ),
-                            // Container(
-                            //   height: 1,
-                            //   decoration: BoxDecoration(
-                            //     color: TColor.black,
-                            //     // borderRadius: const BorderRadius.only(
-                            //     //   topLeft: Radius.circular(10),
-                            //     //   topRight: Radius.circular(10),
-                            //     // ),
-                            //   ),
-                            // ),
-                            for (int ximgsindex = 0; ximgsindex < value[index].ximgs.length; ximgsindex += 1)
-                              if (value[index].ximgs[ximgsindex].date.year == value[index].datetime.year //년 비교
-                                      &&
-                                      value[index].ximgs[ximgsindex].date.month == value[index].datetime.month //월 비교
-                                      &&
-                                      value[index].ximgs[ximgsindex].date.day == value[index].datetime.day //일 비교
-                                  )
-                                XimgSavedTile(
-                                  ximg: value[index].ximgs[ximgsindex],
-                                  height: 1.25,
+                              ),
+                            ],
+                          ),
+
+                          for (int ximgsindex = 0; ximgsindex < value[index].ximgs.length; ximgsindex += 1)
+                            if (value[index].ximgs[ximgsindex].date.year == value[index].datetime.year //년 비교
+                                    &&
+                                    value[index].ximgs[ximgsindex].date.month == value[index].datetime.month //월 비교
+                                    &&
+                                    value[index].ximgs[ximgsindex].date.day == value[index].datetime.day //일 비교
+                                )
+                              XimgSavedTile(
+                                ximg: value[index].ximgs[ximgsindex],
+                                height: 1.25,
+                                onDeleted: () {
+                                  setState(() {
+                                    value[index].ximgs.removeAt(ximgsindex);
+                                    parent?.setState(() {});
+                                  });
+                                },
+                              ),
+                          //
+                          for (int xlogsindex = 0; xlogsindex < value[index].xlogs.length; xlogsindex += 1)
+                            if (
+
+                                ////둘다 dateTime 형식이므로 해당년, 월, 일 비교가 필요함
+                                value[index].xlogs[xlogsindex].lxdate.year == value[index].datetime.year //년 비교
+                                    &&
+                                    value[index].xlogs[xlogsindex].lxdate.month == value[index].datetime.month //월 비교
+                                    &&
+                                    value[index].xlogs[xlogsindex].lxdate.day == value[index].datetime.day //일 비교
+
+                                )
+                              Container(
+                                color: Theme.of(context).colorScheme.onBackground,
+                                child: XlogCreateTile(
+                                  xlog: value[index].xlogs[xlogsindex],
                                   onDeleted: () {
                                     setState(() {
-                                      value[index].ximgs.removeAt(ximgsindex);
+                                      value[index].xlogs.removeAt(xlogsindex);
                                       parent?.setState(() {});
                                     });
                                   },
+                                  selectedweightUnit: widget.weightUnits,
                                 ),
-                            //
-                            for (int xlogsindex = 0; xlogsindex < value[index].xlogs.length; xlogsindex += 1)
-                              if (
+                              ),
 
-                                  ////둘다 dateTime 형식이므로 해당년, 월, 일 비교가 필요함
-                                  value[index].xlogs[xlogsindex].lxdate.year == value[index].datetime.year //년 비교
-                                      &&
-                                      value[index].xlogs[xlogsindex].lxdate.month == value[index].datetime.month //월 비교
-                                      &&
-                                      value[index].xlogs[xlogsindex].lxdate.day == value[index].datetime.day //일 비교
-
-                                  )
-                                Container(
-                                  color: Colors.black,
-                                  child: XlogCreateTile(
-                                    xlog: value[index].xlogs[xlogsindex],
-                                    onDeleted: () {
-                                      setState(() {
-                                        value[index].xlogs.removeAt(xlogsindex);
-                                        parent?.setState(() {});
-                                      });
-                                    },
-                                    selectedweightUnit: widget.weightUnits,
-                                  ),
-                                ),
-                            // Container(
-                            //   height: 8,
-                            //   decoration: BoxDecoration(
-                            //     color: TColor.black,
-                            //     borderRadius: const BorderRadius.only(
-                            //       bottomLeft: Radius.circular(10),
-                            //       bottomRight: Radius.circular(10),
-                            //     ),
-                            //   ),
-                            // ),
-                            // Stack(
-                            //   alignment: Alignment.center,
-                            //   children: [
-                            //     Container(
-                            //       height: media.width * 0.06,
-                            //       width: media.width,
-                            //       color: TColor.black,
-                            //     ),
-                            //     Row(
-                            //       mainAxisAlignment: MainAxisAlignment.center,
-                            //       children: [
-                            //         Container(
-                            //           color: TColor.white,
-                            //           child: Container(
-                            //             height: media.width * 0.06,
-                            //             width: media.width * 0.28, //* 0.28,
-                            //             decoration: BoxDecoration(
-                            //               color: TColor.black,
-                            //               borderRadius: const BorderRadius.only(
-                            //                 bottomRight: Radius.circular(10),
-                            //               ),
-                            //             ),
-                            //             child: const Text(''),
-                            //           ),
-                            //         ),
-                            //         Container(
-                            //           height: media.width * 0.06,
-                            //           width: media.width * 0.28, //* 0.28,
-                            //           decoration: BoxDecoration(
-                            //             color: Theme.of(context).canvasColor,
-                            //             borderRadius: const BorderRadius.only(
-                            //               topLeft: Radius.circular(10),
-                            //               topRight: Radius.circular(10),
-                            //             ),
-                            //           ),
-                            //           child: const Text(''),
-                            //         ),
-                            //         Container(
-                            //           color: TColor.white,
-                            //           child: Container(
-                            //             height: media.width * 0.06,
-                            //             width: media.width * 0.28, //* 0.28,
-                            //             decoration: BoxDecoration(
-                            //               color: TColor.black,
-                            //               borderRadius: const BorderRadius.only(
-                            //                 bottomLeft: Radius.circular(10),
-                            //               ),
-                            //             ),
-                            //             child: const Text(''),
-                            //           ),
-                            //         ),
-                            //       ],
-                            //     ),
-                            //   ],
-                            // ),
-                            const SizedBox(height: 16)
-                          ],
-                        ),
+                          const SizedBox(height: 16)
+                        ],
                       ),
                     );
                   },

@@ -22,7 +22,7 @@ class _XlogDateTileState extends State<XlogDateTile> {
   Widget build(BuildContext context) {
     var media = MediaQuery.of(context).size;
     return Material(
-      color: TColor.black,
+      color: Colors.black,
       child: AnimatedContainer(
         constraints: const BoxConstraints(maxHeight: 22),
         alignment: Alignment.center,
@@ -56,10 +56,7 @@ class _XlogDateTileState extends State<XlogDateTile> {
                       fit: BoxFit.contain,
                       child: Text(
                         "${widget.xlog.xbodypart} |",
-                        style: TextStyle(
-                            color: TColor.white,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w700),
+                        style: TextStyle(color: TColor.white, fontSize: 14, fontWeight: FontWeight.w700),
                       ),
                     ),
                   ),
@@ -71,10 +68,7 @@ class _XlogDateTileState extends State<XlogDateTile> {
                       child: Text(
                         " ${widget.xlog.xType}",
                         textAlign: TextAlign.start,
-                        style: TextStyle(
-                            color: TColor.white,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w700),
+                        style: TextStyle(color: TColor.white, fontSize: 14, fontWeight: FontWeight.w700),
                       ),
                     ),
                   ),
@@ -86,10 +80,7 @@ class _XlogDateTileState extends State<XlogDateTile> {
                       child: Text(
                         "${widget.xlog.lxweight * 0.5}",
                         textAlign: TextAlign.end,
-                        style: TextStyle(
-                            color: TColor.white,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w700),
+                        style: TextStyle(color: TColor.white, fontSize: 14, fontWeight: FontWeight.w700),
                       ),
                     ),
                   ),
@@ -101,10 +92,7 @@ class _XlogDateTileState extends State<XlogDateTile> {
                       child: Text(
                         widget.xlog.lxweightUnit,
                         textAlign: TextAlign.start,
-                        style: TextStyle(
-                            color: TColor.white,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w700),
+                        style: TextStyle(color: TColor.white, fontSize: 14, fontWeight: FontWeight.w700),
                       ),
                     ),
                   ),
@@ -116,10 +104,7 @@ class _XlogDateTileState extends State<XlogDateTile> {
                       child: Text(
                         " ${widget.xlog.lxnumber}회 ×",
                         textAlign: TextAlign.end,
-                        style: TextStyle(
-                            color: TColor.white,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w700),
+                        style: TextStyle(color: TColor.white, fontSize: 14, fontWeight: FontWeight.w700),
                       ),
                     ),
                   ),
@@ -131,10 +116,7 @@ class _XlogDateTileState extends State<XlogDateTile> {
                       child: Text(
                         "${widget.xlog.lxset}세트",
                         textAlign: TextAlign.end,
-                        style: TextStyle(
-                            color: TColor.white,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w700),
+                        style: TextStyle(color: TColor.white, fontSize: 14, fontWeight: FontWeight.w700),
                       ),
                     ),
                   ),

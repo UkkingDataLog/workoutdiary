@@ -3,8 +3,6 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
-
-import 'package:workoutdiary/common/colo_extension.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -49,47 +47,31 @@ class _SettingViewState extends State<SettingView> {
             },
           ),
           automaticallyImplyLeading: false,
-          foregroundColor: TColor.black,
           elevation: 0,
           toolbarHeight: 48,
-          backgroundColor: TColor.white,
           title: Text(
             LocaleData.setting.getString((context)),
-            style: TextStyle(color: TColor.black, fontSize: 16, fontWeight: FontWeight.w700),
+            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
           ),
           centerTitle: true,
         ),
         body: SingleChildScrollView(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(height: 8),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
-                child: Text(
-                  LocaleData.usersetting.getString((context)),
-                  style: TextStyle(
-                      fontSize: 14,
-                      // fontWeight: FontWeight.w700,
-                      color: TColor.primarygray),
-                ),
-              ),
               Card(
-                shape: Border(right: BorderSide(color: TColor.secondaryColor1, width: 5)),
-                shadowColor: TColor.secondaryColor1,
-                elevation: 0.5,
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    const SizedBox(height: 8),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
+                      child: Text(
+                        LocaleData.usersetting.getString((context)),
+                      ),
+                    ),
                     SizedBox(
-                      // height: 72,
                       child: ListTile(
-                        // contentPadding: EdgeInsets.symmetric(horizontal: 16),
-                        // visualDensity: VisualDensity(horizontal: 0, vertical: -4),
-                        leading: CircleAvatar(
-                          backgroundColor: TColor.white,
-                          foregroundColor: TColor.black,
-                          child: const Icon(Icons.language_rounded),
-                        ),
+                        leading: const Icon(Icons.language_rounded),
                         title: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -98,7 +80,6 @@ class _SettingViewState extends State<SettingView> {
                             ),
                             Text(
                               LocaleData.selectedLanguage.getString((context)),
-                              style: TextStyle(color: TColor.primarygray),
                             ),
                           ],
                         ),
@@ -109,17 +90,12 @@ class _SettingViewState extends State<SettingView> {
                         // },
                       ),
                     ),
-                    Divider(height: 1, color: TColor.primarygray),
                     SizedBox(
                       // height: 72,
                       child: ListTile(
                         // contentPadding: EdgeInsets.symmetric(horizontal: 16),
                         // visualDensity: VisualDensity(horizontal: 0, vertical: -4),
-                        leading: CircleAvatar(
-                          backgroundColor: TColor.white,
-                          foregroundColor: TColor.black,
-                          child: const Icon(Icons.monitor_weight_outlined),
-                        ),
+                        leading: const Icon(Icons.monitor_weight_outlined),
                         title: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -128,7 +104,6 @@ class _SettingViewState extends State<SettingView> {
                             ),
                             Text(
                               widget.weightUnits,
-                              style: TextStyle(color: TColor.primarygray),
                             ),
                           ],
                         ),
@@ -138,49 +113,22 @@ class _SettingViewState extends State<SettingView> {
                         // },
                       ),
                     ),
-                    // ListTile(
-                    //   leading: Icon(Icons.home_work_outlined),
-                    //   title: Text("인스타그램 방문하기"),
-                    //   onTap: (() {
-                    //     //
-                    //   }),
-                    // ),
-                    // ListTile(
-                    //   leading: Icon(Icons.star),
-                    //   title: Text("별점주기"),
-                    //   onTap: (() {
-                    //     //
-                    //   }),
-                    // ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 8),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
-                child: Text(
-                  LocaleData.more.getString((context)),
-                  style: TextStyle(
-                      fontSize: 14,
-                      // fontWeight: FontWeight.w700,
-                      color: TColor.primarygray),
-                ),
-              ),
-              Card(
-                shape: Border(right: BorderSide(color: TColor.primaryColor1, width: 5)),
-                shadowColor: TColor.primaryColor1,
-                elevation: 0.5,
-                child: Column(
-                  children: [
+                    const Padding(
+                      padding: EdgeInsets.all(12.0),
+                      child: Divider(),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
+                      child: Text(
+                        LocaleData.more.getString((context)),
+                        style: TextStyle(fontSize: 14),
+                      ),
+                    ),
                     SizedBox(
                       // height: 72,
                       child: Center(
                         child: ListTile(
-                          leading: CircleAvatar(
-                            backgroundColor: TColor.white,
-                            foregroundColor: TColor.black,
-                            child: const Icon(Icons.restore_rounded),
-                          ),
+                          leading: const Icon(Icons.restore_rounded),
                           title: Text(
                             LocaleData.dataInitialization.getString((context)),
                           ),
@@ -214,7 +162,6 @@ class _SettingViewState extends State<SettingView> {
                                               CupertinoDialogAction(
                                                 child: Text(
                                                   LocaleData.back_button_text.getString((context)),
-                                                  style: TextStyle(color: TColor.primarygray),
                                                 ),
                                                 onPressed: () {
                                                   Navigator.of(context).pop(); // Dismisses the dialog
@@ -223,7 +170,6 @@ class _SettingViewState extends State<SettingView> {
                                               CupertinoDialogAction(
                                                   child: Text(
                                                     LocaleData.deleteButtonText.getString((context)),
-                                                    style: TextStyle(color: TColor.primarygray),
                                                   ),
                                                   onPressed: () {
                                                     if (xlogs.isEmpty && ximgs.isEmpty) {
@@ -260,17 +206,12 @@ class _SettingViewState extends State<SettingView> {
                         ),
                       ),
                     ),
-                    Divider(height: 1, color: TColor.primarygray),
                     SizedBox(
                       // height: 72,
                       child: Center(
                         child: ListTile(
-                          leading: CircleAvatar(
-                            backgroundColor: TColor.white,
-                            foregroundColor: TColor.black,
-                            child: const Icon(
-                              Icons.handshake_outlined,
-                            ),
+                          leading: const Icon(
+                            Icons.handshake_outlined,
                           ),
                           title: Text(
                             LocaleData.termsOfUse.getString((context)),
@@ -281,31 +222,22 @@ class _SettingViewState extends State<SettingView> {
                         ),
                       ),
                     ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 8),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
-                child: Text(
-                  LocaleData.toDevelopers.getString((context)),
-                  style: TextStyle(
-                      fontSize: 14,
-                      // fontWeight: FontWeight.w700,
-                      color: TColor.primarygray),
-                ),
-              ),
-              Card(
-                shape: Border(right: BorderSide(color: TColor.primaryColor1, width: 5)),
-                shadowColor: Theme.of(context).canvasColor, //TColor.primaryColor1,
-                elevation: 0.5,
-                child: Column(
-                  children: [
+                    const Padding(
+                      padding: EdgeInsets.all(12.0),
+                      child: Divider(),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
+                      child: Text(
+                        LocaleData.toDevelopers.getString((context)),
+                        style: TextStyle(fontSize: 14),
+                      ),
+                    ),
                     SizedBox(
                       // height: 72,
                       child: Center(
                         child: ListTile(
-                          leading: CircleAvatar(backgroundColor: TColor.white, foregroundColor: TColor.black, child: const Icon(Icons.mail_outline_rounded)),
+                          leading: const Icon(Icons.mail_outline_rounded),
                           title: Text(
                             LocaleData.feedback.getString((context)),
                           ),
@@ -332,7 +264,6 @@ class _SettingViewState extends State<SettingView> {
                                   CupertinoDialogAction(
                                     child: Text(
                                       LocaleData.back_button_text.getString((context)),
-                                      style: TextStyle(color: TColor.primarygray),
                                     ),
                                     onPressed: () {
                                       Navigator.of(context).pop(); // Dismisses the dialog
@@ -341,7 +272,6 @@ class _SettingViewState extends State<SettingView> {
                                   CupertinoDialogAction(
                                     child: Text(
                                       LocaleData.sendEmailButtonText.getString((context)),
-                                      style: TextStyle(color: TColor.secondaryColor1),
                                     ),
                                     onPressed: () async {
                                       Map<String, dynamic> deviceInfo = await _getDeviceInfo();
@@ -376,20 +306,6 @@ class _SettingViewState extends State<SettingView> {
                         ),
                       ),
                     ),
-                    // ListTile(
-                    //   leading: Icon(Icons.home_work_outlined),
-                    //   title: Text("인스타그램 방문하기"),
-                    //   onTap: (() {
-                    //     //
-                    //   }),
-                    // ),
-                    // ListTile(
-                    //   leading: Icon(Icons.star),
-                    //   title: Text("별점주기"),
-                    //   onTap: (() {
-                    //     //
-                    //   }),
-                    // ),
                   ],
                 ),
               ),
@@ -402,32 +318,15 @@ class _SettingViewState extends State<SettingView> {
                     } else if (!snapshot.hasData) {
                       return const Text('Loading...');
                     }
-
                     final data = snapshot.data!;
-
                     appversion = snapshot.data!.version;
-
                     return Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(
-                            data.appName, //App Name:
-                            style: TextStyle(
-                                fontSize: 14,
-                                // fontWeight: FontWeight.w700,
-                                color: TColor.primarygray),
-                          ),
-                          // Text('Package Name: ${data.packageName}'),
-                          Text(
-                            '${LocaleData.version.getString((context))} ${data.version}',
-                            style: TextStyle(
-                                fontSize: 14,
-                                // fontWeight: FontWeight.w700,
-                                color: TColor.primarygray),
-                          ),
-                          // Text('Build Number: ${data.buildNumber}'),
+                          Text(data.appName),
+                          Text('${LocaleData.version.getString((context))} ${data.version}'),
                         ],
                       ),
                     );

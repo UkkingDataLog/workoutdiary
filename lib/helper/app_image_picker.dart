@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -44,7 +45,7 @@ Future<File?> _cropImage({required File imageFile}) async {
       AndroidUiSettings(
         toolbarTitle: '자르기',
         toolbarColor: TColor.white,
-        toolbarWidgetColor: TColor.black,
+        toolbarWidgetColor: Colors.black,
         initAspectRatio: CropAspectRatioPreset.square,
         lockAspectRatio: true,
       ),

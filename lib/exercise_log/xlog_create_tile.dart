@@ -63,7 +63,7 @@ class _XlogCreateTileState extends State<XlogCreateTile> {
         : (widget.xlogformat == 2)
             ? Container()
             : Material(
-                color: TColor.black.withOpacity(0.25),
+                color: Colors.black.withOpacity(0.25),
                 child: AnimatedContainer(
                   constraints: const BoxConstraints(maxHeight: 22),
                   alignment: Alignment.center,

@@ -9,7 +9,6 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 //
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:workoutdiary/common/colo_extension.dart';
 import 'package:workoutdiary/common/hive_helper.dart';
 import 'package:workoutdiary/hivedata/xlog.dart';
 import 'package:workoutdiary/exercise_log/xlog_create_view.dart';
@@ -20,21 +19,21 @@ import 'package:workoutdiary/localization/locales.dart';
 import 'package:workoutdiary/operating_doc/term_of_use_view.dart';
 import 'package:workoutdiary/providers/app_image_provider.dart';
 
-import 'package:workoutdiary/ui/ui_group.dart';
-
 import 'package:app_tracking_transparency/app_tracking_transparency.dart';
 
 int? isviewed;
+
 @override
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   SharedPreferences prefs = await SharedPreferences.getInstance();
   isviewed = prefs.getInt('onBoard');
   // 세로모드로 고정
-  await SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp,
-    DeviceOrientation.portraitDown,
-  ]);
+  // await SystemChrome.setPreferredOrientations([
+  //   DeviceOrientation.portraitUp,
+  //   DeviceOrientation.portraitDown,
+  // ]);
 
   // Show tracking authorization dialog and ask for permission
   final status = await AppTrackingTransparency.requestTrackingAuthorization();
@@ -80,36 +79,38 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
-
-    return Container(
-      color: TColor.white,
-      child: SafeArea(
-        maintainBottomViewPadding: true,
-        top: true,
-        bottom: false,
-        child: MaterialApp(
-          //
-          debugShowCheckedModeBanner: false,
-          theme: ThemeData(
-            primaryColor: TColor.primaryColor1,
-            fontFamily: fontFamily,
+    // 상태바 색상 변환
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle());
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      // 테마
+      theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(
+            seedColor: const Color(0xFF5C6BC0),
+            brightness: Brightness.light,
           ),
-          // darkTheme: ThemeData.dark(),
-          //
-          supportedLocales: localization.supportedLocales,
-          localizationsDelegates: localization.localizationsDelegates,
-          //스크린 위치 설정
-          routes: <String, WidgetBuilder>{
-            '/': (_) => const XlogCreateView(),
-            '/landing': (context) => OnBoard(),
-            '/TermsOfUse': (context) => const TermOfUseView(),
-          },
-          initialRoute:
-              // '/landing',
-              isviewed != 0 ? '/landing' : '/',
+          useMaterial3: true),
+      darkTheme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: const Color(0xFF5C6BC0),
+          brightness: Brightness.dark,
         ),
+        useMaterial3: true,
       ),
+      themeMode: ThemeMode.system,
+
+      //
+      supportedLocales: localization.supportedLocales,
+      localizationsDelegates: localization.localizationsDelegates,
+      //스크린 위치 설정
+      routes: <String, WidgetBuilder>{
+        '/': (_) => const XlogCreateView(),
+        '/landing': (context) => OnBoard(),
+        '/TermsOfUse': (context) => const TermOfUseView(),
+      },
+      initialRoute:
+          // '/landing',
+          isviewed != 0 ? '/landing' : '/',
     );
   }
 

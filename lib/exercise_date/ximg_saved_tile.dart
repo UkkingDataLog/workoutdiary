@@ -42,7 +42,7 @@ class _XimgSavedTileState extends State<XimgSavedTile> {
       alignment: Alignment.bottomLeft,
       children: [
         Container(
-          color: TColor.black,
+          color: Colors.black,
           height: media.width * widget.height,
           width: media.width * 1.0,
           child: InteractiveViewer(
@@ -51,7 +51,7 @@ class _XimgSavedTileState extends State<XimgSavedTile> {
               height: media.width * widget.height, //화면비에 맞게 조정!
               width: media.width * 1.00,
               decoration: BoxDecoration(
-                color: TColor.black,
+                color: Colors.black,
                 image: DecorationImage(
                   image: MemoryImage(widget.ximg.image),
                   fit: BoxFit.contain,

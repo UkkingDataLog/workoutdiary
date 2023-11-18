@@ -3,7 +3,6 @@ import 'dart:collection';
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'package:workoutdiary/common/colo_extension.dart';
 import 'package:workoutdiary/exercise_date/utils.dart';
 
 import 'package:workoutdiary/exercise_date/xlog_ximg_calendar.dart';
@@ -125,19 +124,22 @@ class XlogXimgDateCalendarViewState extends State<XlogXimgDateCalendarView> {
               snap: true,
               leading: IconButton(
                 icon: const Icon(Icons.arrow_back),
-                // iconSize: iconsize,
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
               ),
               automaticallyImplyLeading: false,
-              foregroundColor: TColor.black,
+              foregroundColor: Theme.of(context).colorScheme.onPrimary,
               elevation: 0,
               toolbarHeight: 48,
-              backgroundColor: TColor.white,
+              backgroundColor: Theme.of(context).colorScheme.primary,
               title: Text(
                 LocaleData.viewtitle_calendar.getString((context)),
-                style: TextStyle(color: TColor.black, fontSize: 16, fontWeight: FontWeight.w700),
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.onPrimary,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w700,
+                ),
               ),
             ),
           ],

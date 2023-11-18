@@ -1,7 +1,3 @@
-import 'dart:ui';
-
-import 'package:workoutdiary/common/colo_extension.dart';
-
 //----------001. main.dart----------
 
 String fontFamily = "Poppins";
@@ -12,7 +8,7 @@ double bodypartselectzoneheight = 44;
 //1. appbartitle
 
 double xlogcreateviewtitlefontSize = 20;
-Color xlogcreateviewtitlecolor = TColor.black;
+// Color xlogcreateviewtitlecolor = TColor.black;
 //2. flutterswitch
 double flutterswitchwidth = 64;
 double flutterswitcheight = 22;

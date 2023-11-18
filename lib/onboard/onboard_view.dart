@@ -67,30 +67,29 @@ class _OnBoardState extends State<OnBoard> {
         img: 'assets/img/LanguageTranslator.png',
         text: LocaleData.chooselanguage.getString(context),
         desc: "Sebuah metode belajar yang terbuktiampuh dalam meningkatkan produktifitas belajar, Learning by Doing",
-        bg: Colors.white,
-        button: TColor.secondaryColor1,
+        bg: Theme.of(context).colorScheme.background,
+        button: Theme.of(context).colorScheme.primary,
       ),
       // OnboardModel(
       //   img: 'assets/img/on_2.png',
       //   text: "Dapatkan Kemudahan Akses Kapanpun dan Dimanapun",
       //   desc: "Tidak peduli dimanapun kamu, semua kursus yang telah kamu ikuti bias kamu akses sepenuhnya",
-      //   bg: Colors.white,
-      //   button: Colors.white,
+      //   bg:  Theme.of(context).colorScheme.background,
+      //   button: Theme.of(context).colorScheme.primary,
       // ),
       // OnboardModel(
       //   img: 'assets/img/on_3.png',
       //   text: "Gunakan Fitur Kolaborasi Untuk Pengalaman Lebih",
       //   desc: "Tersedia fitur Kolaborasi dengan tujuan untuk mengasah skill lebih dalam karena bias belajar bersama",
-      //   bg: Colors.white,
-      //   button: TColor.secondaryColor1,
+      //   bg:  Theme.of(context).colorScheme.background,
+      //   button: Theme.of(context).colorScheme.primary,
       // ),
     ];
     return Scaffold(
-      backgroundColor: TColor.white,
       appBar: AppBar(
         toolbarHeight: 48,
         automaticallyImplyLeading: false,
-        backgroundColor: TColor.white,
+        backgroundColor: Theme.of(context).colorScheme.background,
         elevation: 0.0,
         actions: [
           (currentIndex == 0)
@@ -103,7 +102,7 @@ class _OnBoardState extends State<OnBoard> {
                   child: Text(
                     "Skip",
                     style: TextStyle(
-                      color: TColor.black,
+                      color: Theme.of(context).colorScheme.onBackground,
                     ),
                   ),
                 )
@@ -140,7 +139,7 @@ class _OnBoardState extends State<OnBoard> {
                     fontSize: 27.0,
                     fontWeight: FontWeight.bold,
                     fontFamily: 'Poppins',
-                    color: TColor.black,
+                    color: Theme.of(context).colorScheme.onBackground,
                   ),
                 ),
                 (currentIndex != 0)
@@ -156,7 +155,7 @@ class _OnBoardState extends State<OnBoard> {
                                   height: 56,
                                   width: MediaQuery.sizeOf(context).width / 3.5,
                                   child: RoundButton(
-                                    type: selectedchoise == 0 ? RoundButtonType.bgGradient : RoundButtonType.textGradient,
+                                    type: selectedchoise == 0 ? RoundButtonType.selected : RoundButtonType.textGradient,
                                     onPressed: () {
                                       String value = 'en';
                                       _setLocale(value);
@@ -171,7 +170,7 @@ class _OnBoardState extends State<OnBoard> {
                                   height: 56,
                                   width: MediaQuery.sizeOf(context).width / 3.5,
                                   child: RoundButton(
-                                    type: selectedchoise == 1 ? RoundButtonType.bgGradient : RoundButtonType.textGradient,
+                                    type: selectedchoise == 1 ? RoundButtonType.selected : RoundButtonType.textGradient,
                                     onPressed: () {
                                       String value = 'ko';
                                       _setLocale(value);
@@ -186,7 +185,7 @@ class _OnBoardState extends State<OnBoard> {
                                   height: 56,
                                   width: MediaQuery.sizeOf(context).width / 3.5,
                                   child: RoundButton(
-                                    type: selectedchoise == 2 ? RoundButtonType.bgGradient : RoundButtonType.textGradient,
+                                    type: selectedchoise == 2 ? RoundButtonType.selected : RoundButtonType.textGradient,
                                     onPressed: () {
                                       String value = 'zh';
                                       _setLocale(value);
@@ -210,7 +209,7 @@ class _OnBoardState extends State<OnBoard> {
                                   height: 56,
                                   width: MediaQuery.sizeOf(context).width / 3.5,
                                   child: RoundButton(
-                                    type: selectedchoise == 3 ? RoundButtonType.bgGradient : RoundButtonType.textGradient,
+                                    type: selectedchoise == 3 ? RoundButtonType.selected : RoundButtonType.textGradient,
                                     onPressed: () {
                                       String value = 'ja';
                                       _setLocale(value);
@@ -225,7 +224,7 @@ class _OnBoardState extends State<OnBoard> {
                                   height: 56,
                                   width: MediaQuery.sizeOf(context).width / 3.5,
                                   child: RoundButton(
-                                    type: selectedchoise == 4 ? RoundButtonType.bgGradient : RoundButtonType.textGradient,
+                                    type: selectedchoise == 4 ? RoundButtonType.selected : RoundButtonType.textGradient,
                                     onPressed: () {
                                       String value = 'de';
                                       _setLocale(value);
@@ -240,7 +239,7 @@ class _OnBoardState extends State<OnBoard> {
                                   height: 56,
                                   width: MediaQuery.sizeOf(context).width / 3.5,
                                   child: RoundButton(
-                                    type: selectedchoise == 5 ? RoundButtonType.bgGradient : RoundButtonType.textGradient,
+                                    type: selectedchoise == 5 ? RoundButtonType.selected : RoundButtonType.textGradient,
                                     onPressed: () {
                                       String value = 'es';
                                       _setLocale(value);
@@ -264,7 +263,7 @@ class _OnBoardState extends State<OnBoard> {
                                   height: 56,
                                   width: MediaQuery.sizeOf(context).width / 3.5,
                                   child: RoundButton(
-                                    type: selectedchoise == 6 ? RoundButtonType.bgGradient : RoundButtonType.textGradient,
+                                    type: selectedchoise == 6 ? RoundButtonType.selected : RoundButtonType.textGradient,
                                     onPressed: () {
                                       String value = 'pt';
                                       _setLocale(value);
@@ -279,7 +278,7 @@ class _OnBoardState extends State<OnBoard> {
                                   height: 56,
                                   width: MediaQuery.sizeOf(context).width / 3.5,
                                   child: RoundButton(
-                                    type: selectedchoise == 7 ? RoundButtonType.bgGradient : RoundButtonType.textGradient,
+                                    type: selectedchoise == 7 ? RoundButtonType.selected : RoundButtonType.textGradient,
                                     onPressed: () {
                                       String value = 'ar';
                                       _setLocale(value);
@@ -294,7 +293,7 @@ class _OnBoardState extends State<OnBoard> {
                                   height: 56,
                                   width: MediaQuery.sizeOf(context).width / 3.5,
                                   child: RoundButton(
-                                    type: selectedchoise == 8 ? RoundButtonType.bgGradient : RoundButtonType.textGradient,
+                                    type: selectedchoise == 8 ? RoundButtonType.selected : RoundButtonType.textGradient,
                                     onPressed: () {
                                       String value = 'hi';
                                       _setLocale(value);
@@ -318,7 +317,6 @@ class _OnBoardState extends State<OnBoard> {
                         style: TextStyle(
                           fontSize: 14.0,
                           fontFamily: 'Montserrat',
-                          color: TColor.black,
                         ),
                       ),
               ],
@@ -328,7 +326,7 @@ class _OnBoardState extends State<OnBoard> {
       ),
       bottomSheet: Container(
         height: 100,
-        color: TColor.white,
+        color: Theme.of(context).colorScheme.background,
         child: Center(
           child: Column(
             children: [
@@ -346,7 +344,7 @@ class _OnBoardState extends State<OnBoard> {
                         width: currentIndex == index ? 25 : 8,
                         height: 8,
                         decoration: BoxDecoration(
-                          color: TColor.secondaryColor1,
+                          color: Theme.of(context).colorScheme.primary,
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                       )
@@ -373,18 +371,18 @@ class _OnBoardState extends State<OnBoard> {
                             },
                             child: Container(
                               padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
-                              decoration: BoxDecoration(color: TColor.white, borderRadius: BorderRadius.circular(15.0)),
+                              decoration: BoxDecoration(color: Theme.of(context).colorScheme.onPrimary, borderRadius: BorderRadius.circular(15.0)),
                               child: Row(mainAxisSize: MainAxisSize.min, children: [
                                 Icon(
                                   Icons.arrow_back,
-                                  color: TColor.black,
+                                  color: Theme.of(context).colorScheme.onPrimary,
                                 ),
                                 const SizedBox(
                                   width: 15.0,
                                 ),
                                 Text(
                                   LocaleData.prev.getString(context),
-                                  style: TextStyle(fontSize: 16.0, color: TColor.black),
+                                  style: TextStyle(fontSize: 16.0, color: Theme.of(context).colorScheme.onBackground),
                                 ),
                               ]),
                             ),
@@ -404,18 +402,24 @@ class _OnBoardState extends State<OnBoard> {
                       },
                       child: Container(
                         padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
-                        decoration: BoxDecoration(color: TColor.secondaryColor1, borderRadius: BorderRadius.circular(15.0)),
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).colorScheme.primary,
+                          borderRadius: BorderRadius.circular(15.0),
+                        ),
                         child: Row(mainAxisSize: MainAxisSize.min, children: [
                           Text(
                             (currentIndex != screens.length - 1) ? LocaleData.next.getString(context) : LocaleData.done.getString(context),
-                            style: TextStyle(fontSize: 16.0, color: TColor.white),
+                            style: TextStyle(
+                              fontSize: 16.0,
+                              color: Theme.of(context).colorScheme.onPrimary,
+                            ),
                           ),
                           const SizedBox(
                             width: 15.0,
                           ),
                           Icon(
                             Icons.arrow_forward_sharp,
-                            color: TColor.white,
+                            color: Theme.of(context).colorScheme.onPrimary,
                           )
                         ]),
                       ),

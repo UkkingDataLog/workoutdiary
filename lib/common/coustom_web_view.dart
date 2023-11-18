@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-import 'package:workoutdiary/common/colo_extension.dart';
 
 class CoustomWebView extends StatefulWidget {
   const CoustomWebView({super.key, required this.url});
@@ -24,13 +23,10 @@ class _CoustomWebViewState extends State<CoustomWebView> {
     _controller.setNavigationDelegate(
       NavigationDelegate(
         onPageStarted: (String url) => setState(() => loadingPercentage = 0),
-        onProgress: (int progress) =>
-            setState(() => loadingPercentage = progress),
+        onProgress: (int progress) => setState(() => loadingPercentage = progress),
         onPageFinished: (String url) => setState(() => loadingPercentage = 100),
-        onWebResourceError: (WebResourceError error) =>
-            setState(() => this.error = true),
-        onNavigationRequest: (NavigationRequest request) =>
-            NavigationDecision.navigate,
+        onWebResourceError: (WebResourceError error) => setState(() => this.error = true),
+        onNavigationRequest: (NavigationRequest request) => NavigationDecision.navigate,
       ),
     );
     if (widget.url.isNotEmpty) _controller.loadRequest(Uri.parse(widget.url));
@@ -46,13 +42,13 @@ class _CoustomWebViewState extends State<CoustomWebView> {
       children: [
         WebViewWidget(controller: _controller),
         if (loadingPercentage < 100)
-          Column(
+          const Column(
             children: [
-              const SizedBox(height: 55),
+              SizedBox(height: 55),
               LinearProgressIndicator(
                 // value: loadingPercentage / 100,
                 backgroundColor: Colors.transparent,
-                valueColor: AlwaysStoppedAnimation<Color>(TColor.black),
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
               ),
             ],
           ),
