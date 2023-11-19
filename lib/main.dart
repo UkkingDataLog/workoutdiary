@@ -3,16 +3,15 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localization/flutter_localization.dart';
-// import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-//
+
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:workoutdiary/common/hive_helper.dart';
 import 'package:workoutdiary/hivedata/xlog.dart';
 import 'package:workoutdiary/exercise_log/xlog_create_view.dart';
-//
+
 import 'package:provider/provider.dart';
 import 'package:workoutdiary/onboard/onboard_view.dart';
 import 'package:workoutdiary/localization/locales.dart';

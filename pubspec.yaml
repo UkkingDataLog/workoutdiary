@@ -90,6 +90,7 @@ dependencies:
   youtube_player_flutter: ^8.1.2
   connectivity_plus: ^4.0.2 #높은 버전은 작동 안함
   shared_preferences: ^2.2.2
+  
   # youtube에서 videoID가져오는법 모름으로 사용하지 않음, 장점은 웹에서도 유튜브 플레이어 지원 가능
   # youtube_player_iframe: ^4.0.4
   

@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localization/flutter_localization.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 import 'package:timer_builder/timer_builder.dart';
@@ -75,6 +76,7 @@ class XlogCreateViewState extends State<XlogCreateView> {
   //
   late FlutterLocalization _flutterLocalization;
   late String _currentLocale;
+  //
 
   void _setLocale(String? value) {
     if (value == null) return;
@@ -217,8 +219,7 @@ class XlogCreateViewState extends State<XlogCreateView> {
     var media = MediaQuery.of(context).size;
     // ios 5.5에서는 158, ios 6.5에서는 180 사용, 5.5 : 414*736, 6.5 : 414*896
 
-    double cupertinoPickerHeight;
-    (media.height / media.width > 1.8) ? cupertinoPickerHeight = 180 : cupertinoPickerHeight = 158;
+    double cupertinoPickerHeight = 158;
 
     // bool isSelectedkg = true;
     // String selectedWeighUnint = 'kg';
@@ -861,7 +862,7 @@ class XlogCreateViewState extends State<XlogCreateView> {
               videoURL = '';
             } else if (selectedxTypeItem == LocaleData.L_B_Pistol_Squat) {
               selectedxTypeImgpath = 'assets/img/workoutType/L_B_Pistol_Squat.png';
-              videoURL = '';
+              videoURL = 'https://youtu.be/6nrJQNFqXSY';
             } else if (selectedxTypeItem == LocaleData.L_B_Side_Lying_Clam) {
               selectedxTypeImgpath = 'assets/img/workoutType/L_B_Side_Lying_Clam.png';
               videoURL = '';
@@ -1514,7 +1515,7 @@ class XlogCreateViewState extends State<XlogCreateView> {
                                                       setState(() {});
                                                       this.setState(() {});
                                                     },
-                                                    icon: Icon(
+                                                    icon: const Icon(
                                                       Icons.filter_none_rounded,
                                                       size: 18,
                                                     ),
@@ -1638,35 +1639,16 @@ class XlogCreateViewState extends State<XlogCreateView> {
                               elevation: 1,
                               child: FittedBox(
                                 fit: BoxFit.scaleDown,
-                                child: TextButton(
-                                  onPressed: () {
-                                    setState(() {
-                                      _ratio = (_ratio + 1) % 3;
-                                    });
-                                  },
-                                  child: FittedBox(
-                                    fit: BoxFit.fitWidth,
-                                    child: Text(
-                                      ratios[_ratio]!,
-                                      style: TextStyle(fontSize: 22),
-                                    ),
-                                  ),
+                                child: Text(
+                                  ratios[_ratio]!,
                                 ),
                               ),
                               onPressed: () {
                                 setState(
                                   () {
-                                    if (isselectedWritting == true) {
-                                      isselectedWritting = false;
-                                    } else {
-                                      isselectedWritting = true;
-                                    }
-
-                                    _scrollController.animateTo(
-                                      _scrollController.position.maxScrollExtent,
-                                      duration: const Duration(seconds: 100),
-                                      curve: Curves.easeInOut,
-                                    );
+                                    setState(() {
+                                      _ratio = (_ratio + 1) % 3;
+                                    });
                                   },
                                 );
                               },
@@ -1700,7 +1682,7 @@ class XlogCreateViewState extends State<XlogCreateView> {
                                 Icons.add,
                                 color: Theme.of(context).colorScheme.onPrimary,
                               ),
-                              onPressed: () {
+                              onPressed: () async {
                                 if (isSelectedYoutube == true) {
                                   isSelectedYoutube = false;
                                   setState(() {});
@@ -1977,7 +1959,10 @@ class XlogCreateViewState extends State<XlogCreateView> {
                           child: FittedBox(
                             child: Text(
                               '  ${LocaleData.workoutdiary.getString(context)}',
-                              style: TextStyle(fontSize: xlogcreateviewtitlefontSize, fontWeight: FontWeight.w700),
+                              style: TextStyle(
+                                fontSize: xlogcreateviewtitlefontSize,
+                                fontWeight: FontWeight.w700,
+                              ),
                             ),
                           ),
                         ),
@@ -1986,9 +1971,7 @@ class XlogCreateViewState extends State<XlogCreateView> {
                             Padding(
                               padding: const EdgeInsets.symmetric(horizontal: 12.0),
                               child: DropdownButton2(
-                                customButton: Icon(
-                                  Icons.language,
-                                ),
+                                customButton: const Icon(Icons.language),
                                 dropdownStyleData: DropdownStyleData(
                                   maxHeight: 500,
                                   width: 200,
@@ -2153,10 +2136,20 @@ class XlogCreateViewState extends State<XlogCreateView> {
                     //002. photo view zone
                     Screenshot(
                       controller: screenshotController,
-                      child: Container(
+                      child: SizedBox(
                         height: media.width * ratiosMultiply[_ratio]!,
                         width: media.width * 1.00,
                         child: Stack(alignment: Alignment.center, children: [
+                          if (todayaddimgcount == 0)
+                            Container(
+                              height: media.width * ratiosMultiply[_ratio]!,
+                              width: media.width * 1.00,
+                              color: Colors.black,
+                              child: Image.asset(
+                                ('./assets/img/manIntro.gif'),
+                                fit: BoxFit.fill,
+                              ),
+                            ),
                           if (todayaddimgcount > 0)
                             for (int index = 0; index < ximgs.length; index += 1)
                               if (ximgs[index].date.year == todaydate.year //년 비교
@@ -2181,7 +2174,7 @@ class XlogCreateViewState extends State<XlogCreateView> {
                               padding: const EdgeInsets.all(8),
                               child: Container(
                                 decoration: BoxDecoration(
-                                  color: Theme.of(context).colorScheme.onBackground.withOpacity(0.25),
+                                  color: Colors.black.withOpacity(0.25),
                                   borderRadius: const BorderRadius.all(Radius.circular(10)),
                                 ),
                                 child: FittedBox(
@@ -2276,8 +2269,7 @@ class XlogCreateViewState extends State<XlogCreateView> {
                                   children: [
                                     if (isselectedlog)
                                       Container(
-                                        decoration: BoxDecoration(
-                                            color: Theme.of(context).colorScheme.onBackground.withOpacity(0.25), borderRadius: const BorderRadius.all(Radius.circular(10))),
+                                        decoration: BoxDecoration(color: Colors.black.withOpacity(0.25), borderRadius: const BorderRadius.all(Radius.circular(10))),
                                         child: FittedBox(
                                           child: Text(
                                             ' ${LocaleData.workoutdiary.getString(context)} ',
@@ -2621,7 +2613,7 @@ class XlogCreateViewState extends State<XlogCreateView> {
                                   ),
                                 ),
                               ),
-                              SizedBox(width: 8),
+                              const SizedBox(width: 8),
                               Padding(
                                 padding: const EdgeInsets.only(bottom: 4.0, right: 4.0),
                                 child: Container(
@@ -3821,7 +3813,7 @@ class XlogCreateViewState extends State<XlogCreateView> {
                                 ),
                               ),
                               Container(
-                                height: media.height * 68 / 844, //아이폰13을 기준으로 맞춤
+                                height: media.height * 72 / 844, //아이폰13을 기준으로 맞춤
                               ),
                             ],
                           ),
