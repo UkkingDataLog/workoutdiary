@@ -72,6 +72,7 @@ class _SettingViewState extends State<SettingView> {
                       ),
                     ),
                     Card(
+                      elevation: 0,
                       child: Column(
                         children: [
                           SizedBox(
