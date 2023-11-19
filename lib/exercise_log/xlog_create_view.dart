@@ -1450,6 +1450,7 @@ class XlogCreateViewState extends State<XlogCreateView> {
                                     setState(() {});
                                   }
                                   await showModalBottomSheet(
+                                    backgroundColor: Theme.of(context).colorScheme.background.withOpacity(0.5),
                                     isScrollControlled: true,
                                     enableDrag: false,
                                     shape: const RoundedRectangleBorder(
@@ -1463,82 +1464,101 @@ class XlogCreateViewState extends State<XlogCreateView> {
                                         // spacing: 60, // Add spacing between the child widgets.
                                         children: <Widget>[
                                           // Add a container with height to create some space.
-                                          // Container(height: 10),
+
                                           // Add a text widget with a title for the sheet.
                                           Stack(
                                             children: [
-                                              Row(
-                                                children: [
-                                                  // const SizedBox(width: 2),
-                                                  IconButton(
-                                                    onPressed: () {
-                                                      for (int index = 0; index < xlogs.length; index += 1) {
-                                                        (
-                                                                ////둘다 dateTime 형식이므로 해당년, 월, 일 비교가 필요함
-                                                                xlogs[index].lxdate.year == todaydate.year //년 비교
-                                                                    &&
-                                                                    xlogs[index].lxdate.month == todaydate.month //월 비교
-                                                                    &&
-                                                                    xlogs[index].lxdate.day == todaydate.day //일 비교
-
-                                                            )
-                                                            ? {xlogs[index].finished = true, xlogs[index].save()}
-                                                            : null;
-                                                      }
-                                                      setState(() {});
-                                                      this.setState(() {});
-                                                    },
-                                                    icon: const Icon(
-                                                      Icons.library_add_check_outlined,
-                                                      size: 20,
-                                                    ),
-                                                  ),
-                                                  IconButton(
-                                                    onPressed: () {
-                                                      for (int index = 0; index < xlogs.length; index += 1) {
-                                                        (
-
-                                                                ////둘다 dateTime 형식이므로 해당년, 월, 일 비교가 필요함
-                                                                xlogs[index].lxdate.year == todaydate.year //년 비교
-                                                                    &&
-                                                                    xlogs[index].lxdate.month == todaydate.month //월 비교
-                                                                    &&
-                                                                    xlogs[index].lxdate.day == todaydate.day //일 비교
-
-                                                            )
-                                                            ? {
-                                                                xlogs[index].finished = false,
-                                                                xlogs[index].save(),
-                                                              }
-                                                            : null;
-                                                      }
-                                                      setState(() {});
-                                                      this.setState(() {});
-                                                    },
-                                                    icon: const Icon(
-                                                      Icons.filter_none_rounded,
-                                                      size: 18,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
                                               Container(
-                                                padding: const EdgeInsets.only(top: 10),
-                                                child: Center(
-                                                  child: Text(
-                                                    "${todaydate.month}/${todaydate.day} ${LocaleData.toDo.getString((context))}",
-                                                    style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
+                                                decoration: BoxDecoration(
+                                                  color: Theme.of(context).colorScheme.background,
+                                                  borderRadius: const BorderRadius.only(
+                                                    topLeft: Radius.circular(15),
+                                                    topRight: Radius.circular(15),
                                                   ),
+                                                ),
+                                                child: Column(
+                                                  children: [
+                                                    (todayaddcount <= 5)
+                                                        ? ClipRRect(borderRadius: BorderRadius.circular(15.0), child: Image.asset('./assets/img/womanTodo.gif'))
+                                                        : Container(),
+                                                    Row(
+                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                      children: [
+                                                        Row(
+                                                          children: [
+                                                            IconButton(
+                                                              onPressed: () {
+                                                                for (int index = 0; index < xlogs.length; index += 1) {
+                                                                  (
+                                                                          ////둘다 dateTime 형식이므로 해당년, 월, 일 비교가 필요함
+                                                                          xlogs[index].lxdate.year == todaydate.year //년 비교
+                                                                              &&
+                                                                              xlogs[index].lxdate.month == todaydate.month //월 비교
+                                                                              &&
+                                                                              xlogs[index].lxdate.day == todaydate.day //일 비교
+
+                                                                      )
+                                                                      ? {xlogs[index].finished = true, xlogs[index].save()}
+                                                                      : null;
+                                                                }
+                                                                setState(() {});
+                                                                this.setState(() {});
+                                                              },
+                                                              icon: const Icon(
+                                                                Icons.library_add_check_outlined,
+                                                                size: 20,
+                                                              ),
+                                                            ),
+                                                            IconButton(
+                                                              onPressed: () {
+                                                                for (int index = 0; index < xlogs.length; index += 1) {
+                                                                  (
+
+                                                                          ////둘다 dateTime 형식이므로 해당년, 월, 일 비교가 필요함
+                                                                          xlogs[index].lxdate.year == todaydate.year //년 비교
+                                                                              &&
+                                                                              xlogs[index].lxdate.month == todaydate.month //월 비교
+                                                                              &&
+                                                                              xlogs[index].lxdate.day == todaydate.day //일 비교
+
+                                                                      )
+                                                                      ? {
+                                                                          xlogs[index].finished = false,
+                                                                          xlogs[index].save(),
+                                                                        }
+                                                                      : null;
+                                                                }
+                                                                setState(() {});
+                                                                this.setState(() {});
+                                                              },
+                                                              icon: const Icon(
+                                                                Icons.filter_none_rounded,
+                                                                size: 18,
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                        Text(
+                                                          "${todaydate.month}/${todaydate.day} ${LocaleData.toDo.getString((context))}",
+                                                          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
+                                                        ),
+                                                        const SizedBox(),
+                                                        const SizedBox(),
+                                                        const SizedBox(),
+                                                      ],
+                                                    ),
+                                                  ],
                                                 ),
                                               ),
                                             ],
                                           ),
-                                          // Container(height: 10), // Add some more space.
+
+                                          Container(height: 2), // Add some more space.
 
                                           // Add a text widget with a long description for the sheet.
                                           // 타일 추가할 공간
-                                          Container(
-                                            height: media.height * 0.770,
+                                          SizedBox(
+                                            height: (todayaddcount <= 5) ? media.height * 0.770 - media.width : media.height * 0.770,
                                             child: ListView(
                                               // physics: const NeverScrollableScrollPhysics(),
                                               children: [
@@ -1594,25 +1614,23 @@ class XlogCreateViewState extends State<XlogCreateView> {
                                             ),
                                           ),
 
-                                          Align(
-                                            alignment: Alignment(Alignment.bottomCenter.x + 0.97, Alignment.bottomCenter.y),
-                                            child: Padding(
-                                              padding: const EdgeInsets.only(bottom: 24.0),
-                                              child: Container(
-                                                padding: const EdgeInsets.all(12),
-                                                child: FloatingActionButton.extended(
-                                                  backgroundColor: Theme.of(context).colorScheme.surfaceVariant,
-                                                  shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(50.0))),
-                                                  heroTag: 'btn3',
-                                                  elevation: 1,
-                                                  label: Text(
-                                                    LocaleData.close.getString((context)),
-                                                  ),
-                                                  icon: const Icon(Icons.close),
-                                                  onPressed: () {
-                                                    Navigator.pop(context);
-                                                  },
+                                          Container(
+                                            height: 100,
+                                            width: double.infinity,
+                                            child: Container(
+                                              padding: const EdgeInsets.only(top: 16.0, bottom: 32.0, left: 8.0, right: 8.0),
+                                              child: FloatingActionButton.extended(
+                                                backgroundColor: Theme.of(context).colorScheme.surfaceVariant,
+                                                shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(15.0))),
+                                                heroTag: 'btn3',
+                                                elevation: 1,
+                                                label: Text(
+                                                  LocaleData.close.getString((context)),
                                                 ),
+                                                icon: const Icon(Icons.close),
+                                                onPressed: () {
+                                                  Navigator.pop(context);
+                                                },
                                               ),
                                             ),
                                           ),
