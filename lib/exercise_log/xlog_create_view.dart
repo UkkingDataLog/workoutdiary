@@ -3818,18 +3818,7 @@ class XlogCreateViewState extends State<XlogCreateView> {
                                   ),
                                 ],
                               ),
-                              Container(
-                                alignment: Alignment.bottomCenter,
-                                height: 0.5,
-                                width: media.width * 0.98,
-                                decoration: BoxDecoration(
-                                  color: TColor.primarygray.withOpacity(0.4),
-                                  borderRadius: const BorderRadius.only(
-                                    bottomLeft: Radius.circular(10),
-                                    bottomRight: Radius.circular(10),
-                                  ),
-                                ),
-                              ),
+
                               Container(
                                 height: media.height * 72 / 844, //아이폰13을 기준으로 맞춤
                               ),
