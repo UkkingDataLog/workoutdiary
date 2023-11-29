@@ -110,7 +110,7 @@ class _BarChartSample6State extends State<chart> {
       x: x,
       groupVertically: true,
       showingTooltipIndicators: (widget.selectedbodypart == 0)
-          ? []
+          ? [5]
           : (widget.selectedbodypart == 1 && legs > 0)
               ? [0]
               : (widget.selectedbodypart == 2 && shoulders > 0)
@@ -129,37 +129,43 @@ class _BarChartSample6State extends State<chart> {
           fromY: 0,
           toY: legs,
           color: legsColor,
-          width: 10,
+          width: (MediaQuery.sizeOf(context).width - 48 * 3) / (getHashCodeInverse(widget.rangeEnd) - getHashCodeInverse(widget.rangeStart) + 1),
+          borderRadius: const BorderRadius.all(Radius.circular(0)),
         ),
         BarChartRodData(
           fromY: legs + betweenSpace,
           toY: legs + betweenSpace + shoulders,
           color: shouldersColor,
-          width: 10,
+          width: (MediaQuery.sizeOf(context).width - 48 * 3) / (getHashCodeInverse(widget.rangeEnd) - getHashCodeInverse(widget.rangeStart) + 1),
+          borderRadius: const BorderRadius.all(Radius.circular(0)),
         ),
         BarChartRodData(
           fromY: legs + betweenSpace + shoulders + betweenSpace,
           toY: legs + betweenSpace + shoulders + betweenSpace + chest,
           color: chestColor,
-          width: 10,
+          width: (MediaQuery.sizeOf(context).width - 48 * 3) / (getHashCodeInverse(widget.rangeEnd) - getHashCodeInverse(widget.rangeStart) + 1),
+          borderRadius: const BorderRadius.all(Radius.circular(0)),
         ),
         BarChartRodData(
           fromY: legs + betweenSpace + shoulders + betweenSpace + chest + betweenSpace,
           toY: legs + betweenSpace + shoulders + betweenSpace + chest + betweenSpace + arms,
           color: armsColor,
-          width: 10,
+          width: (MediaQuery.sizeOf(context).width - 48 * 3) / (getHashCodeInverse(widget.rangeEnd) - getHashCodeInverse(widget.rangeStart) + 1),
+          borderRadius: const BorderRadius.all(Radius.circular(0)),
         ),
         BarChartRodData(
           fromY: legs + betweenSpace + shoulders + betweenSpace + chest + betweenSpace + arms + betweenSpace,
           toY: legs + betweenSpace + shoulders + betweenSpace + chest + betweenSpace + arms + betweenSpace + back,
           color: backColor,
-          width: 10,
+          width: (MediaQuery.sizeOf(context).width - 48 * 3) / (getHashCodeInverse(widget.rangeEnd) - getHashCodeInverse(widget.rangeStart) + 1),
+          borderRadius: const BorderRadius.all(Radius.circular(0)),
         ),
         BarChartRodData(
           fromY: legs + betweenSpace + shoulders + betweenSpace + chest + betweenSpace + arms + betweenSpace + back + betweenSpace,
           toY: legs + betweenSpace + shoulders + betweenSpace + chest + betweenSpace + arms + betweenSpace + back + betweenSpace + abs,
           color: absColor,
-          width: 10,
+          width: (MediaQuery.sizeOf(context).width - 48 * 3) / (getHashCodeInverse(widget.rangeEnd) - getHashCodeInverse(widget.rangeStart) + 1),
+          borderRadius: const BorderRadius.all(Radius.circular(0)),
         ),
       ],
     );
@@ -181,12 +187,8 @@ class _BarChartSample6State extends State<chart> {
     );
   }
 
-  List<double> sum6 = [];
-  List<double> sum5 = [];
-  List<double> sum4 = [];
-  List<double> sum3 = [];
-  List<double> sum2 = [];
-  List<double> sum1 = [];
+  Map<DateTime, List<double>> sumBodypartbyDateTime = {};
+
   List<double> sum0 = []; // todayStandard
 
   //
@@ -201,22 +203,15 @@ class _BarChartSample6State extends State<chart> {
 
   @override
   Widget build(BuildContext context) {
-    for (int index = 0; index < getHashCodeInverse(widget.rangeEnd) - getHashCodeInverse(widget.rangeStart) + 1; index++) {}
-
+    sumBodypartbyDateTime.clear();
     sum0.clear();
-    sum1.clear();
-    sum2.clear();
-    sum3.clear();
-    sum4.clear();
-    sum5.clear();
-    sum6.clear();
+
+    for (int index = 0; index < getHashCodeInverse(widget.rangeEnd) - getHashCodeInverse(widget.rangeStart) + 1; index++) {
+      sumBodypartbyDateTime[widget.rangeStart.subtract(Duration(days: -index))] = [0, 0, 0, 0, 0, 0];
+    }
+    // print("${sumBodypartbyDateTime}");
     sum0 = [0, 0, 0, 0, 0, 0];
-    sum1 = [0, 0, 0, 0, 0, 0];
-    sum2 = [0, 0, 0, 0, 0, 0];
-    sum3 = [0, 0, 0, 0, 0, 0];
-    sum4 = [0, 0, 0, 0, 0, 0];
-    sum5 = [0, 0, 0, 0, 0, 0];
-    sum6 = [0, 0, 0, 0, 0, 0];
+
     //
     sumLeg.clear();
     sumSho.clear();
@@ -230,425 +225,163 @@ class _BarChartSample6State extends State<chart> {
     sumArm = {};
     sumBac = {};
     sumAbs = {};
+    // sumBodypartbyDateTime[widget.rangeStart.subtract(Duration(days: 0))]?[0] = 1;
+    // print(sumBodypartbyDateTime[widget.rangeStart.subtract(Duration(days: 0))]?[0]);
+    // print(sumBodypartbyDateTime);
 
     for (int index = 0; index < widget.xlogs.length; index++) {
       if (widget.xlogs[index].finished == true) {
-        if (getHashCodeInverse(widget.xlogs[index].lxdate) == getHashCodeInverse(widget.rangeStart.subtract(const Duration(days: 0)))) {
-          switch (widget.xlogs[index].xbodypart) {
-            case '하체':
-              sum0[0] += widget.xlogs[index].lxweight *
-                  0.5 *
-                  UnitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
-                  widget.xlogs[index].lxnumber *
-                  widget.xlogs[index].lxset;
-              // 운동부위의 운동종류별 운동강도
-              if (sumLeg.containsKey(widget.xlogs[index].xType)) {
-                sumLeg[widget.xlogs[index].xType] = sumLeg[widget.xlogs[index].xType]! +
-                    widget.xlogs[index].lxweight *
-                        0.5 *
-                        UnitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
-                        widget.xlogs[index].lxnumber *
-                        widget.xlogs[index].lxset;
-              } else {
-                sumLeg[widget.xlogs[index].xType] = widget.xlogs[index].lxweight *
+        for (int datetimeindex = 0; datetimeindex < getHashCodeInverse(widget.rangeEnd) - getHashCodeInverse(widget.rangeStart) + 1; datetimeindex++) {
+          if (getHashCodeInverse(widget.xlogs[index].lxdate) == getHashCodeInverse(widget.rangeStart.subtract(Duration(days: -datetimeindex)))) {
+            switch (widget.xlogs[index].xbodypart) {
+              case '하체':
+                sumBodypartbyDateTime[widget.rangeStart.subtract(Duration(days: -datetimeindex))]![0] += widget.xlogs[index].lxweight *
                     0.5 *
                     UnitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
                     widget.xlogs[index].lxnumber *
                     widget.xlogs[index].lxset;
-              }
+                // 운동부위의 운동종류별 운동강도
+                if (sumLeg.containsKey(widget.xlogs[index].xType)) {
+                  sumLeg[widget.xlogs[index].xType] = sumLeg[widget.xlogs[index].xType]! +
+                      widget.xlogs[index].lxweight *
+                          0.5 *
+                          UnitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
+                          widget.xlogs[index].lxnumber *
+                          widget.xlogs[index].lxset;
+                } else {
+                  sumLeg[widget.xlogs[index].xType] = widget.xlogs[index].lxweight *
+                      0.5 *
+                      UnitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
+                      widget.xlogs[index].lxnumber *
+                      widget.xlogs[index].lxset;
+                }
 
-              break;
-            case '어깨':
-              sum0[1] += widget.xlogs[index].lxweight *
-                  0.5 *
-                  UnitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
-                  widget.xlogs[index].lxnumber *
-                  widget.xlogs[index].lxset;
-              // 운동부위의 운동종류별 운동강도
-              if (sumSho.containsKey(widget.xlogs[index].xType)) {
-                sumSho[widget.xlogs[index].xType] = sumSho[widget.xlogs[index].xType]! +
-                    widget.xlogs[index].lxweight *
-                        0.5 *
-                        UnitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
-                        widget.xlogs[index].lxnumber *
-                        widget.xlogs[index].lxset;
-              } else {
-                sumSho[widget.xlogs[index].xType] = widget.xlogs[index].lxweight *
+                break;
+              case '어깨':
+                sumBodypartbyDateTime[widget.rangeStart.subtract(Duration(days: -datetimeindex))]![1] += widget.xlogs[index].lxweight *
                     0.5 *
                     UnitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
                     widget.xlogs[index].lxnumber *
                     widget.xlogs[index].lxset;
-              }
-              break;
-            case '가슴':
-              sum0[2] += widget.xlogs[index].lxweight *
-                  0.5 *
-                  UnitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
-                  widget.xlogs[index].lxnumber *
-                  widget.xlogs[index].lxset;
-              // 운동부위의 운동종류별 운동강도
-              if (sumChe.containsKey(widget.xlogs[index].xType)) {
-                sumChe[widget.xlogs[index].xType] = sumChe[widget.xlogs[index].xType]! +
-                    widget.xlogs[index].lxweight *
-                        0.5 *
-                        UnitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
-                        widget.xlogs[index].lxnumber *
-                        widget.xlogs[index].lxset;
-              } else {
-                sumChe[widget.xlogs[index].xType] = widget.xlogs[index].lxweight *
+                // 운동부위의 운동종류별 운동강도
+                if (sumSho.containsKey(widget.xlogs[index].xType)) {
+                  sumSho[widget.xlogs[index].xType] = sumSho[widget.xlogs[index].xType]! +
+                      widget.xlogs[index].lxweight *
+                          0.5 *
+                          UnitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
+                          widget.xlogs[index].lxnumber *
+                          widget.xlogs[index].lxset;
+                } else {
+                  sumSho[widget.xlogs[index].xType] = widget.xlogs[index].lxweight *
+                      0.5 *
+                      UnitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
+                      widget.xlogs[index].lxnumber *
+                      widget.xlogs[index].lxset;
+                }
+                break;
+              case '가슴':
+                sumBodypartbyDateTime[widget.rangeStart.subtract(Duration(days: -datetimeindex))]![2] += widget.xlogs[index].lxweight *
                     0.5 *
                     UnitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
                     widget.xlogs[index].lxnumber *
                     widget.xlogs[index].lxset;
-              }
-              break;
-            case '팔':
-              sum0[3] += widget.xlogs[index].lxweight *
-                  0.5 *
-                  UnitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
-                  widget.xlogs[index].lxnumber *
-                  widget.xlogs[index].lxset;
-              // 운동부위의 운동종류별 운동강도
-              if (sumArm.containsKey(widget.xlogs[index].xType)) {
-                sumArm[widget.xlogs[index].xType] = sumArm[widget.xlogs[index].xType]! +
-                    widget.xlogs[index].lxweight *
-                        0.5 *
-                        UnitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
-                        widget.xlogs[index].lxnumber *
-                        widget.xlogs[index].lxset;
-              } else {
-                sumArm[widget.xlogs[index].xType] = widget.xlogs[index].lxweight *
+                // 운동부위의 운동종류별 운동강도
+                if (sumChe.containsKey(widget.xlogs[index].xType)) {
+                  sumChe[widget.xlogs[index].xType] = sumChe[widget.xlogs[index].xType]! +
+                      widget.xlogs[index].lxweight *
+                          0.5 *
+                          UnitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
+                          widget.xlogs[index].lxnumber *
+                          widget.xlogs[index].lxset;
+                } else {
+                  sumChe[widget.xlogs[index].xType] = widget.xlogs[index].lxweight *
+                      0.5 *
+                      UnitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
+                      widget.xlogs[index].lxnumber *
+                      widget.xlogs[index].lxset;
+                }
+                break;
+              case '팔':
+                sumBodypartbyDateTime[widget.rangeStart.subtract(Duration(days: -datetimeindex))]![3] += widget.xlogs[index].lxweight *
                     0.5 *
                     UnitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
                     widget.xlogs[index].lxnumber *
                     widget.xlogs[index].lxset;
-              }
-              break;
-            case '등':
-              sum0[4] += widget.xlogs[index].lxweight *
-                  0.5 *
-                  UnitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
-                  widget.xlogs[index].lxnumber *
-                  widget.xlogs[index].lxset;
-              // 운동부위의 운동종류별 운동강도
-              if (sumBac.containsKey(widget.xlogs[index].xType)) {
-                sumBac[widget.xlogs[index].xType] = sumBac[widget.xlogs[index].xType]! +
-                    widget.xlogs[index].lxweight *
-                        0.5 *
-                        UnitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
-                        widget.xlogs[index].lxnumber *
-                        widget.xlogs[index].lxset;
-              } else {
-                sumBac[widget.xlogs[index].xType] = widget.xlogs[index].lxweight *
+                // 운동부위의 운동종류별 운동강도
+                if (sumArm.containsKey(widget.xlogs[index].xType)) {
+                  sumArm[widget.xlogs[index].xType] = sumArm[widget.xlogs[index].xType]! +
+                      widget.xlogs[index].lxweight *
+                          0.5 *
+                          UnitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
+                          widget.xlogs[index].lxnumber *
+                          widget.xlogs[index].lxset;
+                } else {
+                  sumArm[widget.xlogs[index].xType] = widget.xlogs[index].lxweight *
+                      0.5 *
+                      UnitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
+                      widget.xlogs[index].lxnumber *
+                      widget.xlogs[index].lxset;
+                }
+                break;
+              case '등':
+                sumBodypartbyDateTime[widget.rangeStart.subtract(Duration(days: -datetimeindex))]![4] += widget.xlogs[index].lxweight *
                     0.5 *
                     UnitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
                     widget.xlogs[index].lxnumber *
                     widget.xlogs[index].lxset;
-              }
-              break;
-            case '복근':
-              sum0[5] += widget.xlogs[index].lxweight *
-                  0.5 *
-                  UnitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
-                  widget.xlogs[index].lxnumber *
-                  widget.xlogs[index].lxset;
-              // 운동부위의 운동종류별 운동강도
-              if (sumAbs.containsKey(widget.xlogs[index].xType)) {
-                sumAbs[widget.xlogs[index].xType] = sumAbs[widget.xlogs[index].xType]! +
-                    widget.xlogs[index].lxweight *
-                        0.5 *
-                        UnitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
-                        widget.xlogs[index].lxnumber *
-                        widget.xlogs[index].lxset;
-              } else {
-                sumAbs[widget.xlogs[index].xType] = widget.xlogs[index].lxweight *
+                // 운동부위의 운동종류별 운동강도
+                if (sumBac.containsKey(widget.xlogs[index].xType)) {
+                  sumBac[widget.xlogs[index].xType] = sumBac[widget.xlogs[index].xType]! +
+                      widget.xlogs[index].lxweight *
+                          0.5 *
+                          UnitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
+                          widget.xlogs[index].lxnumber *
+                          widget.xlogs[index].lxset;
+                } else {
+                  sumBac[widget.xlogs[index].xType] = widget.xlogs[index].lxweight *
+                      0.5 *
+                      UnitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
+                      widget.xlogs[index].lxnumber *
+                      widget.xlogs[index].lxset;
+                }
+                break;
+              case '복근':
+                sumBodypartbyDateTime[widget.rangeStart.subtract(Duration(days: -datetimeindex))]![5] += widget.xlogs[index].lxweight *
                     0.5 *
                     UnitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
                     widget.xlogs[index].lxnumber *
                     widget.xlogs[index].lxset;
-              }
-              break;
-          }
-        }
-
-        if (getHashCodeInverse(widget.xlogs[index].lxdate) == getHashCodeInverse(widget.rangeStart.subtract(const Duration(days: 1)))) {
-          switch (widget.xlogs[index].xbodypart) {
-            case '하체':
-              sum1[0] += widget.xlogs[index].lxweight *
-                  0.5 *
-                  UnitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
-                  widget.xlogs[index].lxnumber *
-                  widget.xlogs[index].lxset;
-              break;
-            case '어깨':
-              sum1[1] += widget.xlogs[index].lxweight *
-                  0.5 *
-                  UnitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
-                  widget.xlogs[index].lxnumber *
-                  widget.xlogs[index].lxset;
-              break;
-            case '가슴':
-              sum1[2] += widget.xlogs[index].lxweight *
-                  0.5 *
-                  UnitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
-                  widget.xlogs[index].lxnumber *
-                  widget.xlogs[index].lxset;
-              break;
-            case '팔':
-              sum1[3] += widget.xlogs[index].lxweight *
-                  0.5 *
-                  UnitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
-                  widget.xlogs[index].lxnumber *
-                  widget.xlogs[index].lxset;
-              break;
-            case '등':
-              sum1[4] += widget.xlogs[index].lxweight *
-                  0.5 *
-                  UnitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
-                  widget.xlogs[index].lxnumber *
-                  widget.xlogs[index].lxset;
-              break;
-            case '복근':
-              sum1[5] += widget.xlogs[index].lxweight *
-                  0.5 *
-                  UnitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
-                  widget.xlogs[index].lxnumber *
-                  widget.xlogs[index].lxset;
-              break;
-          }
-        }
-        if (getHashCodeInverse(widget.xlogs[index].lxdate) == getHashCodeInverse(widget.rangeStart.subtract(const Duration(days: 2)))) {
-          switch (widget.xlogs[index].xbodypart) {
-            case '하체':
-              sum2[0] += widget.xlogs[index].lxweight *
-                  0.5 *
-                  UnitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
-                  widget.xlogs[index].lxnumber *
-                  widget.xlogs[index].lxset;
-              break;
-            case '어깨':
-              sum2[1] += widget.xlogs[index].lxweight *
-                  0.5 *
-                  UnitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
-                  widget.xlogs[index].lxnumber *
-                  widget.xlogs[index].lxset;
-              break;
-            case '가슴':
-              sum2[2] += widget.xlogs[index].lxweight *
-                  0.5 *
-                  UnitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
-                  widget.xlogs[index].lxnumber *
-                  widget.xlogs[index].lxset;
-              break;
-            case '팔':
-              sum2[3] += widget.xlogs[index].lxweight *
-                  0.5 *
-                  UnitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
-                  widget.xlogs[index].lxnumber *
-                  widget.xlogs[index].lxset;
-              break;
-            case '등':
-              sum2[4] += widget.xlogs[index].lxweight *
-                  0.5 *
-                  UnitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
-                  widget.xlogs[index].lxnumber *
-                  widget.xlogs[index].lxset;
-              break;
-            case '복근':
-              sum2[5] += widget.xlogs[index].lxweight *
-                  0.5 *
-                  UnitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
-                  widget.xlogs[index].lxnumber *
-                  widget.xlogs[index].lxset;
-              break;
-          }
-        }
-        if (getHashCodeInverse(widget.xlogs[index].lxdate) == getHashCodeInverse(widget.rangeStart.subtract(const Duration(days: 3)))) {
-          switch (widget.xlogs[index].xbodypart) {
-            case '하체':
-              sum3[0] += widget.xlogs[index].lxweight *
-                  0.5 *
-                  UnitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
-                  widget.xlogs[index].lxnumber *
-                  widget.xlogs[index].lxset;
-              break;
-            case '어깨':
-              sum3[1] += widget.xlogs[index].lxweight *
-                  0.5 *
-                  UnitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
-                  widget.xlogs[index].lxnumber *
-                  widget.xlogs[index].lxset;
-              break;
-            case '가슴':
-              sum3[2] += widget.xlogs[index].lxweight *
-                  0.5 *
-                  UnitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
-                  widget.xlogs[index].lxnumber *
-                  widget.xlogs[index].lxset;
-              break;
-            case '팔':
-              sum3[3] += widget.xlogs[index].lxweight *
-                  0.5 *
-                  UnitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
-                  widget.xlogs[index].lxnumber *
-                  widget.xlogs[index].lxset;
-              break;
-            case '등':
-              sum3[4] += widget.xlogs[index].lxweight *
-                  0.5 *
-                  UnitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
-                  widget.xlogs[index].lxnumber *
-                  widget.xlogs[index].lxset;
-              break;
-            case '복근':
-              sum3[5] += widget.xlogs[index].lxweight *
-                  0.5 *
-                  UnitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
-                  widget.xlogs[index].lxnumber *
-                  widget.xlogs[index].lxset;
-              break;
-          }
-        }
-        if (getHashCodeInverse(widget.xlogs[index].lxdate) == getHashCodeInverse(widget.rangeStart.subtract(const Duration(days: 4)))) {
-          switch (widget.xlogs[index].xbodypart) {
-            case '하체':
-              sum4[0] += widget.xlogs[index].lxweight *
-                  0.5 *
-                  UnitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
-                  widget.xlogs[index].lxnumber *
-                  widget.xlogs[index].lxset;
-              break;
-            case '어깨':
-              sum4[1] += widget.xlogs[index].lxweight *
-                  0.5 *
-                  UnitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
-                  widget.xlogs[index].lxnumber *
-                  widget.xlogs[index].lxset;
-              break;
-            case '가슴':
-              sum4[2] += widget.xlogs[index].lxweight *
-                  0.5 *
-                  UnitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
-                  widget.xlogs[index].lxnumber *
-                  widget.xlogs[index].lxset;
-              break;
-            case '팔':
-              sum4[3] += widget.xlogs[index].lxweight *
-                  0.5 *
-                  UnitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
-                  widget.xlogs[index].lxnumber *
-                  widget.xlogs[index].lxset;
-              break;
-            case '등':
-              sum4[4] += widget.xlogs[index].lxweight *
-                  0.5 *
-                  UnitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
-                  widget.xlogs[index].lxnumber *
-                  widget.xlogs[index].lxset;
-              break;
-            case '복근':
-              sum4[5] += widget.xlogs[index].lxweight *
-                  0.5 *
-                  UnitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
-                  widget.xlogs[index].lxnumber *
-                  widget.xlogs[index].lxset;
-              break;
-          }
-        }
-        if (getHashCodeInverse(widget.xlogs[index].lxdate) == getHashCodeInverse(widget.rangeStart.subtract(const Duration(days: 5)))) {
-          switch (widget.xlogs[index].xbodypart) {
-            case '하체':
-              sum5[0] += widget.xlogs[index].lxweight *
-                  0.5 *
-                  UnitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
-                  widget.xlogs[index].lxnumber *
-                  widget.xlogs[index].lxset;
-              break;
-            case '어깨':
-              sum5[1] += widget.xlogs[index].lxweight *
-                  0.5 *
-                  UnitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
-                  widget.xlogs[index].lxnumber *
-                  widget.xlogs[index].lxset;
-              break;
-            case '가슴':
-              sum5[2] += widget.xlogs[index].lxweight *
-                  0.5 *
-                  UnitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
-                  widget.xlogs[index].lxnumber *
-                  widget.xlogs[index].lxset;
-              break;
-            case '팔':
-              sum5[3] += widget.xlogs[index].lxweight *
-                  0.5 *
-                  UnitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
-                  widget.xlogs[index].lxnumber *
-                  widget.xlogs[index].lxset;
-              break;
-            case '등':
-              sum5[4] += widget.xlogs[index].lxweight *
-                  0.5 *
-                  UnitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
-                  widget.xlogs[index].lxnumber *
-                  widget.xlogs[index].lxset;
-              break;
-            case '복근':
-              sum5[5] += widget.xlogs[index].lxweight *
-                  0.5 *
-                  UnitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
-                  widget.xlogs[index].lxnumber *
-                  widget.xlogs[index].lxset;
-              break;
-          }
-        }
-        if (getHashCodeInverse(widget.xlogs[index].lxdate) == getHashCodeInverse(widget.rangeStart.subtract(const Duration(days: 6)))) {
-          switch (widget.xlogs[index].xbodypart) {
-            case '하체':
-              sum6[0] += widget.xlogs[index].lxweight *
-                  0.5 *
-                  UnitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
-                  widget.xlogs[index].lxnumber *
-                  widget.xlogs[index].lxset;
-              break;
-            case '어깨':
-              sum6[1] += widget.xlogs[index].lxweight *
-                  0.5 *
-                  UnitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
-                  widget.xlogs[index].lxnumber *
-                  widget.xlogs[index].lxset;
-              break;
-            case '가슴':
-              sum6[2] += widget.xlogs[index].lxweight *
-                  0.5 *
-                  UnitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
-                  widget.xlogs[index].lxnumber *
-                  widget.xlogs[index].lxset;
-              break;
-            case '팔':
-              sum6[3] += widget.xlogs[index].lxweight *
-                  0.5 *
-                  UnitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
-                  widget.xlogs[index].lxnumber *
-                  widget.xlogs[index].lxset;
-              break;
-            case '등':
-              sum6[4] += widget.xlogs[index].lxweight *
-                  0.5 *
-                  UnitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
-                  widget.xlogs[index].lxnumber *
-                  widget.xlogs[index].lxset;
-              break;
-            case '복근':
-              sum6[5] += widget.xlogs[index].lxweight *
-                  0.5 *
-                  UnitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
-                  widget.xlogs[index].lxnumber *
-                  widget.xlogs[index].lxset;
-              break;
+                // 운동부위의 운동종류별 운동강도
+                if (sumAbs.containsKey(widget.xlogs[index].xType)) {
+                  sumAbs[widget.xlogs[index].xType] = sumAbs[widget.xlogs[index].xType]! +
+                      widget.xlogs[index].lxweight *
+                          0.5 *
+                          UnitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
+                          widget.xlogs[index].lxnumber *
+                          widget.xlogs[index].lxset;
+                } else {
+                  sumAbs[widget.xlogs[index].xType] = widget.xlogs[index].lxweight *
+                      0.5 *
+                      UnitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
+                      widget.xlogs[index].lxnumber *
+                      widget.xlogs[index].lxset;
+                }
+                break;
+            }
           }
         }
       }
     }
+
+    for (int datetimeindex = 0; datetimeindex < getHashCodeInverse(widget.rangeEnd) - getHashCodeInverse(widget.rangeStart) + 1; datetimeindex++) {
+      sum0[0] += sumBodypartbyDateTime[widget.rangeStart.subtract(Duration(days: -datetimeindex))]![0];
+      sum0[1] += sumBodypartbyDateTime[widget.rangeStart.subtract(Duration(days: -datetimeindex))]![1];
+      sum0[2] += sumBodypartbyDateTime[widget.rangeStart.subtract(Duration(days: -datetimeindex))]![2];
+      sum0[3] += sumBodypartbyDateTime[widget.rangeStart.subtract(Duration(days: -datetimeindex))]![3];
+      sum0[4] += sumBodypartbyDateTime[widget.rangeStart.subtract(Duration(days: -datetimeindex))]![4];
+      sum0[5] += sumBodypartbyDateTime[widget.rangeStart.subtract(Duration(days: -datetimeindex))]![5];
+    }
+
     // 오늘날짜에 따라 내림차순 정렬
     Map<String, double> todayBodypratRaito = {'하체': sum0[0], '어깨': sum0[1], '가슴': sum0[2], '팔': sum0[3], '등': sum0[4], '복근': sum0[5]};
     Map<String, double> sortedMap = Map.fromEntries(todayBodypratRaito.entries.toList()..sort((e1, e2) => e2.value.compareTo(e1.value)));
@@ -1048,105 +781,70 @@ class _BarChartSample6State extends State<chart> {
         colorRank6 = absColorRank6;
         break;
     }
-
-    Xvalue = [];
+    List<double> maxYScalelist = [];
+    double maxYScale = 0;
     switch (widget.selectedbodypart) {
       case 0:
-        Xvalue = [
-          generateGroupData(0, sum6[0], sum6[1], sum6[2], sum6[3], sum6[4], sum6[5]),
-          generateGroupData(1, sum5[0], sum5[1], sum5[2], sum5[3], sum5[4], sum5[5]),
-          generateGroupData(2, sum4[0], sum4[1], sum4[2], sum4[3], sum4[4], sum4[5]),
-          generateGroupData(3, sum3[0], sum3[1], sum3[2], sum3[3], sum3[4], sum3[5]),
-          generateGroupData(4, sum2[0], sum2[1], sum2[2], sum2[3], sum2[4], sum2[5]),
-          generateGroupData(5, sum1[0], sum1[1], sum1[2], sum1[3], sum1[4], sum1[5]),
-          generateGroupData(6, sum0[0], sum0[1], sum0[2], sum0[3], sum0[4], sum0[5]),
-        ];
+        for (int datetimeindex = 0; datetimeindex < getHashCodeInverse(widget.rangeEnd) - getHashCodeInverse(widget.rangeStart) + 1; datetimeindex++) {
+          maxYScalelist.add(
+            sumBodypartbyDateTime[widget.rangeStart.subtract(Duration(days: -datetimeindex))]![0] +
+                sumBodypartbyDateTime[widget.rangeStart.subtract(Duration(days: -datetimeindex))]![1] +
+                sumBodypartbyDateTime[widget.rangeStart.subtract(Duration(days: -datetimeindex))]![2] +
+                sumBodypartbyDateTime[widget.rangeStart.subtract(Duration(days: -datetimeindex))]![3] +
+                sumBodypartbyDateTime[widget.rangeStart.subtract(Duration(days: -datetimeindex))]![4] +
+                sumBodypartbyDateTime[widget.rangeStart.subtract(Duration(days: -datetimeindex))]![5],
+          );
+        }
+        List<double> legsortedmaxYScale = maxYScalelist.toList()..sort((e1, e2) => e2.compareTo(e1));
+        maxYScale = legsortedmaxYScale.first;
         break;
       case 1:
-        Xvalue = [
-          generateGroupData(0, sum6[0], 0, 0, 0, 0, 0),
-          generateGroupData(1, sum5[0], 0, 0, 0, 0, 0),
-          generateGroupData(2, sum4[0], 0, 0, 0, 0, 0),
-          generateGroupData(3, sum3[0], 0, 0, 0, 0, 0),
-          generateGroupData(4, sum2[0], 0, 0, 0, 0, 0),
-          generateGroupData(5, sum1[0], 0, 0, 0, 0, 0),
-          generateGroupData(6, sum0[0], 0, 0, 0, 0, 0),
-        ];
+        for (int datetimeindex = 0; datetimeindex < getHashCodeInverse(widget.rangeEnd) - getHashCodeInverse(widget.rangeStart) + 1; datetimeindex++) {
+          maxYScalelist.add(sumBodypartbyDateTime[widget.rangeStart.subtract(Duration(days: -datetimeindex))]![0]);
+        }
+        List<double> legsortedmaxYScale = maxYScalelist.toList()..sort((e1, e2) => e2.compareTo(e1));
+        maxYScale = legsortedmaxYScale.first;
         break;
       case 2:
-        Xvalue = [
-          generateGroupData(0, 0, sum6[1], 0, 0, 0, 0),
-          generateGroupData(1, 0, sum5[1], 0, 0, 0, 0),
-          generateGroupData(2, 0, sum4[1], 0, 0, 0, 0),
-          generateGroupData(3, 0, sum3[1], 0, 0, 0, 0),
-          generateGroupData(4, 0, sum2[1], 0, 0, 0, 0),
-          generateGroupData(5, 0, sum1[1], 0, 0, 0, 0),
-          generateGroupData(6, 0, sum0[1], 0, 0, 0, 0),
-        ];
+        for (int datetimeindex = 0; datetimeindex < getHashCodeInverse(widget.rangeEnd) - getHashCodeInverse(widget.rangeStart) + 1; datetimeindex++) {
+          maxYScalelist.add(sumBodypartbyDateTime[widget.rangeStart.subtract(Duration(days: -datetimeindex))]![1]);
+        }
+        List<double> legsortedmaxYScale = maxYScalelist.toList()..sort((e1, e2) => e2.compareTo(e1));
+        maxYScale = legsortedmaxYScale.first;
         break;
       case 3:
-        Xvalue = [
-          generateGroupData(0, 0, 0, sum6[2], 0, 0, 0),
-          generateGroupData(1, 0, 0, sum5[2], 0, 0, 0),
-          generateGroupData(2, 0, 0, sum4[2], 0, 0, 0),
-          generateGroupData(3, 0, 0, sum3[2], 0, 0, 0),
-          generateGroupData(4, 0, 0, sum2[2], 0, 0, 0),
-          generateGroupData(5, 0, 0, sum1[2], 0, 0, 0),
-          generateGroupData(6, 0, 0, sum0[2], 0, 0, 0),
-        ];
+        for (int datetimeindex = 0; datetimeindex < getHashCodeInverse(widget.rangeEnd) - getHashCodeInverse(widget.rangeStart) + 1; datetimeindex++) {
+          maxYScalelist.add(sumBodypartbyDateTime[widget.rangeStart.subtract(Duration(days: -datetimeindex))]![2]);
+        }
+        List<double> legsortedmaxYScale = maxYScalelist.toList()..sort((e1, e2) => e2.compareTo(e1));
+        maxYScale = legsortedmaxYScale.first;
         break;
       case 4:
-        Xvalue = [
-          generateGroupData(0, 0, 0, 0, sum6[3], 0, 0),
-          generateGroupData(1, 0, 0, 0, sum5[3], 0, 0),
-          generateGroupData(2, 0, 0, 0, sum4[3], 0, 0),
-          generateGroupData(3, 0, 0, 0, sum3[3], 0, 0),
-          generateGroupData(4, 0, 0, 0, sum2[3], 0, 0),
-          generateGroupData(5, 0, 0, 0, sum1[3], 0, 0),
-          generateGroupData(6, 0, 0, 0, sum0[3], 0, 0),
-        ];
+        for (int datetimeindex = 0; datetimeindex < getHashCodeInverse(widget.rangeEnd) - getHashCodeInverse(widget.rangeStart) + 1; datetimeindex++) {
+          maxYScalelist.add(sumBodypartbyDateTime[widget.rangeStart.subtract(Duration(days: -datetimeindex))]![3]);
+        }
+        List<double> legsortedmaxYScale = maxYScalelist.toList()..sort((e1, e2) => e2.compareTo(e1));
+        maxYScale = legsortedmaxYScale.first;
         break;
       case 5:
-        Xvalue = [
-          generateGroupData(0, 0, 0, 0, 0, sum6[4], 0),
-          generateGroupData(1, 0, 0, 0, 0, sum5[4], 0),
-          generateGroupData(2, 0, 0, 0, 0, sum4[4], 0),
-          generateGroupData(3, 0, 0, 0, 0, sum3[4], 0),
-          generateGroupData(4, 0, 0, 0, 0, sum2[4], 0),
-          generateGroupData(5, 0, 0, 0, 0, sum1[4], 0),
-          generateGroupData(6, 0, 0, 0, 0, sum0[4], 0),
-        ];
+        for (int datetimeindex = 0; datetimeindex < getHashCodeInverse(widget.rangeEnd) - getHashCodeInverse(widget.rangeStart) + 1; datetimeindex++) {
+          maxYScalelist.add(sumBodypartbyDateTime[widget.rangeStart.subtract(Duration(days: -datetimeindex))]![4]);
+        }
+        List<double> legsortedmaxYScale = maxYScalelist.toList()..sort((e1, e2) => e2.compareTo(e1));
+        maxYScale = legsortedmaxYScale.first;
         break;
       case 6:
-        Xvalue = [
-          generateGroupData(0, 0, 0, 0, 0, 0, sum6[5]),
-          generateGroupData(1, 0, 0, 0, 0, 0, sum5[5]),
-          generateGroupData(2, 0, 0, 0, 0, 0, sum4[5]),
-          generateGroupData(3, 0, 0, 0, 0, 0, sum3[5]),
-          generateGroupData(4, 0, 0, 0, 0, 0, sum2[5]),
-          generateGroupData(5, 0, 0, 0, 0, 0, sum1[5]),
-          generateGroupData(6, 0, 0, 0, 0, 0, sum0[5]),
-        ];
+        for (int datetimeindex = 0; datetimeindex < getHashCodeInverse(widget.rangeEnd) - getHashCodeInverse(widget.rangeStart) + 1; datetimeindex++) {
+          maxYScalelist.add(sumBodypartbyDateTime[widget.rangeStart.subtract(Duration(days: -datetimeindex))]![5]);
+        }
+        List<double> legsortedmaxYScale = maxYScalelist.toList()..sort((e1, e2) => e2.compareTo(e1));
+        maxYScale = legsortedmaxYScale.first;
         break;
     }
-
-    // Y축 스케일
-    List maxYscale = [
-      sum6[0] + sum6[1] + sum6[2] + sum6[3] + sum6[4] + sum6[5],
-      sum5[0] + sum5[1] + sum5[2] + sum5[3] + sum5[4] + sum5[5],
-      sum4[0] + sum4[1] + sum4[2] + sum4[3] + sum4[4] + sum4[5],
-      sum3[0] + sum3[1] + sum3[2] + sum3[3] + sum3[4] + sum3[5],
-      sum2[0] + sum2[1] + sum2[2] + sum2[3] + sum2[4] + sum2[5],
-      sum1[0] + sum1[1] + sum1[2] + sum1[3] + sum1[4] + sum1[5],
-      sum0[0] + sum0[1] + sum0[2] + sum0[3] + sum0[4] + sum0[5],
-    ];
-    maxYscale.sort();
-
     // ----------------------<< pie chart >>-----------------------
 
     return Column(
       children: [
-        Text("${widget.rangeStart},\n${widget.rangeEnd}"),
         // pie chart
         Card(
           child: Padding(
@@ -1154,20 +852,20 @@ class _BarChartSample6State extends State<chart> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Text(
-                  "${widget.rangeStart.month}/${widget.rangeStart.day}",
-                  style: TextStyle(
-                    color: Theme.of(context).colorScheme.onBackground,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+                // Text(
+                //   "${widget.rangeStart.month}/${widget.rangeStart.day}~${widget.rangeEnd.month}/${widget.rangeEnd.day}",
+                //   style: TextStyle(
+                //     color: Theme.of(context).colorScheme.onBackground,
+                //     fontSize: 16,
+                //     fontWeight: FontWeight.bold,
+                //   ),
+                // ),
                 const SizedBox(height: 8),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: SizedBox(
                     width: double.infinity,
-                    height: 160,
+                    height: 200,
                     child: (rank[0] == 0)
                         ? Image.asset('./assets/img/emptyBox.png')
                         : Row(
@@ -1280,125 +978,166 @@ class _BarChartSample6State extends State<chart> {
             ),
           ),
         ),
-        // bar_chart
-        const SizedBox(height: 8),
-        Card(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  "${widget.rangeStart.subtract(const Duration(days: 6)).month}/${widget.rangeStart.subtract(const Duration(days: 6)).day}~${widget.rangeStart.month}/${widget.rangeStart.day}",
-                  style: TextStyle(
-                    color: Theme.of(context).colorScheme.onBackground,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                // 범례
-                // const SizedBox(height: 8),
-                // LegendsListWidget(
-                //   legends: [
-                //     Legend(LocaleData.legs.getString((context)), legsColor),
-                //     Legend(LocaleData.shoulders.getString((context)), legsColor),
-                //     Legend(LocaleData.chest.getString((context)), legsColor),
-                //     Legend(LocaleData.arms.getString((context)), legsColor),
-                //     Legend(LocaleData.back.getString((context)), legsColor),
-                //     Legend(LocaleData.abs.getString((context)), legsColor),
-                //   ],
-                // ),
 
-                const SizedBox(height: 8),
-                Padding(
-                  padding: const EdgeInsets.only(top: 8, bottom: 8, left: 4, right: 28),
-                  child: SizedBox(
-                    height: 220,
-                    child: AspectRatio(
-                      aspectRatio: 2,
-                      child: BarChart(
-                        BarChartData(
-                          alignment: BarChartAlignment.spaceBetween,
-                          titlesData: FlTitlesData(
-                            leftTitles: const AxisTitles(
-                              sideTitles: SideTitles(
-                                showTitles: true,
-                                reservedSize: 50,
-                              ),
-                            ),
-                            rightTitles: const AxisTitles(),
-                            topTitles: const AxisTitles(),
-                            bottomTitles: AxisTitles(
-                              sideTitles: SideTitles(
-                                showTitles: true,
-                                getTitlesWidget: bottomTitles,
-                                reservedSize: 25,
+        // Padding(
+        //   padding: const EdgeInsets.all(8.0),
+        //   child: Text(
+        //     (widget.rangeStart == widget.rangeEnd)
+        //         ? "${widget.rangeStart.month}/${widget.rangeStart.day}"
+        //         : "${widget.rangeStart.month}/${widget.rangeStart.day}~${widget.rangeEnd.month}/${widget.rangeEnd.day}",
+        //     style: TextStyle(
+        //       color: Theme.of(context).colorScheme.onBackground,
+        //       fontSize: 16,
+        //       fontWeight: FontWeight.bold,
+        //     ),
+        //   ),
+        // ),
+        // bar_chart
+        // const SizedBox(height: 8),
+        (rank[0] == 0)
+            ? Container()
+            : Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      // Text(
+                      //   "${widget.rangeStart.month}/${widget.rangeStart.day}~${widget.rangeEnd.month}/${widget.rangeEnd.day}",
+                      //   style: TextStyle(
+                      //     color: Theme.of(context).colorScheme.onBackground,
+                      //     fontSize: 16,
+                      //     fontWeight: FontWeight.bold,
+                      //   ),
+                      // ),
+                      // 범례
+                      // const SizedBox(height: 8),
+                      // LegendsListWidget(
+                      //   legends: [
+                      //     Legend(LocaleData.legs.getString((context)), legsColor),
+                      //     Legend(LocaleData.shoulders.getString((context)), legsColor),
+                      //     Legend(LocaleData.chest.getString((context)), legsColor),
+                      //     Legend(LocaleData.arms.getString((context)), legsColor),
+                      //     Legend(LocaleData.back.getString((context)), legsColor),
+                      //     Legend(LocaleData.abs.getString((context)), legsColor),
+                      //   ],
+                      // ),
+
+                      Padding(
+                        padding: const EdgeInsets.only(top: 48, bottom: 8, left: 0, right: 20),
+                        child: SizedBox(
+                          height: 200,
+                          child: AspectRatio(
+                            aspectRatio: 2,
+                            child: BarChart(
+                              BarChartData(
+                                alignment: (getHashCodeInverse(widget.rangeEnd) - getHashCodeInverse(widget.rangeStart) + 1 == 1)
+                                    ? BarChartAlignment.center
+                                    : BarChartAlignment.spaceBetween,
+                                titlesData: FlTitlesData(
+                                  leftTitles: const AxisTitles(
+                                    sideTitles: SideTitles(
+                                      showTitles: true,
+                                      reservedSize: 50,
+                                    ),
+                                  ),
+                                  rightTitles: const AxisTitles(),
+                                  topTitles: const AxisTitles(),
+                                  bottomTitles: AxisTitles(
+                                    sideTitles: SideTitles(
+                                      showTitles: true,
+                                      getTitlesWidget: bottomTitles,
+                                      reservedSize: 25,
+                                    ),
+                                  ),
+                                ),
+                                barTouchData: BarTouchData(
+                                  enabled: false,
+                                  touchTooltipData: BarTouchTooltipData(
+                                    tooltipBgColor: Colors.transparent,
+                                    tooltipRoundedRadius: 8,
+                                  ),
+                                ),
+                                borderData: FlBorderData(show: false),
+                                gridData: const FlGridData(show: true, drawVerticalLine: false),
+                                barGroups: [
+                                  for (int index = 0; index < getHashCodeInverse(widget.rangeEnd) - getHashCodeInverse(widget.rangeStart) + 1; index++)
+                                    (widget.selectedbodypart == 0)
+                                        ? generateGroupData(
+                                            index,
+                                            sumBodypartbyDateTime[widget.rangeStart.subtract(Duration(days: -index))]![0],
+                                            sumBodypartbyDateTime[widget.rangeStart.subtract(Duration(days: -index))]![1],
+                                            sumBodypartbyDateTime[widget.rangeStart.subtract(Duration(days: -index))]![2],
+                                            sumBodypartbyDateTime[widget.rangeStart.subtract(Duration(days: -index))]![3],
+                                            sumBodypartbyDateTime[widget.rangeStart.subtract(Duration(days: -index))]![4],
+                                            sumBodypartbyDateTime[widget.rangeStart.subtract(Duration(days: -index))]![5],
+                                          )
+                                        : (widget.selectedbodypart == 1)
+                                            ? generateGroupData(index, sumBodypartbyDateTime[widget.rangeStart.subtract(Duration(days: -index))]![0], 0, 0, 0, 0, 0)
+                                            : (widget.selectedbodypart == 2)
+                                                ? generateGroupData(index, 0, sumBodypartbyDateTime[widget.rangeStart.subtract(Duration(days: -index))]![1], 0, 0, 0, 0)
+                                                : (widget.selectedbodypart == 3)
+                                                    ? generateGroupData(index, 0, 0, sumBodypartbyDateTime[widget.rangeStart.subtract(Duration(days: -index))]![2], 0, 0, 0)
+                                                    : (widget.selectedbodypart == 4)
+                                                        ? generateGroupData(index, 0, 0, 0, sumBodypartbyDateTime[widget.rangeStart.subtract(Duration(days: -index))]![3], 0, 0)
+                                                        : (widget.selectedbodypart == 5)
+                                                            ? generateGroupData(index, 0, 0, 0, 0, sumBodypartbyDateTime[widget.rangeStart.subtract(Duration(days: -index))]![4], 0)
+                                                            : generateGroupData(index, 0, 0, 0, 0, 0, sumBodypartbyDateTime[widget.rangeStart.subtract(Duration(days: -index))]![5])
+                                ],
+
+                                // 그래프의 Y축 길이
+                                maxY: maxYScale,
+
+                                // extraLinesData: ExtraLinesData(
+                                //   horizontalLines: [
+                                //     HorizontalLine(
+                                //       y: maxYScale,
+                                //       color: legsColor,
+                                //       strokeWidth: 1,
+                                //       dashArray: [20, 4],
+                                //     ),
+                                //     HorizontalLine(
+                                //       y: maxYScale,
+                                //       color: shouldersColor,
+                                //       strokeWidth: 1,
+                                //       dashArray: [20, 4],
+                                //     ),
+                                //     HorizontalLine(
+                                //       y: 6,
+                                //       color: chestColor,
+                                //       strokeWidth: 1,
+                                //       dashArray: [20, 4],
+                                //     ),
+                                //     HorizontalLine(
+                                //       y: 8,
+                                //       color: armsColor,
+                                //       strokeWidth: 1,
+                                //       dashArray: [20, 4],
+                                //     ),
+                                //     HorizontalLine(
+                                //       y: 10,
+                                //       color: backColor,
+                                //       strokeWidth: 1,
+                                //       dashArray: [20, 4],
+                                //     ),
+                                //     HorizontalLine(
+                                //       y: 12,
+                                //       color: absColor,
+                                //       strokeWidth: 1,
+                                //       dashArray: [20, 4],
+                                //     ),
+                                //   ],
+                                // ),
                               ),
                             ),
                           ),
-                          barTouchData: BarTouchData(
-                            enabled: false,
-                            touchTooltipData: BarTouchTooltipData(
-                              tooltipBgColor: Colors.transparent,
-                              tooltipRoundedRadius: 8,
-                            ),
-                          ),
-                          borderData: FlBorderData(show: false),
-                          gridData: const FlGridData(show: true, drawVerticalLine: false),
-                          barGroups: Xvalue,
-                          // 그래프의 Y축 길이
-                          maxY: maxYscale[6],
-                          //
-                          // extraLinesData: ExtraLinesData(
-                          //   horizontalLines: [
-                          //     HorizontalLine(
-                          //       y: 2,
-                          //       color: legsColor,
-                          //       strokeWidth: 1,
-                          //       dashArray: [20, 4],
-                          //     ),
-                          //     HorizontalLine(
-                          //       y: 4,
-                          //       color: shouldersColor,
-                          //       strokeWidth: 1,
-                          //       dashArray: [20, 4],
-                          //     ),
-                          //     HorizontalLine(
-                          //       y: 6,
-                          //       color: chestColor,
-                          //       strokeWidth: 1,
-                          //       dashArray: [20, 4],
-                          //     ),
-                          //     HorizontalLine(
-                          //       y: 8,
-                          //       color: armsColor,
-                          //       strokeWidth: 1,
-                          //       dashArray: [20, 4],
-                          //     ),
-                          //     HorizontalLine(
-                          //       y: 10,
-                          //       color: backColor,
-                          //       strokeWidth: 1,
-                          //       dashArray: [20, 4],
-                          //     ),
-                          //     HorizontalLine(
-                          //       y: 12,
-                          //       color: absColor,
-                          //       strokeWidth: 1,
-                          //       dashArray: [20, 4],
-                          //     ),
-                          //   ],
-                          // ),
                         ),
                       ),
-                    ),
+                    ],
                   ),
                 ),
-              ],
-            ),
-          ),
-        ),
+              ),
       ],
     );
   }

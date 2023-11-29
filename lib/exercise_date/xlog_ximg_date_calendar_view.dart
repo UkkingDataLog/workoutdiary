@@ -1,7 +1,5 @@
 import 'dart:collection';
-import 'dart:math';
 
-import 'package:animated_toggle_switch/animated_toggle_switch.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -238,61 +236,6 @@ class XlogXimgDateCalendarViewState extends State<XlogXimgDateCalendarView> {
                     backgroundColor: Theme.of(context).colorScheme.secondary.withOpacity(0.3),
                     child: Column(
                       children: [
-                        //// 기간 선택
-                        // Padding(
-                        //   padding: const EdgeInsets.symmetric(vertical: 8.0),
-                        //   child: AnimatedToggleSwitch<int>.size(
-                        //     height: 36,
-                        //     current: min(value, 2),
-                        //     style: ToggleStyle(
-                        //       backgroundColor: Theme.of(context).colorScheme.surfaceVariant,
-                        //       indicatorColor: Theme.of(context).colorScheme.onSurface,
-                        //       borderColor: Colors.transparent,
-                        //       borderRadius: BorderRadius.circular(10.0),
-                        //       indicatorBorderRadius: BorderRadius.zero,
-                        //     ),
-                        //     // 주, 달 까지 고도화
-                        //     // values: const [0, 1, 2],
-                        //     values: const [0],
-                        //     iconOpacity: 1.0,
-                        //     selectedIconScale: 1.0,
-                        //     indicatorSize: const Size.fromWidth(100),
-                        //     iconAnimationType: AnimationType.onHover,
-                        //     styleAnimationType: AnimationType.onHover,
-                        //     spacing: 2.0,
-                        //     customSeparatorBuilder: (context, local, global) {
-                        //       final opacity = ((global.position - local.position).abs() - 0.5).clamp(0.0, 1.0);
-                        //       return VerticalDivider(
-                        //         indent: 10.0,
-                        //         endIndent: 10.0,
-                        //         color: Theme.of(context).colorScheme.onSurfaceVariant,
-                        //       );
-                        //     },
-                        //     customIconBuilder: (context, local, global) {
-                        //       // 주, 달 까지 고도화
-                        //       // final text = const ["day", "week", "month"][local.index];
-                        //       final text = const ["day"][local.index];
-                        //       return Center(
-                        //         child: Text(
-                        //           text,
-                        //           style: TextStyle(
-                        //             color: Color.lerp(
-                        //               Theme.of(context).colorScheme.onBackground,
-                        //               Theme.of(context).colorScheme.background,
-                        //               local.animationValue,
-                        //             ),
-                        //           ),
-                        //         ),
-                        //       );
-                        //     },
-                        //     borderWidth: 0.0,
-                        //     onChanged: (i) {
-                        //       setState(() => value = i);
-                        //       // print(i);
-                        //     },
-                        //   ),
-                        // ),
-                        //
                         Wrap(
                           alignment: WrapAlignment.center,
                           spacing: 8,

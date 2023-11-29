@@ -41,6 +41,9 @@ class TableComplexExample extends StatefulWidget {
   int selectedbodypart;
   //
   final List<Xlog> xlogs;
+  //
+  String startTitle = '';
+  String endTitle = '';
 
   @override
   _TableComplexExampleState createState() => _TableComplexExampleState();
@@ -137,6 +140,8 @@ class _TableComplexExampleState extends State<TableComplexExample> {
 
   @override
   Widget build(BuildContext context) {
+    //
+
     // selectedbodypart 0,1,2,3,4,5,6
     switch (widget.selectedbodypart) {
       case 0:
@@ -258,70 +263,90 @@ class _TableComplexExampleState extends State<TableComplexExample> {
                       ),
                     )
                   : Container(),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
+              Stack(
+                alignment: Alignment.center,
                 children: [
-                  const SizedBox(width: 8),
-                  Container(
-                    height: 36,
-                    width: 36,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                      color: Theme.of(context).colorScheme.outline,
-                    ),
-                    child: IconButton(
-                      padding: const EdgeInsets.all(0),
-                      onPressed: () {
-                        setState(() {
-                          if (isSelectedkg == true) {
-                            isSelectedkg = false;
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Container(
+                        height: 36,
+                        width: 36,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                          color: Theme.of(context).colorScheme.outline,
+                        ),
+                        child: IconButton(
+                          padding: const EdgeInsets.all(0),
+                          onPressed: () {
+                            setState(() {
+                              if (isSelectedkg == true) {
+                                isSelectedkg = false;
 
-                            widget.weightUnits = 'lb';
-                          } else {
-                            isSelectedkg = true;
+                                widget.weightUnits = 'lb';
+                              } else {
+                                isSelectedkg = true;
 
-                            widget.weightUnits = 'kg';
-                          }
-                        });
-                      },
-                      icon: Image.asset(
-                        (isSelectedkg == true) ? 'assets/img/weight_kg.png' : 'assets/img/weight_lb.png',
-                        scale: 24,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  Padding(
-                    padding: const EdgeInsets.only(right: 4.0),
-                    child: Container(
-                      height: 40,
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.onBackground,
-                        borderRadius: const BorderRadius.only(
-                          bottomLeft: Radius.circular(20),
-                          bottomRight: Radius.circular(20),
+                                widget.weightUnits = 'kg';
+                              }
+                            });
+                          },
+                          icon: Image.asset(
+                            (isSelectedkg == true) ? 'assets/img/weight_kg.png' : 'assets/img/weight_lb.png',
+                            scale: 24,
+                          ),
                         ),
                       ),
-                      child: Row(
-                        children: [
-                          IconButton(
-                              color: Theme.of(context).colorScheme.background,
-                              onPressed: () {
-                                if (isCalenderopen == true) {
-                                  setState(() {
-                                    isCalenderopen = false;
-                                  });
-                                } else {
-                                  setState(() {
-                                    isCalenderopen = true;
-                                  });
-                                }
-                              },
-                              icon: const Icon(Icons.date_range)),
-                        ],
+                      const SizedBox(width: 8),
+                      Padding(
+                        padding: const EdgeInsets.only(right: 4.0),
+                        child: Container(
+                          height: 40,
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).colorScheme.onBackground,
+                            borderRadius: const BorderRadius.only(
+                              bottomLeft: Radius.circular(20),
+                              bottomRight: Radius.circular(20),
+                            ),
+                          ),
+                          child: Row(
+                            children: [
+                              IconButton(
+                                  color: Theme.of(context).colorScheme.background,
+                                  onPressed: () {
+                                    if (isCalenderopen == true) {
+                                      setState(() {
+                                        isCalenderopen = false;
+                                      });
+                                    } else {
+                                      setState(() {
+                                        isCalenderopen = true;
+                                      });
+                                    }
+                                  },
+                                  icon: const Icon(Icons.date_range)),
+                            ],
+                          ),
+                        ),
                       ),
-                    ),
+                    ],
                   ),
+                  (isCalenderopen == true)
+                      ? Container()
+                      : Text(
+                          (_rangeStart == _rangeEnd)
+                              ? (_rangeStart == null && _rangeEnd == null)
+                                  ? "${_selectedDays.first.month}/${_selectedDays.first.day}"
+                                  : "${_rangeStart?.month}/${_rangeStart?.day}"
+                              : (_rangeEnd == null)
+                                  ? "${_rangeStart?.month}/${_rangeStart?.day}"
+                                  : "${_rangeStart?.month}/${_rangeStart?.day}~${_rangeEnd?.month}/${_rangeEnd?.day}",
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.onBackground,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                 ],
               )
             ],
