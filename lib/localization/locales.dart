@@ -15,6 +15,7 @@ const List<MapLocale> LOCALES = [
 mixin LocaleData {
   // define
   // setting
+  static const String workout_analysis = 'workout_analysis';
   static const String prev = 'prev';
   static const String next = 'next';
   static const String done = 'done';
@@ -331,6 +332,7 @@ mixin LocaleData {
 
   // 영어 (English)
   static const Map<String, dynamic> EN = {
+    workout_analysis: 'Workout Analysis',
     locale: 'en',
     workoutdiary: 'Workout Diary',
     chooselanguage: 'Choose Language',
@@ -384,7 +386,7 @@ mixin LocaleData {
     toastmessage_imgsavesuccess: 'Save success 😘',
     toastmessage_registernumberexceeded: 'Maximum exceeded 15! It\'s amazing👍',
     toastmessage_internetconnect: '❗Check your internet connection❗',
-    viewtitle_calendar: 'workout calendar',
+    viewtitle_calendar: 'Workout Calendar',
     slogan: 'Habit make me',
     L_B_Barbell_Glute_Bridge: 'Barbell Glute Bridge',
     L_B_Sumo_Deadlift: 'Sumo Deadlift',
@@ -646,6 +648,7 @@ mixin LocaleData {
   };
   // 한국어 (Korean)
   static const Map<String, dynamic> KO = {
+    workout_analysis: '운동 분석',
     locale: 'ko',
     workoutdiary: 'Workout Diary',
     chooselanguage: '언어를 선택하세요',
@@ -961,6 +964,7 @@ mixin LocaleData {
 
   // 독일어 (German)
   static const Map<String, dynamic> DE = {
+    workout_analysis: 'Trainingsanalyse',
     locale: 'de',
     workoutdiary: 'Workout Diary',
     chooselanguage: 'Sprache wählen',
@@ -1277,6 +1281,7 @@ mixin LocaleData {
 
   // 일본어 (Japanese)
   static const Map<String, dynamic> JA = {
+    workout_analysis: 'トレーニング分析',
     locale: 'ja',
     workoutdiary: 'ワークアウト日記',
     chooselanguage: '言語選択',
@@ -1592,6 +1597,7 @@ mixin LocaleData {
 
   // 스페인어 (Spanish)
   static const Map<String, dynamic> ES = {
+    workout_analysis: 'Análisis Entrenamiento',
     locale: 'es',
     workoutdiary: 'Workout Diary',
     chooselanguage: 'Elige Idioma',
@@ -1645,7 +1651,7 @@ mixin LocaleData {
     toastmessage_imgsavesuccess: 'Guardado exitoso 😘',
     toastmessage_registernumberexceeded: 'Máximo excedido 15! Es asombroso👍',
     toastmessage_internetconnect: '❗Verifica tu conexión a internet❗',
-    viewtitle_calendar: 'calendario de entrenamiento',
+    viewtitle_calendar: 'Calendario Entrenamiento',
     slogan: 'Hábito hazme',
     L_B_Barbell_Glute_Bridge: 'Puente de Glúteo con Barra',
     L_B_Sumo_Deadlift: 'Peso Muerto Sumo',
@@ -1908,6 +1914,7 @@ mixin LocaleData {
 
   // 중국어 (Simplified Chinese) - 간체
   static const Map<String, dynamic> ZH = {
+    workout_analysis: '运动分析',
     locale: 'zh',
     workoutdiary: '健身追记',
     chooselanguage: '请选择语言',
@@ -2223,6 +2230,7 @@ mixin LocaleData {
 
   // 포르투갈어 (Portuguese)
   static const Map<String, dynamic> PT = {
+    workout_analysis: 'Análise de Treino',
     locale: 'pt',
     workoutdiary: 'Workout Diary',
     chooselanguage: 'Escolha o Idioma',
@@ -2276,7 +2284,7 @@ mixin LocaleData {
     toastmessage_imgsavesuccess: 'Sucesso ao salvar 😘',
     toastmessage_registernumberexceeded: 'Máximo excedido 15! É incrível👍',
     toastmessage_internetconnect: '❗Verifique sua conexão com a internet❗',
-    viewtitle_calendar: 'Calendário de treinos',
+    viewtitle_calendar: 'Calendário de Treinos',
     slogan: 'Habit make me',
     L_B_Barbell_Glute_Bridge: 'Ponte de Glúteos com Barra',
     L_B_Sumo_Deadlift: 'Levantamento Terra Sumô',
@@ -2539,6 +2547,7 @@ mixin LocaleData {
 
   // 아랍어 (Arabic)
   static const Map<String, dynamic> AR = {
+    workout_analysis: 'تحليل اللياقة',
     locale: 'ar',
     workoutdiary: 'يومية التمرين',
     chooselanguage: 'اختر اللغة',
@@ -2854,6 +2863,7 @@ mixin LocaleData {
 
   // 힌디어 (Hindi)
   static const Map<String, dynamic> HI = {
+    workout_analysis: 'व्यायाम विश्लेषण',
     locale: 'hi',
     workoutdiary: 'वर्कआउट डायरी',
     chooselanguage: 'भाषा चुनें',

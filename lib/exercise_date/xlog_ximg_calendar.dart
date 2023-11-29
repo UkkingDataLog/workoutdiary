@@ -7,10 +7,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:workoutdiary/anlysis/chart.dart';
 import 'package:workoutdiary/exercise_date/utils.dart';
 import 'package:workoutdiary/exercise_date/ximg_saved_tile.dart';
 import 'package:workoutdiary/exercise_date/xlog_ximg_date_calendar_view.dart';
 import 'package:workoutdiary/exercise_log/xlog_create_tile.dart';
+import 'package:workoutdiary/hivedata/xlog.dart';
+
 import 'package:workoutdiary/localization/locales.dart';
 
 class TableComplexExample extends StatefulWidget {
@@ -20,12 +23,24 @@ class TableComplexExample extends StatefulWidget {
     required this.kFirstDay,
     required this.kLastDay,
     required this.weightUnits,
+    required this.selectedAnalysis,
+    //
+    required this.value, // 0: day, 1: week, 2: month
+    required this.selectedbodypart, // 0: all, 1: leg, 2: shoulders, 3: chest, 4: arms, 5: back, 6: abs
+    //
+    required this.xlogs,
   });
 
   final LinkedHashMap<DateTime, List<Event>> kEvents;
   final DateTime kFirstDay;
   final DateTime kLastDay;
   String weightUnits;
+  bool selectedAnalysis;
+  //
+  int value;
+  int selectedbodypart;
+  //
+  final List<Xlog> xlogs;
 
   @override
   _TableComplexExampleState createState() => _TableComplexExampleState();
@@ -35,7 +50,9 @@ class _TableComplexExampleState extends State<TableComplexExample> {
   bool isSelectedkg = true;
   bool isCalenderopen = true;
 
-  int selectdaycount = 0;
+  //
+  double todayLegsSum = 0;
+
   late final ValueNotifier<List<Event>> _selectedEvents;
   final ValueNotifier<DateTime> _focusedDay = ValueNotifier(DateTime.now());
   final Set<DateTime> _selectedDays = LinkedHashSet<DateTime>(
@@ -45,7 +62,7 @@ class _TableComplexExampleState extends State<TableComplexExample> {
 
   late PageController _pageController;
   CalendarFormat _calendarFormat = CalendarFormat.week;
-  RangeSelectionMode _rangeSelectionMode = RangeSelectionMode.toggledOff;
+  RangeSelectionMode _rangeSelectionMode = RangeSelectionMode.toggledOn;
   DateTime? _rangeStart;
   DateTime? _rangeEnd;
 
@@ -116,8 +133,23 @@ class _TableComplexExampleState extends State<TableComplexExample> {
     }
   }
 
+  var allBodypartStatisticsinput = Map<int, List<double>>();
+
   @override
   Widget build(BuildContext context) {
+    // selectedbodypart 0,1,2,3,4,5,6
+    switch (widget.selectedbodypart) {
+      case 0:
+        int allBodypartStatisticsIndex;
+        Map<int, List<double>> allBodypartStatistics = {};
+        allBodypartStatisticsinput = allBodypartStatistics;
+        break;
+      case 1:
+        break;
+      default:
+        break;
+    }
+
     XlogXimgDateCalendarViewState? parent = context.findAncestorStateOfType<XlogXimgDateCalendarViewState>();
 
     if (widget.weightUnits == 'kg') {
@@ -178,7 +210,6 @@ class _TableComplexExampleState extends State<TableComplexExample> {
                   },
                 )
               : Container(),
-
           Column(
             children: [
               (isCalenderopen == true)
@@ -202,7 +233,8 @@ class _TableComplexExampleState extends State<TableComplexExample> {
                       //   return day.day == 20;
                       // },
 
-                      onDaySelected: _onDaySelected,
+                      // 단일 기간을 선택하여 다중선택
+                      // onDaySelected: _onDaySelected,
                       onRangeSelected: _onRangeSelected,
                       onCalendarCreated: (controller) => _pageController = controller,
                       onPageChanged: (focusedDay) => _focusedDay.value = focusedDay,
@@ -229,6 +261,7 @@ class _TableComplexExampleState extends State<TableComplexExample> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
+                  const SizedBox(width: 8),
                   Container(
                     height: 36,
                     width: 36,
@@ -293,101 +326,126 @@ class _TableComplexExampleState extends State<TableComplexExample> {
               )
             ],
           ),
-
-          // const SizedBox(height: 8.0),
-          Expanded(
-            child: ValueListenableBuilder<List<Event>>(
-              valueListenable: _selectedEvents,
-              builder: (context, value, _) {
-                return ListView.builder(
-                  // physics: ClampingScrollPhysics(),
-                  itemCount: value.length,
-                  itemBuilder: (context, index) {
-                    return ListTile(
-                      contentPadding: EdgeInsets.zero,
-                      // onTap: () => print('${value[index]}'), //버튼 클릭시 이벤트 발생
-                      title: Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Container(
-                                height: media.width * 0.06,
-                                width: media.width * 0.28,
-                                decoration: BoxDecoration(
-                                  color: Theme.of(context).colorScheme.onBackground,
-                                  borderRadius: const BorderRadius.only(
-                                    topLeft: Radius.circular(10),
-                                    topRight: Radius.circular(10),
-                                  ),
-                                ),
-                                child: FittedBox(
-                                  fit: BoxFit.fitHeight,
-                                  child: Text(
-                                    '${value[index].datetime.month} / ${value[index].datetime.day}',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.w700,
-                                      color: Theme.of(context).colorScheme.background,
+          (widget.selectedAnalysis == false)
+              ? Expanded(
+                  child: ValueListenableBuilder<List<Event>>(
+                    valueListenable: _selectedEvents,
+                    builder: (context, value, _) {
+                      return ListView.builder(
+                        // physics: ClampingScrollPhysics(),
+                        itemCount: value.length,
+                        itemBuilder: (context, index) {
+                          return ListTile(
+                            contentPadding: EdgeInsets.zero,
+                            // onTap: () => print('${value[index]}'), //버튼 클릭시 이벤트 발생
+                            title: Column(
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Container(
+                                      height: media.width * 0.06,
+                                      width: media.width * 0.28,
+                                      decoration: BoxDecoration(
+                                        color: Theme.of(context).colorScheme.onBackground,
+                                        borderRadius: const BorderRadius.only(
+                                          topLeft: Radius.circular(10),
+                                          topRight: Radius.circular(10),
+                                        ),
+                                      ),
+                                      child: FittedBox(
+                                        fit: BoxFit.fitHeight,
+                                        child: Text(
+                                          '${value[index].datetime.month} / ${value[index].datetime.day}',
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.w700,
+                                            color: Theme.of(context).colorScheme.background,
+                                          ),
+                                        ),
+                                      ),
                                     ),
-                                  ),
+                                  ],
                                 ),
-                              ),
-                            ],
-                          ),
 
-                          for (int ximgsindex = 0; ximgsindex < value[index].ximgs.length; ximgsindex += 1)
-                            if (value[index].ximgs[ximgsindex].date.year == value[index].datetime.year //년 비교
-                                    &&
-                                    value[index].ximgs[ximgsindex].date.month == value[index].datetime.month //월 비교
-                                    &&
-                                    value[index].ximgs[ximgsindex].date.day == value[index].datetime.day //일 비교
-                                )
-                              XimgSavedTile(
-                                ximg: value[index].ximgs[ximgsindex],
-                                height: 1.25,
-                                onDeleted: () {
-                                  setState(() {
-                                    value[index].ximgs.removeAt(ximgsindex);
-                                    parent?.setState(() {});
-                                  });
-                                },
-                              ),
-                          //
-                          for (int xlogsindex = 0; xlogsindex < value[index].xlogs.length; xlogsindex += 1)
-                            if (
+                                for (int ximgsindex = 0; ximgsindex < value[index].ximgs.length; ximgsindex += 1)
+                                  if (getHashCodeInverse(value[index].ximgs[ximgsindex].date) == getHashCodeInverse(value[index].datetime))
+                                    XimgSavedTile(
+                                      ximg: value[index].ximgs[ximgsindex],
+                                      height: 1.25,
+                                      onDeleted: () {
+                                        setState(() {
+                                          value[index].ximgs.removeAt(ximgsindex);
+                                          parent?.setState(() {});
+                                        });
+                                      },
+                                    ),
+                                //
+                                for (int xlogsindex = 0; xlogsindex < value[index].xlogs.length; xlogsindex += 1)
+                                  if (getHashCodeInverse(value[index].xlogs[xlogsindex].lxdate) == getHashCodeInverse(value[index].datetime))
+                                    Container(
+                                      color: Theme.of(context).colorScheme.onBackground,
+                                      child: XlogCreateTile(
+                                        xlog: value[index].xlogs[xlogsindex],
+                                        onDeleted: () {
+                                          setState(() {
+                                            value[index].xlogs.removeAt(xlogsindex);
+                                            parent?.setState(() {});
+                                          });
+                                        },
+                                        selectedweightUnit: widget.weightUnits,
+                                      ),
+                                    ),
 
-                                ////둘다 dateTime 형식이므로 해당년, 월, 일 비교가 필요함
-                                value[index].xlogs[xlogsindex].lxdate.year == value[index].datetime.year //년 비교
-                                    &&
-                                    value[index].xlogs[xlogsindex].lxdate.month == value[index].datetime.month //월 비교
-                                    &&
-                                    value[index].xlogs[xlogsindex].lxdate.day == value[index].datetime.day //일 비교
+                                const SizedBox(height: 16)
+                              ],
+                            ),
+                          );
+                        },
+                      );
+                    },
+                  ),
+                )
+              : Expanded(
+                  child: ValueListenableBuilder<List<Event>>(
+                    valueListenable: _selectedEvents,
+                    builder: (context, value, _) {
+                      return ListView.builder(
+                        // physics: ClampingScrollPhysics(),
 
-                                )
-                              Container(
-                                color: Theme.of(context).colorScheme.onBackground,
-                                child: XlogCreateTile(
-                                  xlog: value[index].xlogs[xlogsindex],
-                                  onDeleted: () {
-                                    setState(() {
-                                      value[index].xlogs.removeAt(xlogsindex);
-                                      parent?.setState(() {});
-                                    });
-                                  },
-                                  selectedweightUnit: widget.weightUnits,
-                                ),
-                              ),
-
-                          const SizedBox(height: 16)
-                        ],
-                      ),
-                    );
-                  },
-                );
-              },
-            ),
-          ),
+                        itemCount: value.length,
+                        itemBuilder: (context, index) {
+                          return (value.isEmpty)
+                              ? Container()
+                              : Column(
+                                  children: [
+                                    // Text("$_rangeStart,$_rangeEnd,${value.last.datetime}"),
+                                    // 1회만 만들기
+                                    if (index == value.length - 1)
+                                      Column(
+                                        children: [
+                                          Builder(builder: (context) {
+                                            return chart(
+                                              value: widget.value,
+                                              selectedbodypart: widget.selectedbodypart,
+                                              //
+                                              rangeStart: (_rangeStart == null && _rangeEnd == null) ? value.last.datetime : _rangeStart!,
+                                              rangeEnd: (_rangeEnd == null) ? value.last.datetime : _rangeEnd!,
+                                              //
+                                              xlogs: widget.xlogs,
+                                              weightUnits: widget.weightUnits,
+                                            );
+                                          }),
+                                          SizedBox(height: media.height * 0.20),
+                                        ],
+                                      ),
+                                  ],
+                                );
+                        },
+                      );
+                    },
+                  ),
+                )
         ],
       ),
     );

@@ -51,6 +51,9 @@ class XlogCreateView extends StatefulWidget {
 
   @override
   State<XlogCreateView> createState() => XlogCreateViewState();
+
+  //context를 반환하는 함수 'of'를 static으로 생성한다.
+  static XlogCreateViewState? of(BuildContext context) => context.findAncestorStateOfType<XlogCreateViewState>();
 }
 
 class XlogCreateViewState extends State<XlogCreateView> {
@@ -1433,8 +1436,7 @@ class XlogCreateViewState extends State<XlogCreateView> {
                                 '$todayaddcountComplete/$todayaddcount',
                               ),
                               backgroundColor: Theme.of(context).colorScheme.primary,
-                              child: FloatingActionButton.small(
-                                shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(50.0))),
+                              child: FloatingActionButton(
                                 heroTag: "btn3",
 
                                 elevation: 2,
@@ -1621,7 +1623,6 @@ class XlogCreateViewState extends State<XlogCreateView> {
                                               padding: const EdgeInsets.only(top: 16.0, bottom: 32.0, left: 8.0, right: 8.0),
                                               child: FloatingActionButton.extended(
                                                 backgroundColor: Theme.of(context).colorScheme.surfaceVariant,
-                                                shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(15.0))),
                                                 heroTag: 'btn3',
                                                 elevation: 1,
                                                 label: Text(
@@ -1651,8 +1652,7 @@ class XlogCreateViewState extends State<XlogCreateView> {
                           alignment: Alignment(Alignment.bottomCenter.x - 0.95, Alignment.bottomCenter.y),
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: FloatingActionButton.small(
-                              shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(50.0))),
+                            child: FloatingActionButton(
                               heroTag: 'btn2',
                               elevation: 1,
                               child: FittedBox(
@@ -1669,6 +1669,11 @@ class XlogCreateViewState extends State<XlogCreateView> {
                                     });
                                   },
                                 );
+                                _scrollController.animateTo(
+                                  _scrollController.position.minScrollExtent,
+                                  duration: const Duration(seconds: 1),
+                                  curve: Curves.easeInOut,
+                                );
                               },
                             ),
                           ),
@@ -1682,7 +1687,6 @@ class XlogCreateViewState extends State<XlogCreateView> {
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: FloatingActionButton.extended(
-                              shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(50.0))),
                               clipBehavior: Clip.antiAlias,
                               heroTag: 'btn1',
                               backgroundColor: Theme.of(context).colorScheme.primary,
@@ -1932,7 +1936,6 @@ class XlogCreateViewState extends State<XlogCreateView> {
                             padding: const EdgeInsets.all(8.0),
                             child: FloatingActionButton.extended(
                               backgroundColor: Theme.of(context).colorScheme.surfaceVariant,
-                              shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(50.0))),
                               heroTag: 'btn1',
                               elevation: 1,
                               label: Text(
@@ -1962,8 +1965,11 @@ class XlogCreateViewState extends State<XlogCreateView> {
               ),
               body: SingleChildScrollView(
                 physics: (isselectedWritting == false)
-                    ? const NeverScrollableScrollPhysics()
-                    : //const ScrollPhysics(),
+                    ? (_ratio == 2)
+                        ? const ClampingScrollPhysics()
+                        : const NeverScrollableScrollPhysics()
+                    :
+                    //const ScrollPhysics(),
                     // const ClampingScrollPhysics(),
                     const NeverScrollableScrollPhysics(), //스크롤 불가
                 controller: _scrollController,
@@ -2081,7 +2087,7 @@ class XlogCreateViewState extends State<XlogCreateView> {
                                             child: RoundButton(
                                               type: RoundButtonType.textGradient,
                                               onPressed: () {
-                                                _showRewardedInterstitialAd();
+                                                showRewardedInterstitialAd(isseledctedValue: isselectedlog);
                                                 setState(() {});
                                               },
                                               title: LocaleData.seeAds.getString((context)),
@@ -3901,7 +3907,7 @@ class XlogCreateViewState extends State<XlogCreateView> {
         ));
   }
 
-  void _showRewardedInterstitialAd() {
+  void showRewardedInterstitialAd({required bool isseledctedValue}) {
     if (_rewardedInterstitialAd == null) {
       debugPrint('Warning: attempt to show rewarded interstitial before loaded.');
       return;
@@ -3909,7 +3915,8 @@ class XlogCreateViewState extends State<XlogCreateView> {
     _rewardedInterstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
       onAdShowedFullScreenContent: (RewardedInterstitialAd ad) {
         debugPrint('$ad onAdShowedFullScreenContent.');
-        isselectedlog = false;
+        isseledctedValue = false;
+        // isselectedlog = false;
         setState(() {
           Navigator.pop(context);
         });

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
-import 'package:workoutdiary/common/colo_extension.dart';
 import 'package:workoutdiary/common_widget/round_button.dart';
 import 'package:workoutdiary/exercise_log/xlog_create_view.dart';
 import 'package:workoutdiary/localization/locales.dart';
