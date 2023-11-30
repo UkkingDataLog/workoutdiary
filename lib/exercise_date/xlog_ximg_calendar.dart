@@ -251,15 +251,26 @@ class _TableComplexExampleState extends State<TableComplexExample> {
 
                       //custom
                       calendarStyle: CalendarStyle(
+                        rangeHighlightColor: Theme.of(context).colorScheme.primaryContainer,
+                        withinRangeTextStyle: TextStyle(
+                          color: Theme.of(context).colorScheme.onPrimaryContainer,
+                        ),
+
+                        rangeStartDecoration: BoxDecoration(
+                          color: Theme.of(context).colorScheme.primary,
+                          shape: BoxShape.circle,
+                        ),
+                        rangeEndDecoration: BoxDecoration(
+                          color: Theme.of(context).colorScheme.primary,
+                          shape: BoxShape.circle,
+                        ),
+
                         // marker 모양 조정
                         markerDecoration: BoxDecoration(
                           color: Theme.of(context).colorScheme.onBackground,
                           shape: BoxShape.circle,
                         ),
                         // startDay, endDay 사이의 글자 조정
-                        withinRangeTextStyle: TextStyle(
-                          color: Theme.of(context).colorScheme.background,
-                        ),
                       ),
                     )
                   : Container(),

@@ -109,8 +109,8 @@ class _BarChartSample6State extends State<chart> {
     return BarChartGroupData(
       x: x,
       groupVertically: true,
-      showingTooltipIndicators: (widget.selectedbodypart == 0)
-          ? [5]
+      showingTooltipIndicators: (widget.selectedbodypart == 0 && (legs > 0 || shoulders > 0 || chest > 0 || arms > 0 || back > 0 || abs > 0))
+          ? [6]
           : (widget.selectedbodypart == 1 && legs > 0)
               ? [0]
               : (widget.selectedbodypart == 2 && shoulders > 0)
@@ -129,42 +129,49 @@ class _BarChartSample6State extends State<chart> {
           fromY: 0,
           toY: legs,
           color: legsColor,
-          width: (MediaQuery.sizeOf(context).width - 48 * 3) / (getHashCodeInverse(widget.rangeEnd) - getHashCodeInverse(widget.rangeStart) + 1),
+          width: (MediaQuery.sizeOf(context).width - 48 * 3) / (widget.rangeEnd.difference(widget.rangeStart).inDays + 1),
           borderRadius: const BorderRadius.all(Radius.circular(0)),
         ),
         BarChartRodData(
           fromY: legs + betweenSpace,
           toY: legs + betweenSpace + shoulders,
           color: shouldersColor,
-          width: (MediaQuery.sizeOf(context).width - 48 * 3) / (getHashCodeInverse(widget.rangeEnd) - getHashCodeInverse(widget.rangeStart) + 1),
+          width: (MediaQuery.sizeOf(context).width - 48 * 3) / (widget.rangeEnd.difference(widget.rangeStart).inDays + 1),
           borderRadius: const BorderRadius.all(Radius.circular(0)),
         ),
         BarChartRodData(
           fromY: legs + betweenSpace + shoulders + betweenSpace,
           toY: legs + betweenSpace + shoulders + betweenSpace + chest,
           color: chestColor,
-          width: (MediaQuery.sizeOf(context).width - 48 * 3) / (getHashCodeInverse(widget.rangeEnd) - getHashCodeInverse(widget.rangeStart) + 1),
+          width: (MediaQuery.sizeOf(context).width - 48 * 3) / (widget.rangeEnd.difference(widget.rangeStart).inDays + 1),
           borderRadius: const BorderRadius.all(Radius.circular(0)),
         ),
         BarChartRodData(
           fromY: legs + betweenSpace + shoulders + betweenSpace + chest + betweenSpace,
           toY: legs + betweenSpace + shoulders + betweenSpace + chest + betweenSpace + arms,
           color: armsColor,
-          width: (MediaQuery.sizeOf(context).width - 48 * 3) / (getHashCodeInverse(widget.rangeEnd) - getHashCodeInverse(widget.rangeStart) + 1),
+          width: (MediaQuery.sizeOf(context).width - 48 * 3) / (widget.rangeEnd.difference(widget.rangeStart).inDays + 1),
           borderRadius: const BorderRadius.all(Radius.circular(0)),
         ),
         BarChartRodData(
           fromY: legs + betweenSpace + shoulders + betweenSpace + chest + betweenSpace + arms + betweenSpace,
           toY: legs + betweenSpace + shoulders + betweenSpace + chest + betweenSpace + arms + betweenSpace + back,
           color: backColor,
-          width: (MediaQuery.sizeOf(context).width - 48 * 3) / (getHashCodeInverse(widget.rangeEnd) - getHashCodeInverse(widget.rangeStart) + 1),
+          width: (MediaQuery.sizeOf(context).width - 48 * 3) / (widget.rangeEnd.difference(widget.rangeStart).inDays + 1),
           borderRadius: const BorderRadius.all(Radius.circular(0)),
         ),
         BarChartRodData(
           fromY: legs + betweenSpace + shoulders + betweenSpace + chest + betweenSpace + arms + betweenSpace + back + betweenSpace,
           toY: legs + betweenSpace + shoulders + betweenSpace + chest + betweenSpace + arms + betweenSpace + back + betweenSpace + abs,
           color: absColor,
-          width: (MediaQuery.sizeOf(context).width - 48 * 3) / (getHashCodeInverse(widget.rangeEnd) - getHashCodeInverse(widget.rangeStart) + 1),
+          width: (MediaQuery.sizeOf(context).width - 48 * 3) / (widget.rangeEnd.difference(widget.rangeStart).inDays + 1),
+          borderRadius: const BorderRadius.all(Radius.circular(0)),
+        ),
+        BarChartRodData(
+          fromY: legs + betweenSpace + shoulders + betweenSpace + chest + betweenSpace + arms + betweenSpace + back + betweenSpace + abs,
+          toY: legs + betweenSpace + shoulders + betweenSpace + chest + betweenSpace + arms + betweenSpace + back + betweenSpace + abs,
+          color: Theme.of(context).colorScheme.onBackground,
+          width: (MediaQuery.sizeOf(context).width - 48 * 3) / (widget.rangeEnd.difference(widget.rangeStart).inDays + 1),
           borderRadius: const BorderRadius.all(Radius.circular(0)),
         ),
       ],
@@ -175,9 +182,15 @@ class _BarChartSample6State extends State<chart> {
     const style = TextStyle(fontSize: 14);
     String text = "";
     // x축 항목 날짜
-    for (int index = 0; index < getHashCodeInverse(widget.rangeEnd) - getHashCodeInverse(widget.rangeStart) + 1; index++) {
+    for (int index = 0; index < widget.rangeEnd.difference(widget.rangeStart).inDays + 1; index++) {
       if (value.toInt() == index) {
-        text = "${(widget.rangeStart.subtract(Duration(days: -index))).day}";
+        text = (widget.rangeEnd.difference(widget.rangeStart).inDays + 1 > 8)
+            ? (index == 0 || (index + widget.rangeStart.day) % 7 == widget.rangeStart.day % 7 && widget.rangeEnd.difference(widget.rangeStart).inDays + 1 < 33)
+                ? "${(widget.rangeStart.subtract(Duration(days: -index))).day}"
+                : (index == (widget.rangeEnd.difference(widget.rangeStart).inDays + 1) - 1)
+                    ? "${(widget.rangeStart.subtract(Duration(days: -index))).day}"
+                    : " "
+            : "${(widget.rangeStart.subtract(Duration(days: -index))).day}";
       }
     }
 
@@ -206,7 +219,7 @@ class _BarChartSample6State extends State<chart> {
     sumBodypartbyDateTime.clear();
     sum0.clear();
 
-    for (int index = 0; index < getHashCodeInverse(widget.rangeEnd) - getHashCodeInverse(widget.rangeStart) + 1; index++) {
+    for (int index = 0; index < widget.rangeEnd.difference(widget.rangeStart).inDays + 1; index++) {
       sumBodypartbyDateTime[widget.rangeStart.subtract(Duration(days: -index))] = [0, 0, 0, 0, 0, 0];
     }
     // print("${sumBodypartbyDateTime}");
@@ -229,9 +242,13 @@ class _BarChartSample6State extends State<chart> {
     // print(sumBodypartbyDateTime[widget.rangeStart.subtract(Duration(days: 0))]?[0]);
     // print(sumBodypartbyDateTime);
 
+    //두날짜사이의 차이 개수구하기
+    //getHashCodeInverse(widget.rangeEnd) - getHashCodeInverse(widget.rangeStart) + 1
+    // print(widget.rangeEnd.difference(widget.rangeStart).inDays + 1);
+
     for (int index = 0; index < widget.xlogs.length; index++) {
       if (widget.xlogs[index].finished == true) {
-        for (int datetimeindex = 0; datetimeindex < getHashCodeInverse(widget.rangeEnd) - getHashCodeInverse(widget.rangeStart) + 1; datetimeindex++) {
+        for (int datetimeindex = 0; datetimeindex < widget.rangeEnd.difference(widget.rangeStart).inDays + 1; datetimeindex++) {
           if (getHashCodeInverse(widget.xlogs[index].lxdate) == getHashCodeInverse(widget.rangeStart.subtract(Duration(days: -datetimeindex)))) {
             switch (widget.xlogs[index].xbodypart) {
               case '하체':
@@ -373,7 +390,7 @@ class _BarChartSample6State extends State<chart> {
       }
     }
 
-    for (int datetimeindex = 0; datetimeindex < getHashCodeInverse(widget.rangeEnd) - getHashCodeInverse(widget.rangeStart) + 1; datetimeindex++) {
+    for (int datetimeindex = 0; datetimeindex < widget.rangeEnd.difference(widget.rangeStart).inDays + 1; datetimeindex++) {
       sum0[0] += sumBodypartbyDateTime[widget.rangeStart.subtract(Duration(days: -datetimeindex))]![0];
       sum0[1] += sumBodypartbyDateTime[widget.rangeStart.subtract(Duration(days: -datetimeindex))]![1];
       sum0[2] += sumBodypartbyDateTime[widget.rangeStart.subtract(Duration(days: -datetimeindex))]![2];
@@ -785,7 +802,7 @@ class _BarChartSample6State extends State<chart> {
     double maxYScale = 0;
     switch (widget.selectedbodypart) {
       case 0:
-        for (int datetimeindex = 0; datetimeindex < getHashCodeInverse(widget.rangeEnd) - getHashCodeInverse(widget.rangeStart) + 1; datetimeindex++) {
+        for (int datetimeindex = 0; datetimeindex < widget.rangeEnd.difference(widget.rangeStart).inDays + 1; datetimeindex++) {
           maxYScalelist.add(
             sumBodypartbyDateTime[widget.rangeStart.subtract(Duration(days: -datetimeindex))]![0] +
                 sumBodypartbyDateTime[widget.rangeStart.subtract(Duration(days: -datetimeindex))]![1] +
@@ -799,42 +816,42 @@ class _BarChartSample6State extends State<chart> {
         maxYScale = legsortedmaxYScale.first;
         break;
       case 1:
-        for (int datetimeindex = 0; datetimeindex < getHashCodeInverse(widget.rangeEnd) - getHashCodeInverse(widget.rangeStart) + 1; datetimeindex++) {
+        for (int datetimeindex = 0; datetimeindex < widget.rangeEnd.difference(widget.rangeStart).inDays + 1; datetimeindex++) {
           maxYScalelist.add(sumBodypartbyDateTime[widget.rangeStart.subtract(Duration(days: -datetimeindex))]![0]);
         }
         List<double> legsortedmaxYScale = maxYScalelist.toList()..sort((e1, e2) => e2.compareTo(e1));
         maxYScale = legsortedmaxYScale.first;
         break;
       case 2:
-        for (int datetimeindex = 0; datetimeindex < getHashCodeInverse(widget.rangeEnd) - getHashCodeInverse(widget.rangeStart) + 1; datetimeindex++) {
+        for (int datetimeindex = 0; datetimeindex < widget.rangeEnd.difference(widget.rangeStart).inDays + 1; datetimeindex++) {
           maxYScalelist.add(sumBodypartbyDateTime[widget.rangeStart.subtract(Duration(days: -datetimeindex))]![1]);
         }
         List<double> legsortedmaxYScale = maxYScalelist.toList()..sort((e1, e2) => e2.compareTo(e1));
         maxYScale = legsortedmaxYScale.first;
         break;
       case 3:
-        for (int datetimeindex = 0; datetimeindex < getHashCodeInverse(widget.rangeEnd) - getHashCodeInverse(widget.rangeStart) + 1; datetimeindex++) {
+        for (int datetimeindex = 0; datetimeindex < widget.rangeEnd.difference(widget.rangeStart).inDays + 1; datetimeindex++) {
           maxYScalelist.add(sumBodypartbyDateTime[widget.rangeStart.subtract(Duration(days: -datetimeindex))]![2]);
         }
         List<double> legsortedmaxYScale = maxYScalelist.toList()..sort((e1, e2) => e2.compareTo(e1));
         maxYScale = legsortedmaxYScale.first;
         break;
       case 4:
-        for (int datetimeindex = 0; datetimeindex < getHashCodeInverse(widget.rangeEnd) - getHashCodeInverse(widget.rangeStart) + 1; datetimeindex++) {
+        for (int datetimeindex = 0; datetimeindex < widget.rangeEnd.difference(widget.rangeStart).inDays + 1; datetimeindex++) {
           maxYScalelist.add(sumBodypartbyDateTime[widget.rangeStart.subtract(Duration(days: -datetimeindex))]![3]);
         }
         List<double> legsortedmaxYScale = maxYScalelist.toList()..sort((e1, e2) => e2.compareTo(e1));
         maxYScale = legsortedmaxYScale.first;
         break;
       case 5:
-        for (int datetimeindex = 0; datetimeindex < getHashCodeInverse(widget.rangeEnd) - getHashCodeInverse(widget.rangeStart) + 1; datetimeindex++) {
+        for (int datetimeindex = 0; datetimeindex < widget.rangeEnd.difference(widget.rangeStart).inDays + 1; datetimeindex++) {
           maxYScalelist.add(sumBodypartbyDateTime[widget.rangeStart.subtract(Duration(days: -datetimeindex))]![4]);
         }
         List<double> legsortedmaxYScale = maxYScalelist.toList()..sort((e1, e2) => e2.compareTo(e1));
         maxYScale = legsortedmaxYScale.first;
         break;
       case 6:
-        for (int datetimeindex = 0; datetimeindex < getHashCodeInverse(widget.rangeEnd) - getHashCodeInverse(widget.rangeStart) + 1; datetimeindex++) {
+        for (int datetimeindex = 0; datetimeindex < widget.rangeEnd.difference(widget.rangeStart).inDays + 1; datetimeindex++) {
           maxYScalelist.add(sumBodypartbyDateTime[widget.rangeStart.subtract(Duration(days: -datetimeindex))]![5]);
         }
         List<double> legsortedmaxYScale = maxYScalelist.toList()..sort((e1, e2) => e2.compareTo(e1));
@@ -907,63 +924,105 @@ class _BarChartSample6State extends State<chart> {
                                     children: <Widget>[
                                       (rank[0] == 0)
                                           ? Container()
-                                          : Padding(
-                                              padding: const EdgeInsets.all(2.0),
-                                              child: Indicator(
-                                                color: colorRank1,
-                                                text: rankName[0],
-                                                isSquare: true,
-                                              ),
+                                          : Row(
+                                              children: [
+                                                SizedBox(
+                                                  height: 24,
+                                                  width: 24,
+                                                  child: Image.asset('./assets/img/medal_1.png'),
+                                                ),
+                                                Padding(
+                                                  padding: const EdgeInsets.all(2.0),
+                                                  child: Indicator(
+                                                    color: colorRank1,
+                                                    text: rankName[0],
+                                                    isSquare: true,
+                                                  ),
+                                                ),
+                                              ],
                                             ),
                                       (rank[1] == 0)
                                           ? Container()
-                                          : Padding(
-                                              padding: const EdgeInsets.all(2.0),
-                                              child: Indicator(
-                                                color: colorRank2,
-                                                text: rankName[1],
-                                                isSquare: true,
-                                              ),
+                                          : Row(
+                                              children: [
+                                                SizedBox(
+                                                  height: 24,
+                                                  width: 24,
+                                                  child: Image.asset('./assets/img/medal_2.png'),
+                                                ),
+                                                Padding(
+                                                  padding: const EdgeInsets.all(2.0),
+                                                  child: Indicator(
+                                                    color: colorRank2,
+                                                    text: rankName[1],
+                                                    isSquare: true,
+                                                  ),
+                                                ),
+                                              ],
                                             ),
                                       (rank[2] == 0)
                                           ? Container()
-                                          : Padding(
-                                              padding: const EdgeInsets.all(2.0),
-                                              child: Indicator(
-                                                color: colorRank3,
-                                                text: rankName[2],
-                                                isSquare: true,
-                                              ),
+                                          : Row(
+                                              children: [
+                                                SizedBox(
+                                                  height: 24,
+                                                  width: 24,
+                                                  child: Image.asset('./assets/img/medal_3.png'),
+                                                ),
+                                                Padding(
+                                                  padding: const EdgeInsets.all(2.0),
+                                                  child: Indicator(
+                                                    color: colorRank3,
+                                                    text: rankName[2],
+                                                    isSquare: true,
+                                                  ),
+                                                ),
+                                              ],
                                             ),
                                       (rank[3] == 0)
                                           ? Container()
-                                          : Padding(
-                                              padding: const EdgeInsets.all(2.0),
-                                              child: Indicator(
-                                                color: colorRank4,
-                                                text: rankName[3],
-                                                isSquare: true,
-                                              ),
+                                          : Row(
+                                              children: [
+                                                const SizedBox(height: 24, width: 24),
+                                                Padding(
+                                                  padding: const EdgeInsets.all(2.0),
+                                                  child: Indicator(
+                                                    color: colorRank4,
+                                                    text: rankName[3],
+                                                    isSquare: true,
+                                                  ),
+                                                ),
+                                              ],
                                             ),
                                       (rank[4] == 0)
                                           ? Container()
-                                          : Padding(
-                                              padding: const EdgeInsets.all(2.0),
-                                              child: Indicator(
-                                                color: colorRank5,
-                                                text: rankName[4],
-                                                isSquare: true,
-                                              ),
+                                          : Row(
+                                              children: [
+                                                const SizedBox(height: 24, width: 24),
+                                                Padding(
+                                                  padding: const EdgeInsets.all(2.0),
+                                                  child: Indicator(
+                                                    color: colorRank5,
+                                                    text: rankName[4],
+                                                    isSquare: true,
+                                                  ),
+                                                ),
+                                              ],
                                             ),
                                       (rank[5] == 0)
                                           ? Container()
-                                          : Padding(
-                                              padding: const EdgeInsets.all(2.0),
-                                              child: Indicator(
-                                                color: colorRank6,
-                                                text: rankName[5],
-                                                isSquare: true,
-                                              ),
+                                          : Row(
+                                              children: [
+                                                const SizedBox(height: 24, width: 24),
+                                                Padding(
+                                                  padding: const EdgeInsets.all(2.0),
+                                                  child: Indicator(
+                                                    color: colorRank6,
+                                                    text: rankName[5],
+                                                    isSquare: true,
+                                                  ),
+                                                ),
+                                              ],
                                             ),
                                     ],
                                   ),
@@ -1027,14 +1086,13 @@ class _BarChartSample6State extends State<chart> {
                       Padding(
                         padding: const EdgeInsets.only(top: 48, bottom: 8, left: 0, right: 20),
                         child: SizedBox(
+                          width: double.infinity,
                           height: 200,
                           child: AspectRatio(
                             aspectRatio: 2,
                             child: BarChart(
                               BarChartData(
-                                alignment: (getHashCodeInverse(widget.rangeEnd) - getHashCodeInverse(widget.rangeStart) + 1 == 1)
-                                    ? BarChartAlignment.center
-                                    : BarChartAlignment.spaceBetween,
+                                alignment: (widget.rangeEnd.difference(widget.rangeStart).inDays + 1 == 1) ? BarChartAlignment.center : BarChartAlignment.spaceBetween,
                                 titlesData: FlTitlesData(
                                   leftTitles: const AxisTitles(
                                     sideTitles: SideTitles(
@@ -1062,7 +1120,7 @@ class _BarChartSample6State extends State<chart> {
                                 borderData: FlBorderData(show: false),
                                 gridData: const FlGridData(show: true, drawVerticalLine: false),
                                 barGroups: [
-                                  for (int index = 0; index < getHashCodeInverse(widget.rangeEnd) - getHashCodeInverse(widget.rangeStart) + 1; index++)
+                                  for (int index = 0; index < widget.rangeEnd.difference(widget.rangeStart).inDays + 1; index++)
                                     (widget.selectedbodypart == 0)
                                         ? generateGroupData(
                                             index,
@@ -1154,7 +1212,7 @@ class _BarChartSample6State extends State<chart> {
           return PieChartSectionData(
             color: colorRank1,
             value: rank[0] / rankTotal * 100,
-            title: '${(rank[0] / rankTotal * 100).round()}%',
+            title: ((rank[0] / rankTotal * 100).round() == 0) ? '' : '${(rank[0] / rankTotal * 100).round()}%',
             radius: radius,
             titleStyle: TextStyle(
               fontSize: fontSize,
@@ -1167,7 +1225,7 @@ class _BarChartSample6State extends State<chart> {
           return PieChartSectionData(
             color: colorRank2,
             value: rank[1] / rankTotal * 100,
-            title: '${(rank[1] / rankTotal * 100).round()}%',
+            title: ((rank[1] / rankTotal * 100).round() == 0) ? '' : '${(rank[1] / rankTotal * 100).round()}%',
             radius: radius,
             titleStyle: TextStyle(
               fontSize: fontSize,
@@ -1180,7 +1238,7 @@ class _BarChartSample6State extends State<chart> {
           return PieChartSectionData(
             color: colorRank3,
             value: rank[2] / rankTotal * 100,
-            title: '${(rank[2] / rankTotal * 100).round()}%',
+            title: ((rank[2] / rankTotal * 100).round() == 0) ? '' : '${(rank[2] / rankTotal * 100).round()}%',
             radius: radius,
             titleStyle: TextStyle(
               fontSize: fontSize,
@@ -1193,7 +1251,7 @@ class _BarChartSample6State extends State<chart> {
           return PieChartSectionData(
             color: colorRank4,
             value: rank[3] / rankTotal * 100,
-            title: '${(rank[3] / rankTotal * 100).round()}%',
+            title: ((rank[3] / rankTotal * 100).round() == 0) ? '' : '${(rank[3] / rankTotal * 100).round()}%',
             radius: radius,
             titleStyle: TextStyle(
               fontSize: fontSize,
@@ -1206,7 +1264,7 @@ class _BarChartSample6State extends State<chart> {
           return PieChartSectionData(
             color: colorRank5,
             value: rank[4] / rankTotal * 100,
-            title: '${(rank[4] / rankTotal * 100).round()}%',
+            title: ((rank[4] / rankTotal * 100).round() == 0) ? '' : '${(rank[4] / rankTotal * 100).round()}%',
             radius: radius,
             titleStyle: TextStyle(
               fontSize: fontSize,
@@ -1219,7 +1277,7 @@ class _BarChartSample6State extends State<chart> {
           return PieChartSectionData(
             color: colorRank6,
             value: rank[5] / rankTotal * 100,
-            title: '${(rank[5] / rankTotal * 100).round()}%',
+            title: ((rank[5] / rankTotal * 100).round() == 0) ? '' : '${(rank[5] / rankTotal * 100).round()}%',
             radius: radius,
             titleStyle: TextStyle(
               fontSize: fontSize,

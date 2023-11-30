@@ -1,10 +1,15 @@
 import 'dart:collection';
+import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:workoutdiary/common_widget/round_button.dart';
 import 'package:workoutdiary/exercise_date/utils.dart';
 import 'package:workoutdiary/exercise_date/xlog_ximg_calendar.dart';
+import 'package:workoutdiary/exercise_log/xlog_create_view.dart';
 import 'package:workoutdiary/hivedata/xlog.dart';
 import 'package:workoutdiary/localization/locales.dart';
 
@@ -24,7 +29,20 @@ class XlogXimgDateCalendarView extends StatefulWidget {
 }
 
 class XlogXimgDateCalendarViewState extends State<XlogXimgDateCalendarView> {
-  bool selectedAnalysis = false;
+  @override
+  void initState() {
+    super.initState();
+
+    _createRewardedInterstitialAd();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _rewardedInterstitialAd?.dispose();
+  }
+
+  late bool selectedAnalysis = false;
   int value = 0;
   int selectedbodypart = 0;
 
@@ -183,7 +201,43 @@ class XlogXimgDateCalendarViewState extends State<XlogXimgDateCalendarView> {
                           borderRadius: BorderRadius.circular(15),
                           onTap: () {
                             if (selectedAnalysis == false) {
-                              selectedAnalysis = true;
+                              showCupertinoModalPopup(
+                                context: context,
+                                builder: (context) {
+                                  return Column(
+                                    children: [
+                                      Container(height: media.height * 0.125),
+                                      SizedBox(
+                                        height: 48,
+                                        width: double.infinity,
+                                        child: RoundButton(
+                                          type: RoundButtonType.textGradient,
+                                          onPressed: () {
+                                            // showRewardedInterstitialAd(isseledctedValue: selectedAnalysis);
+                                            setState(() {
+                                              selectedAnalysis = true;
+                                            });
+                                          },
+                                          title: LocaleData.seeAds.getString((context)),
+                                        ),
+                                      ),
+                                      Container(height: 8),
+                                      SizedBox(
+                                        height: 48,
+                                        width: double.infinity,
+                                        child: RoundButton(
+                                          type: RoundButtonType.textGradient,
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                          },
+                                          title: LocaleData.back_button_text.getString((context)),
+                                        ),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                              // selectedAnalysis = true;
                               setState(() {});
                             } else {
                               selectedAnalysis = false;
@@ -385,5 +439,77 @@ class XlogXimgDateCalendarViewState extends State<XlogXimgDateCalendarView> {
   Future<bool> _onBackPressed(BuildContext context) async {
     Navigator.pop(context, false);
     return true;
+  }
+
+  static final AdRequest request = AdRequest(
+    keywords: <String>['foo', 'bar'],
+    contentUrl: 'http://foo.com/bar.html',
+    nonPersonalizedAds: true,
+  );
+  RewardedInterstitialAd? _rewardedInterstitialAd;
+  int _numRewardedInterstitialLoadAttempts = 0;
+  void _createRewardedInterstitialAd() {
+    RewardedInterstitialAd.load(
+        adUnitId: Platform.isIOS
+            ?
+            // // 배포용
+            'ca-app-pub-9398946924743018/3910679056' //my ios key
+            : 'ca-app-pub-9398946924743018/5926506292', //my android key
+
+        //테스트용
+        // 'ca-app-pub-3940256099942544/6978759866'
+        // : 'ca-app-pub-3940256099942544/6978759866',
+        // 테스트 데모 https://developers.google.com/admob/ios/test-ads?hl=ko#demo_ad_units
+
+        request: request,
+        rewardedInterstitialAdLoadCallback: RewardedInterstitialAdLoadCallback(
+          onAdLoaded: (RewardedInterstitialAd ad) {
+            debugPrint('$ad loaded.');
+            _rewardedInterstitialAd = ad;
+            _numRewardedInterstitialLoadAttempts = 0;
+          },
+          onAdFailedToLoad: (LoadAdError error) {
+            debugPrint('RewardedInterstitialAd failed to load: $error');
+            _rewardedInterstitialAd = null;
+            _numRewardedInterstitialLoadAttempts += 1;
+            if (_numRewardedInterstitialLoadAttempts < maxFailedLoadAttempts) {
+              _createRewardedInterstitialAd();
+            }
+          },
+        ));
+  }
+
+  void showRewardedInterstitialAd({required bool isseledctedValue}) {
+    if (_rewardedInterstitialAd == null) {
+      debugPrint('Warning: attempt to show rewarded interstitial before loaded.');
+      return;
+    }
+    _rewardedInterstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
+      onAdShowedFullScreenContent: (RewardedInterstitialAd ad) {
+        debugPrint('$ad onAdShowedFullScreenContent.');
+        isseledctedValue = true;
+
+        setState(() {
+          Navigator.pop(context);
+        });
+      },
+      onAdDismissedFullScreenContent: (RewardedInterstitialAd ad) {
+        debugPrint('$ad onAdDismissedFullScreenContent.');
+
+        ad.dispose();
+        _createRewardedInterstitialAd();
+      },
+      onAdFailedToShowFullScreenContent: (RewardedInterstitialAd ad, AdError error) {
+        debugPrint('$ad onAdFailedToShowFullScreenContent: $error');
+        ad.dispose();
+        _createRewardedInterstitialAd();
+      },
+    );
+
+    _rewardedInterstitialAd!.setImmersiveMode(true);
+    _rewardedInterstitialAd!.show(onUserEarnedReward: (AdWithoutView ad, RewardItem reward) {
+      debugPrint('$ad with reward $RewardItem(${reward.amount}, ${reward.type})');
+    });
+    _rewardedInterstitialAd = null;
   }
 }

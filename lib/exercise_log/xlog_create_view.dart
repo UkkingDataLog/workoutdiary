@@ -135,6 +135,7 @@ class XlogCreateViewState extends State<XlogCreateView> {
   int _xlogformat = 0;
   //사진 크기 변경
   int _ratio = 1;
+
   final Map<int, String> ratios = {
     0: '1:1',
     1: '4:5',
@@ -197,6 +198,11 @@ class XlogCreateViewState extends State<XlogCreateView> {
   //
   @override
   Widget build(BuildContext context) {
+    // 아이패드일때 시작화면비는 1:1
+    if (MediaQuery.sizeOf(context).height / MediaQuery.sizeOf(context).width < 1.5) {
+      _ratio = 0;
+    }
+
     //날짜 포멧을 자국어로 생성한다
     initializeDateFormatting(LocaleData.language.getString(context));
     //오늘 날짜 비교용 코드
@@ -3881,12 +3887,12 @@ class XlogCreateViewState extends State<XlogCreateView> {
         adUnitId: Platform.isIOS
             ?
             // // 배포용
-            // 'ca-app-pub-9398946924743018/6574107704' //my ios key
-            // : 'ca-app-pub-9398946924743018/8074891633', //my android key
+            'ca-app-pub-9398946924743018/6574107704' //my ios key
+            : 'ca-app-pub-9398946924743018/8074891633', //my android key
 
-            //테스트용
-            'ca-app-pub-3940256099942544/6978759866'
-            : 'ca-app-pub-3940256099942544/6978759866',
+        //테스트용
+        // 'ca-app-pub-3940256099942544/6978759866'
+        // : 'ca-app-pub-3940256099942544/6978759866',
         // 테스트 데모 https://developers.google.com/admob/ios/test-ads?hl=ko#demo_ad_units
 
         request: request,
