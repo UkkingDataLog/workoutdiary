@@ -1,6 +1,4 @@
-import 'package:workoutdiary/hivedata/xlog.dart';
-
-double UnitConversion(String lxweightUnit, String selectedweightUnit) {
+double unitConversion(String lxweightUnit, String selectedweightUnit) {
   double weightUnitConversion = 1;
 
   switch (selectedweightUnit) {

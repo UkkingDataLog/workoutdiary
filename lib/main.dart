@@ -35,6 +35,8 @@ void main() async {
   ]);
 
   // Show tracking authorization dialog and ask for permission
+
+  // ignore: unused_local_variable
   final status = await AppTrackingTransparency.requestTrackingAuthorization();
   sleep(const Duration(seconds: 1));
 

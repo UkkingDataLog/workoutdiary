@@ -7,8 +7,8 @@ import 'package:workoutdiary/exercise_date/utils.dart';
 import 'package:workoutdiary/hivedata/xlog.dart';
 import 'package:workoutdiary/localization/locales.dart';
 
-class chart extends StatefulWidget {
-  chart({
+class ChartCustom extends StatefulWidget {
+  const ChartCustom({
     super.key,
     required this.value, // 0: day, 1: week, 2: month
     required this.selectedbodypart, // 0: all, 1: legs, 2: shoulders, 3: chest, 4: arms, 5: back, 6: abs
@@ -19,20 +19,20 @@ class chart extends StatefulWidget {
     required this.xlogs,
   });
   //
-  int value;
-  int selectedbodypart;
-  DateTime rangeStart;
-  DateTime rangeEnd;
+  final int value;
+  final int selectedbodypart;
+  final DateTime rangeStart;
+  final DateTime rangeEnd;
   //
-  String weightUnits;
+  final String weightUnits;
   final List<Xlog> xlogs;
   //
 
   @override
-  State<chart> createState() => _BarChartSample6State();
+  State<ChartCustom> createState() => _BarChartSample6State();
 }
 
-class _BarChartSample6State extends State<chart> {
+class _BarChartSample6State extends State<ChartCustom> {
   //
   final legsColor = Colors.redAccent;
   final shouldersColor = Colors.orangeAccent;
@@ -243,7 +243,6 @@ class _BarChartSample6State extends State<chart> {
     // print(sumBodypartbyDateTime);
 
     //두날짜사이의 차이 개수구하기
-    //getHashCodeInverse(widget.rangeEnd) - getHashCodeInverse(widget.rangeStart) + 1
     // print(widget.rangeEnd.difference(widget.rangeStart).inDays + 1);
 
     for (int index = 0; index < widget.xlogs.length; index++) {
@@ -254,7 +253,7 @@ class _BarChartSample6State extends State<chart> {
               case '하체':
                 sumBodypartbyDateTime[widget.rangeStart.subtract(Duration(days: -datetimeindex))]![0] += widget.xlogs[index].lxweight *
                     0.5 *
-                    UnitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
+                    unitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
                     widget.xlogs[index].lxnumber *
                     widget.xlogs[index].lxset;
                 // 운동부위의 운동종류별 운동강도
@@ -262,13 +261,13 @@ class _BarChartSample6State extends State<chart> {
                   sumLeg[widget.xlogs[index].xType] = sumLeg[widget.xlogs[index].xType]! +
                       widget.xlogs[index].lxweight *
                           0.5 *
-                          UnitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
+                          unitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
                           widget.xlogs[index].lxnumber *
                           widget.xlogs[index].lxset;
                 } else {
                   sumLeg[widget.xlogs[index].xType] = widget.xlogs[index].lxweight *
                       0.5 *
-                      UnitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
+                      unitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
                       widget.xlogs[index].lxnumber *
                       widget.xlogs[index].lxset;
                 }
@@ -277,7 +276,7 @@ class _BarChartSample6State extends State<chart> {
               case '어깨':
                 sumBodypartbyDateTime[widget.rangeStart.subtract(Duration(days: -datetimeindex))]![1] += widget.xlogs[index].lxweight *
                     0.5 *
-                    UnitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
+                    unitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
                     widget.xlogs[index].lxnumber *
                     widget.xlogs[index].lxset;
                 // 운동부위의 운동종류별 운동강도
@@ -285,13 +284,13 @@ class _BarChartSample6State extends State<chart> {
                   sumSho[widget.xlogs[index].xType] = sumSho[widget.xlogs[index].xType]! +
                       widget.xlogs[index].lxweight *
                           0.5 *
-                          UnitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
+                          unitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
                           widget.xlogs[index].lxnumber *
                           widget.xlogs[index].lxset;
                 } else {
                   sumSho[widget.xlogs[index].xType] = widget.xlogs[index].lxweight *
                       0.5 *
-                      UnitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
+                      unitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
                       widget.xlogs[index].lxnumber *
                       widget.xlogs[index].lxset;
                 }
@@ -299,7 +298,7 @@ class _BarChartSample6State extends State<chart> {
               case '가슴':
                 sumBodypartbyDateTime[widget.rangeStart.subtract(Duration(days: -datetimeindex))]![2] += widget.xlogs[index].lxweight *
                     0.5 *
-                    UnitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
+                    unitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
                     widget.xlogs[index].lxnumber *
                     widget.xlogs[index].lxset;
                 // 운동부위의 운동종류별 운동강도
@@ -307,13 +306,13 @@ class _BarChartSample6State extends State<chart> {
                   sumChe[widget.xlogs[index].xType] = sumChe[widget.xlogs[index].xType]! +
                       widget.xlogs[index].lxweight *
                           0.5 *
-                          UnitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
+                          unitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
                           widget.xlogs[index].lxnumber *
                           widget.xlogs[index].lxset;
                 } else {
                   sumChe[widget.xlogs[index].xType] = widget.xlogs[index].lxweight *
                       0.5 *
-                      UnitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
+                      unitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
                       widget.xlogs[index].lxnumber *
                       widget.xlogs[index].lxset;
                 }
@@ -321,7 +320,7 @@ class _BarChartSample6State extends State<chart> {
               case '팔':
                 sumBodypartbyDateTime[widget.rangeStart.subtract(Duration(days: -datetimeindex))]![3] += widget.xlogs[index].lxweight *
                     0.5 *
-                    UnitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
+                    unitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
                     widget.xlogs[index].lxnumber *
                     widget.xlogs[index].lxset;
                 // 운동부위의 운동종류별 운동강도
@@ -329,13 +328,13 @@ class _BarChartSample6State extends State<chart> {
                   sumArm[widget.xlogs[index].xType] = sumArm[widget.xlogs[index].xType]! +
                       widget.xlogs[index].lxweight *
                           0.5 *
-                          UnitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
+                          unitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
                           widget.xlogs[index].lxnumber *
                           widget.xlogs[index].lxset;
                 } else {
                   sumArm[widget.xlogs[index].xType] = widget.xlogs[index].lxweight *
                       0.5 *
-                      UnitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
+                      unitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
                       widget.xlogs[index].lxnumber *
                       widget.xlogs[index].lxset;
                 }
@@ -343,7 +342,7 @@ class _BarChartSample6State extends State<chart> {
               case '등':
                 sumBodypartbyDateTime[widget.rangeStart.subtract(Duration(days: -datetimeindex))]![4] += widget.xlogs[index].lxweight *
                     0.5 *
-                    UnitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
+                    unitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
                     widget.xlogs[index].lxnumber *
                     widget.xlogs[index].lxset;
                 // 운동부위의 운동종류별 운동강도
@@ -351,13 +350,13 @@ class _BarChartSample6State extends State<chart> {
                   sumBac[widget.xlogs[index].xType] = sumBac[widget.xlogs[index].xType]! +
                       widget.xlogs[index].lxweight *
                           0.5 *
-                          UnitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
+                          unitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
                           widget.xlogs[index].lxnumber *
                           widget.xlogs[index].lxset;
                 } else {
                   sumBac[widget.xlogs[index].xType] = widget.xlogs[index].lxweight *
                       0.5 *
-                      UnitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
+                      unitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
                       widget.xlogs[index].lxnumber *
                       widget.xlogs[index].lxset;
                 }
@@ -365,7 +364,7 @@ class _BarChartSample6State extends State<chart> {
               case '복근':
                 sumBodypartbyDateTime[widget.rangeStart.subtract(Duration(days: -datetimeindex))]![5] += widget.xlogs[index].lxweight *
                     0.5 *
-                    UnitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
+                    unitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
                     widget.xlogs[index].lxnumber *
                     widget.xlogs[index].lxset;
                 // 운동부위의 운동종류별 운동강도
@@ -373,13 +372,13 @@ class _BarChartSample6State extends State<chart> {
                   sumAbs[widget.xlogs[index].xType] = sumAbs[widget.xlogs[index].xType]! +
                       widget.xlogs[index].lxweight *
                           0.5 *
-                          UnitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
+                          unitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
                           widget.xlogs[index].lxnumber *
                           widget.xlogs[index].lxset;
                 } else {
                   sumAbs[widget.xlogs[index].xType] = widget.xlogs[index].lxweight *
                       0.5 *
-                      UnitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
+                      unitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
                       widget.xlogs[index].lxnumber *
                       widget.xlogs[index].lxset;
                 }
@@ -858,11 +857,11 @@ class _BarChartSample6State extends State<chart> {
         maxYScale = legsortedmaxYScale.first;
         break;
     }
-    // ----------------------<< pie chart >>-----------------------
+    // ----------------------<< pie ChartCustom >>-----------------------
 
     return Column(
       children: [
-        // pie chart
+        // pie ChartCustom
         Card(
           child: Padding(
             padding: const EdgeInsets.all(8.0),

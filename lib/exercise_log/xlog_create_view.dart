@@ -78,6 +78,7 @@ class XlogCreateViewState extends State<XlogCreateView> {
   String videoURL = 'default';
   //
   late FlutterLocalization _flutterLocalization;
+  // ignore: unused_field
   late String _currentLocale;
   //
 

@@ -16,6 +16,7 @@ import 'package:workoutdiary/hivedata/xlog.dart';
 
 import 'package:workoutdiary/localization/locales.dart';
 
+// ignore: must_be_immutable
 class TableComplexExample extends StatefulWidget {
   TableComplexExample({
     super.key,
@@ -145,7 +146,7 @@ class _TableComplexExampleState extends State<TableComplexExample> {
     // selectedbodypart 0,1,2,3,4,5,6
     switch (widget.selectedbodypart) {
       case 0:
-        int allBodypartStatisticsIndex;
+        // int allBodypartStatisticsIndex;
         Map<int, List<double>> allBodypartStatistics = {};
         allBodypartStatisticsinput = allBodypartStatistics;
         break;
@@ -461,7 +462,7 @@ class _TableComplexExampleState extends State<TableComplexExample> {
                                       Column(
                                         children: [
                                           Builder(builder: (context) {
-                                            return chart(
+                                            return ChartCustom(
                                               value: widget.value,
                                               selectedbodypart: widget.selectedbodypart,
                                               //
