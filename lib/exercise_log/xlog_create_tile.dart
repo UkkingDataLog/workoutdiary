@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
-import 'package:workoutdiary/common/colo_extension.dart';
+
 import 'package:workoutdiary/hivedata/xlog.dart';
 import 'package:workoutdiary/localization/locales.dart';
 import 'package:workoutdiary/ui/ui_group.dart';
