@@ -1,40 +1,12 @@
 name: workoutdiary
 description: Record your exercise on one page per day and analyze your exercise records over time
-# The following line prevents the package from being accidentally published to
-# pub.dev using `flutter pub publish`. This is preferred for private packages.
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
-
-# The following defines the version and build number for your application.
-# A version number is three numbers separated by dots, like 1.2.43
-# followed by an optional build number separated by a +.
-# Both the version and the builder number may be overridden in flutter
-# build by specifying --build-name and --build-number, respectively.
-# In Android, build-name is used as versionName while build-number used as versionCode.
-# Read more about Android versioning at https://developer.android.com/studio/publish/versioning
-# In iOS, build-name is used as CFBundleShortVersionString while build-number is used as CFBundleVersion.
-# Read more about iOS versioning at
-# https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-# In Windows, build-name is used as the major, minor, and patch parts
-# of the product and file versions while build-number is used as the build suffix.
-version: 1.4.1+13
-# 1.3.1: localization - 한국어, 영어, 중국어, 일본어, 독일어, 스페인어, 포르투갈어, 아랍어, 힌디어
-
+publish_to: none
+version: 1.4.3+15
 environment:
-    # sdk: '>=2.19.6 <3.0.0'
-    sdk: '>=3.1.2 <4.0.0'
-
-# Dependencies specify other packages that your package needs in order to work.
-# To automatically upgrade your package dependencies to the latest versions
-# consider running `flutter pub upgrade --major-versions`. Alternatively,
-# dependencies can be manually updated by changing the version numbers below to
-# the latest version available on pub.dev. To see which dependencies have newer
-# versions available, run `flutter pub outdated`.
+  sdk: '>=3.1.2 <4.0.0'
 dependencies:
   flutter:
     sdk: flutter
-
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   flutter_localization: ^0.1.14
   dropdown_button2: ^2.3.9
@@ -45,150 +17,65 @@ dependencies:
   simple_circular_progress_bar: ^1.0.2
   animated_toggle_switch: ^0.8.0
   readmore: ^2.1.0
-  # calendar_agenda:
-  #   path: dev_lib/calendar_agenda/
   intl: ^0.18.1
   uuid: ^4.1.0
-  # hive DB
   hive: ^2.2.3
   hive_flutter: ^1.1.0
-  # capture screenshot
   screenshot: ^2.1.0
-  # save image
-  image_gallery_saver: '^2.0.3'
+  image_gallery_saver: ^2.0.3
   permission_handler: ^11.0.0
-  # share image
   share_plus: ^7.1.0
   path_provider: ^2.1.1
-  # fluttertoast
   fluttertoast: ^8.2.2
-  # 사진앨범에서 선택하기
   image_picker: ^1.0.4
   provider: ^6.0.5
-  # 이미지 자르기
   image_cropper: ^5.0.0
-  # 커스텀 스위치
   flutter_switch: ^0.3.2
-  # 보상형 광고
   google_mobile_ads: ^3.0.0
-  # email연결
   url_launcher: ^6.1.14
-  # 정보가져오기
-  device_info_plus: ^9.0.3 #사용자 기기정보
-  package_info_plus: ^5.0.1 #내 앱정보
-  #웹뷰
+  device_info_plus: ^9.0.3
+  package_info_plus: ^5.0.1
   webview_flutter: ^4.3.0
-  #달력
   table_calendar: ^3.0.9
-  #제삼자 동의
   app_tracking_transparency: ^2.0.4
-  #로딩화면 스플레시 ---------------------------------
   flutter_native_splash: ^2.3.4
   change_app_package_name: ^1.1.0
-  
   timer_builder: ^2.0.0
   youtube_player_flutter: ^8.1.2
-  connectivity_plus: ^5.0.2 #높은 버전은 작동 안함
+  connectivity_plus: ^5.0.2
   shared_preferences: ^2.2.2
-  #차트
-  
-  
-  # youtube에서 videoID가져오는법 모름으로 사용하지 않음, 장점은 웹에서도 유튜브 플레이어 지원 가능
-  # youtube_player_iframe: ^4.0.4
-  
-  
-# 수정하거나 변경되는 경우
-# 0) flutter pub run flutter_native_splash:remove
-# 1) flutter clean
-# 2) flutter pub get
-# 3) flutter pub run flutter_native_splash:create
 flutter_native_splash:
   andriod: true
   ios: true
   web: false
-  # color: "#42a5f5" 배경색"FFCC00"꼴로 변경해야함
-  background_image: "assets/img/backgroundimg.png"
-  image: "assets/img/iconremovebg.png"
-  branding: "assets/img/brandingImg.png"
-  # 안드로이드 적용안됨 수정 필요
+  background_image: assets/img/backgroundimg.png
+  image: assets/img/iconremovebg.png
+  branding: assets/img/brandingImg.png
   andriod_12:
-    background_image: "assets/img/backgroundimg.png"
-    image: "assets/img/iconremovebg.png"
-    branding: "assets/img/brandingImg.png"
-    background_image_dark: "assets/img/backgroundimg.png"
-    image_dark: "assets/img/iconremovebg.png"
-    branding_dark: "assets/img/brandingImg.png"
-#------------------------------------------------------
-
-
-
-dependency_overrides: 
+    background_image: assets/img/backgroundimg.png
+    image: assets/img/iconremovebg.png
+    branding: assets/img/brandingImg.png
+    background_image_dark: assets/img/backgroundimg.png
+    image_dark: assets/img/iconremovebg.png
+    branding_dark: assets/img/brandingImg.png
+dependency_overrides:
   intl: ^0.18.1
-
 dev_dependencies:
   flutter_test:
     sdk: flutter
-    
-# # 런처아이콘 변경시 주석풀고 터미널에 명령어실행-----
-# # flutter pub get
-# # flutter pub run flutter_launcher_icons
-
-#   flutter_launcher_icons: "^0.13.1"
-
-# flutter_launcher_icons:
-#   android: "launcher_icon"
-#   ios: true
-#   image_path: "assets/img/icon.png"
-# #----------------------------------------------------
-
-  # The "flutter_lints" package below contains a set of recommended lints to
-  # encourage good coding practices. The lint set provided by the package is
-  # activated in the `analysis_options.yaml` file located at the root of your
-  # package. See that file for information about deactivating specific lint
-  # rules and activating additional ones.
   flutter_lints: ^3.0.0
-  # 아답터라는 모델을 만들고 쉽게 DB와 플러터를 연동하게 도와줌
   hive_generator: ^2.0.1
   build_runner: ^2.4.6
-
-# For information on the generic Dart part of this file, see the
-# following page: https://dart.dev/tools/pub/pubspec
-
-# The following section is specific to Flutter packages.
 flutter:
-
-  # The following line ensures that the Material Icons font is
-  # included with your application, so that you can use the icons in
-  # the material Icons class.
   uses-material-design: true
-
-  # To add assets to your application, add an assets section, like this:
   assets:
     - assets/img/
     - assets/img/workoutType/
-
-    
-  
-
-  # An image asset can refer to one or more resolution-specific "variants", see
-  # https://flutter.dev/assets-and-images/#resolution-aware
-
-  # For details regarding adding assets from package dependencies, see
-  # https://flutter.dev/assets-and-images/#from-packages
-
-  # To add custom fonts to your application, add a fonts section here,
-  # in this "flutter" section. Each entry in this list should have a
-  # "family" key with the font family name, and a "fonts" key with a
-  # list giving the asset and other descriptors for the font. For
-  # example:
   fonts:
-  - family: Poppins
-    fonts:
-      - asset: assets/font/Poppins-Regular.ttf
-      - asset: assets/font/Poppins-Medium.ttf
-        weight: 500
-      - asset: assets/font/Poppins-Bold.ttf
-        weight: 700
-
-  # For details regarding fonts from package dependencies,
-  # see https://flutter.dev/custom-fonts/#from-packages
+    - family: Poppins
+      fonts:
+        - asset: assets/font/Poppins-Regular.ttf
+        - asset: assets/font/Poppins-Medium.ttf
+          weight: 500
+        - asset: assets/font/Poppins-Bold.ttf
+          weight: 700

@@ -213,10 +213,8 @@ class XlogXimgDateCalendarViewState extends State<XlogXimgDateCalendarView> {
                                         child: RoundButton(
                                           type: RoundButtonType.textGradient,
                                           onPressed: () {
-                                            // showRewardedInterstitialAd(isseledctedValue: selectedAnalysis);
-                                            setState(() {
-                                              selectedAnalysis = true;
-                                            });
+                                            showRewardedInterstitialAd();
+                                            setState(() {});
                                           },
                                           title: LocaleData.seeAds.getString((context)),
                                         ),
@@ -479,7 +477,7 @@ class XlogXimgDateCalendarViewState extends State<XlogXimgDateCalendarView> {
         ));
   }
 
-  void showRewardedInterstitialAd({required bool isseledctedValue}) {
+  void showRewardedInterstitialAd() {
     if (_rewardedInterstitialAd == null) {
       debugPrint('Warning: attempt to show rewarded interstitial before loaded.');
       return;
@@ -487,7 +485,6 @@ class XlogXimgDateCalendarViewState extends State<XlogXimgDateCalendarView> {
     _rewardedInterstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
       onAdShowedFullScreenContent: (RewardedInterstitialAd ad) {
         debugPrint('$ad onAdShowedFullScreenContent.');
-        isseledctedValue = true;
 
         setState(() {
           Navigator.pop(context);
@@ -509,6 +506,8 @@ class XlogXimgDateCalendarViewState extends State<XlogXimgDateCalendarView> {
     _rewardedInterstitialAd!.setImmersiveMode(true);
     _rewardedInterstitialAd!.show(onUserEarnedReward: (AdWithoutView ad, RewardItem reward) {
       debugPrint('$ad with reward $RewardItem(${reward.amount}, ${reward.type})');
+      selectedAnalysis = true;
+      setState(() {});
     });
     _rewardedInterstitialAd = null;
   }

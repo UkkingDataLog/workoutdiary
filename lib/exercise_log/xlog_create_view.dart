@@ -2093,7 +2093,7 @@ class XlogCreateViewState extends State<XlogCreateView> {
                                             child: RoundButton(
                                               type: RoundButtonType.textGradient,
                                               onPressed: () {
-                                                showRewardedInterstitialAd(isseledctedValue: isselectedlog);
+                                                showRewardedInterstitialAd();
                                                 setState(() {});
                                               },
                                               title: LocaleData.seeAds.getString((context)),
@@ -3913,7 +3913,7 @@ class XlogCreateViewState extends State<XlogCreateView> {
         ));
   }
 
-  void showRewardedInterstitialAd({required bool isseledctedValue}) {
+  void showRewardedInterstitialAd() {
     if (_rewardedInterstitialAd == null) {
       debugPrint('Warning: attempt to show rewarded interstitial before loaded.');
       return;
@@ -3921,8 +3921,7 @@ class XlogCreateViewState extends State<XlogCreateView> {
     _rewardedInterstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
       onAdShowedFullScreenContent: (RewardedInterstitialAd ad) {
         debugPrint('$ad onAdShowedFullScreenContent.');
-        isseledctedValue = false;
-        // isselectedlog = false;
+
         setState(() {
           Navigator.pop(context);
         });
@@ -3943,6 +3942,8 @@ class XlogCreateViewState extends State<XlogCreateView> {
     _rewardedInterstitialAd!.setImmersiveMode(true);
     _rewardedInterstitialAd!.show(onUserEarnedReward: (AdWithoutView ad, RewardItem reward) {
       debugPrint('$ad with reward $RewardItem(${reward.amount}, ${reward.type})');
+      isselectedlog = false;
+      setState(() {});
     });
     _rewardedInterstitialAd = null;
   }
