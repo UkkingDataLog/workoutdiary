@@ -127,7 +127,7 @@ class _SettingViewState extends State<SettingView> {
                       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
                       child: Text(
                         LocaleData.more.getString((context)),
-                        style: TextStyle(fontSize: 14),
+                        style: const TextStyle(fontSize: 14),
                       ),
                     ),
                     Card(
@@ -239,7 +239,7 @@ class _SettingViewState extends State<SettingView> {
                       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
                       child: Text(
                         LocaleData.toDevelopers.getString((context)),
-                        style: TextStyle(fontSize: 14),
+                        style: const TextStyle(fontSize: 14),
                       ),
                     ),
                     Card(

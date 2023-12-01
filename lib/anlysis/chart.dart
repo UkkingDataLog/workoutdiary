@@ -1276,7 +1276,9 @@ class _BarChartSample6State extends State<ChartCustom> {
           return PieChartSectionData(
             color: colorRank6,
             value: rank[5] / rankTotal * 100,
-            title: ((rank[5] / rankTotal * 100).round() == 0) ? '' : '${(rank[5] / rankTotal * 100).round()}%',
+            title: ((rank[5] / rankTotal * 100).round() == 0)
+                ? ''
+                : '${100 - (rank[0] / rankTotal * 100).round() - (rank[1] / rankTotal * 100).round() - (rank[2] / rankTotal * 100).round() - (rank[3] / rankTotal * 100).round() - (rank[4] / rankTotal * 100).round()}%',
             radius: radius,
             titleStyle: TextStyle(
               fontSize: fontSize,

@@ -133,7 +133,10 @@ class XlogCreateViewState extends State<XlogCreateView> {
 
   //--------------------<<  Variable  >>--------------------
   int _timeformat = 0;
+  int _styleformat = 0;
   int _xlogformat = 0;
+  Color stylefontColor = Colors.white;
+  Color stylebackgroundColor = Colors.black;
   //사진 크기 변경
   int _ratio = 1;
 
@@ -199,6 +202,24 @@ class XlogCreateViewState extends State<XlogCreateView> {
   //
   @override
   Widget build(BuildContext context) {
+    switch (_styleformat) {
+      case 0:
+        stylefontColor = Colors.white;
+        stylebackgroundColor = Colors.black.withOpacity(0.25);
+        break;
+      case 1:
+        stylefontColor = Colors.white;
+        stylebackgroundColor = Colors.black.withOpacity(0);
+        break;
+      case 2:
+        stylefontColor = Colors.black;
+        stylebackgroundColor = Colors.white.withOpacity(0.25);
+        break;
+      case 3:
+        stylefontColor = Colors.black;
+        stylebackgroundColor = Colors.white.withOpacity(0);
+        break;
+    }
     // 아이패드일때 시작화면비는 1:1
     if (MediaQuery.sizeOf(context).height / MediaQuery.sizeOf(context).width < 1.5) {
       _ratio = 0;
@@ -2205,7 +2226,7 @@ class XlogCreateViewState extends State<XlogCreateView> {
                               padding: const EdgeInsets.all(8),
                               child: Container(
                                 decoration: BoxDecoration(
-                                  color: Colors.black.withOpacity(0.25),
+                                  color: stylebackgroundColor,
                                   borderRadius: const BorderRadius.all(Radius.circular(10)),
                                 ),
                                 child: FittedBox(
@@ -2219,18 +2240,18 @@ class XlogCreateViewState extends State<XlogCreateView> {
                                                 children: [
                                                   Text(
                                                     DateFormat((' M/ d ')).format(DateTime.now()),
-                                                    style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w700),
+                                                    style: TextStyle(color: stylefontColor, fontSize: 16, fontWeight: FontWeight.w700),
                                                   ),
                                                   Text(
                                                     DateFormat.E('${LocaleData.locale.getString(context)}').format(DateTime.now()),
-                                                    style: TextStyle(color: TColor.white, fontSize: 16, fontWeight: FontWeight.w700),
+                                                    style: TextStyle(color: stylefontColor, fontSize: 16, fontWeight: FontWeight.w700),
                                                   ),
                                                   const Text(" "),
                                                 ],
                                               ),
                                               Text(
                                                 DateFormat((' a hh:mm:ss ')).format(DateTime.now()),
-                                                style: TextStyle(color: TColor.white, fontSize: 16, fontWeight: FontWeight.w700),
+                                                style: TextStyle(color: stylefontColor, fontSize: 16, fontWeight: FontWeight.w700),
                                               ),
                                             ],
                                           ),
@@ -2245,18 +2266,18 @@ class XlogCreateViewState extends State<XlogCreateView> {
                                                     children: [
                                                       Text(
                                                         DateFormat((' M/ d ')).format(DateTime.now()),
-                                                        style: TextStyle(color: TColor.white, fontSize: 16, fontWeight: FontWeight.w700),
+                                                        style: TextStyle(color: stylefontColor, fontSize: 16, fontWeight: FontWeight.w700),
                                                       ),
                                                       Text(
                                                         DateFormat.E('${LocaleData.locale.getString(context)}').format(DateTime.now()),
-                                                        style: TextStyle(color: TColor.white, fontSize: 16, fontWeight: FontWeight.w700),
+                                                        style: TextStyle(color: stylefontColor, fontSize: 16, fontWeight: FontWeight.w700),
                                                       ),
                                                       const Text(" "),
                                                     ],
                                                   ),
                                                   Text(
                                                     DateFormat((' a hh:mm ')).format(DateTime.now()),
-                                                    style: TextStyle(color: TColor.white, fontSize: 16, fontWeight: FontWeight.w700),
+                                                    style: TextStyle(color: stylefontColor, fontSize: 16, fontWeight: FontWeight.w700),
                                                   ),
                                                 ],
                                               ),
@@ -2270,11 +2291,11 @@ class XlogCreateViewState extends State<XlogCreateView> {
                                                     children: [
                                                       Text(
                                                         DateFormat((' M/ d ')).format(DateTime.now()),
-                                                        style: TextStyle(color: TColor.white, fontSize: 16, fontWeight: FontWeight.w700),
+                                                        style: TextStyle(color: stylefontColor, fontSize: 16, fontWeight: FontWeight.w700),
                                                       ),
                                                       Text(
                                                         DateFormat.E('${LocaleData.locale.getString(context)}').format(DateTime.now()),
-                                                        style: TextStyle(color: TColor.white, fontSize: 16, fontWeight: FontWeight.w700),
+                                                        style: TextStyle(color: stylefontColor, fontSize: 16, fontWeight: FontWeight.w700),
                                                       ),
                                                       const Text(" "),
                                                     ],
@@ -2300,11 +2321,18 @@ class XlogCreateViewState extends State<XlogCreateView> {
                                   children: [
                                     if (isselectedlog)
                                       Container(
-                                        decoration: BoxDecoration(color: Colors.black.withOpacity(0.25), borderRadius: const BorderRadius.all(Radius.circular(10))),
+                                        decoration: BoxDecoration(
+                                          color: stylebackgroundColor,
+                                          borderRadius: const BorderRadius.all(Radius.circular(10)),
+                                        ),
                                         child: FittedBox(
                                           child: Text(
                                             ' ${LocaleData.workoutdiary.getString(context)} ',
-                                            style: TextStyle(color: TColor.white, fontSize: 16, fontWeight: FontWeight.w700),
+                                            style: TextStyle(
+                                              color: stylefontColor,
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w700,
+                                            ),
                                           ),
                                         ),
                                       ),
@@ -2330,6 +2358,7 @@ class XlogCreateViewState extends State<XlogCreateView> {
                                               xlog: xlogs[index],
                                               selectedweightUnit: selectedWeighUnint,
                                               xlogformat: _xlogformat,
+                                              styleformat: _styleformat,
                                               onDeleted: () {
                                                 setState(() {
                                                   xlogs.removeAt(index);
@@ -2450,12 +2479,69 @@ class XlogCreateViewState extends State<XlogCreateView> {
                                         ),
                                       ),
                                     )
-                              : Row(
+                              : Column(
                                   children: [
-                                    IconButton(
-                                        onPressed: () async {
-                                          AppImagePicker(source: ImageSource.gallery).pick(
-                                            onPick: (File? image) {
+                                    Row(
+                                      children: [
+                                        IconButton(
+                                            onPressed: () async {
+                                              AppImagePicker(source: ImageSource.gallery).pick(
+                                                onPick: (File? image) {
+                                                  Uint8List bytes;
+                                                  Uint8List uint8List;
+
+                                                  (image != null)
+                                                      ? {
+                                                          // 파일의 내용 읽기
+                                                          bytes = image.readAsBytesSync(),
+                                                          // `Uint8List`로 변환
+                                                          uint8List = Uint8List.fromList(bytes),
+                                                          imageProvider.changeImage(image),
+                                                          if (ximgs.isEmpty)
+                                                            {
+                                                              HiveHelper().createXimg(
+                                                                Ximg(
+                                                                  date: todaydate.subtract(const Duration(days: 0)), //1:어제날짜, 테스트할때 첫번째 사진은 이부분에서 들어감
+                                                                  image: uint8List,
+                                                                ),
+                                                              ),
+                                                              setState(() {
+                                                                todayaddimgcount++; //테스트일때 주석
+                                                              }),
+                                                              // print("1비어있음 오늘날짜 이미지 개수는  $todayaddimgcount"),
+                                                            }
+                                                          else
+                                                            {
+                                                              if (todayaddimgcount > 0)
+                                                                {
+                                                                  tempximg.image = uint8List,
+                                                                  HiveHelper().updateXimg(tempximgindex, tempximg),
+                                                                  setState(() {}),
+                                                                  // print("2기존이미지있음 오늘날짜 이미지가 이미 있어 교체합니다.  $todayaddimgcount"),
+                                                                }
+                                                              else
+                                                                {
+                                                                  HiveHelper().createXimg(
+                                                                    Ximg(
+                                                                      date: todaydate.subtract(const Duration(days: 0)), //1:어제날짜 테스트할때, 과거사진이 있으면 이부분을 수정해서 넣어줘야함
+                                                                      image: uint8List,
+                                                                    ),
+                                                                  ),
+                                                                  setState(() {
+                                                                    todayaddimgcount++; //테스트할때 주석,
+                                                                  }),
+                                                                  // print("3기존이미지있음 오늘날짜 이미지가 없어 새로 생성합니다.   $todayaddimgcount"),
+                                                                }
+                                                            }
+                                                        }
+                                                      : null;
+                                                },
+                                              );
+                                            },
+                                            icon: Icon(Icons.photo_outlined)),
+                                        IconButton(
+                                          onPressed: () async {
+                                            AppImagePicker(source: ImageSource.camera).pick(onPick: (File? image) {
                                               Uint8List bytes;
                                               Uint8List uint8List;
 
@@ -2466,16 +2552,17 @@ class XlogCreateViewState extends State<XlogCreateView> {
                                                       // `Uint8List`로 변환
                                                       uint8List = Uint8List.fromList(bytes),
                                                       imageProvider.changeImage(image),
+                                                      //이미지 저장
                                                       if (ximgs.isEmpty)
                                                         {
                                                           HiveHelper().createXimg(
                                                             Ximg(
-                                                              date: todaydate.subtract(const Duration(days: 0)), //1:어제날짜, 테스트할때 첫번째 사진은 이부분에서 들어감
+                                                              date: todaydate,
                                                               image: uint8List,
                                                             ),
                                                           ),
                                                           setState(() {
-                                                            todayaddimgcount++; //테스트일때 주석
+                                                            todayaddimgcount++;
                                                           }),
                                                           // print("1비어있음 오늘날짜 이미지 개수는  $todayaddimgcount"),
                                                         }
@@ -2492,129 +2579,33 @@ class XlogCreateViewState extends State<XlogCreateView> {
                                                             {
                                                               HiveHelper().createXimg(
                                                                 Ximg(
-                                                                  date: todaydate.subtract(const Duration(days: 0)), //1:어제날짜 테스트할때, 과거사진이 있으면 이부분을 수정해서 넣어줘야함
+                                                                  date: todaydate,
                                                                   image: uint8List,
                                                                 ),
                                                               ),
                                                               setState(() {
-                                                                todayaddimgcount++; //테스트할때 주석,
+                                                                todayaddimgcount++;
                                                               }),
                                                               // print("3기존이미지있음 오늘날짜 이미지가 없어 새로 생성합니다.   $todayaddimgcount"),
                                                             }
                                                         }
                                                     }
                                                   : null;
-                                            },
-                                          );
-                                        },
-                                        icon: Icon(Icons.photo_outlined)),
-                                    IconButton(
-                                      onPressed: () async {
-                                        AppImagePicker(source: ImageSource.camera).pick(onPick: (File? image) {
-                                          Uint8List bytes;
-                                          Uint8List uint8List;
-
-                                          (image != null)
-                                              ? {
-                                                  // 파일의 내용 읽기
-                                                  bytes = image.readAsBytesSync(),
-                                                  // `Uint8List`로 변환
-                                                  uint8List = Uint8List.fromList(bytes),
-                                                  imageProvider.changeImage(image),
-                                                  //이미지 저장
-                                                  if (ximgs.isEmpty)
-                                                    {
-                                                      HiveHelper().createXimg(
-                                                        Ximg(
-                                                          date: todaydate,
-                                                          image: uint8List,
-                                                        ),
-                                                      ),
-                                                      setState(() {
-                                                        todayaddimgcount++;
-                                                      }),
-                                                      // print("1비어있음 오늘날짜 이미지 개수는  $todayaddimgcount"),
-                                                    }
-                                                  else
-                                                    {
-                                                      if (todayaddimgcount > 0)
-                                                        {
-                                                          tempximg.image = uint8List,
-                                                          HiveHelper().updateXimg(tempximgindex, tempximg),
-                                                          setState(() {}),
-                                                          // print("2기존이미지있음 오늘날짜 이미지가 이미 있어 교체합니다.  $todayaddimgcount"),
-                                                        }
-                                                      else
-                                                        {
-                                                          HiveHelper().createXimg(
-                                                            Ximg(
-                                                              date: todaydate,
-                                                              image: uint8List,
-                                                            ),
-                                                          ),
-                                                          setState(() {
-                                                            todayaddimgcount++;
-                                                          }),
-                                                          // print("3기존이미지있음 오늘날짜 이미지가 없어 새로 생성합니다.   $todayaddimgcount"),
-                                                        }
-                                                    }
-                                                }
-                                              : null;
-                                          // Navigator.of(context).pushReplacementNamed('/');
-                                        });
-                                      },
-                                      icon: Icon(
-                                        Icons.camera_alt_outlined,
-                                      ),
-                                    ),
-                                    Stack(
-                                      children: [
-                                        IconButton(
-                                          onPressed: () {
-                                            _timeformat++;
-                                            setState(() {});
+                                              // Navigator.of(context).pushReplacementNamed('/');
+                                            });
                                           },
-                                          icon: const Icon(
-                                            Icons.timer,
-                                          ),
+                                          icon: const Icon(Icons.camera_alt_outlined),
                                         ),
-                                        Positioned(
-                                            bottom: 6,
-                                            right: 6,
-                                            child: Text(
-                                              "${_timeformat % 3 + 1}",
-                                              style: const TextStyle(fontWeight: FontWeight.w700),
-                                            ))
+
+                                        // 텍스트 스티커 추가 기능
+                                        // IconButton(
+                                        //   onPressed: () async {
+                                        //     //
+                                        //   },
+                                        //   icon: const Icon(Icons.text_fields_outlined),
+                                        // ),
                                       ],
                                     ),
-                                    //운동기록 형태 변경
-                                    (todayaddcount >= 1)
-                                        ? Stack(
-                                            children: [
-                                              IconButton(
-                                                onPressed: () {
-                                                  if (_xlogformat > 1) {
-                                                    _xlogformat = 0;
-                                                  } else {
-                                                    _xlogformat++;
-                                                  }
-                                                  setState(() {});
-                                                },
-                                                icon: const Icon(
-                                                  Icons.edit_document,
-                                                ),
-                                              ),
-                                              Positioned(
-                                                bottom: 6,
-                                                right: 6,
-                                                child: Text(
-                                                  (_xlogformat != 2) ? "${_xlogformat % 3 + 1}" : "x",
-                                                  style: const TextStyle(fontWeight: FontWeight.w700),
-                                                ),
-                                              )
-                                            ],
-                                          )
-                                        : Container(),
                                   ],
                                 ),
                           Row(
@@ -2690,6 +2681,104 @@ class XlogCreateViewState extends State<XlogCreateView> {
                         ],
                       ),
                     ),
+                    (isselectedWritting == true) //기록중이라면 사진앨범,카메라,이미지비율조정 버튼 비활성화(안보임)
+                        ? Container()
+                        : SizedBox(
+                            width: media.width,
+                            child: Center(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Stack(
+                                      children: [
+                                        IconButton.filledTonal(
+                                          padding: EdgeInsets.all(12.0),
+                                          onPressed: () {
+                                            _timeformat++;
+                                            setState(() {});
+                                          },
+                                          icon: const Icon(
+                                            Icons.timer,
+                                          ),
+                                        ),
+                                        Positioned(
+                                            bottom: 6,
+                                            right: 6,
+                                            child: Text(
+                                              "${_timeformat % 3 + 1}",
+                                              style: const TextStyle(fontWeight: FontWeight.w700),
+                                            ))
+                                      ],
+                                    ),
+                                  ),
+                                  //스크린샷 위의 오브젝트 스타일 변경
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Stack(
+                                      children: [
+                                        IconButton.filledTonal(
+                                          padding: EdgeInsets.all(12.0),
+                                          onPressed: () {
+                                            if (_styleformat < 3) {
+                                              _styleformat++;
+                                            } else {
+                                              _styleformat = 0;
+                                            }
+
+                                            setState(() {});
+                                          },
+                                          icon: const Icon(
+                                            Icons.font_download,
+                                          ),
+                                        ),
+                                        Positioned(
+                                            bottom: 6,
+                                            right: 6,
+                                            child: Text(
+                                              "${_styleformat % 4 + 1}",
+                                              style: const TextStyle(fontWeight: FontWeight.w700),
+                                            ))
+                                      ],
+                                    ),
+                                  ),
+                                  //운동기록 형태 변경
+                                  (todayaddcount >= 1)
+                                      ? Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Stack(
+                                            children: [
+                                              IconButton.filledTonal(
+                                                padding: EdgeInsets.all(12.0),
+                                                onPressed: () {
+                                                  if (_xlogformat > 1) {
+                                                    _xlogformat = 0;
+                                                  } else {
+                                                    _xlogformat++;
+                                                  }
+                                                  setState(() {});
+                                                },
+                                                icon: const Icon(
+                                                  Icons.edit_document,
+                                                ),
+                                              ),
+                                              Positioned(
+                                                bottom: 6,
+                                                right: 6,
+                                                child: Text(
+                                                  (_xlogformat != 2) ? "${_xlogformat % 3 + 1}" : "x",
+                                                  style: const TextStyle(fontWeight: FontWeight.w700),
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                        )
+                                      : Container(),
+                                ],
+                              ),
+                            ),
+                          ),
 
                     (isselectedWritting == false)
                         ? Container(height: media.height * 0.9)
@@ -3034,6 +3123,7 @@ class XlogCreateViewState extends State<XlogCreateView> {
                                               child: Builder(builder: (context) {
                                                 return CupertinoPicker(
                                                   // hasSuitableHapticHardware = false로 내부 위젯 수정
+
                                                   looping: false,
                                                   //처음나오는 운동으로 변경 필요
                                                   scrollController: FixedExtentScrollController(initialItem: selectedxTypeIndex),

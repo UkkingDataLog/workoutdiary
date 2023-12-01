@@ -40,7 +40,7 @@ class _CoustomWebViewState extends State<CoustomWebView> {
 
     return Stack(
       children: [
-        WebViewWidget(controller: _controller),
+        Container(color: Colors.white, child: WebViewWidget(controller: _controller)),
         if (loadingPercentage < 100)
           const Column(
             children: [

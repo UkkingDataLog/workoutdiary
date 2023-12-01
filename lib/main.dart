@@ -81,7 +81,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     // 상태바 색상 변환
-    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle());
+    // SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle());
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       // 테마
@@ -100,7 +100,6 @@ class _MyAppState extends State<MyApp> {
       ),
       themeMode: ThemeMode.system,
 
-      //
       supportedLocales: localization.supportedLocales,
       localizationsDelegates: localization.localizationsDelegates,
       //스크린 위치 설정

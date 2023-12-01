@@ -12,20 +12,42 @@ class XlogCreateTile extends StatefulWidget {
     required this.onDeleted,
     required this.selectedweightUnit,
     this.xlogformat = 0,
+    this.styleformat = 0,
   }) : super(key: key);
 
   final Xlog xlog;
   final Function onDeleted;
   final String selectedweightUnit;
   final int xlogformat;
+  final int styleformat;
 
   @override
   State<XlogCreateTile> createState() => _XlogCreateTileState();
 }
 
 class _XlogCreateTileState extends State<XlogCreateTile> {
+  Color stylefontColor = Colors.white;
+  Color stylebackgroundColor = Colors.black;
   @override
   Widget build(BuildContext context) {
+    switch (widget.styleformat) {
+      case 0:
+        stylefontColor = Colors.white;
+        stylebackgroundColor = Colors.black.withOpacity(0.25);
+        break;
+      case 1:
+        stylefontColor = Colors.white;
+        stylebackgroundColor = Colors.black.withOpacity(0);
+        break;
+      case 2:
+        stylefontColor = Colors.black;
+        stylebackgroundColor = Colors.white.withOpacity(0.25);
+        break;
+      case 3:
+        stylefontColor = Colors.black;
+        stylebackgroundColor = Colors.white.withOpacity(0);
+        break;
+    }
     var media = MediaQuery.of(context).size;
 
     double weightUnitConversion = 1;
@@ -63,7 +85,7 @@ class _XlogCreateTileState extends State<XlogCreateTile> {
         : (widget.xlogformat == 2)
             ? Container()
             : Material(
-                color: Colors.black.withOpacity(0.25),
+                color: stylebackgroundColor,
                 child: AnimatedContainer(
                   constraints: const BoxConstraints(maxHeight: 22),
                   alignment: Alignment.center,
@@ -82,7 +104,7 @@ class _XlogCreateTileState extends State<XlogCreateTile> {
                                       padding: EdgeInsets.zero,
                                       icon: Image.asset(
                                         "assets/img/checkboxok.png",
-                                        color: TColor.white,
+                                        color: stylefontColor,
                                         fit: BoxFit.fitHeight,
                                       ),
                                       onPressed: () {
@@ -98,7 +120,7 @@ class _XlogCreateTileState extends State<XlogCreateTile> {
                                       fit: BoxFit.contain,
                                       child: Text(
                                         " ${(widget.xlog.xbodypart == '하체') ? (LocaleData.legs.getString((context)).length > 2) ? LocaleData.legs.getString((context)).substring(0, 3) : LocaleData.legs.getString((context)) : (widget.xlog.xbodypart == '어깨') ? (LocaleData.shoulders.getString((context)).length > 2) ? LocaleData.shoulders.getString((context)).substring(0, 3) : LocaleData.shoulders.getString((context)) : (widget.xlog.xbodypart == '가슴') ? (LocaleData.chest.getString((context)).length > 2) ? LocaleData.chest.getString((context)).substring(0, 3) : LocaleData.chest.getString((context)) : (widget.xlog.xbodypart == '팔') ? (LocaleData.arms.getString((context)).length > 2) ? LocaleData.arms.getString((context)).substring(0, 3) : LocaleData.arms.getString((context)) : (widget.xlog.xbodypart == '등') ? (LocaleData.back.getString((context)).length > 2) ? LocaleData.back.getString((context)).substring(0, 3) : LocaleData.back.getString((context)) : (LocaleData.abs.getString((context)).length > 2) ? LocaleData.abs.getString((context)).substring(0, 3) : LocaleData.abs.getString((context))} |",
-                                        style: TextStyle(color: TColor.white, fontSize: 14, fontWeight: FontWeight.w700),
+                                        style: TextStyle(color: stylefontColor, fontSize: 14, fontWeight: FontWeight.w700),
                                       ),
                                     ),
                                   ),
@@ -110,7 +132,7 @@ class _XlogCreateTileState extends State<XlogCreateTile> {
                                       child: Text(
                                         " ${widget.xlog.xType.getString(context)}",
                                         textAlign: TextAlign.start,
-                                        style: TextStyle(color: TColor.white, fontSize: 14, fontWeight: FontWeight.w700),
+                                        style: TextStyle(color: stylefontColor, fontSize: 14, fontWeight: FontWeight.w700),
                                       ),
                                     ),
                                   ),
@@ -122,7 +144,7 @@ class _XlogCreateTileState extends State<XlogCreateTile> {
                                       child: Text(
                                         (widget.xlog.lxweight == 0) ? ' ' : (widget.xlog.lxweight * 0.5 * weightUnitConversion).toStringAsFixed(1), //소수2자리에서 반올림
                                         textAlign: TextAlign.end,
-                                        style: TextStyle(color: TColor.white, fontSize: 14, fontWeight: FontWeight.w700),
+                                        style: TextStyle(color: stylefontColor, fontSize: 14, fontWeight: FontWeight.w700),
                                       ),
                                     ),
                                   ),
@@ -134,7 +156,7 @@ class _XlogCreateTileState extends State<XlogCreateTile> {
                                       child: Text(
                                         (widget.xlog.lxweight == 0) ? ' ' : widget.selectedweightUnit,
                                         textAlign: TextAlign.start,
-                                        style: TextStyle(color: TColor.white, fontSize: 14, fontWeight: FontWeight.w700),
+                                        style: TextStyle(color: stylefontColor, fontSize: 14, fontWeight: FontWeight.w700),
                                       ),
                                     ),
                                   ),
@@ -146,7 +168,7 @@ class _XlogCreateTileState extends State<XlogCreateTile> {
                                       child: Text(
                                         " ${widget.xlog.lxnumber}${(LocaleData.reps.getString((context)).length < 4) ? LocaleData.reps.getString((context)) : LocaleData.reps.getString((context)).substring(0, 3)} ×",
                                         textAlign: TextAlign.end,
-                                        style: TextStyle(color: TColor.white, fontSize: 14, fontWeight: FontWeight.w700),
+                                        style: TextStyle(color: stylefontColor, fontSize: 14, fontWeight: FontWeight.w700),
                                       ),
                                     ),
                                   ),
@@ -158,7 +180,7 @@ class _XlogCreateTileState extends State<XlogCreateTile> {
                                       child: Text(
                                         "${widget.xlog.lxset}${(LocaleData.sets.getString((context)).length < 4) ? LocaleData.sets.getString((context)) : LocaleData.sets.getString((context)).substring(0, 3)}",
                                         textAlign: TextAlign.end,
-                                        style: TextStyle(color: TColor.white, fontSize: 14, fontWeight: FontWeight.w700),
+                                        style: TextStyle(color: stylefontColor, fontSize: 14, fontWeight: FontWeight.w700),
                                       ),
                                     ),
                                   ),
@@ -175,7 +197,7 @@ class _XlogCreateTileState extends State<XlogCreateTile> {
                                           padding: EdgeInsets.zero,
                                           icon: Image.asset(
                                             "assets/img/checkboxok.png",
-                                            color: TColor.white,
+                                            color: stylefontColor,
                                             fit: BoxFit.fitHeight,
                                           ),
                                           onPressed: () {
@@ -192,7 +214,7 @@ class _XlogCreateTileState extends State<XlogCreateTile> {
                                           child: Text(
                                             " ${widget.xlog.xType.getString(context)}",
                                             textAlign: TextAlign.start,
-                                            style: TextStyle(color: TColor.white, fontSize: 14, fontWeight: FontWeight.w700),
+                                            style: TextStyle(color: stylefontColor, fontSize: 14, fontWeight: FontWeight.w700),
                                           ),
                                         ),
                                       ),
@@ -204,7 +226,7 @@ class _XlogCreateTileState extends State<XlogCreateTile> {
                                           child: Text(
                                             (widget.xlog.lxweight == 0) ? ' ' : (widget.xlog.lxweight * 0.5 * weightUnitConversion).toStringAsFixed(1), //소수2자리에서 반올림
                                             textAlign: TextAlign.end,
-                                            style: TextStyle(color: TColor.white, fontSize: 14, fontWeight: FontWeight.w700),
+                                            style: TextStyle(color: stylefontColor, fontSize: 14, fontWeight: FontWeight.w700),
                                           ),
                                         ),
                                       ),
@@ -216,7 +238,7 @@ class _XlogCreateTileState extends State<XlogCreateTile> {
                                           child: Text(
                                             (widget.xlog.lxweight == 0) ? ' ' : widget.selectedweightUnit,
                                             textAlign: TextAlign.start,
-                                            style: TextStyle(color: TColor.white, fontSize: 14, fontWeight: FontWeight.w700),
+                                            style: TextStyle(color: stylefontColor, fontSize: 14, fontWeight: FontWeight.w700),
                                           ),
                                         ),
                                       ),
@@ -228,7 +250,7 @@ class _XlogCreateTileState extends State<XlogCreateTile> {
                                           child: Text(
                                             " ${widget.xlog.lxnumber} ×",
                                             textAlign: TextAlign.end,
-                                            style: TextStyle(color: TColor.white, fontSize: 14, fontWeight: FontWeight.w700),
+                                            style: TextStyle(color: stylefontColor, fontSize: 14, fontWeight: FontWeight.w700),
                                           ),
                                         ),
                                       ),
@@ -240,7 +262,7 @@ class _XlogCreateTileState extends State<XlogCreateTile> {
                                           child: Text(
                                             "${widget.xlog.lxset}",
                                             textAlign: TextAlign.end,
-                                            style: TextStyle(color: TColor.white, fontSize: 14, fontWeight: FontWeight.w700),
+                                            style: TextStyle(color: stylefontColor, fontSize: 14, fontWeight: FontWeight.w700),
                                           ),
                                         ),
                                       ),
