@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -24,6 +23,7 @@ import 'package:workoutdiary/common/colo_extension.dart';
 import 'package:workoutdiary/common/hive_helper.dart';
 import 'package:workoutdiary/exercise_date/ximg_saved_tile.dart';
 import 'package:workoutdiary/exercise_date/xlog_ximg_date_calendar_view.dart';
+import 'package:workoutdiary/exercise_log/text_add_view.dart';
 import 'package:workoutdiary/exercise_log/today_xlog_list_tile.dart';
 import 'package:workoutdiary/hivedata/xlog.dart';
 
@@ -76,44 +76,10 @@ class XlogCreateViewState extends State<XlogCreateView> {
 
   // youtube streaming
   String videoURL = 'default';
-  //
-  late FlutterLocalization _flutterLocalization;
-  // ignore: unused_field
-  late String _currentLocale;
-  //
-
-  void _setLocale(String? value) {
-    if (value == null) return;
-    if (value == 'en') {
-      _flutterLocalization.translate(('en'));
-    } else if (value == 'ko') {
-      _flutterLocalization.translate(('ko'));
-    } else if (value == 'zh') {
-      _flutterLocalization.translate(('zh'));
-    } else if (value == 'ja') {
-      _flutterLocalization.translate(('ja'));
-    } else if (value == 'de') {
-      _flutterLocalization.translate(('de'));
-    } else if (value == 'es') {
-      _flutterLocalization.translate(('es'));
-    } else if (value == 'pt') {
-      _flutterLocalization.translate(('pt'));
-    } else if (value == 'ar') {
-      _flutterLocalization.translate(('ar'));
-    } else if (value == 'hi') {
-      _flutterLocalization.translate(('hi'));
-    } else {
-      return;
-    }
-  }
 
   @override
   void initState() {
     super.initState();
-    _flutterLocalization = FlutterLocalization.instance;
-    _currentLocale = _flutterLocalization.currentLocale!.languageCode;
-    // print(_currentLocale);
-
     imageProvider = Provider.of<AppImageProvider>(context, listen: false);
     _createRewardedInterstitialAd();
   }
@@ -126,9 +92,7 @@ class XlogCreateViewState extends State<XlogCreateView> {
 
   //화면 전환 후 초기화
   void _update() {
-    setState(() {
-      //
-    });
+    setState(() {});
   }
 
   //--------------------<<  Variable  >>--------------------
@@ -2020,67 +1984,6 @@ class XlogCreateViewState extends State<XlogCreateView> {
                         ),
                         Row(
                           children: [
-                            Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                              child: DropdownButton2(
-                                customButton: const Icon(Icons.language),
-                                dropdownStyleData: DropdownStyleData(
-                                  maxHeight: 500,
-                                  width: 200,
-                                  offset: const Offset(-20, 0),
-                                  scrollbarTheme: ScrollbarThemeData(
-                                    radius: const Radius.circular(40),
-                                    thickness: MaterialStateProperty.all<double>(6),
-                                    thumbVisibility: MaterialStateProperty.all<bool>(true),
-                                  ),
-                                ),
-                                menuItemStyleData: const MenuItemStyleData(
-                                  height: 40,
-                                  padding: EdgeInsets.only(left: 14, right: 14),
-                                ),
-                                items: [
-                                  DropdownMenuItem(
-                                    value: 'en',
-                                    child: (LocaleData.locale.getString(context) == 'en') ? Text('🇺🇸 English ✔') : Text('🇺🇸 English'),
-                                  ),
-                                  DropdownMenuItem(
-                                    value: 'ko',
-                                    child: (LocaleData.locale.getString(context) == 'ko') ? Text("🇰🇷 한국어 ✔") : Text("🇰🇷 한국어"),
-                                  ),
-                                  DropdownMenuItem(
-                                    value: 'zh',
-                                    child: (LocaleData.locale.getString(context) == 'zh') ? Text("🇨🇳 中国 ✔") : Text("🇨🇳 中国"),
-                                  ),
-                                  DropdownMenuItem(
-                                    value: 'ja',
-                                    child: (LocaleData.locale.getString(context) == 'ja') ? Text("🇯🇵 日本語 ✔") : Text("🇯🇵 日本語"),
-                                  ),
-                                  DropdownMenuItem(
-                                    value: 'de',
-                                    child: (LocaleData.locale.getString(context) == 'de') ? Text('🇩🇪 Deutsch ✔') : Text('🇩🇪 Deutsch'),
-                                  ),
-                                  DropdownMenuItem(
-                                    value: 'es',
-                                    child: (LocaleData.locale.getString(context) == 'es') ? Text("🇪🇸 Español ✔") : Text("🇪🇸 Español"),
-                                  ),
-                                  DropdownMenuItem(
-                                    value: 'pt',
-                                    child: (LocaleData.locale.getString(context) == 'pt') ? Text("🇵🇹 Português ✔") : Text("🇵🇹 Português"),
-                                  ),
-                                  DropdownMenuItem(
-                                    value: 'ar',
-                                    child: (LocaleData.locale.getString(context) == 'ar') ? Text("🇸🇦 عربي ✔") : Text("🇸🇦 عربي"),
-                                  ),
-                                  DropdownMenuItem(
-                                    value: 'hi',
-                                    child: (LocaleData.locale.getString(context) == 'hi') ? Text("🇮🇳 हिंदी ✔") : Text("🇮🇳 हिंदी"),
-                                  ),
-                                ],
-                                onChanged: (value) {
-                                  _setLocale(value);
-                                },
-                              ),
-                            ),
                             FlutterSwitch(
                               // active
                               activeColor: Theme.of(context).colorScheme.onPrimaryContainer,
@@ -2556,10 +2459,7 @@ class XlogCreateViewState extends State<XlogCreateView> {
                                                       if (ximgs.isEmpty)
                                                         {
                                                           HiveHelper().createXimg(
-                                                            Ximg(
-                                                              date: todaydate,
-                                                              image: uint8List,
-                                                            ),
+                                                            Ximg(date: todaydate, image: uint8List),
                                                           ),
                                                           setState(() {
                                                             todayaddimgcount++;
@@ -2598,12 +2498,30 @@ class XlogCreateViewState extends State<XlogCreateView> {
                                         ),
 
                                         // 텍스트 스티커 추가 기능
-                                        // IconButton(
-                                        //   onPressed: () async {
-                                        //     //
-                                        //   },
-                                        //   icon: const Icon(Icons.text_fields_outlined),
-                                        // ),
+                                        (todayaddimgcount == 0)
+                                            ? Container()
+                                            : IconButton(
+                                                onPressed: () {
+                                                  // ignore: use_build_context_synchronously
+                                                  Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                          fullscreenDialog: true,
+                                                          builder: (context) => TextAddView(
+                                                                tempximgindex: tempximgindex,
+                                                                image: tempximg.image,
+                                                                tempximg: tempximg,
+                                                                onSave: () async {
+                                                                  {
+                                                                    setState(() {});
+                                                                  }
+                                                                },
+                                                              ))).then((value) {
+                                                    _update();
+                                                  });
+                                                },
+                                                icon: const Icon(Icons.text_fields_outlined),
+                                              ),
                                       ],
                                     ),
                                   ],

@@ -44,6 +44,8 @@ dependencies:
   youtube_player_flutter: ^8.1.2
   connectivity_plus: ^5.0.2
   shared_preferences: ^2.2.2
+  lindi_sticker_widget: ^0.1.1
+  text_editor: ^0.7.0
 flutter_native_splash:
   andriod: true
   ios: true
@@ -72,10 +74,32 @@ flutter:
     - assets/img/
     - assets/img/workoutType/
   fonts:
-    - family: Poppins
+    - family: Pretendard
       fonts:
-        - asset: assets/font/Poppins-Regular.ttf
-        - asset: assets/font/Poppins-Medium.ttf
+        - asset: assets/font/Pretendard-Regular.otf
+        - asset: assets/font/Pretendard-Medium.otf
           weight: 500
-        - asset: assets/font/Poppins-Bold.ttf
+        - asset: assets/font/Pretendard-Bold.otf
           weight: 700
+    - family: JalnanGothicTTF
+      fonts:
+        - asset: assets/font/JalnanGothicTTF.ttf
+    - family: GmarketSansTTFMedium
+      fonts:
+        - asset: assets/font/GmarketSansTTFMedium.ttf
+    - family: YeongdeokSea
+      fonts:
+        - asset: assets/font/YeongdeokSea.ttf
+        # 
+    - family: Diphylleia
+      fonts:
+        - asset: assets/font/Diphylleia-Regular.ttf
+    - family: GasoekOne
+      fonts:
+        - asset: assets/font/GasoekOne-Regular.ttf
+    - family: NPSfont
+      fonts:
+        - asset: assets/font/NPSfont_regular.ttf
+    - family: IncheonEducationJaramche
+      fonts:
+        - asset: assets/font/IncheonEducationJaramche.ttf

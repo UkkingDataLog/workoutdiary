@@ -86,17 +86,20 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       // 테마
       theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(
-            seedColor: const Color(0xFF5C6BC0),
-            brightness: Brightness.light,
-          ),
-          useMaterial3: true),
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: const Color(0xFF5C6BC0),
+          brightness: Brightness.light,
+        ),
+        useMaterial3: true,
+        fontFamily: 'Pretendard',
+      ),
       darkTheme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
           seedColor: const Color(0xFF5C6BC0),
           brightness: Brightness.dark,
         ),
         useMaterial3: true,
+        fontFamily: 'Pretendard',
       ),
       themeMode: ThemeMode.system,
 

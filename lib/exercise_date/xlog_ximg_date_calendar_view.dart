@@ -145,13 +145,7 @@ class XlogXimgDateCalendarViewState extends State<XlogXimgDateCalendarView> {
               floating: true,
               snap: true,
               centerTitle: true,
-              leading: IconButton(
-                icon: const Icon(Icons.arrow_back),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-              automaticallyImplyLeading: false,
+              leading: const CloseButton(),
               foregroundColor: Theme.of(context).colorScheme.onPrimary,
               elevation: 0,
               toolbarHeight: 48,

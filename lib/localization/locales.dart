@@ -15,6 +15,8 @@ const List<MapLocale> LOCALES = [
 mixin LocaleData {
   // define
   // setting
+  static const String text = 'text';
+  static const String add_Text = 'add_Text';
   static const String workout_analysis = 'workout_analysis';
   static const String prev = 'prev';
   static const String next = 'next';
@@ -333,6 +335,8 @@ mixin LocaleData {
   // 영어 (English)
   static const Map<String, dynamic> EN = {
     workout_analysis: 'Workout Analysis',
+    text: 'Text',
+    add_Text: 'Add Text',
     locale: 'en',
     workoutdiary: 'Workout Diary',
     chooselanguage: 'Choose Language',
@@ -648,6 +652,8 @@ mixin LocaleData {
   };
   // 한국어 (Korean)
   static const Map<String, dynamic> KO = {
+    text: '텍스트',
+    add_Text: '텍스트 추가',
     workout_analysis: '운동 분석',
     locale: 'ko',
     workoutdiary: 'Workout Diary',
@@ -964,6 +970,8 @@ mixin LocaleData {
 
   // 독일어 (German)
   static const Map<String, dynamic> DE = {
+    text: 'Text',
+    add_Text: 'Text hinzufügen',
     workout_analysis: 'Trainingsanalyse',
     locale: 'de',
     workoutdiary: 'Workout Diary',
@@ -1281,6 +1289,8 @@ mixin LocaleData {
 
   // 일본어 (Japanese)
   static const Map<String, dynamic> JA = {
+    text: 'テキスト',
+    add_Text: 'テキストを追加',
     workout_analysis: 'トレーニング分析',
     locale: 'ja',
     workoutdiary: 'ワークアウト日記',
@@ -1597,6 +1607,8 @@ mixin LocaleData {
 
   // 스페인어 (Spanish)
   static const Map<String, dynamic> ES = {
+    text: 'Texto',
+    add_Text: 'Añadir Texto',
     workout_analysis: 'Análisis Entrenamiento',
     locale: 'es',
     workoutdiary: 'Workout Diary',
@@ -1914,6 +1926,8 @@ mixin LocaleData {
 
   // 중국어 (Simplified Chinese) - 간체
   static const Map<String, dynamic> ZH = {
+    text: '文本',
+    add_Text: '添加文本',
     workout_analysis: '运动分析',
     locale: 'zh',
     workoutdiary: '健身追记',
@@ -2230,6 +2244,8 @@ mixin LocaleData {
 
   // 포르투갈어 (Portuguese)
   static const Map<String, dynamic> PT = {
+    text: 'Texto',
+    add_Text: 'Adicionar Texto',
     workout_analysis: 'Análise de Treino',
     locale: 'pt',
     workoutdiary: 'Workout Diary',
@@ -2238,8 +2254,8 @@ mixin LocaleData {
     logo: 'logo',
     setting: 'Configuração',
     usersetting: 'Você',
-    language: 'Idioma',
-    selectedLanguage: 'Inglês',
+    language: 'Português',
+    selectedLanguage: 'Português',
     units: 'Unidades',
     more: 'Mais',
     dataInitialization: 'Inicialização de Dados',
@@ -2547,6 +2563,8 @@ mixin LocaleData {
 
   // 아랍어 (Arabic)
   static const Map<String, dynamic> AR = {
+    text: 'نص',
+    add_Text: 'إضافة نص',
     workout_analysis: 'تحليل اللياقة',
     locale: 'ar',
     workoutdiary: 'يومية التمرين',
@@ -2863,6 +2881,8 @@ mixin LocaleData {
 
   // 힌디어 (Hindi)
   static const Map<String, dynamic> HI = {
+    text: 'पाठ',
+    add_Text: 'पाठ जोड़ें',
     workout_analysis: 'व्यायाम विश्लेषण',
     locale: 'hi',
     workoutdiary: 'वर्कआउट डायरी',
