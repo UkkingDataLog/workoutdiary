@@ -15,17 +15,17 @@ import 'package:workoutdiary/localization/locales.dart';
 import 'package:workoutdiary/providers/app_image_provider.dart';
 
 class TextAddView extends StatefulWidget {
-  TextAddView({
+  const TextAddView({
     Key? key,
     required this.image,
     required this.onSave,
     required this.tempximgindex,
     required this.tempximg,
   }) : super(key: key);
-  Uint8List image;
-  Function onSave;
-  int tempximgindex;
-  Ximg tempximg;
+  final Uint8List image;
+  final Function onSave;
+  final int tempximgindex;
+  final Ximg tempximg;
 
   @override
   State<TextAddView> createState() => _TextAddViewState();

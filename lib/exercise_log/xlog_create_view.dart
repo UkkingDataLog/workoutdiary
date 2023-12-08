@@ -58,6 +58,11 @@ class XlogCreateView extends StatefulWidget {
 
 class XlogCreateViewState extends State<XlogCreateView> {
   //
+  late Xlog recentLog;
+  int recentLogcount = 0;
+
+  bool isSelectedRecentLog = false;
+  //
   bool isSelectedYoutube = false;
   bool isSelectedkg = true;
   String selectedWeighUnint = 'kg';
@@ -101,6 +106,7 @@ class XlogCreateViewState extends State<XlogCreateView> {
   int _xlogformat = 0;
   Color stylefontColor = Colors.white;
   Color stylebackgroundColor = Colors.black;
+
   //사진 크기 변경
   int _ratio = 1;
 
@@ -163,6 +169,8 @@ class XlogCreateViewState extends State<XlogCreateView> {
   bool isSelectedDumbbell = true;
   bool isSelectedMachine = true;
   bool isSelectedBodyweight = true;
+  //
+  bool isSelected = true;
   //
   @override
   Widget build(BuildContext context) {
@@ -1407,6 +1415,17 @@ class XlogCreateViewState extends State<XlogCreateView> {
 
             if (videoURL == '') {
               videoURL = 'default';
+            }
+
+            for (int countindex = xlogs.length - 1; countindex >= 0; countindex--) {
+              if (xlogs[countindex].finished == true) {
+                if (xlogs[countindex].xType == selectedxTypeItem) {
+                  recentLog = xlogs[countindex];
+                  recentLogcount = 1;
+
+                  break;
+                }
+              }
             }
 
             return Scaffold(
@@ -2699,7 +2718,7 @@ class XlogCreateViewState extends State<XlogCreateView> {
                           ),
 
                     (isselectedWritting == false)
-                        ? Container(height: media.height * 0.9)
+                        ? Container(height: media.height * 0.8)
                         : Column(
                             children: [
                               Container(
@@ -2736,27 +2755,142 @@ class XlogCreateViewState extends State<XlogCreateView> {
                                               )
                                             :
                                             //유튜브
-
                                             CustomYoutubePlayer(videoURL: videoURL),
                                   ),
-                                  SizedBox(
-                                    //유튜브를 가져오면 위아래 검은줄을 안보이도록 하는 프레임
-                                    height: media.width / 16 * 9, //이미지의 1400*800
-                                    width: media.width,
-                                    child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Container(
-                                          height: 1.2,
-                                          color: TColor.white,
-                                        ),
-                                        Container(
-                                          height: 1.2,
-                                          color: TColor.white,
-                                        ),
-                                      ],
-                                    ),
-                                  )
+                                  (isSelectedYoutube == false)
+                                      ?
+                                      //이미지
+                                      SizedBox(
+                                          //유튜브를 가져오면 위아래 검은줄을 안보이도록 하는 프레임
+                                          height: media.width / 16 * 9, //이미지의 1400*800
+                                          width: media.width,
+                                          child: Column(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Container(),
+                                              (recentLogcount != 1)
+                                                  ? Container()
+                                                  : (recentLog.xType != selectedxTypeItem)
+                                                      ? Container()
+                                                      : InkWell(
+                                                          onTap: () async {
+                                                            selectedlxweightItems = "${recentLog.lxweight.ceil()}";
+                                                            selectedWeighUnint = recentLog.lxweightUnit;
+                                                            if (selectedWeighUnint == 'kg') {
+                                                              isSelectedkg = true;
+                                                            } else {
+                                                              isSelectedkg = false;
+                                                            }
+                                                            selectedlxnumberItem = "${recentLog.lxnumber}";
+                                                            selectedlxsetItem = "${recentLog.lxset}";
+
+                                                            lxweightIndex = recentLog.lxweight.ceil();
+                                                            lxnumberIndex = recentLog.lxnumber - 1;
+                                                            lxsetIndex = recentLog.lxset - 1;
+
+                                                            isSelectedRecentLog = true;
+                                                            setState(() {});
+                                                            Future.delayed(const Duration(milliseconds: 50), () {
+                                                              isSelectedRecentLog = false;
+                                                              setState(() {});
+                                                            });
+                                                          },
+                                                          child: SizedBox(
+                                                            height: 20,
+                                                            width: media.width,
+                                                            // color: Colors.black.withOpacity(0.5),
+                                                            child: Row(
+                                                              children: [
+                                                                // //운동종류
+                                                                const SizedBox(width: 12.0),
+                                                                Container(
+                                                                  width: (media.width * selectedXtypewidth),
+                                                                  alignment: Alignment.centerRight,
+                                                                  child: FittedBox(
+                                                                    child: Row(
+                                                                      children: [
+                                                                        const Icon(
+                                                                          Icons.date_range_rounded,
+                                                                          size: 16.0,
+                                                                        ),
+                                                                        Text(
+                                                                          ' ${recentLog.lxdate.year}/${recentLog.lxdate.month}/${recentLog.lxdate.day}',
+                                                                          style: TextStyle(
+                                                                            color: Colors.black,
+                                                                            // fontSize: logTextSizeselected,
+                                                                            fontWeight: logTextFontselectedWeight,
+                                                                          ),
+                                                                        ),
+                                                                      ],
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                                // //운동 중량
+                                                                Container(
+                                                                  alignment: Alignment.center,
+                                                                  width: media.width * selectedXweight,
+                                                                  child: Text(
+                                                                    '   ${recentLog.lxweight * 0.5}${recentLog.lxweightUnit}',
+                                                                    style: TextStyle(
+                                                                      color: Colors.black,
+                                                                      // fontSize: logTextSizeselected,
+                                                                      fontWeight: logTextFontselectedWeight,
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                                // //운동횟수
+                                                                Container(
+                                                                  alignment: Alignment.center,
+                                                                  width: media.width * selectedXnumber,
+                                                                  child: Text(
+                                                                    '${recentLog.lxnumber} ',
+                                                                    style: TextStyle(
+                                                                      color: Colors.black,
+                                                                      // fontSize: logTextSizeselected,
+                                                                      fontWeight: logTextFontselectedWeight,
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                                // //운동세트수
+                                                                Container(
+                                                                  alignment: Alignment.centerLeft,
+                                                                  width: media.width * selectedXset,
+                                                                  child: Text(
+                                                                    'x     ${recentLog.lxset}',
+                                                                    style: TextStyle(
+                                                                      color: Colors.black,
+                                                                      // fontSize: logTextSizeselected,
+                                                                      fontWeight: logTextFontselectedWeight,
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                        ),
+                                            ],
+                                          ),
+                                        )
+                                      :
+                                      //유튜브
+                                      SizedBox(
+                                          //유튜브를 가져오면 위아래 검은줄을 안보이도록 하는 프레임
+                                          height: media.width / 16 * 9, //이미지의 1400*800
+                                          width: media.width,
+                                          child: Column(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Container(
+                                                height: 1.2,
+                                                color: TColor.white,
+                                              ),
+                                              Container(
+                                                height: 1.2,
+                                                color: TColor.white,
+                                              ),
+                                            ],
+                                          ),
+                                        )
                                 ],
                               ),
 
@@ -3010,322 +3144,342 @@ class XlogCreateViewState extends State<XlogCreateView> {
                               const SizedBox(height: 8),
 
                               // 005. Easy workout dial selector
-                              Stack(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 8.0),
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        //1. exercise
-                                        Column(
-                                          children: [
-                                            SizedBox(
-                                              width: (media.width * selectedXtypewidth),
-                                              height: logheightmargin,
-                                            ),
-                                            SizedBox(
-                                              height: 20,
-                                              child: Text(
-                                                LocaleData.workOut.getString((context)),
-                                                style: TextStyle(
-                                                  color: Theme.of(context).colorScheme.primary,
-                                                  fontSize: logTextSize,
-                                                  fontWeight: FontWeight.w700,
-                                                ),
+                              Builder(builder: (context) {
+                                return Stack(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 8.0),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          //1. exercise
+                                          Column(
+                                            children: [
+                                              SizedBox(
+                                                width: (media.width * selectedXtypewidth),
+                                                height: logheightmargin,
                                               ),
-                                            ),
-                                            SizedBox(
-                                              height: cupertinoPickerHeight,
-                                              width: media.width * selectedXtypewidth,
-                                              child: Builder(builder: (context) {
-                                                return CupertinoPicker(
-                                                  // hasSuitableHapticHardware = false로 내부 위젯 수정
-
-                                                  looping: false,
-                                                  //처음나오는 운동으로 변경 필요
-                                                  scrollController: FixedExtentScrollController(initialItem: selectedxTypeIndex),
-                                                  selectionOverlay: const CupertinoPickerDefaultSelectionOverlay(),
-                                                  //Specify the height of lxsetItem
-                                                  itemExtent: cupertinoPickeritemExtent,
-                                                  //Enter a list of exerciseItems to select
-
-                                                  children: List.generate(
-                                                    exerciseItems.length,
-                                                    (xTypeIndex) {
-                                                      final isSelected = this.xTypeIndex == xTypeIndex;
-                                                      // 번역 된 운동으로 보여주기
-                                                      final lxsetItem = exerciseItems[xTypeIndex].getString(context);
-
-                                                      final color = isSelected ? Theme.of(context).colorScheme.onPrimaryContainer : Theme.of(context).colorScheme.outline;
-
-                                                      return Center(
-                                                        child: FittedBox(
-                                                          child: Text(
-                                                            lxsetItem,
-                                                            style: TextStyle(color: color, fontSize: 20),
-                                                          ),
-                                                        ),
-                                                      );
-                                                    },
-                                                  ),
-
-                                                  onSelectedItemChanged: (xTypeIndex) async {
-                                                    setState(
-                                                      () {
-                                                        this.xTypeIndex = xTypeIndex;
-                                                        if (isSelectedYoutube == true) {
-                                                          isSelectedYoutube = false;
-                                                        }
-                                                      },
-                                                    );
-
-                                                    final lxsetItem = exerciseItems[xTypeIndex];
-
-                                                    selectedxTypeItem = lxsetItem;
-                                                    selectedxTypeIndex = xTypeIndex;
-
-                                                    // debugPrint(lxsetItem);
-                                                  },
-                                                );
-                                              }),
-                                            ),
-                                            // SizedBox(height: logbottomHeight)
-                                          ],
-                                        ),
-
-                                        //2. input weight when exercising---------------------------
-                                        Column(
-                                          children: [
-                                            SizedBox(
-                                              height: logheightmargin,
-                                              width: media.width * selectedXweight,
-                                            ),
-                                            SizedBox(
-                                              height: 20,
-                                              child: Text(
-                                                (selectedlxweightItems == '0') ? ' ' : selectedWeighUnint,
-                                                style: TextStyle(
-                                                  color: Theme.of(context).colorScheme.primary,
-                                                  fontSize: logTextSize,
-                                                  fontWeight: FontWeight.w700,
-                                                ),
-                                              ),
-                                            ),
-
-                                            SizedBox(
-                                              height: cupertinoPickerHeight,
-                                              width: media.width * selectedXweight,
-                                              child: CupertinoPicker(
-                                                looping: false,
-                                                scrollController: FixedExtentScrollController(initialItem: int.parse(selectedlxweightItems)),
-                                                selectionOverlay: const CupertinoPickerDefaultSelectionOverlay(),
-                                                //Specify the height of lxsetItem
-                                                itemExtent: cupertinoPickeritemExtent,
-                                                //Enter a list of lxweightItems to select
-
-                                                children: List.generate(lxweightItems.length, (lxweightIndex) {
-                                                  final isSelected = this.lxweightIndex == lxweightIndex;
-                                                  final lxsetItem = lxweightItems[lxweightIndex];
-                                                  final color = isSelected ? Theme.of(context).colorScheme.onPrimaryContainer : Theme.of(context).colorScheme.outline;
-
-                                                  return Center(
-                                                    child: FittedBox(
-                                                      child: Text(
-                                                        '${lxsetItem * 0.5}',
-                                                        style: TextStyle(color: color, fontSize: 20),
-                                                      ),
-                                                    ),
-                                                  );
-                                                }),
-
-                                                onSelectedItemChanged: (lxweightIndex) {
-                                                  setState(() => this.lxweightIndex = lxweightIndex);
-
-                                                  final lxsetItem = lxweightItems[lxweightIndex];
-
-                                                  selectedlxweightItems = '$lxsetItem';
-                                                },
-                                              ),
-                                            ),
-
-                                            // SizedBox(height: logbottomHeight)
-                                          ],
-                                        ),
-
-                                        //3. Number of repetitions per exercise---------------------
-                                        Column(
-                                          children: [
-                                            SizedBox(
-                                              height: logheightmargin,
-                                              width: media.width * selectedXnumber,
-                                            ),
-                                            SizedBox(
-                                              height: 20,
-                                              child: Text(
-                                                (LocaleData.reps.getString((context)).length < 4)
-                                                    ? LocaleData.reps.getString((context))
-                                                    : LocaleData.reps.getString((context)).substring(0, 3),
-                                                style: TextStyle(
-                                                  color: Theme.of(context).colorScheme.primary,
-                                                  fontSize: logTextSize,
-                                                  fontWeight: FontWeight.w700,
-                                                ),
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              height: cupertinoPickerHeight,
-                                              width: media.width * selectedXnumber,
-                                              child: CupertinoPicker(
-                                                looping: false,
-                                                scrollController: FixedExtentScrollController(initialItem: int.parse(selectedlxnumberItem) - 1),
-                                                selectionOverlay: CupertinoPickerDefaultSelectionOverlay(),
-                                                //Specify the height of lxsetItem
-                                                itemExtent: cupertinoPickeritemExtent,
-                                                //Enter a list of lxnumberItems to select
-
-                                                children: List.generate(lxnumberItems.length, (lxnumberIndex) {
-                                                  final isSelected = this.lxnumberIndex == lxnumberIndex;
-                                                  final lxsetItem = lxnumberItems[lxnumberIndex];
-                                                  final color = isSelected ? Theme.of(context).colorScheme.onPrimaryContainer : Theme.of(context).colorScheme.outline;
-
-                                                  return Center(
-                                                    child: FittedBox(
-                                                      child: Text(
-                                                        '$lxsetItem',
-                                                        style: TextStyle(color: color, fontSize: 20),
-                                                      ),
-                                                    ),
-                                                  );
-                                                }),
-
-                                                onSelectedItemChanged: (lxnumberIndex) {
-                                                  setState(() => this.lxnumberIndex = lxnumberIndex);
-
-                                                  final lxsetItem = lxnumberItems[lxnumberIndex];
-
-                                                  selectedlxnumberItem = '$lxsetItem';
-                                                },
-                                              ),
-                                            ),
-                                            // SizedBox(height: logbottomHeight)
-                                          ],
-                                        ),
-
-                                        //4. input number of sets-----------------------------------
-                                        Column(
-                                          children: [
-                                            SizedBox(
-                                              height: logheightmargin,
-                                              width: media.width * selectedXset,
-                                            ),
-                                            SizedBox(
-                                              height: 20,
-                                              child: Text(
-                                                (LocaleData.sets.getString((context)).length < 4)
-                                                    ? LocaleData.sets.getString((context))
-                                                    : LocaleData.sets.getString((context)).substring(0, 3),
-                                                textAlign: TextAlign.left,
-                                                style: TextStyle(
-                                                  color: Theme.of(context).colorScheme.primary,
-                                                  fontSize: logTextSize,
-                                                  fontWeight: FontWeight.w700,
-                                                ),
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              height: cupertinoPickerHeight,
-                                              width: media.width * selectedXset,
-                                              child: CupertinoPicker(
-                                                looping: false,
-                                                scrollController: FixedExtentScrollController(initialItem: int.parse(selectedlxsetItem) - 1),
-                                                selectionOverlay: CupertinoPickerDefaultSelectionOverlay(),
-                                                //Specify the height of lxsetItem
-                                                itemExtent: cupertinoPickeritemExtent,
-                                                //Enter a list of lxsetItems to select
-
-                                                children: List.generate(lxsetItems.length, (lxsetIndex) {
-                                                  final isSelected = this.lxsetIndex == lxsetIndex;
-                                                  final lxsetItem = lxsetItems[lxsetIndex];
-                                                  final color = isSelected ? Theme.of(context).colorScheme.onPrimaryContainer : Theme.of(context).colorScheme.outline;
-
-                                                  return Center(
-                                                    child: FittedBox(
-                                                      child: Text(
-                                                        "$lxsetItem",
-                                                        style: TextStyle(color: color, fontSize: 20),
-                                                      ),
-                                                    ),
-                                                  );
-                                                }),
-
-                                                onSelectedItemChanged: (lxsetIndex) {
-                                                  setState(() => this.lxsetIndex = lxsetIndex);
-
-                                                  final lxsetItem = lxsetItems[lxsetIndex];
-
-                                                  selectedlxsetItem = '$lxsetItem';
-                                                },
-                                              ),
-                                            ),
-                                            // SizedBox(height: logbottomHeight)
-                                          ],
-                                        ),
-                                        const SizedBox(width: 4),
-                                      ],
-                                    ),
-                                  ),
-                                  Container(
-                                    padding: const EdgeInsets.only(left: 4.0),
-                                    height: addXlogoutlinebuttonheight,
-                                    width: media.width * addXlogoutlinebuttonwidth,
-                                    child: OutlinedButton(
-                                      style: OutlinedButton.styleFrom(
-                                        backgroundColor: Theme.of(context).colorScheme.primary,
-                                        minimumSize: Size.zero,
-                                        padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                                      ),
-                                      onPressed: () {
-                                        if (todayaddcount < 15) {
-                                          setState(
-                                            () {
-                                              HiveHelper().createXlog(
-                                                Xlog(
-                                                  finished: true,
-                                                  lxdate:
-                                                      // todaydate //지금시간 넣기
-                                                      //1:어제날짜 //테스트,
-                                                      todaydate.subtract(const Duration(days: 0)),
-                                                  xbodypart: _isbodypartcontroller,
-                                                  xType: selectedxTypeItem,
-                                                  lxweight: double.parse(selectedlxweightItems),
-                                                  lxweightUnit: selectedWeighUnint,
-                                                  lxnumber: int.parse(selectedlxnumberItem),
-                                                  lxset: int.parse(selectedlxsetItem),
-                                                ),
-                                              );
-                                              //
-                                              todayaddcount++;
-                                            },
-                                          );
-                                        } else {
-                                          showToastMessage(LocaleData.toastmessage_registernumberexceeded.getString((context)));
-                                        }
-                                      },
-                                      child: FittedBox(
-                                        child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            // 추가 버튼
-                                            // //운동종류
-                                            Container(
-                                              width: (media.width * selectedXtypewidth),
-                                              alignment: Alignment.center,
-                                              child: FittedBox(
+                                              SizedBox(
+                                                height: 20,
                                                 child: Text(
-                                                  selectedxTypeItem.getString(context),
+                                                  LocaleData.workOut.getString((context)),
+                                                  style: TextStyle(
+                                                    color: Theme.of(context).colorScheme.primary,
+                                                    fontSize: logTextSize,
+                                                    fontWeight: FontWeight.w700,
+                                                  ),
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: cupertinoPickerHeight,
+                                                width: media.width * selectedXtypewidth,
+                                                child: Builder(builder: (context) {
+                                                  return CupertinoPicker(
+                                                    // hasSuitableHapticHardware = false로 내부 위젯 수정
+
+                                                    looping: false,
+                                                    //처음나오는 운동으로 변경 필요
+                                                    scrollController: FixedExtentScrollController(initialItem: selectedxTypeIndex),
+                                                    selectionOverlay: const CupertinoPickerDefaultSelectionOverlay(),
+                                                    //Specify the height of lxsetItem
+                                                    itemExtent: cupertinoPickeritemExtent,
+                                                    //Enter a list of exerciseItems to select
+
+                                                    children: List.generate(
+                                                      exerciseItems.length,
+                                                      (xTypeIndex) {
+                                                        final isSelected = this.xTypeIndex == xTypeIndex;
+                                                        // 번역 된 운동으로 보여주기
+                                                        final lxsetItem = exerciseItems[xTypeIndex].getString(context);
+
+                                                        final color = isSelected ? Theme.of(context).colorScheme.onPrimaryContainer : Theme.of(context).colorScheme.outline;
+
+                                                        return Center(
+                                                          child: FittedBox(
+                                                            child: Text(
+                                                              lxsetItem,
+                                                              style: TextStyle(color: color, fontSize: 20),
+                                                            ),
+                                                          ),
+                                                        );
+                                                      },
+                                                    ),
+
+                                                    onSelectedItemChanged: (xTypeIndex) async {
+                                                      setState(
+                                                        () {
+                                                          this.xTypeIndex = xTypeIndex;
+                                                          if (isSelectedYoutube == true) {
+                                                            isSelectedYoutube = false;
+                                                          }
+                                                        },
+                                                      );
+
+                                                      final lxsetItem = exerciseItems[xTypeIndex];
+
+                                                      selectedxTypeItem = lxsetItem;
+                                                      selectedxTypeIndex = xTypeIndex;
+
+                                                      // debugPrint(lxsetItem);
+                                                    },
+                                                  );
+                                                }),
+                                              ),
+                                              // SizedBox(height: logbottomHeight)
+                                            ],
+                                          ),
+
+                                          //2. input weight when exercising---------------------------
+                                          Column(
+                                            children: [
+                                              SizedBox(
+                                                height: logheightmargin,
+                                                width: media.width * selectedXweight,
+                                              ),
+                                              SizedBox(
+                                                height: 20,
+                                                child: Text(
+                                                  (selectedlxweightItems == '0') ? ' ' : selectedWeighUnint,
+                                                  style: TextStyle(
+                                                    color: Theme.of(context).colorScheme.primary,
+                                                    fontSize: logTextSize,
+                                                    fontWeight: FontWeight.w700,
+                                                  ),
+                                                ),
+                                              ),
+
+                                              SizedBox(
+                                                height: cupertinoPickerHeight,
+                                                width: media.width * selectedXweight,
+                                                child: (isSelectedRecentLog == true)
+                                                    ? Container()
+                                                    : CupertinoPicker(
+                                                        looping: false,
+                                                        scrollController: FixedExtentScrollController(initialItem: int.parse(selectedlxweightItems)),
+                                                        selectionOverlay: const CupertinoPickerDefaultSelectionOverlay(),
+                                                        //Specify the height of lxsetItem
+                                                        itemExtent: cupertinoPickeritemExtent,
+                                                        //Enter a list of lxweightItems to select
+
+                                                        children: List.generate(lxweightItems.length, (lxweightIndex) {
+                                                          final isSelected = this.lxweightIndex == lxweightIndex;
+                                                          final lxsetItem = lxweightItems[lxweightIndex];
+                                                          final color = isSelected ? Theme.of(context).colorScheme.onPrimaryContainer : Theme.of(context).colorScheme.outline;
+
+                                                          return Center(
+                                                            child: FittedBox(
+                                                              child: Text(
+                                                                '${lxsetItem * 0.5}',
+                                                                style: TextStyle(color: color, fontSize: 20),
+                                                              ),
+                                                            ),
+                                                          );
+                                                        }),
+
+                                                        onSelectedItemChanged: (lxweightIndex) {
+                                                          setState(() => this.lxweightIndex = lxweightIndex);
+                                                          final lxsetItem = lxweightItems[lxweightIndex];
+
+                                                          selectedlxweightItems = '$lxsetItem';
+                                                        },
+                                                      ),
+                                              ),
+
+                                              // SizedBox(height: logbottomHeight)
+                                            ],
+                                          ),
+
+                                          //3. Number of repetitions per exercise---------------------
+                                          Column(
+                                            children: [
+                                              SizedBox(
+                                                height: logheightmargin,
+                                                width: media.width * selectedXnumber,
+                                              ),
+                                              SizedBox(
+                                                height: 20,
+                                                child: Text(
+                                                  (LocaleData.reps.getString((context)).length < 4)
+                                                      ? LocaleData.reps.getString((context))
+                                                      : LocaleData.reps.getString((context)).substring(0, 3),
+                                                  style: TextStyle(
+                                                    color: Theme.of(context).colorScheme.primary,
+                                                    fontSize: logTextSize,
+                                                    fontWeight: FontWeight.w700,
+                                                  ),
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: cupertinoPickerHeight,
+                                                width: media.width * selectedXnumber,
+                                                child: (isSelectedRecentLog == true)
+                                                    ? Container()
+                                                    : CupertinoPicker(
+                                                        looping: false,
+                                                        scrollController: FixedExtentScrollController(initialItem: int.parse(selectedlxnumberItem) - 1),
+                                                        selectionOverlay: CupertinoPickerDefaultSelectionOverlay(),
+                                                        //Specify the height of lxsetItem
+                                                        itemExtent: cupertinoPickeritemExtent,
+                                                        //Enter a list of lxnumberItems to select
+
+                                                        children: List.generate(lxnumberItems.length, (lxnumberIndex) {
+                                                          final isSelected = this.lxnumberIndex == lxnumberIndex;
+                                                          final lxsetItem = lxnumberItems[lxnumberIndex];
+                                                          final color = isSelected ? Theme.of(context).colorScheme.onPrimaryContainer : Theme.of(context).colorScheme.outline;
+
+                                                          return Center(
+                                                            child: FittedBox(
+                                                              child: Text(
+                                                                '$lxsetItem',
+                                                                style: TextStyle(color: color, fontSize: 20),
+                                                              ),
+                                                            ),
+                                                          );
+                                                        }),
+
+                                                        onSelectedItemChanged: (lxnumberIndex) {
+                                                          setState(() => this.lxnumberIndex = lxnumberIndex);
+
+                                                          final lxsetItem = lxnumberItems[lxnumberIndex];
+
+                                                          selectedlxnumberItem = '$lxsetItem';
+                                                        },
+                                                      ),
+                                              ),
+                                              // SizedBox(height: logbottomHeight)
+                                            ],
+                                          ),
+
+                                          //4. input number of sets-----------------------------------
+                                          Column(
+                                            children: [
+                                              SizedBox(
+                                                height: logheightmargin,
+                                                width: media.width * selectedXset,
+                                              ),
+                                              SizedBox(
+                                                height: 20,
+                                                child: Text(
+                                                  (LocaleData.sets.getString((context)).length < 4)
+                                                      ? LocaleData.sets.getString((context))
+                                                      : LocaleData.sets.getString((context)).substring(0, 3),
+                                                  textAlign: TextAlign.left,
+                                                  style: TextStyle(
+                                                    color: Theme.of(context).colorScheme.primary,
+                                                    fontSize: logTextSize,
+                                                    fontWeight: FontWeight.w700,
+                                                  ),
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: cupertinoPickerHeight,
+                                                width: media.width * selectedXset,
+                                                child: (isSelectedRecentLog == true)
+                                                    ? Container()
+                                                    : CupertinoPicker(
+                                                        looping: false,
+                                                        scrollController: FixedExtentScrollController(initialItem: int.parse(selectedlxsetItem) - 1),
+                                                        selectionOverlay: CupertinoPickerDefaultSelectionOverlay(),
+                                                        //Specify the height of lxsetItem
+                                                        itemExtent: cupertinoPickeritemExtent,
+                                                        //Enter a list of lxsetItems to select
+
+                                                        children: List.generate(lxsetItems.length, (lxsetIndex) {
+                                                          final isSelected = this.lxsetIndex == lxsetIndex;
+                                                          final lxsetItem = lxsetItems[lxsetIndex];
+                                                          final color = isSelected ? Theme.of(context).colorScheme.onPrimaryContainer : Theme.of(context).colorScheme.outline;
+
+                                                          return Center(
+                                                            child: FittedBox(
+                                                              child: Text(
+                                                                "$lxsetItem",
+                                                                style: TextStyle(color: color, fontSize: 20),
+                                                              ),
+                                                            ),
+                                                          );
+                                                        }),
+
+                                                        onSelectedItemChanged: (lxsetIndex) {
+                                                          setState(() => this.lxsetIndex = lxsetIndex);
+
+                                                          final lxsetItem = lxsetItems[lxsetIndex];
+
+                                                          selectedlxsetItem = '$lxsetItem';
+                                                        },
+                                                      ),
+                                              ),
+                                              // SizedBox(height: logbottomHeight)
+                                            ],
+                                          ),
+                                          const SizedBox(width: 4),
+                                        ],
+                                      ),
+                                    ),
+                                    Container(
+                                      padding: const EdgeInsets.only(left: 4.0),
+                                      height: addXlogoutlinebuttonheight,
+                                      width: media.width * addXlogoutlinebuttonwidth,
+                                      child: OutlinedButton(
+                                        style: OutlinedButton.styleFrom(
+                                          backgroundColor: Theme.of(context).colorScheme.primary,
+                                          minimumSize: Size.zero,
+                                          padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                                          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                                        ),
+                                        onPressed: () {
+                                          if (todayaddcount < 15) {
+                                            setState(
+                                              () {
+                                                HiveHelper().createXlog(
+                                                  Xlog(
+                                                    finished: true,
+                                                    lxdate:
+                                                        // todaydate //지금시간 넣기
+                                                        //1:어제날짜 //테스트,
+                                                        todaydate.subtract(const Duration(days: 0)),
+                                                    xbodypart: _isbodypartcontroller,
+                                                    xType: selectedxTypeItem,
+                                                    lxweight: double.parse(selectedlxweightItems),
+                                                    lxweightUnit: selectedWeighUnint,
+                                                    lxnumber: int.parse(selectedlxnumberItem),
+                                                    lxset: int.parse(selectedlxsetItem),
+                                                  ),
+                                                );
+                                                //
+                                                todayaddcount++;
+                                              },
+                                            );
+                                          } else {
+                                            showToastMessage(LocaleData.toastmessage_registernumberexceeded.getString((context)));
+                                          }
+                                        },
+                                        child: FittedBox(
+                                          child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              // 추가 버튼
+                                              // //운동종류
+                                              Container(
+                                                width: (media.width * selectedXtypewidth),
+                                                alignment: Alignment.center,
+                                                child: FittedBox(
+                                                  child: Text(
+                                                    selectedxTypeItem.getString(context),
+                                                    style: TextStyle(
+                                                      color: Theme.of(context).colorScheme.onPrimary,
+                                                      fontSize: logTextSizeselected,
+                                                      fontWeight: logTextFontselectedWeight,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              // //운동 중량
+                                              Container(
+                                                alignment: Alignment.center,
+                                                width: media.width * selectedXweight,
+                                                child: Text(
+                                                  (selectedlxweightItems == '0') ? ' ' : '${int.parse(selectedlxweightItems) * 0.5}',
                                                   style: TextStyle(
                                                     color: Theme.of(context).colorScheme.onPrimary,
                                                     fontSize: logTextSizeselected,
@@ -3333,54 +3487,41 @@ class XlogCreateViewState extends State<XlogCreateView> {
                                                   ),
                                                 ),
                                               ),
-                                            ),
-                                            // //운동 중량
-                                            Container(
-                                              alignment: Alignment.center,
-                                              width: media.width * selectedXweight,
-                                              child: Text(
-                                                (selectedlxweightItems == '0') ? ' ' : '${int.parse(selectedlxweightItems) * 0.5}',
-                                                style: TextStyle(
-                                                  color: Theme.of(context).colorScheme.onPrimary,
-                                                  fontSize: logTextSizeselected,
-                                                  fontWeight: logTextFontselectedWeight,
+                                              // //운동횟수
+                                              Container(
+                                                alignment: Alignment.center,
+                                                width: media.width * selectedXnumber,
+                                                child: Text(
+                                                  selectedlxnumberItem,
+                                                  style: TextStyle(
+                                                    color: Theme.of(context).colorScheme.onPrimary,
+                                                    fontSize: logTextSizeselected,
+                                                    fontWeight: logTextFontselectedWeight,
+                                                  ),
                                                 ),
                                               ),
-                                            ),
-                                            // //운동횟수
-                                            Container(
-                                              alignment: Alignment.center,
-                                              width: media.width * selectedXnumber,
-                                              child: Text(
-                                                selectedlxnumberItem,
-                                                style: TextStyle(
-                                                  color: Theme.of(context).colorScheme.onPrimary,
-                                                  fontSize: logTextSizeselected,
-                                                  fontWeight: logTextFontselectedWeight,
+                                              // //운동세트수
+                                              Container(
+                                                alignment: Alignment.center,
+                                                width: media.width * selectedXset,
+                                                child: Text(
+                                                  selectedlxsetItem,
+                                                  style: TextStyle(
+                                                    color: Theme.of(context).colorScheme.onPrimary,
+                                                    fontSize: logTextSizeselected,
+                                                    fontWeight: logTextFontselectedWeight,
+                                                  ),
                                                 ),
                                               ),
-                                            ),
-                                            // //운동세트수
-                                            Container(
-                                              alignment: Alignment.center,
-                                              width: media.width * selectedXset,
-                                              child: Text(
-                                                selectedlxsetItem,
-                                                style: TextStyle(
-                                                  color: Theme.of(context).colorScheme.onPrimary,
-                                                  fontSize: logTextSizeselected,
-                                                  fontWeight: logTextFontselectedWeight,
-                                                ),
-                                              ),
-                                            ),
-                                          ],
+                                            ],
+                                          ),
                                         ),
+                                        // 기록추가부분
                                       ),
-                                      // 기록추가부분
                                     ),
-                                  ),
-                                ],
-                              ),
+                                  ],
+                                );
+                              }),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [

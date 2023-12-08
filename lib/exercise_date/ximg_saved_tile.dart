@@ -61,7 +61,7 @@ class _XimgSavedTileState extends State<XimgSavedTile> {
           ),
         ),
         Padding(
-          padding: EdgeInsets.only(bottom: (media.width >= 700) ? 0 : 4), //아이패드 화면 크기면 0 min-device-width : 768px
+          padding: EdgeInsets.only(bottom: (media.width >= 700) ? 0 : 3.5), //아이패드 화면 크기면 0 min-device-width : 768px
           child: Container(
             constraints: const BoxConstraints(maxHeight: 22),
             // color: TColor.black.withOpacity(0.25),
