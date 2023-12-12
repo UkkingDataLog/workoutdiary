@@ -46,6 +46,8 @@ dependencies:
   shared_preferences: ^2.2.2
   lindi_sticker_widget: ^0.1.1
   text_editor: ^0.7.0
+  firebase_core: ^2.24.1
+  firebase_analytics: ^10.7.3
 flutter_native_splash:
   andriod: true
   ios: true

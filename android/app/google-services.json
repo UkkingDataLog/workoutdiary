@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "412796109235",
+    "project_id": "workoutdiary-f43ad",
+    "storage_bucket": "workoutdiary-f43ad.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:412796109235:android:5d42136a5ffb9ab1178bc6",
+        "android_client_info": {
+          "package_name": "com.ukkingdata.workoutdiary"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAVtx1hQkVkvA6gZ4KoOWBQwf2Cd4R-G5s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

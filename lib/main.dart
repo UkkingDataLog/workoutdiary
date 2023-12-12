@@ -19,12 +19,16 @@ import 'package:workoutdiary/operating_doc/term_of_use_view.dart';
 import 'package:workoutdiary/providers/app_image_provider.dart';
 
 import 'package:app_tracking_transparency/app_tracking_transparency.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 
 int? isviewed;
 
 @override
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   SharedPreferences prefs = await SharedPreferences.getInstance();
   isviewed = prefs.getInt('onBoard');
@@ -63,6 +67,7 @@ void main() async {
 }
 
 class MyApp extends StatefulWidget {
+  static FirebaseAnalytics analytics = FirebaseAnalytics.instance;
   MyApp({super.key});
 
   @override

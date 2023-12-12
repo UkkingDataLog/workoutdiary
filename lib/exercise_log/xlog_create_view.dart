@@ -18,6 +18,7 @@ import 'package:permission_handler/permission_handler.dart';
 
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:workoutdiary/analytics/ga_event.dart';
 
 import 'package:workoutdiary/common/colo_extension.dart';
 import 'package:workoutdiary/common/hive_helper.dart';
@@ -2076,6 +2077,9 @@ class XlogCreateViewState extends State<XlogCreateView> {
                               child: IconButton(
                                 color: Theme.of(context).colorScheme.onPrimary,
                                 onPressed: (() {
+                                  gaEvent('click_CalendarScreen', {
+                                    'color': 'purple',
+                                  });
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
@@ -2395,7 +2399,8 @@ class XlogCreateViewState extends State<XlogCreateView> {
                                                       child: Image.asset(
                                                         'assets/img/yt_logo_mono_light.png',
                                                         scale: 0.1,
-                                                      )),
+                                                      ),
+                                                    ),
                                             ),
                                           ),
                                         ),
