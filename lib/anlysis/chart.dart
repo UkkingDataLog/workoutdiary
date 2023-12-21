@@ -8,8 +8,11 @@ import 'package:workoutdiary/hivedata/xlog.dart';
 import 'package:workoutdiary/localization/locales.dart';
 
 class ChartCustom extends StatefulWidget {
-  const ChartCustom({
+  ChartCustom({
     super.key,
+    this.isxtype = false,
+    this.isxtypeName = " ",
+    //
     required this.value, // 0: day, 1: week, 2: month
     required this.selectedbodypart, // 0: all, 1: legs, 2: shoulders, 3: chest, 4: arms, 5: back, 6: abs
     required this.rangeStart,
@@ -18,6 +21,9 @@ class ChartCustom extends StatefulWidget {
     required this.weightUnits,
     required this.xlogs,
   });
+  //
+  bool isxtype;
+  String isxtypeName;
   //
   final int value;
   final int selectedbodypart;
@@ -109,21 +115,23 @@ class _BarChartSample6State extends State<ChartCustom> {
     return BarChartGroupData(
       x: x,
       groupVertically: true,
-      showingTooltipIndicators: (widget.selectedbodypart == 0 && (legs > 0 || shoulders > 0 || chest > 0 || arms > 0 || back > 0 || abs > 0))
-          ? [6]
-          : (widget.selectedbodypart == 1 && legs > 0)
-              ? [0]
-              : (widget.selectedbodypart == 2 && shoulders > 0)
-                  ? [1]
-                  : (widget.selectedbodypart == 3 && chest > 0)
-                      ? [2]
-                      : (widget.selectedbodypart == 4 && arms > 0)
-                          ? [3]
-                          : (widget.selectedbodypart == 5 && back > 0)
-                              ? [4]
-                              : (abs > 0)
-                                  ? [5]
-                                  : [],
+      showingTooltipIndicators: (widget.isxtype == true)
+          ? []
+          : (widget.selectedbodypart == 0 && (legs > 0 || shoulders > 0 || chest > 0 || arms > 0 || back > 0 || abs > 0))
+              ? [6]
+              : (widget.selectedbodypart == 1 && legs > 0)
+                  ? [0]
+                  : (widget.selectedbodypart == 2 && shoulders > 0)
+                      ? [1]
+                      : (widget.selectedbodypart == 3 && chest > 0)
+                          ? [2]
+                          : (widget.selectedbodypart == 4 && arms > 0)
+                              ? [3]
+                              : (widget.selectedbodypart == 5 && back > 0)
+                                  ? [4]
+                                  : (abs > 0)
+                                      ? [5]
+                                      : [],
       barRods: [
         BarChartRodData(
           fromY: 0,
@@ -216,6 +224,7 @@ class _BarChartSample6State extends State<ChartCustom> {
 
   @override
   Widget build(BuildContext context) {
+    var media = MediaQuery.of(context).size;
     sumBodypartbyDateTime.clear();
     sum0.clear();
 
@@ -244,145 +253,290 @@ class _BarChartSample6State extends State<ChartCustom> {
 
     //두날짜사이의 차이 개수구하기
     // print(widget.rangeEnd.difference(widget.rangeStart).inDays + 1);
+    if (widget.isxtype == false) {
+      for (int index = 0; index < widget.xlogs.length; index++) {
+        if (widget.xlogs[index].finished == true) {
+          for (int datetimeindex = 0; datetimeindex < widget.rangeEnd.difference(widget.rangeStart).inDays + 1; datetimeindex++) {
+            if (getHashCodeInverse(widget.xlogs[index].lxdate) == getHashCodeInverse(widget.rangeStart.subtract(Duration(days: -datetimeindex)))) {
+              switch (widget.xlogs[index].xbodypart) {
+                case '하체':
+                  sumBodypartbyDateTime[widget.rangeStart.subtract(Duration(days: -datetimeindex))]![0] += widget.xlogs[index].lxweight *
+                      0.5 *
+                      unitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
+                      widget.xlogs[index].lxnumber *
+                      widget.xlogs[index].lxset;
+                  // 운동부위의 운동종류별 운동강도
+                  if (sumLeg.containsKey(widget.xlogs[index].xType)) {
+                    sumLeg[widget.xlogs[index].xType] = sumLeg[widget.xlogs[index].xType]! +
+                        widget.xlogs[index].lxweight *
+                            0.5 *
+                            unitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
+                            widget.xlogs[index].lxnumber *
+                            widget.xlogs[index].lxset;
+                  } else {
+                    sumLeg[widget.xlogs[index].xType] = widget.xlogs[index].lxweight *
+                        0.5 *
+                        unitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
+                        widget.xlogs[index].lxnumber *
+                        widget.xlogs[index].lxset;
+                  }
 
-    for (int index = 0; index < widget.xlogs.length; index++) {
-      if (widget.xlogs[index].finished == true) {
-        for (int datetimeindex = 0; datetimeindex < widget.rangeEnd.difference(widget.rangeStart).inDays + 1; datetimeindex++) {
-          if (getHashCodeInverse(widget.xlogs[index].lxdate) == getHashCodeInverse(widget.rangeStart.subtract(Duration(days: -datetimeindex)))) {
-            switch (widget.xlogs[index].xbodypart) {
-              case '하체':
-                sumBodypartbyDateTime[widget.rangeStart.subtract(Duration(days: -datetimeindex))]![0] += widget.xlogs[index].lxweight *
-                    0.5 *
-                    unitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
-                    widget.xlogs[index].lxnumber *
-                    widget.xlogs[index].lxset;
-                // 운동부위의 운동종류별 운동강도
-                if (sumLeg.containsKey(widget.xlogs[index].xType)) {
-                  sumLeg[widget.xlogs[index].xType] = sumLeg[widget.xlogs[index].xType]! +
-                      widget.xlogs[index].lxweight *
-                          0.5 *
-                          unitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
-                          widget.xlogs[index].lxnumber *
-                          widget.xlogs[index].lxset;
-                } else {
-                  sumLeg[widget.xlogs[index].xType] = widget.xlogs[index].lxweight *
+                  break;
+                case '어깨':
+                  sumBodypartbyDateTime[widget.rangeStart.subtract(Duration(days: -datetimeindex))]![1] += widget.xlogs[index].lxweight *
                       0.5 *
                       unitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
                       widget.xlogs[index].lxnumber *
                       widget.xlogs[index].lxset;
-                }
+                  // 운동부위의 운동종류별 운동강도
+                  if (sumSho.containsKey(widget.xlogs[index].xType)) {
+                    sumSho[widget.xlogs[index].xType] = sumSho[widget.xlogs[index].xType]! +
+                        widget.xlogs[index].lxweight *
+                            0.5 *
+                            unitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
+                            widget.xlogs[index].lxnumber *
+                            widget.xlogs[index].lxset;
+                  } else {
+                    sumSho[widget.xlogs[index].xType] = widget.xlogs[index].lxweight *
+                        0.5 *
+                        unitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
+                        widget.xlogs[index].lxnumber *
+                        widget.xlogs[index].lxset;
+                  }
+                  break;
+                case '가슴':
+                  sumBodypartbyDateTime[widget.rangeStart.subtract(Duration(days: -datetimeindex))]![2] += widget.xlogs[index].lxweight *
+                      0.5 *
+                      unitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
+                      widget.xlogs[index].lxnumber *
+                      widget.xlogs[index].lxset;
+                  // 운동부위의 운동종류별 운동강도
+                  if (sumChe.containsKey(widget.xlogs[index].xType)) {
+                    sumChe[widget.xlogs[index].xType] = sumChe[widget.xlogs[index].xType]! +
+                        widget.xlogs[index].lxweight *
+                            0.5 *
+                            unitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
+                            widget.xlogs[index].lxnumber *
+                            widget.xlogs[index].lxset;
+                  } else {
+                    sumChe[widget.xlogs[index].xType] = widget.xlogs[index].lxweight *
+                        0.5 *
+                        unitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
+                        widget.xlogs[index].lxnumber *
+                        widget.xlogs[index].lxset;
+                  }
+                  break;
+                case '팔':
+                  sumBodypartbyDateTime[widget.rangeStart.subtract(Duration(days: -datetimeindex))]![3] += widget.xlogs[index].lxweight *
+                      0.5 *
+                      unitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
+                      widget.xlogs[index].lxnumber *
+                      widget.xlogs[index].lxset;
+                  // 운동부위의 운동종류별 운동강도
+                  if (sumArm.containsKey(widget.xlogs[index].xType)) {
+                    sumArm[widget.xlogs[index].xType] = sumArm[widget.xlogs[index].xType]! +
+                        widget.xlogs[index].lxweight *
+                            0.5 *
+                            unitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
+                            widget.xlogs[index].lxnumber *
+                            widget.xlogs[index].lxset;
+                  } else {
+                    sumArm[widget.xlogs[index].xType] = widget.xlogs[index].lxweight *
+                        0.5 *
+                        unitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
+                        widget.xlogs[index].lxnumber *
+                        widget.xlogs[index].lxset;
+                  }
+                  break;
+                case '등':
+                  sumBodypartbyDateTime[widget.rangeStart.subtract(Duration(days: -datetimeindex))]![4] += widget.xlogs[index].lxweight *
+                      0.5 *
+                      unitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
+                      widget.xlogs[index].lxnumber *
+                      widget.xlogs[index].lxset;
+                  // 운동부위의 운동종류별 운동강도
+                  if (sumBac.containsKey(widget.xlogs[index].xType)) {
+                    sumBac[widget.xlogs[index].xType] = sumBac[widget.xlogs[index].xType]! +
+                        widget.xlogs[index].lxweight *
+                            0.5 *
+                            unitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
+                            widget.xlogs[index].lxnumber *
+                            widget.xlogs[index].lxset;
+                  } else {
+                    sumBac[widget.xlogs[index].xType] = widget.xlogs[index].lxweight *
+                        0.5 *
+                        unitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
+                        widget.xlogs[index].lxnumber *
+                        widget.xlogs[index].lxset;
+                  }
+                  break;
+                case '복근':
+                  sumBodypartbyDateTime[widget.rangeStart.subtract(Duration(days: -datetimeindex))]![5] += widget.xlogs[index].lxweight *
+                      0.5 *
+                      unitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
+                      widget.xlogs[index].lxnumber *
+                      widget.xlogs[index].lxset;
+                  // 운동부위의 운동종류별 운동강도
+                  if (sumAbs.containsKey(widget.xlogs[index].xType)) {
+                    sumAbs[widget.xlogs[index].xType] = sumAbs[widget.xlogs[index].xType]! +
+                        widget.xlogs[index].lxweight *
+                            0.5 *
+                            unitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
+                            widget.xlogs[index].lxnumber *
+                            widget.xlogs[index].lxset;
+                  } else {
+                    sumAbs[widget.xlogs[index].xType] = widget.xlogs[index].lxweight *
+                        0.5 *
+                        unitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
+                        widget.xlogs[index].lxnumber *
+                        widget.xlogs[index].lxset;
+                  }
+                  break;
+              }
+            }
+          }
+        }
+      }
+    } else {
+      for (int index = 0; index < widget.xlogs.length; index++) {
+        if (widget.xlogs[index].finished == true && widget.xlogs[index].xType == widget.isxtypeName) {
+          for (int datetimeindex = 0; datetimeindex < widget.rangeEnd.difference(widget.rangeStart).inDays + 1; datetimeindex++) {
+            if (getHashCodeInverse(widget.xlogs[index].lxdate) == getHashCodeInverse(widget.rangeStart.subtract(Duration(days: -datetimeindex)))) {
+              switch (widget.xlogs[index].xbodypart) {
+                case '하체':
+                  sumBodypartbyDateTime[widget.rangeStart.subtract(Duration(days: -datetimeindex))]![0] += widget.xlogs[index].lxweight *
+                      0.5 *
+                      unitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
+                      widget.xlogs[index].lxnumber *
+                      widget.xlogs[index].lxset;
+                  // 운동부위의 운동종류별 운동강도
+                  if (sumLeg.containsKey(widget.xlogs[index].xType)) {
+                    sumLeg[widget.xlogs[index].xType] = sumLeg[widget.xlogs[index].xType]! +
+                        widget.xlogs[index].lxweight *
+                            0.5 *
+                            unitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
+                            widget.xlogs[index].lxnumber *
+                            widget.xlogs[index].lxset;
+                  } else {
+                    sumLeg[widget.xlogs[index].xType] = widget.xlogs[index].lxweight *
+                        0.5 *
+                        unitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
+                        widget.xlogs[index].lxnumber *
+                        widget.xlogs[index].lxset;
+                  }
 
-                break;
-              case '어깨':
-                sumBodypartbyDateTime[widget.rangeStart.subtract(Duration(days: -datetimeindex))]![1] += widget.xlogs[index].lxweight *
-                    0.5 *
-                    unitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
-                    widget.xlogs[index].lxnumber *
-                    widget.xlogs[index].lxset;
-                // 운동부위의 운동종류별 운동강도
-                if (sumSho.containsKey(widget.xlogs[index].xType)) {
-                  sumSho[widget.xlogs[index].xType] = sumSho[widget.xlogs[index].xType]! +
-                      widget.xlogs[index].lxweight *
-                          0.5 *
-                          unitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
-                          widget.xlogs[index].lxnumber *
-                          widget.xlogs[index].lxset;
-                } else {
-                  sumSho[widget.xlogs[index].xType] = widget.xlogs[index].lxweight *
+                  break;
+                case '어깨':
+                  sumBodypartbyDateTime[widget.rangeStart.subtract(Duration(days: -datetimeindex))]![1] += widget.xlogs[index].lxweight *
                       0.5 *
                       unitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
                       widget.xlogs[index].lxnumber *
                       widget.xlogs[index].lxset;
-                }
-                break;
-              case '가슴':
-                sumBodypartbyDateTime[widget.rangeStart.subtract(Duration(days: -datetimeindex))]![2] += widget.xlogs[index].lxweight *
-                    0.5 *
-                    unitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
-                    widget.xlogs[index].lxnumber *
-                    widget.xlogs[index].lxset;
-                // 운동부위의 운동종류별 운동강도
-                if (sumChe.containsKey(widget.xlogs[index].xType)) {
-                  sumChe[widget.xlogs[index].xType] = sumChe[widget.xlogs[index].xType]! +
-                      widget.xlogs[index].lxweight *
-                          0.5 *
-                          unitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
-                          widget.xlogs[index].lxnumber *
-                          widget.xlogs[index].lxset;
-                } else {
-                  sumChe[widget.xlogs[index].xType] = widget.xlogs[index].lxweight *
+                  // 운동부위의 운동종류별 운동강도
+                  if (sumSho.containsKey(widget.xlogs[index].xType)) {
+                    sumSho[widget.xlogs[index].xType] = sumSho[widget.xlogs[index].xType]! +
+                        widget.xlogs[index].lxweight *
+                            0.5 *
+                            unitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
+                            widget.xlogs[index].lxnumber *
+                            widget.xlogs[index].lxset;
+                  } else {
+                    sumSho[widget.xlogs[index].xType] = widget.xlogs[index].lxweight *
+                        0.5 *
+                        unitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
+                        widget.xlogs[index].lxnumber *
+                        widget.xlogs[index].lxset;
+                  }
+                  break;
+                case '가슴':
+                  sumBodypartbyDateTime[widget.rangeStart.subtract(Duration(days: -datetimeindex))]![2] += widget.xlogs[index].lxweight *
                       0.5 *
                       unitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
                       widget.xlogs[index].lxnumber *
                       widget.xlogs[index].lxset;
-                }
-                break;
-              case '팔':
-                sumBodypartbyDateTime[widget.rangeStart.subtract(Duration(days: -datetimeindex))]![3] += widget.xlogs[index].lxweight *
-                    0.5 *
-                    unitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
-                    widget.xlogs[index].lxnumber *
-                    widget.xlogs[index].lxset;
-                // 운동부위의 운동종류별 운동강도
-                if (sumArm.containsKey(widget.xlogs[index].xType)) {
-                  sumArm[widget.xlogs[index].xType] = sumArm[widget.xlogs[index].xType]! +
-                      widget.xlogs[index].lxweight *
-                          0.5 *
-                          unitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
-                          widget.xlogs[index].lxnumber *
-                          widget.xlogs[index].lxset;
-                } else {
-                  sumArm[widget.xlogs[index].xType] = widget.xlogs[index].lxweight *
+                  // 운동부위의 운동종류별 운동강도
+                  if (sumChe.containsKey(widget.xlogs[index].xType)) {
+                    sumChe[widget.xlogs[index].xType] = sumChe[widget.xlogs[index].xType]! +
+                        widget.xlogs[index].lxweight *
+                            0.5 *
+                            unitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
+                            widget.xlogs[index].lxnumber *
+                            widget.xlogs[index].lxset;
+                  } else {
+                    sumChe[widget.xlogs[index].xType] = widget.xlogs[index].lxweight *
+                        0.5 *
+                        unitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
+                        widget.xlogs[index].lxnumber *
+                        widget.xlogs[index].lxset;
+                  }
+                  break;
+                case '팔':
+                  sumBodypartbyDateTime[widget.rangeStart.subtract(Duration(days: -datetimeindex))]![3] += widget.xlogs[index].lxweight *
                       0.5 *
                       unitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
                       widget.xlogs[index].lxnumber *
                       widget.xlogs[index].lxset;
-                }
-                break;
-              case '등':
-                sumBodypartbyDateTime[widget.rangeStart.subtract(Duration(days: -datetimeindex))]![4] += widget.xlogs[index].lxweight *
-                    0.5 *
-                    unitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
-                    widget.xlogs[index].lxnumber *
-                    widget.xlogs[index].lxset;
-                // 운동부위의 운동종류별 운동강도
-                if (sumBac.containsKey(widget.xlogs[index].xType)) {
-                  sumBac[widget.xlogs[index].xType] = sumBac[widget.xlogs[index].xType]! +
-                      widget.xlogs[index].lxweight *
-                          0.5 *
-                          unitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
-                          widget.xlogs[index].lxnumber *
-                          widget.xlogs[index].lxset;
-                } else {
-                  sumBac[widget.xlogs[index].xType] = widget.xlogs[index].lxweight *
+                  // 운동부위의 운동종류별 운동강도
+                  if (sumArm.containsKey(widget.xlogs[index].xType)) {
+                    sumArm[widget.xlogs[index].xType] = sumArm[widget.xlogs[index].xType]! +
+                        widget.xlogs[index].lxweight *
+                            0.5 *
+                            unitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
+                            widget.xlogs[index].lxnumber *
+                            widget.xlogs[index].lxset;
+                  } else {
+                    sumArm[widget.xlogs[index].xType] = widget.xlogs[index].lxweight *
+                        0.5 *
+                        unitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
+                        widget.xlogs[index].lxnumber *
+                        widget.xlogs[index].lxset;
+                  }
+                  break;
+                case '등':
+                  sumBodypartbyDateTime[widget.rangeStart.subtract(Duration(days: -datetimeindex))]![4] += widget.xlogs[index].lxweight *
                       0.5 *
                       unitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
                       widget.xlogs[index].lxnumber *
                       widget.xlogs[index].lxset;
-                }
-                break;
-              case '복근':
-                sumBodypartbyDateTime[widget.rangeStart.subtract(Duration(days: -datetimeindex))]![5] += widget.xlogs[index].lxweight *
-                    0.5 *
-                    unitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
-                    widget.xlogs[index].lxnumber *
-                    widget.xlogs[index].lxset;
-                // 운동부위의 운동종류별 운동강도
-                if (sumAbs.containsKey(widget.xlogs[index].xType)) {
-                  sumAbs[widget.xlogs[index].xType] = sumAbs[widget.xlogs[index].xType]! +
-                      widget.xlogs[index].lxweight *
-                          0.5 *
-                          unitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
-                          widget.xlogs[index].lxnumber *
-                          widget.xlogs[index].lxset;
-                } else {
-                  sumAbs[widget.xlogs[index].xType] = widget.xlogs[index].lxweight *
+                  // 운동부위의 운동종류별 운동강도
+                  if (sumBac.containsKey(widget.xlogs[index].xType)) {
+                    sumBac[widget.xlogs[index].xType] = sumBac[widget.xlogs[index].xType]! +
+                        widget.xlogs[index].lxweight *
+                            0.5 *
+                            unitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
+                            widget.xlogs[index].lxnumber *
+                            widget.xlogs[index].lxset;
+                  } else {
+                    sumBac[widget.xlogs[index].xType] = widget.xlogs[index].lxweight *
+                        0.5 *
+                        unitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
+                        widget.xlogs[index].lxnumber *
+                        widget.xlogs[index].lxset;
+                  }
+                  break;
+                case '복근':
+                  sumBodypartbyDateTime[widget.rangeStart.subtract(Duration(days: -datetimeindex))]![5] += widget.xlogs[index].lxweight *
                       0.5 *
                       unitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
                       widget.xlogs[index].lxnumber *
                       widget.xlogs[index].lxset;
-                }
-                break;
+                  // 운동부위의 운동종류별 운동강도
+                  if (sumAbs.containsKey(widget.xlogs[index].xType)) {
+                    sumAbs[widget.xlogs[index].xType] = sumAbs[widget.xlogs[index].xType]! +
+                        widget.xlogs[index].lxweight *
+                            0.5 *
+                            unitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
+                            widget.xlogs[index].lxnumber *
+                            widget.xlogs[index].lxset;
+                  } else {
+                    sumAbs[widget.xlogs[index].xType] = widget.xlogs[index].lxweight *
+                        0.5 *
+                        unitConversion(widget.xlogs[index].lxweightUnit, widget.weightUnits) *
+                        widget.xlogs[index].lxnumber *
+                        widget.xlogs[index].lxset;
+                  }
+                  break;
+              }
             }
           }
         }
@@ -862,180 +1016,182 @@ class _BarChartSample6State extends State<ChartCustom> {
     return Column(
       children: [
         // pie ChartCustom
-        Card(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                // Text(
-                //   "${widget.rangeStart.month}/${widget.rangeStart.day}~${widget.rangeEnd.month}/${widget.rangeEnd.day}",
-                //   style: TextStyle(
-                //     color: Theme.of(context).colorScheme.onBackground,
-                //     fontSize: 16,
-                //     fontWeight: FontWeight.bold,
-                //   ),
-                // ),
-                const SizedBox(height: 8),
-                Padding(
+        (widget.isxtype)
+            ? Container()
+            : Card(
+                child: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: SizedBox(
-                    width: double.infinity,
-                    height: 200,
-                    child: (rank[0] == 0)
-                        ? Image.asset('./assets/img/emptyBox.png')
-                        : Row(
-                            children: <Widget>[
-                              // const SizedBox(width: 18),
-                              Expanded(
-                                child: AspectRatio(
-                                  aspectRatio: 1.2,
-                                  child: PieChart(
-                                    PieChartData(
-                                      pieTouchData: PieTouchData(
-                                        touchCallback: (FlTouchEvent event, pieTouchResponse) {
-                                          setState(() {
-                                            if (!event.isInterestedForInteractions || pieTouchResponse == null || pieTouchResponse.touchedSection == null) {
-                                              touchedIndex = -1;
-                                              return;
-                                            }
-                                            touchedIndex = pieTouchResponse.touchedSection!.touchedSectionIndex;
-                                          });
-                                        },
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      // Text(
+                      //   "${widget.rangeStart.month}/${widget.rangeStart.day}~${widget.rangeEnd.month}/${widget.rangeEnd.day}",
+                      //   style: TextStyle(
+                      //     color: Theme.of(context).colorScheme.onBackground,
+                      //     fontSize: 16,
+                      //     fontWeight: FontWeight.bold,
+                      //   ),
+                      // ),
+                      const SizedBox(height: 8),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: SizedBox(
+                          width: double.infinity,
+                          height: 200,
+                          child: (rank[0] == 0)
+                              ? Image.asset('./assets/img/emptyBox.png')
+                              : Row(
+                                  children: <Widget>[
+                                    // const SizedBox(width: 18),
+                                    Expanded(
+                                      child: AspectRatio(
+                                        aspectRatio: 1.2,
+                                        child: PieChart(
+                                          PieChartData(
+                                            pieTouchData: PieTouchData(
+                                              touchCallback: (FlTouchEvent event, pieTouchResponse) {
+                                                setState(() {
+                                                  if (!event.isInterestedForInteractions || pieTouchResponse == null || pieTouchResponse.touchedSection == null) {
+                                                    touchedIndex = -1;
+                                                    return;
+                                                  }
+                                                  touchedIndex = pieTouchResponse.touchedSection!.touchedSectionIndex;
+                                                });
+                                              },
+                                            ),
+                                            borderData: FlBorderData(
+                                              show: false,
+                                            ),
+                                            sectionsSpace: 0,
+                                            centerSpaceRadius: 40,
+                                            sections: showingSections(),
+                                          ),
+                                        ),
                                       ),
-                                      borderData: FlBorderData(
-                                        show: false,
-                                      ),
-                                      sectionsSpace: 0,
-                                      centerSpaceRadius: 40,
-                                      sections: showingSections(),
                                     ),
-                                  ),
+                                    SizedBox(
+                                      width: MediaQuery.of(context).size.width * 0.35,
+                                      child: FittedBox(
+                                        fit: BoxFit.scaleDown,
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          children: <Widget>[
+                                            (rank[0] == 0)
+                                                ? Container()
+                                                : Row(
+                                                    children: [
+                                                      SizedBox(
+                                                        height: 24,
+                                                        width: 24,
+                                                        child: Image.asset('./assets/img/medal_1.png'),
+                                                      ),
+                                                      Padding(
+                                                        padding: const EdgeInsets.all(2.0),
+                                                        child: Indicator(
+                                                          color: colorRank1,
+                                                          text: rankName[0],
+                                                          isSquare: true,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                            (rank[1] == 0)
+                                                ? Container()
+                                                : Row(
+                                                    children: [
+                                                      SizedBox(
+                                                        height: 24,
+                                                        width: 24,
+                                                        child: Image.asset('./assets/img/medal_2.png'),
+                                                      ),
+                                                      Padding(
+                                                        padding: const EdgeInsets.all(2.0),
+                                                        child: Indicator(
+                                                          color: colorRank2,
+                                                          text: rankName[1],
+                                                          isSquare: true,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                            (rank[2] == 0)
+                                                ? Container()
+                                                : Row(
+                                                    children: [
+                                                      SizedBox(
+                                                        height: 24,
+                                                        width: 24,
+                                                        child: Image.asset('./assets/img/medal_3.png'),
+                                                      ),
+                                                      Padding(
+                                                        padding: const EdgeInsets.all(2.0),
+                                                        child: Indicator(
+                                                          color: colorRank3,
+                                                          text: rankName[2],
+                                                          isSquare: true,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                            (rank[3] == 0)
+                                                ? Container()
+                                                : Row(
+                                                    children: [
+                                                      const SizedBox(height: 24, width: 24),
+                                                      Padding(
+                                                        padding: const EdgeInsets.all(2.0),
+                                                        child: Indicator(
+                                                          color: colorRank4,
+                                                          text: rankName[3],
+                                                          isSquare: true,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                            (rank[4] == 0)
+                                                ? Container()
+                                                : Row(
+                                                    children: [
+                                                      const SizedBox(height: 24, width: 24),
+                                                      Padding(
+                                                        padding: const EdgeInsets.all(2.0),
+                                                        child: Indicator(
+                                                          color: colorRank5,
+                                                          text: rankName[4],
+                                                          isSquare: true,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                            (rank[5] == 0)
+                                                ? Container()
+                                                : Row(
+                                                    children: [
+                                                      const SizedBox(height: 24, width: 24),
+                                                      Padding(
+                                                        padding: const EdgeInsets.all(2.0),
+                                                        child: Indicator(
+                                                          color: colorRank6,
+                                                          text: rankName[5],
+                                                          isSquare: true,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ),
-                              SizedBox(
-                                width: MediaQuery.of(context).size.width * 0.35,
-                                child: FittedBox(
-                                  fit: BoxFit.scaleDown,
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: <Widget>[
-                                      (rank[0] == 0)
-                                          ? Container()
-                                          : Row(
-                                              children: [
-                                                SizedBox(
-                                                  height: 24,
-                                                  width: 24,
-                                                  child: Image.asset('./assets/img/medal_1.png'),
-                                                ),
-                                                Padding(
-                                                  padding: const EdgeInsets.all(2.0),
-                                                  child: Indicator(
-                                                    color: colorRank1,
-                                                    text: rankName[0],
-                                                    isSquare: true,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                      (rank[1] == 0)
-                                          ? Container()
-                                          : Row(
-                                              children: [
-                                                SizedBox(
-                                                  height: 24,
-                                                  width: 24,
-                                                  child: Image.asset('./assets/img/medal_2.png'),
-                                                ),
-                                                Padding(
-                                                  padding: const EdgeInsets.all(2.0),
-                                                  child: Indicator(
-                                                    color: colorRank2,
-                                                    text: rankName[1],
-                                                    isSquare: true,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                      (rank[2] == 0)
-                                          ? Container()
-                                          : Row(
-                                              children: [
-                                                SizedBox(
-                                                  height: 24,
-                                                  width: 24,
-                                                  child: Image.asset('./assets/img/medal_3.png'),
-                                                ),
-                                                Padding(
-                                                  padding: const EdgeInsets.all(2.0),
-                                                  child: Indicator(
-                                                    color: colorRank3,
-                                                    text: rankName[2],
-                                                    isSquare: true,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                      (rank[3] == 0)
-                                          ? Container()
-                                          : Row(
-                                              children: [
-                                                const SizedBox(height: 24, width: 24),
-                                                Padding(
-                                                  padding: const EdgeInsets.all(2.0),
-                                                  child: Indicator(
-                                                    color: colorRank4,
-                                                    text: rankName[3],
-                                                    isSquare: true,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                      (rank[4] == 0)
-                                          ? Container()
-                                          : Row(
-                                              children: [
-                                                const SizedBox(height: 24, width: 24),
-                                                Padding(
-                                                  padding: const EdgeInsets.all(2.0),
-                                                  child: Indicator(
-                                                    color: colorRank5,
-                                                    text: rankName[4],
-                                                    isSquare: true,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                      (rank[5] == 0)
-                                          ? Container()
-                                          : Row(
-                                              children: [
-                                                const SizedBox(height: 24, width: 24),
-                                                Padding(
-                                                  padding: const EdgeInsets.all(2.0),
-                                                  child: Indicator(
-                                                    color: colorRank6,
-                                                    text: rankName[5],
-                                                    isSquare: true,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 8)
+                    ],
                   ),
                 ),
-                const SizedBox(height: 8)
-              ],
-            ),
-          ),
-        ),
+              ),
 
         // Padding(
         //   padding: const EdgeInsets.all(8.0),
@@ -1055,8 +1211,9 @@ class _BarChartSample6State extends State<ChartCustom> {
         (rank[0] == 0)
             ? Container()
             : Card(
+                color: Theme.of(context).colorScheme.surface.withOpacity(0.5),
                 child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: (widget.isxtype == false) ? const EdgeInsets.all(8.0) : const EdgeInsets.only(top: 12.0, bottom: 8.0, left: 8.0, right: 8.0),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -1083,112 +1240,137 @@ class _BarChartSample6State extends State<ChartCustom> {
                       // ),
 
                       Padding(
-                        padding: const EdgeInsets.only(top: 48, bottom: 8, left: 0, right: 20),
-                        child: SizedBox(
-                          width: double.infinity,
-                          height: 200,
-                          child: AspectRatio(
-                            aspectRatio: 2,
-                            child: BarChart(
-                              BarChartData(
-                                alignment: (widget.rangeEnd.difference(widget.rangeStart).inDays + 1 == 1) ? BarChartAlignment.center : BarChartAlignment.spaceBetween,
-                                titlesData: FlTitlesData(
-                                  leftTitles: const AxisTitles(
-                                    sideTitles: SideTitles(
-                                      showTitles: true,
-                                      reservedSize: 50,
-                                    ),
+                        padding: EdgeInsets.only(top: (widget.isxtype == false) ? 48 : 0, bottom: 8, left: 0, right: 20),
+                        child: Column(
+                          children: [
+                            (widget.isxtype == false)
+                                ? Container()
+                                : Container(
+                                    padding: const EdgeInsets.only(left: 20),
+                                    height: 48,
+                                    child: Center(
+                                        child: Column(
+                                      children: [
+                                        Text(
+                                          LocaleData.exercise_intensity.getString((context)),
+                                          style: const TextStyle(fontWeight: FontWeight.w700),
+                                        ),
+                                        Text(
+                                          "(${LocaleData.weight.getString((context))} x ${LocaleData.reps.getString((context))} x ${LocaleData.sets.getString((context))})",
+                                          style: const TextStyle(fontWeight: FontWeight.w700),
+                                        ),
+                                      ],
+                                    )),
                                   ),
-                                  rightTitles: const AxisTitles(),
-                                  topTitles: const AxisTitles(),
-                                  bottomTitles: AxisTitles(
-                                    sideTitles: SideTitles(
-                                      showTitles: true,
-                                      getTitlesWidget: bottomTitles,
-                                      reservedSize: 25,
+                            SizedBox(
+                              width: double.infinity,
+                              height: (widget.isxtype == false) ? 200 : (media.width / 16 * 6.6) - 48,
+                              child: AspectRatio(
+                                aspectRatio: 2,
+                                child: BarChart(
+                                  BarChartData(
+                                    alignment: (widget.rangeEnd.difference(widget.rangeStart).inDays + 1 == 1) ? BarChartAlignment.center : BarChartAlignment.spaceBetween,
+                                    titlesData: FlTitlesData(
+                                      leftTitles: const AxisTitles(
+                                        sideTitles: SideTitles(
+                                          showTitles: true,
+                                          reservedSize: 50,
+                                        ),
+                                      ),
+                                      rightTitles: const AxisTitles(),
+                                      topTitles: const AxisTitles(),
+                                      bottomTitles: AxisTitles(
+                                        sideTitles: SideTitles(
+                                          showTitles: true,
+                                          getTitlesWidget: bottomTitles,
+                                          reservedSize: 25,
+                                        ),
+                                      ),
                                     ),
+                                    barTouchData: BarTouchData(
+                                      enabled: false,
+                                      touchTooltipData: BarTouchTooltipData(
+                                        tooltipBgColor: Colors.transparent,
+                                        tooltipRoundedRadius: 8,
+                                      ),
+                                    ),
+                                    borderData: FlBorderData(show: false),
+                                    gridData: const FlGridData(show: true, drawVerticalLine: false),
+                                    barGroups: [
+                                      for (int index = 0; index < widget.rangeEnd.difference(widget.rangeStart).inDays + 1; index++)
+                                        (widget.selectedbodypart == 0)
+                                            ? generateGroupData(
+                                                index,
+                                                sumBodypartbyDateTime[widget.rangeStart.subtract(Duration(days: -index))]![0],
+                                                sumBodypartbyDateTime[widget.rangeStart.subtract(Duration(days: -index))]![1],
+                                                sumBodypartbyDateTime[widget.rangeStart.subtract(Duration(days: -index))]![2],
+                                                sumBodypartbyDateTime[widget.rangeStart.subtract(Duration(days: -index))]![3],
+                                                sumBodypartbyDateTime[widget.rangeStart.subtract(Duration(days: -index))]![4],
+                                                sumBodypartbyDateTime[widget.rangeStart.subtract(Duration(days: -index))]![5],
+                                              )
+                                            : (widget.selectedbodypart == 1)
+                                                ? generateGroupData(index, sumBodypartbyDateTime[widget.rangeStart.subtract(Duration(days: -index))]![0], 0, 0, 0, 0, 0)
+                                                : (widget.selectedbodypart == 2)
+                                                    ? generateGroupData(index, 0, sumBodypartbyDateTime[widget.rangeStart.subtract(Duration(days: -index))]![1], 0, 0, 0, 0)
+                                                    : (widget.selectedbodypart == 3)
+                                                        ? generateGroupData(index, 0, 0, sumBodypartbyDateTime[widget.rangeStart.subtract(Duration(days: -index))]![2], 0, 0, 0)
+                                                        : (widget.selectedbodypart == 4)
+                                                            ? generateGroupData(index, 0, 0, 0, sumBodypartbyDateTime[widget.rangeStart.subtract(Duration(days: -index))]![3], 0, 0)
+                                                            : (widget.selectedbodypart == 5)
+                                                                ? generateGroupData(
+                                                                    index, 0, 0, 0, 0, sumBodypartbyDateTime[widget.rangeStart.subtract(Duration(days: -index))]![4], 0)
+                                                                : generateGroupData(
+                                                                    index, 0, 0, 0, 0, 0, sumBodypartbyDateTime[widget.rangeStart.subtract(Duration(days: -index))]![5])
+                                    ],
+
+                                    // 그래프의 Y축 길이
+                                    maxY: maxYScale,
+
+                                    // extraLinesData: ExtraLinesData(
+                                    //   horizontalLines: [
+                                    //     HorizontalLine(
+                                    //       y: maxYScale,
+                                    //       color: legsColor,
+                                    //       strokeWidth: 1,
+                                    //       dashArray: [20, 4],
+                                    //     ),
+                                    //     HorizontalLine(
+                                    //       y: maxYScale,
+                                    //       color: shouldersColor,
+                                    //       strokeWidth: 1,
+                                    //       dashArray: [20, 4],
+                                    //     ),
+                                    //     HorizontalLine(
+                                    //       y: 6,
+                                    //       color: chestColor,
+                                    //       strokeWidth: 1,
+                                    //       dashArray: [20, 4],
+                                    //     ),
+                                    //     HorizontalLine(
+                                    //       y: 8,
+                                    //       color: armsColor,
+                                    //       strokeWidth: 1,
+                                    //       dashArray: [20, 4],
+                                    //     ),
+                                    //     HorizontalLine(
+                                    //       y: 10,
+                                    //       color: backColor,
+                                    //       strokeWidth: 1,
+                                    //       dashArray: [20, 4],
+                                    //     ),
+                                    //     HorizontalLine(
+                                    //       y: 12,
+                                    //       color: absColor,
+                                    //       strokeWidth: 1,
+                                    //       dashArray: [20, 4],
+                                    //     ),
+                                    //   ],
+                                    // ),
                                   ),
                                 ),
-                                barTouchData: BarTouchData(
-                                  enabled: false,
-                                  touchTooltipData: BarTouchTooltipData(
-                                    tooltipBgColor: Colors.transparent,
-                                    tooltipRoundedRadius: 8,
-                                  ),
-                                ),
-                                borderData: FlBorderData(show: false),
-                                gridData: const FlGridData(show: true, drawVerticalLine: false),
-                                barGroups: [
-                                  for (int index = 0; index < widget.rangeEnd.difference(widget.rangeStart).inDays + 1; index++)
-                                    (widget.selectedbodypart == 0)
-                                        ? generateGroupData(
-                                            index,
-                                            sumBodypartbyDateTime[widget.rangeStart.subtract(Duration(days: -index))]![0],
-                                            sumBodypartbyDateTime[widget.rangeStart.subtract(Duration(days: -index))]![1],
-                                            sumBodypartbyDateTime[widget.rangeStart.subtract(Duration(days: -index))]![2],
-                                            sumBodypartbyDateTime[widget.rangeStart.subtract(Duration(days: -index))]![3],
-                                            sumBodypartbyDateTime[widget.rangeStart.subtract(Duration(days: -index))]![4],
-                                            sumBodypartbyDateTime[widget.rangeStart.subtract(Duration(days: -index))]![5],
-                                          )
-                                        : (widget.selectedbodypart == 1)
-                                            ? generateGroupData(index, sumBodypartbyDateTime[widget.rangeStart.subtract(Duration(days: -index))]![0], 0, 0, 0, 0, 0)
-                                            : (widget.selectedbodypart == 2)
-                                                ? generateGroupData(index, 0, sumBodypartbyDateTime[widget.rangeStart.subtract(Duration(days: -index))]![1], 0, 0, 0, 0)
-                                                : (widget.selectedbodypart == 3)
-                                                    ? generateGroupData(index, 0, 0, sumBodypartbyDateTime[widget.rangeStart.subtract(Duration(days: -index))]![2], 0, 0, 0)
-                                                    : (widget.selectedbodypart == 4)
-                                                        ? generateGroupData(index, 0, 0, 0, sumBodypartbyDateTime[widget.rangeStart.subtract(Duration(days: -index))]![3], 0, 0)
-                                                        : (widget.selectedbodypart == 5)
-                                                            ? generateGroupData(index, 0, 0, 0, 0, sumBodypartbyDateTime[widget.rangeStart.subtract(Duration(days: -index))]![4], 0)
-                                                            : generateGroupData(index, 0, 0, 0, 0, 0, sumBodypartbyDateTime[widget.rangeStart.subtract(Duration(days: -index))]![5])
-                                ],
-
-                                // 그래프의 Y축 길이
-                                maxY: maxYScale,
-
-                                // extraLinesData: ExtraLinesData(
-                                //   horizontalLines: [
-                                //     HorizontalLine(
-                                //       y: maxYScale,
-                                //       color: legsColor,
-                                //       strokeWidth: 1,
-                                //       dashArray: [20, 4],
-                                //     ),
-                                //     HorizontalLine(
-                                //       y: maxYScale,
-                                //       color: shouldersColor,
-                                //       strokeWidth: 1,
-                                //       dashArray: [20, 4],
-                                //     ),
-                                //     HorizontalLine(
-                                //       y: 6,
-                                //       color: chestColor,
-                                //       strokeWidth: 1,
-                                //       dashArray: [20, 4],
-                                //     ),
-                                //     HorizontalLine(
-                                //       y: 8,
-                                //       color: armsColor,
-                                //       strokeWidth: 1,
-                                //       dashArray: [20, 4],
-                                //     ),
-                                //     HorizontalLine(
-                                //       y: 10,
-                                //       color: backColor,
-                                //       strokeWidth: 1,
-                                //       dashArray: [20, 4],
-                                //     ),
-                                //     HorizontalLine(
-                                //       y: 12,
-                                //       color: absColor,
-                                //       strokeWidth: 1,
-                                //       dashArray: [20, 4],
-                                //     ),
-                                //   ],
-                                // ),
                               ),
                             ),
-                          ),
+                          ],
                         ),
                       ),
                     ],

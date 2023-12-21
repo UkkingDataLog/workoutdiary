@@ -19,6 +19,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:workoutdiary/analytics/ga_event.dart';
+import 'package:workoutdiary/anlysis/chart.dart';
 
 import 'package:workoutdiary/common/colo_extension.dart';
 import 'package:workoutdiary/common/hive_helper.dart';
@@ -58,6 +59,8 @@ class XlogCreateView extends StatefulWidget {
 }
 
 class XlogCreateViewState extends State<XlogCreateView> {
+  //
+  bool ischartxtype = true;
   //
   late Xlog recentLog;
   int recentLogcount = 0;
@@ -2038,6 +2041,14 @@ class XlogCreateViewState extends State<XlogCreateView> {
                                             child: RoundButton(
                                               type: RoundButtonType.textGradient,
                                               onPressed: () {
+                                                gaEvent(
+                                                  'click_logoOff',
+                                                  {
+                                                    'ximgratios': ratios[_ratio],
+                                                    'ximgcount': todayaddimgcount,
+                                                    'todayXlogcount': todayaddcount,
+                                                  },
+                                                );
                                                 showRewardedInterstitialAd();
                                                 setState(() {});
                                               },
@@ -2077,9 +2088,12 @@ class XlogCreateViewState extends State<XlogCreateView> {
                               child: IconButton(
                                 color: Theme.of(context).colorScheme.onPrimary,
                                 onPressed: (() {
-                                  gaEvent('click_CalendarScreen', {
-                                    'color': 'purple',
-                                  });
+                                  gaEvent(
+                                    'click_CalendarScreen',
+                                    {
+                                      'todayXlogcount': todayaddcount,
+                                    },
+                                  );
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
@@ -2592,28 +2606,47 @@ class XlogCreateViewState extends State<XlogCreateView> {
                                   child: Row(
                                     children: [
                                       // 위젯이미지 캡처 및 공유
-                                      IconButton(
-                                          color: Theme.of(context).colorScheme.surface,
-                                          onPressed: () async {
-                                            //화면캡쳐 및 공유
-                                            final screenshotimage = await screenshotController.capture();
-                                            // 이미지 저장 버튼
-                                            if (screenshotimage == null) return;
-                                            saveAndShare(screenshotimage);
-                                          },
-                                          icon: const Icon(Icons.share)),
-                                      IconButton(
-                                          color: Theme.of(context).colorScheme.surface,
-                                          onPressed: () async {
-                                            showToastMessage(LocaleData.toastmessage_imgsaveing.getString((context)));
-                                            final screenshotimage = await screenshotController.capture();
-                                            if (screenshotimage == null) return;
+                                      (todayaddcount > 0 || todayaddimgcount > 0)
+                                          ? IconButton(
+                                              color: Theme.of(context).colorScheme.surface,
+                                              onPressed: () async {
+                                                //화면캡쳐 및 공유
+                                                final screenshotimage = await screenshotController.capture();
+                                                // 이미지 저장 버튼
+                                                if (screenshotimage == null) return;
+                                                saveAndShare(screenshotimage);
+                                              },
+                                              icon: const Icon(Icons.share))
+                                          : IconButton(
+                                              color: Theme.of(context).colorScheme.surface,
+                                              onPressed: () {},
+                                              icon: Icon(
+                                                Icons.share,
+                                                color: Theme.of(context).colorScheme.onSurfaceVariant,
+                                              ),
+                                            ),
+                                      (todayaddcount > 0 || todayaddimgcount > 0)
+                                          ? IconButton(
+                                              color: Theme.of(context).colorScheme.surface,
+                                              onPressed: () async {
+                                                showToastMessage(LocaleData.toastmessage_imgsaveing.getString((context)));
+                                                final screenshotimage = await screenshotController.capture();
+                                                if (screenshotimage == null) return;
 
-                                            await saveImage(screenshotimage);
+                                                await saveImage(screenshotimage);
 
-                                            showToastMessage(LocaleData.toastmessage_imgsavesuccess.getString((context)));
-                                          },
-                                          icon: const Icon(Icons.download_rounded)),
+                                                showToastMessage(LocaleData.toastmessage_imgsavesuccess.getString((context)));
+                                              },
+                                              icon: const Icon(Icons.download_rounded),
+                                            )
+                                          : IconButton(
+                                              color: Theme.of(context).colorScheme.surface,
+                                              onPressed: () {},
+                                              icon: Icon(
+                                                Icons.download_rounded,
+                                                color: Theme.of(context).colorScheme.onSurfaceVariant,
+                                              ),
+                                            ),
                                     ],
                                   ),
                                 ),
@@ -2777,101 +2810,145 @@ class XlogCreateViewState extends State<XlogCreateView> {
                                                   ? Container()
                                                   : (recentLog.xType != selectedxTypeItem)
                                                       ? Container()
-                                                      : InkWell(
-                                                          onTap: () async {
-                                                            selectedlxweightItems = "${recentLog.lxweight.ceil()}";
-                                                            selectedWeighUnint = recentLog.lxweightUnit;
-                                                            if (selectedWeighUnint == 'kg') {
-                                                              isSelectedkg = true;
-                                                            } else {
-                                                              isSelectedkg = false;
-                                                            }
-                                                            selectedlxnumberItem = "${recentLog.lxnumber}";
-                                                            selectedlxsetItem = "${recentLog.lxset}";
-
-                                                            lxweightIndex = recentLog.lxweight.ceil();
-                                                            lxnumberIndex = recentLog.lxnumber - 1;
-                                                            lxsetIndex = recentLog.lxset - 1;
-
-                                                            isSelectedRecentLog = true;
-                                                            setState(() {});
-                                                            Future.delayed(const Duration(milliseconds: 50), () {
-                                                              isSelectedRecentLog = false;
-                                                              setState(() {});
-                                                            });
-                                                          },
-                                                          child: SizedBox(
-                                                            height: 20,
-                                                            width: media.width,
-                                                            // color: Colors.black.withOpacity(0.5),
-                                                            child: Row(
-                                                              children: [
-                                                                // //운동종류
-                                                                const SizedBox(width: 12.0),
-                                                                Container(
-                                                                  width: (media.width * selectedXtypewidth),
-                                                                  alignment: Alignment.centerRight,
-                                                                  child: FittedBox(
-                                                                    child: Row(
-                                                                      children: [
-                                                                        const Icon(
-                                                                          Icons.date_range_rounded,
-                                                                          size: 16.0,
-                                                                        ),
-                                                                        Text(
-                                                                          ' ${recentLog.lxdate.year}/${recentLog.lxdate.month}/${recentLog.lxdate.day}',
-                                                                          style: TextStyle(
-                                                                            color: Colors.black,
-                                                                            // fontSize: logTextSizeselected,
-                                                                            fontWeight: logTextFontselectedWeight,
-                                                                          ),
-                                                                        ),
-                                                                      ],
+                                                      : Column(
+                                                          children: [
+                                                            InkWell(
+                                                              onTap: () {
+                                                                //
+                                                                if (ischartxtype == false) {
+                                                                  ischartxtype = true;
+                                                                  setState(() {});
+                                                                } else {
+                                                                  ischartxtype = false;
+                                                                  setState(() {});
+                                                                }
+                                                              },
+                                                              child: (ischartxtype == false)
+                                                                  ? SizedBox(height: media.width / 16 * 8, width: media.width)
+                                                                  : SizedBox(
+                                                                      // height: media.width / 16 * 8,
+                                                                      width: media.width,
+                                                                      // color: Colors.black.withOpacity(0.5),
+                                                                      child: ChartCustom(
+                                                                        isxtype: true,
+                                                                        isxtypeName: selectedxTypeItem,
+                                                                        value: 0,
+                                                                        // 0: all, 1: legs, 2: shoulders, 3: chest, 4: arms, 5: back, 6: abs
+                                                                        selectedbodypart: (_isbodypartcontroller == '하체')
+                                                                            ? 1
+                                                                            : (_isbodypartcontroller == '어깨')
+                                                                                ? 2
+                                                                                : (_isbodypartcontroller == '가슴')
+                                                                                    ? 3
+                                                                                    : (_isbodypartcontroller == '팔')
+                                                                                        ? 4
+                                                                                        : (_isbodypartcontroller == '등')
+                                                                                            ? 5
+                                                                                            : 6,
+                                                                        rangeStart: DateTime.now().subtract(const Duration(days: 7 + 7 + 7 + 7)),
+                                                                        rangeEnd: DateTime.now(),
+                                                                        xlogs: xlogs,
+                                                                        weightUnits: selectedWeighUnint,
+                                                                      ),
                                                                     ),
-                                                                  ),
-                                                                ),
-                                                                // //운동 중량
-                                                                Container(
-                                                                  alignment: Alignment.center,
-                                                                  width: media.width * selectedXweight,
-                                                                  child: Text(
-                                                                    '   ${recentLog.lxweight * 0.5}${recentLog.lxweightUnit}',
-                                                                    style: TextStyle(
-                                                                      color: Colors.black,
-                                                                      // fontSize: logTextSizeselected,
-                                                                      fontWeight: logTextFontselectedWeight,
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                                // //운동횟수
-                                                                Container(
-                                                                  alignment: Alignment.center,
-                                                                  width: media.width * selectedXnumber,
-                                                                  child: Text(
-                                                                    '${recentLog.lxnumber} ',
-                                                                    style: TextStyle(
-                                                                      color: Colors.black,
-                                                                      // fontSize: logTextSizeselected,
-                                                                      fontWeight: logTextFontselectedWeight,
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                                // //운동세트수
-                                                                Container(
-                                                                  alignment: Alignment.centerLeft,
-                                                                  width: media.width * selectedXset,
-                                                                  child: Text(
-                                                                    'x     ${recentLog.lxset}',
-                                                                    style: TextStyle(
-                                                                      color: Colors.black,
-                                                                      // fontSize: logTextSizeselected,
-                                                                      fontWeight: logTextFontselectedWeight,
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                              ],
                                                             ),
-                                                          ),
+                                                            InkWell(
+                                                              onTap: () async {
+                                                                selectedlxweightItems = "${recentLog.lxweight.ceil()}";
+                                                                selectedWeighUnint = recentLog.lxweightUnit;
+                                                                if (selectedWeighUnint == 'kg') {
+                                                                  isSelectedkg = true;
+                                                                } else {
+                                                                  isSelectedkg = false;
+                                                                }
+                                                                selectedlxnumberItem = "${recentLog.lxnumber}";
+                                                                selectedlxsetItem = "${recentLog.lxset}";
+
+                                                                lxweightIndex = recentLog.lxweight.ceil();
+                                                                lxnumberIndex = recentLog.lxnumber - 1;
+                                                                lxsetIndex = recentLog.lxset - 1;
+
+                                                                isSelectedRecentLog = true;
+                                                                setState(() {});
+                                                                Future.delayed(const Duration(milliseconds: 50), () {
+                                                                  isSelectedRecentLog = false;
+                                                                  setState(() {});
+                                                                });
+                                                              },
+                                                              child: SizedBox(
+                                                                height: 20,
+                                                                width: media.width,
+                                                                // color: Colors.black.withOpacity(0.5),
+                                                                child: Row(
+                                                                  children: [
+                                                                    // //운동종류
+                                                                    const SizedBox(width: 12.0),
+                                                                    Container(
+                                                                      width: (media.width * selectedXtypewidth),
+                                                                      alignment: Alignment.centerRight,
+                                                                      child: FittedBox(
+                                                                        child: Row(
+                                                                          children: [
+                                                                            const Icon(
+                                                                              Icons.date_range_rounded,
+                                                                              size: 16.0,
+                                                                            ),
+                                                                            Text(
+                                                                              ' ${recentLog.lxdate.year}/${recentLog.lxdate.month}/${recentLog.lxdate.day}',
+                                                                              style: TextStyle(
+                                                                                color: Colors.black,
+                                                                                // fontSize: logTextSizeselected,
+                                                                                fontWeight: logTextFontselectedWeight,
+                                                                              ),
+                                                                            ),
+                                                                          ],
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                    // //운동 중량
+                                                                    Container(
+                                                                      alignment: Alignment.center,
+                                                                      width: media.width * selectedXweight,
+                                                                      child: Text(
+                                                                        '   ${recentLog.lxweight * 0.5}${recentLog.lxweightUnit}',
+                                                                        style: TextStyle(
+                                                                          color: Colors.black,
+                                                                          // fontSize: logTextSizeselected,
+                                                                          fontWeight: logTextFontselectedWeight,
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                    // //운동횟수
+                                                                    Container(
+                                                                      alignment: Alignment.center,
+                                                                      width: media.width * selectedXnumber,
+                                                                      child: Text(
+                                                                        '${recentLog.lxnumber} ',
+                                                                        style: TextStyle(
+                                                                          color: Colors.black,
+                                                                          // fontSize: logTextSizeselected,
+                                                                          fontWeight: logTextFontselectedWeight,
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                    // //운동세트수
+                                                                    Container(
+                                                                      alignment: Alignment.centerLeft,
+                                                                      width: media.width * selectedXset,
+                                                                      child: Text(
+                                                                        'x     ${recentLog.lxset}',
+                                                                        style: TextStyle(
+                                                                          color: Colors.black,
+                                                                          // fontSize: logTextSizeselected,
+                                                                          fontWeight: logTextFontselectedWeight,
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ],
                                                         ),
                                             ],
                                           ),

@@ -15,6 +15,8 @@ const List<MapLocale> LOCALES = [
 mixin LocaleData {
   // define
   // setting
+  static const String exercise_intensity = 'exercise_intensity';
+  static const String weight = 'weight';
   static const String text = 'text';
   static const String add_Text = 'add_Text';
   static const String workout_analysis = 'workout_analysis';
@@ -334,6 +336,8 @@ mixin LocaleData {
 
   // 영어 (English)
   static const Map<String, dynamic> EN = {
+    exercise_intensity: 'exercise intensity',
+    weight: 'weight',
     workout_analysis: 'Workout Analysis',
     text: 'Text',
     add_Text: 'Add Text',
@@ -652,6 +656,8 @@ mixin LocaleData {
   };
   // 한국어 (Korean)
   static const Map<String, dynamic> KO = {
+    exercise_intensity: '운동강도',
+    weight: '중량',
     text: '텍스트',
     add_Text: '텍스트 추가',
     workout_analysis: '운동 분석',
@@ -970,6 +976,8 @@ mixin LocaleData {
 
   // 독일어 (German)
   static const Map<String, dynamic> DE = {
+    exercise_intensity: 'Trainingsintensität',
+    weight: 'Gewicht',
     text: 'Text',
     add_Text: 'Text hinzufügen',
     workout_analysis: 'Trainingsanalyse',
@@ -1289,6 +1297,8 @@ mixin LocaleData {
 
   // 일본어 (Japanese)
   static const Map<String, dynamic> JA = {
+    exercise_intensity: '運動強度',
+    weight: '重量',
     text: 'テキスト',
     add_Text: 'テキストを追加',
     workout_analysis: 'トレーニング分析',
@@ -1607,6 +1617,8 @@ mixin LocaleData {
 
   // 스페인어 (Spanish)
   static const Map<String, dynamic> ES = {
+    exercise_intensity: 'intensidad del ejercicio',
+    weight: 'peso',
     text: 'Texto',
     add_Text: 'Añadir Texto',
     workout_analysis: 'Análisis Entrenamiento',
@@ -1926,6 +1938,8 @@ mixin LocaleData {
 
   // 중국어 (Simplified Chinese) - 간체
   static const Map<String, dynamic> ZH = {
+    exercise_intensity: '运动强度',
+    weight: '重量',
     text: '文本',
     add_Text: '添加文本',
     workout_analysis: '运动分析',
@@ -2244,6 +2258,8 @@ mixin LocaleData {
 
   // 포르투갈어 (Portuguese)
   static const Map<String, dynamic> PT = {
+    exercise_intensity: 'intensidade do exercício',
+    weight: 'peso',
     text: 'Texto',
     add_Text: 'Adicionar Texto',
     workout_analysis: 'Análise de Treino',
@@ -2563,6 +2579,8 @@ mixin LocaleData {
 
   // 아랍어 (Arabic)
   static const Map<String, dynamic> AR = {
+    exercise_intensity: 'شدة التمرين',
+    weight: 'وزن',
     text: 'نص',
     add_Text: 'إضافة نص',
     workout_analysis: 'تحليل اللياقة',
@@ -2881,6 +2899,8 @@ mixin LocaleData {
 
   // 힌디어 (Hindi)
   static const Map<String, dynamic> HI = {
+    exercise_intensity: 'व्यायाम की तीव्रता',
+    weight: 'वजन',
     text: 'पाठ',
     add_Text: 'पाठ जोड़ें',
     workout_analysis: 'व्यायाम विश्लेषण',
